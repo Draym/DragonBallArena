@@ -2,8 +2,8 @@ package com.andres_k.components.gameComponents.controllers;
 
 import com.andres_k.components.gameComponents.animations.AnimatorGameData;
 import com.andres_k.components.gameComponents.gameObject.GameObjectController;
+import com.andres_k.components.graphicComponents.background.Background;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
-import com.andres_k.components.graphicComponents.graphic.windowGame.BackgroundSliding;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.input.InputGame;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
@@ -32,7 +32,7 @@ import java.util.*;
 public class GameController extends WindowController {
     private AnimatorGameData animatorGameData;
     private GameObjectController gameObjectController;
-    private BackgroundSliding background;
+    private Background background;
     private InputGame inputGame;
     private List<String> playerNames;
 
@@ -83,7 +83,9 @@ public class GameController extends WindowController {
         this.animatorGameData.init();
         this.gameObjectController.init(this.animatorGameData);
 
-        this.background = new BackgroundSliding("image/background/backgroundGame.png");
+        this.background = new Background();
+        this.background.addBackground("basic", "image/background/backgroundGame.png");
+        this.background.init();
     }
 
     @Override

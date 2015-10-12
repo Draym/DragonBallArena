@@ -26,7 +26,7 @@ public class AnimatorGameData extends AnimatorData{
     }
 
     public void initItem() throws SlickException, JSONException {
-        //this.addItemAnimator(this.animatorFactory.getAnimator(EnumSprites.SPACESHIP), EnumGameObject.SPACESHIP);
+        this.addItemAnimator(this.animatorFactory.getAnimator(EnumSprites.GOKU), EnumGameObject.GOKU);
     }
 
     public void addItemAnimator(Animator roundAnimator, EnumGameObject type) {

@@ -146,7 +146,7 @@ public class GameObjectController extends Observable {
             Player player = null;
             while (player == null || this.checkCollision(player)) {
                 int randomX = RandomTools.getInt(WindowConfig.getW2SizeX() - 200) + 100;
-                player = new Player(animatorGameData.getAnimator(EnumGameObject.PLAYER), "player" + String.valueOf(i) + ":" + playerNames.get(i), randomX, WindowConfig.w2_sY - 100);
+                player = new Player(animatorGameData.getAnimator(EnumGameObject.GOKU), "player" + String.valueOf(i) + ":" + playerNames.get(i), randomX, WindowConfig.w2_sY - 100);
             }
             this.players.add(player);
         }

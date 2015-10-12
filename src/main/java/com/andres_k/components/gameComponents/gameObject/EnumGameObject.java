@@ -14,7 +14,9 @@ public enum EnumGameObject {
     BLOCK_BODY("blockBody"),
 
     //item
-    PLAYER("player");
+    PLAYER("player"),
+    GOKU("goku");
+
 
 
     private final String value;
