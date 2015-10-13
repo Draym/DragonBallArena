@@ -16,7 +16,6 @@ import com.andres_k.components.soundComponents.EnumSound;
 import com.andres_k.components.soundComponents.MusicController;
 import com.andres_k.components.taskComponent.EnumTargetTask;
 import com.andres_k.components.taskComponent.TaskFactory;
-import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
 import org.codehaus.jettison.json.JSONException;
@@ -38,7 +37,6 @@ public class GameController extends WindowController {
     private List<String> playerNames;
 
     private boolean running;
-    private float roundSpeed;
 
     public GameController() throws JSONException {
         this.animatorGameData = new AnimatorGameData();
@@ -46,7 +44,6 @@ public class GameController extends WindowController {
         this.inputGame = new InputGame();
         this.gameObjectController = new GameObjectController();
         this.gameObjectController.addObserver(this);
-        this.roundSpeed = GlobalVariable.defaultSpeed;
 
         this.playerNames = new ArrayList<>();
     }
@@ -55,7 +52,6 @@ public class GameController extends WindowController {
     public void enter() throws SlickException {
         this.gameObjectController.enter();
 
-        GlobalVariable.currentSpeed = this.roundSpeed;
         this.createPlayerForGame();
         this.setChanged();
         this.notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME, EnumTargetTask.GAME_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundStart("admin", "admin", true))));
@@ -74,7 +70,6 @@ public class GameController extends WindowController {
     @Override
     public void leave() {
         this.running = false;
-        GlobalVariable.currentSpeed = this.roundSpeed;
         this.gameObjectController.leave();
         MusicController.resume(EnumSound.BACKGROUND_GAME);
     }
@@ -107,7 +102,6 @@ public class GameController extends WindowController {
                 this.notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME, EnumTargetTask.GAME_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundEnd("admin", "admin", "enemy"))));
                 this.running = false;
             }
-            GlobalVariable.currentSpeed += 0.001;
         }
     }
 
@@ -158,18 +152,12 @@ public class GameController extends WindowController {
                     }
                 } else if (received.getV3() instanceof MessageGameNew) {
                     List<String> values = ((MessageGameNew) received.getV3()).getValues();
-                    float newSpeed = Float.valueOf(values.get(0));
 
                     this.playerNames.clear();
-                    for (int i = 1; i < values.size(); ++i) {
+                    for (int i = 0; i < values.size(); ++i) {
                         this.playerNames.add(values.get(i));
                     }
 
-                    if (newSpeed >= 1 && newSpeed < 100) {
-                        this.roundSpeed = newSpeed;
-                    } else {
-                        this.roundSpeed = GlobalVariable.defaultSpeed;
-                    }
                     this.stateWindow.enterState(EnumWindow.GAME.getValue());
                 } else if (received.getV3() instanceof MessageOverlayMenu) {
                     this.running = !((MessageOverlayMenu) received.getV3()).isActivated();

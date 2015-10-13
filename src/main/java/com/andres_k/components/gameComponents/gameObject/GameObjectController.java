@@ -44,7 +44,7 @@ public class GameObjectController extends Observable {
     }
 
     public void initWorld() throws SlickException {
-       this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item1:ground", 640, 680));
+        this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item1:ground", 640, 680));
     }
 
     // FUNCTIONS
@@ -83,8 +83,10 @@ public class GameObjectController extends Observable {
                 this.players.remove(i);
                 --i;
             } else {
-                this.checkCollision(this.players.get(i));
-                this.players.get(i).move();
+                if (!this.checkCollision(this.players.get(i), EnumTask.GRAVITY))
+                    this.players.get(i).gravity();
+                if (!this.checkCollision(this.players.get(i), EnumTask.MOVE))
+                    this.players.get(i).move();
             }
         }
         for (int i = 0; i < this.obstacles.size(); ++i) {
@@ -93,8 +95,10 @@ public class GameObjectController extends Observable {
                 this.obstacles.remove(i);
                 --i;
             } else {
-                this.checkCollision(this.obstacles.get(i));
-                this.obstacles.get(i).move();
+                if (!this.checkCollision(this.obstacles.get(i), EnumTask.GRAVITY))
+                    this.obstacles.get(i).gravity();
+                if (!this.checkCollision(this.obstacles.get(i), EnumTask.MOVE))
+                    this.obstacles.get(i).move();
             }
         }
         if (running) {
@@ -131,12 +135,12 @@ public class GameObjectController extends Observable {
         ConsoleWrite.write("\n" + player.getPseudo() + " : '" + score + "' pts.");
     }
 
-    public void changeGameState(boolean running){
-        for (GameObject object : this.players){
+    public void changeGameState(boolean running) {
+        for (GameObject object : this.players) {
             if (object.getAnimator() != null && object.getAnimator().currentAnimation() != null)
                 object.getAnimator().currentAnimation().setAutoUpdate(running);
         }
-        for (GameObject object : this.obstacles){
+        for (GameObject object : this.obstacles) {
             if (object.getAnimator() != null && object.getAnimator().currentAnimation() != null)
                 object.getAnimator().currentAnimation().setAutoUpdate(running);
         }
@@ -147,7 +151,7 @@ public class GameObjectController extends Observable {
     public void createPlayers(List<String> playerNames) throws SlickException {
         for (int i = 0; i < playerNames.size(); ++i) {
             GameObject player = null;
-            while (player == null || this.checkCollision(player)) {
+            while (player == null || this.checkCollision(player, EnumTask.LOCAL)) {
                 int randomX = RandomTools.getInt(WindowConfig.getW2SizeX() - 200) + 100;
                 player = GameObjectFactory.create(EnumGameObject.GOKU, this.animatorGameData.getAnimator(EnumGameObject.GOKU), "player" + String.valueOf(i) + ":" + playerNames.get(i), randomX, WindowConfig.w2_sY - 100);
             }
@@ -157,13 +161,20 @@ public class GameObjectController extends Observable {
 
     // COLLISION
 
-    public boolean checkCollision(GameObject current) {
+    public boolean checkCollision(GameObject current, EnumTask type) {
         boolean collision = false;
         if (current != null) {
             List<GameObject> items = this.getAllExpectHim(current.getId());
+            Pair<Float, Float> pos;
 
+            if (type == EnumTask.GRAVITY)
+                pos = current.predictGravity();
+            else if (type == EnumTask.MOVE)
+                pos = current.predictMove();
+            else
+                pos = new Pair<>(current.getPosX(), current.getPosY());
             for (GameObject item : items) {
-                if (current.checkCollisionWith(item)){
+                if (current.checkCollisionWith(item, pos)) {
                     collision = true;
                 }
             }

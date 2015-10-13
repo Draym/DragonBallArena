@@ -97,7 +97,7 @@ public class WindowGame extends WindowBasedGame {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         this.delta += i;
 
-        if (this.delta > 30) {
+        if (this.delta > GlobalVariable.timeLoop) {
             this.controller.updateWindow(gameContainer);
             this.overlay.updateOverlay();
             this.delta = 0;

@@ -28,8 +28,10 @@ public abstract class GameObject {
     protected float currentLife;
     protected float damage;
     protected float speed;
+    protected float weight;
+    protected float myGravity;
 
-    protected GameObject(Animator animator, String id, EnumGameObject type, Pair<Float, Float> pos, float life, float damage, float speed) {
+    protected GameObject(Animator animator, String id, EnumGameObject type, Pair<Float, Float> pos, float life, float damage, float speed, float weight) {
         this.positions = pos;
         this.moveTo = new Pair<>(0f, 0f);
         this.move = false;
@@ -42,9 +44,11 @@ public abstract class GameObject {
         this.currentLife = life;
         this.damage = damage;
         this.speed = speed;
+        this.weight = weight;
+        this.myGravity = 0;//this.calculateWithSpeed() * this.weight / 10;
     }
 
-    public void revive(){
+    public void revive() {
         this.alive = true;
         this.currentLife = this.maxLife;
     }
@@ -61,10 +65,22 @@ public abstract class GameObject {
 
     public abstract Object doTask(Object task);
 
+    public void gravity() {
+        if (this.inTheMapAfterMove(this.predictGravity())) {
+            this.positions.setV2(this.positions.getV2() + this.myGravity);
+        }
+    }
+
     public void move() {
-        if (this.move) {
-            this.positions.setV1(this.positions.getV1() + this.moveTo.getV1());
-            this.positions.setV2(this.positions.getV2() + this.moveTo.getV2());
+        if (this.move && !this.isNeedDelete()) {
+            if (this.inTheMapAfterMove(this.predictMove())) {
+                this.positions.setV1(this.positions.getV1() + this.moveTo.getV1());
+                this.positions.setV2(this.positions.getV2() + this.moveTo.getV2());
+            } else {
+                this.move = false;
+                this.moveTo.setV1(0f);
+                this.moveTo.setV2(0f);
+            }
         }
     }
 
@@ -76,39 +92,39 @@ public abstract class GameObject {
         }
     }
 
-    public boolean inTheMapAfterMove() {
-        Pair<Float, Float> pos = this.predictMove();
+    public Pair<Float, Float> predictGravity() {
+        return new Pair<>(this.positions.getV1(), this.positions.getV2() + this.myGravity);
+    }
 
-        if (this.animator.currentAnimation() != null && this.checkBorderMap(pos.getV1(), this.animator.currentAnimation().getWidth() / 2, pos.getV2() ,this.animator.currentAnimation().getHeight() / 2))
+    public boolean inTheMapAfterMove(Pair<Float, Float> pos) {
+        if (this.animator.currentAnimation() != null && this.checkBorderMap(pos.getV1(), this.animator.currentAnimation().getWidth() / 2, pos.getV2(), this.animator.currentAnimation().getHeight() / 2))
             return true;
         else if (this.animator.currentAnimation() == null && this.checkBorderMap(pos.getV1(), 0, pos.getV2(), 0))
             return true;
         return false;
     }
 
-    public boolean checkBorderMap(float x, float decalX, float y, float decalY)
-    {
+    public boolean checkBorderMap(float x, float decalX, float y, float decalY) {
         if (x - decalX > 0 && x + decalX < WindowConfig.w2_sX && y - decalY > 0 && y + decalY < WindowConfig.w2_sY)
             return true;
         else
             return false;
     }
 
-    public boolean checkCollisionWith(GameObject enemy) {
-        Pair<Float, Float> tmpPos = predictMove();
+    public boolean checkCollisionWith(GameObject enemy, Pair<Float, Float> pos) {
         boolean collision = false;
 
         if (this.animator.getCurrentAnimation() != EnumAnimation.EXPLODE && enemy.animator.getCurrentAnimation() != EnumAnimation.EXPLODE) {
             BodySprite enemyBody = enemy.getBody();
             BodySprite myBody = this.getBody();
 
-            if (myBody.getBody(tmpPos.getV1(), tmpPos.getV2()).intersects(enemyBody.getBody(enemy.getPosX(), enemy.getPosY()))) {
+            if (myBody.getBody(pos.getV1(), pos.getV2()).intersects(enemyBody.getBody(enemy.getPosX(), enemy.getPosY()))) {
                 List<BodyRect> enemyBodies = enemyBody.getBodies();
                 List<BodyRect> myBodies = myBody.getBodies();
 
                 for (BodyRect mine : myBodies) {
                     for (BodyRect his : enemyBodies) {
-                        if (mine.getBody(tmpPos.getV1(), tmpPos.getV2()).intersects(his.getBody(enemy.getPosX(), enemy.getPosY()))) {
+                        if (mine.getBody(pos.getV1(), pos.getV2()).intersects(his.getBody(enemy.getPosX(), enemy.getPosY()))) {
                             collision = true;
                             if (mine.getType() == EnumGameObject.ATTACK_BODY && his.getType() == EnumGameObject.DEFENSE_BODY) {
                                 enemy.getHit(this);
@@ -120,7 +136,7 @@ public abstract class GameObject {
                         }
                     }
                 }
-            // do something with collision
+                // do something with collision
             }
         }
         return collision;
@@ -139,7 +155,7 @@ public abstract class GameObject {
     }
 
     public float calculateWithSpeed() {
-        return this.speed + (GlobalVariable.currentSpeed * 0.7f);
+        return this.speed * GlobalVariable.timeLoop / 1000;
     }
 
     // GETTERS
@@ -198,7 +214,7 @@ public abstract class GameObject {
         return this.alive;
     }
 
-    public Animator getAnimator(){
+    public Animator getAnimator() {
         return this.animator;
     }
 

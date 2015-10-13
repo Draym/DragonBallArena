@@ -166,9 +166,6 @@ public class InterfaceOverlay extends Overlay {
         tableMenuNew.doTask(new ImageElement(new ColorRect(new Rectangle(posX + 15, posY + 15, sizeX - 30, sizeY - 30), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)), EnumOverlayElement.BACKGROUND.getValue(), Element.PositionInBody.MIDDLE_MID));
         posY += (StringTools.charSizeY());
         posY += 10;
-        tableMenuNew.doTask(new StringElement(new ColorRect(new Rectangle(posX + 20, posY, (sizeX - 30) / 2, StringTools.charSizeY())), new StringTimer("Speed Game"), Color.black, Element.PositionInBody.RIGHT_MID));
-        tableMenuNew.doTask(new SelectionStringField(new ColorRect(new Rectangle(posX + 160, posY, (sizeX - 30) / 2 - 10, StringTools.charSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
-                new StringElement(new StringTimer(String.valueOf(GlobalVariable.currentSpeed)), Color.black, Element.PositionInBody.LEFT_MID), EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "speedGame", true));
         for (int i = 0; i < GlobalVariable.currentPlayer; ++i) {
             posY += (StringTools.charSizeY());
             tableMenuNew.doTask(new StringElement(new ColorRect(new Rectangle(posX + 20, posY, (sizeX - 30) / 2, StringTools.charSizeY())), new StringTimer("Pseudo P" + String.valueOf(i + 1)), Color.black, Element.PositionInBody.RIGHT_MID));

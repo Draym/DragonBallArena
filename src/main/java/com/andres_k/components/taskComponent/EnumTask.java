@@ -4,7 +4,7 @@ package com.andres_k.components.taskComponent;
  * Created by andres_k on 11/07/2015.
  */
 public enum EnumTask {
-    //generic
+    //Interface generic
     GETTER,
     SETTER,
 
@@ -18,4 +18,8 @@ public enum EnumTask {
     //others
     UPGRADE_SCORE,
 
+    //Game move
+    MOVE,
+    GRAVITY,
+    LOCAL
 }

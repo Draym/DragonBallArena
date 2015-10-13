@@ -16,8 +16,8 @@ public class Player extends GameObject {
     private EnumInput current;
     private long score;
 
-    public Player(Animator animator, EnumGameObject type, String id, float x, float y, float life, float damage, float speed) {
-        super(animator, id, type, new Pair<>(x, y), life, damage, speed);
+    public Player(Animator animator, EnumGameObject type, String id, float x, float y, float life, float damage, float speed, float weight) {
+        super(animator, id, type, new Pair<>(x, y), life, damage, speed, weight);
     }
 
     @Override
@@ -39,23 +39,6 @@ public class Player extends GameObject {
 
     @Override
     public void update() {
-        if (this.positions.getV2() < 200) {
-            this.score += 1;
-        }
-        this.score += Math.ceil(this.calculateWithSpeed() - this.speed);
-    }
-
-    public void move() {
-        if (this.move && !this.isNeedDelete()) {
-            if (this.inTheMapAfterMove()) {
-                this.positions.setV1(this.positions.getV1() + this.moveTo.getV1());
-                this.positions.setV2(this.positions.getV2() + this.moveTo.getV2());
-            } else {
-                this.move = false;
-                this.moveTo.setV1(0f);
-                this.moveTo.setV2(0f);
-            }
-        }
     }
 
     @Override
@@ -80,7 +63,7 @@ public class Player extends GameObject {
             } else if (input.isIn(EnumInput.MOVE_DOWN)) {
                 this.animator.setCurrent(EnumAnimation.BASIC);
                 this.moveTo.setV1(0f);
-                this.moveTo.setV2(this.calculateWithSpeed() / 2);
+                this.moveTo.setV2(this.calculateWithSpeed());
                 this.move = true;
             }
             if (this.move) {
