@@ -17,8 +17,8 @@ public class Player extends GameObject {
     private EnumInput current;
     private long score;
 
-    public Player(Animator animator, String id, float x, float y) {
-        super(animator, id, EnumGameObject.PLAYER, new Pair<>(x, y), 1, 0, 5);
+    public Player(Animator animator, EnumGameObject type, String id, float x, float y, float life, float damage, float speed) {
+        super(animator, id, type, new Pair<>(x, y), life, damage, speed);
     }
 
     @Override

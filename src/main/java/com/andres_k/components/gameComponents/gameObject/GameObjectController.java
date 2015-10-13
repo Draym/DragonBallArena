@@ -132,10 +132,12 @@ public class GameObjectController extends Observable {
 
     public void changeGameState(boolean running){
         for (GameObject object : this.players){
-            object.getAnimator().currentAnimation().setAutoUpdate(running);
+            if (object.getAnimator() != null)
+                object.getAnimator().currentAnimation().setAutoUpdate(running);
         }
         for (GameObject object : this.obstacles){
-            object.getAnimator().currentAnimation().setAutoUpdate(running);
+            if (object.getAnimator() != null)
+                object.getAnimator().currentAnimation().setAutoUpdate(running);
         }
     }
 
@@ -143,10 +145,10 @@ public class GameObjectController extends Observable {
 
     public void createPlayers(List<String> playerNames) throws SlickException {
         for (int i = 0; i < playerNames.size(); ++i) {
-            Player player = null;
+            GameObject player = null;
             while (player == null || this.checkCollision(player)) {
                 int randomX = RandomTools.getInt(WindowConfig.getW2SizeX() - 200) + 100;
-                player = new Player(this.animatorGameData.getAnimator(EnumGameObject.GOKU), "player" + String.valueOf(i) + ":" + playerNames.get(i), randomX, WindowConfig.w2_sY - 100);
+                player = GameObjectFactory.create(EnumGameObject.GOKU, this.animatorGameData.getAnimator(EnumGameObject.GOKU), "player" + String.valueOf(i) + ":" + playerNames.get(i), randomX, WindowConfig.w2_sY - 100);
             }
             this.players.add(player);
         }
