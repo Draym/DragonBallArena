@@ -141,12 +141,12 @@ public class GameObjectController extends Observable {
 
     // ADD
 
-    public void createPlayers(List<String> playerNames, AnimatorGameData animatorGameData) throws SlickException {
+    public void createPlayers(List<String> playerNames) throws SlickException {
         for (int i = 0; i < playerNames.size(); ++i) {
             Player player = null;
             while (player == null || this.checkCollision(player)) {
                 int randomX = RandomTools.getInt(WindowConfig.getW2SizeX() - 200) + 100;
-                player = new Player(animatorGameData.getAnimator(EnumGameObject.GOKU), "player" + String.valueOf(i) + ":" + playerNames.get(i), randomX, WindowConfig.w2_sY - 100);
+                player = new Player(this.animatorGameData.getAnimator(EnumGameObject.GOKU), "player" + String.valueOf(i) + ":" + playerNames.get(i), randomX, WindowConfig.w2_sY - 100);
             }
             this.players.add(player);
         }

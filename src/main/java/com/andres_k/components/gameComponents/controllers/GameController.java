@@ -3,6 +3,7 @@ package com.andres_k.components.gameComponents.controllers;
 import com.andres_k.components.gameComponents.animations.AnimatorGameData;
 import com.andres_k.components.gameComponents.gameObject.GameObjectController;
 import com.andres_k.components.graphicComponents.background.Background;
+import com.andres_k.components.graphicComponents.background.BackgroundEnum;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.input.InputGame;
@@ -84,7 +85,7 @@ public class GameController extends WindowController {
         this.gameObjectController.init(this.animatorGameData);
 
         this.background = new Background();
-        this.background.addBackground("basic", "image/background/backgroundGame.png");
+        this.background.addBackground(BackgroundEnum.VALLEY_DAY);
         this.background.init();
     }
 
@@ -175,13 +176,13 @@ public class GameController extends WindowController {
                     this.gameObjectController.changeGameState(this.running);
                 }
             }
-        } else if (arg instanceof Pair){
+        } else if (arg instanceof Pair) {
             this.setChanged();
             this.notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME, (EnumTargetTask) ((Pair) arg).getV1(), ((Pair) arg).getV2()));
         }
     }
 
     public void createPlayerForGame() throws SlickException {
-        this.gameObjectController.createPlayers(this.playerNames, this.animatorGameData);
+        this.gameObjectController.createPlayers(this.playerNames);
     }
 }

@@ -1,12 +1,12 @@
 package com.andres_k.components.graphicComponents.background;
 
-import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,17 +14,18 @@ import java.util.Map;
  * Created by andres_k on 07/10/2015.
  */
 public class Background {
-    protected boolean   launched;
-    protected String    current;
-    protected float backgroundSizeY;
-    protected List<Image> images;
     protected List<Pair<Integer, Integer>> positions;
     protected Map<String, String> path;
+    protected float backgroundSizeY;
+    protected List<Image> images;
+    protected boolean launched;
+    protected String current;
 
     public Background() {
         this.images = new ArrayList<>();
         this.positions = new ArrayList<>();
         this.launched = false;
+        this.path = new HashMap<>();
     }
 
     // FUNCTIONS
@@ -54,24 +55,17 @@ public class Background {
     public void instanceCurrentBackground() throws SlickException {
         Image background = new Image(this.path.get(this.current));
 
+        this.images.clear();
+        this.images.add(background);
         this.backgroundSizeY = background.getHeight();
-        int number = (int) (WindowConfig.w2_sY / this.backgroundSizeY) + 2;
-
-        int x = 0;
-        int y = (int)(WindowConfig.w2_sY - this.backgroundSizeY);
-
-        y = (y < 0 ? 0 : y);
-        for (int i = 0; i < number; ++i) {
-            this.images.add(background.copy());
-            this.positions.add(new Pair<>(x, y));
-            y -= this.backgroundSizeY;
-        }
+        this.positions.clear();
+        this.positions.add(new Pair<>(0, 0));
     }
 
     // SETTERS
-    public void addBackground(String name, String path) {
-        this.current = name;
-        this.path.put(name, path);
+    public void addBackground(BackgroundEnum background) {
+        this.current = background.getName();
+        this.path.put(background.getName(), background.getPath());
     }
 
     public void changeCurrent(String name){
