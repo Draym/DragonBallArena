@@ -27,6 +27,7 @@ public class AnimatorGameData extends AnimatorData{
 
     public void initItem() throws SlickException, JSONException {
         this.addItemAnimator(this.animatorFactory.getAnimator(EnumSprites.GOKU), EnumGameObject.GOKU);
+        this.addItemAnimator(this.animatorFactory.getAnimator(EnumSprites.GROUND), EnumGameObject.GROUND);
     }
 
     public void addItemAnimator(Animator roundAnimator, EnumGameObject type) {

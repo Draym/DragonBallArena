@@ -78,10 +78,20 @@ public abstract class GameObject {
 
     public boolean inTheMapAfterMove() {
         Pair<Float, Float> pos = this.predictMove();
-        if (pos.getV1() > 0 && pos.getV1() < WindowConfig.w2_sX && pos.getV2() > 0 && pos.getV2() < WindowConfig.w2_sY) {
+
+        if (this.animator.currentAnimation() != null && this.checkBorderMap(pos.getV1(), this.animator.currentAnimation().getWidth() / 2, pos.getV2() ,this.animator.currentAnimation().getHeight() / 2))
             return true;
-        }
+        else if (this.animator.currentAnimation() == null && this.checkBorderMap(pos.getV1(), 0, pos.getV2(), 0))
+            return true;
         return false;
+    }
+
+    public boolean checkBorderMap(float x, float decalX, float y, float decalY)
+    {
+        if (x - decalX > 0 && x + decalX < WindowConfig.w2_sX && y - decalY > 0 && y + decalY < WindowConfig.w2_sY)
+            return true;
+        else
+            return false;
     }
 
     public boolean checkCollisionWith(GameObject enemy) {

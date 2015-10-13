@@ -137,11 +137,19 @@ public class Animator implements Observer {
     // GETTERS
 
     public int currentFrame(){
-        return this.currentAnimation().getFrame();
+        try {
+            return this.currentAnimation().getFrame();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     public Animation currentAnimation() {
-        return this.animations.get(this.current).get(this.index);
+        try {
+            return this.animations.get(this.current).get(this.index);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public List<BodyRect> currentCollisions() {

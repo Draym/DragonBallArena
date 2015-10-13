@@ -15,6 +15,9 @@ public enum EnumGameObject {
 
     //items
     PLATFORM("platform"),
+    GROUND("ground"),
+
+    //players
     GOKU("goku");
 
 

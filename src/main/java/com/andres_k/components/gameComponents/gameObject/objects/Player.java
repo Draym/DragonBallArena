@@ -2,7 +2,6 @@ package com.andres_k.components.gameComponents.gameObject.objects;
 
 import com.andres_k.components.gameComponents.animations.Animator;
 import com.andres_k.components.gameComponents.animations.EnumAnimation;
-import com.andres_k.components.gameComponents.collisions.BodyAnimation;
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.graphicComponents.input.EnumInput;
@@ -29,11 +28,11 @@ public class Player extends GameObject {
     @Override
     public void draw(Graphics g) {
         if (this.animator != null) {
-            g.drawAnimation(this.animator.currentAnimation(), this.graphicalX(), this.graphicalY());
-            BodyAnimation bodyAnimation = this.animator.currentBodyAnimation();
-
-            if (bodyAnimation != null) {
-                bodyAnimation.draw(g, this.animator.currentFrame(), this.getPosX(), this.getPosY());
+            if (this.animator.currentAnimation() != null) {
+                g.drawAnimation(this.animator.currentAnimation(), this.graphicalX(), this.graphicalY());
+            }
+            if (this.animator.currentBodyAnimation() != null) {
+                this.animator.currentBodyAnimation().draw(g, this.animator.currentFrame(), this.getPosX(), this.getPosY());
             }
         }
     }
@@ -128,7 +127,7 @@ public class Player extends GameObject {
         }
     }
 
-    public int getIdIndex(){
+    public int getIdIndex() {
         if (this.id.contains(":")) {
             int index = this.id.indexOf(":");
             return Integer.valueOf(this.id.substring(index - 1, index));

@@ -44,6 +44,7 @@ public class GameObjectController extends Observable {
     }
 
     public void initWorld() throws SlickException {
+       this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item1:ground", 640, 680));
     }
 
     // FUNCTIONS
@@ -132,11 +133,11 @@ public class GameObjectController extends Observable {
 
     public void changeGameState(boolean running){
         for (GameObject object : this.players){
-            if (object.getAnimator() != null)
+            if (object.getAnimator() != null && object.getAnimator().currentAnimation() != null)
                 object.getAnimator().currentAnimation().setAutoUpdate(running);
         }
         for (GameObject object : this.obstacles){
-            if (object.getAnimator() != null)
+            if (object.getAnimator() != null && object.getAnimator().currentAnimation() != null)
                 object.getAnimator().currentAnimation().setAutoUpdate(running);
         }
     }

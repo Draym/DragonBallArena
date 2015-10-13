@@ -8,6 +8,7 @@ public enum EnumSprites {
     //index
     NOTHING(0),
     ITEM(1),
+    PLAYER(2),
     ROUND(6),
     MENU(7),
 
@@ -19,7 +20,8 @@ public enum EnumSprites {
     TOPSCORE(MENU.getIndex()), ALPHABET(MENU.getIndex()),
 
     //game
-    GOKU(ITEM.getIndex());
+    GOKU(PLAYER.getIndex()),
+    GROUND(ITEM.getIndex());
 
     private final int index;
 
