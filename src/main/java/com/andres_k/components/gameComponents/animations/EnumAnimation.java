@@ -5,10 +5,34 @@ package com.andres_k.components.gameComponents.animations;
  * Created by andres_k on 13/03/2015.
  */
 public enum EnumAnimation {
-    BASIC,
-    EXPLODE,
+    IDLE(true),
+    EXPLODE(false),
+    RUSH(true),
+    RUN(true),
+    JUMP(false),
+    DEF(true),
+    BLOCK(false),
+    FALL(true);
 
-    IDDLE,
-    MOVE_RIGHT,
-    MOVE_LEFT
+    private boolean loop;
+
+    EnumAnimation(boolean loop) {
+        this.loop = loop;
+    }
+
+    public boolean isLoop() {
+        return this.loop;
+    }
+
+    public static boolean checkLoop(EnumAnimation value) {
+        EnumAnimation[] enums = EnumAnimation.values();
+        int enumsNumber = enums.length;
+        for (int i = 0; i < enumsNumber; i++) {
+            EnumAnimation type = enums[i];
+            if (type.equals(value)) {
+                return type.isLoop();
+            }
+        }
+        return false;
+    }
 }

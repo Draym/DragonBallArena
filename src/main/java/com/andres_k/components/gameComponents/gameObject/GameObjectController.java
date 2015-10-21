@@ -1,6 +1,7 @@
 package com.andres_k.components.gameComponents.gameObject;
 
 import com.andres_k.components.gameComponents.animations.AnimatorGameData;
+import com.andres_k.components.gameComponents.collisions.EnumDirection;
 import com.andres_k.components.gameComponents.controllers.ScoreData;
 import com.andres_k.components.gameComponents.gameObject.objects.Player;
 import com.andres_k.components.graphicComponents.input.EnumInput;
@@ -75,6 +76,16 @@ public class GameObjectController extends Observable {
         }
     }
 
+    private void doMovement(GameObject item) {
+        Pair<Boolean, EnumDirection> result;
+
+        result = this.checkCollision(item, EnumTask.MOVE);
+        if (!result.getV1())
+            item.updatePos();
+       else if (result.getV2() != EnumDirection.NULL)
+            item.forceMove(result.getV2());
+    }
+
     public void update(boolean running) throws SlickException {
         for (int i = 0; i < this.players.size(); ++i) {
             this.players.get(i).update();
@@ -83,10 +94,7 @@ public class GameObjectController extends Observable {
                 this.players.remove(i);
                 --i;
             } else {
-                if (!this.checkCollision(this.players.get(i), EnumTask.GRAVITY))
-                    this.players.get(i).gravity();
-                if (!this.checkCollision(this.players.get(i), EnumTask.MOVE))
-                    this.players.get(i).move();
+                this.doMovement(this.players.get(i));
             }
         }
         for (int i = 0; i < this.obstacles.size(); ++i) {
@@ -95,10 +103,7 @@ public class GameObjectController extends Observable {
                 this.obstacles.remove(i);
                 --i;
             } else {
-                if (!this.checkCollision(this.obstacles.get(i), EnumTask.GRAVITY))
-                    this.obstacles.get(i).gravity();
-                if (!this.checkCollision(this.obstacles.get(i), EnumTask.MOVE))
-                    this.obstacles.get(i).move();
+                this.doMovement(this.obstacles.get(i));
             }
         }
         if (running) {
@@ -116,9 +121,11 @@ public class GameObjectController extends Observable {
                 }
             }
         } else if (event == EnumInput.KEY_PRESSED) {
-            GameObject player = this.getPlayerById("player" + String.valueOf(input.getIndex()));
-            if (player != null) {
-                player.eventPressed(input);
+            if (input.getIndex() >= 0 && input.getIndex() < this.players.size()) {
+                GameObject player = this.getPlayerById("player" + String.valueOf(input.getIndex()));
+                if (player != null) {
+                    player.eventPressed(input);
+                }
             }
         }
     }
@@ -151,7 +158,7 @@ public class GameObjectController extends Observable {
     public void createPlayers(List<String> playerNames) throws SlickException {
         for (int i = 0; i < playerNames.size(); ++i) {
             GameObject player = null;
-            while (player == null || this.checkCollision(player, EnumTask.LOCAL)) {
+            while (player == null || this.checkCollision(player, EnumTask.STATIC).getV1()) {
                 int randomX = RandomTools.getInt(WindowConfig.getW2SizeX() - 200) + 100;
                 player = GameObjectFactory.create(EnumGameObject.GOKU, this.animatorGameData.getAnimator(EnumGameObject.GOKU), "player" + String.valueOf(i) + ":" + playerNames.get(i), randomX, WindowConfig.w2_sY - 100);
             }
@@ -161,25 +168,28 @@ public class GameObjectController extends Observable {
 
     // COLLISION
 
-    public boolean checkCollision(GameObject current, EnumTask type) {
-        boolean collision = false;
+    public Pair<Boolean, EnumDirection> checkCollision(GameObject current, EnumTask type) {
+        Pair<Boolean, EnumDirection> result = new Pair<>(false, EnumDirection.NULL);
+
         if (current != null) {
             List<GameObject> items = this.getAllExpectHim(current.getId());
             Pair<Float, Float> pos;
 
-            if (type == EnumTask.GRAVITY)
-                pos = current.predictGravity();
-            else if (type == EnumTask.MOVE)
-                pos = current.predictMove();
+            if (type == EnumTask.STATIC)
+            pos = new Pair<>(current.getPosX(), current.getPosY());
             else
-                pos = new Pair<>(current.getPosX(), current.getPosY());
+                pos = current.predictNextPosition();
             for (GameObject item : items) {
-                if (current.checkCollisionWith(item, pos)) {
-                    collision = true;
+                Pair<Boolean, EnumDirection> tmp = current.checkCollisionWith(item, pos);
+
+                if (tmp.getV1()) {
+                    result.setV1(tmp.getV1());
+                    if (tmp.getV2() != EnumDirection.NULL)
+                        result.setV2(tmp.getV2());
                 }
             }
         }
-        return collision;
+        return result;
     }
 
     // GETTERS

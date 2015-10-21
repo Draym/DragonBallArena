@@ -24,17 +24,17 @@ public class AnimatorOverlayFactory extends AnimatorFactory {
             Animation animation = new Animation();
             Image img = new Image("image/overlay/newGame.png");
             animation.addFrame(img, 150);
-            animator.addAnimation(EnumAnimation.BASIC, animation);
+            animator.addAnimation(EnumAnimation.IDLE, animation);
         } else if (index == EnumSprites.END_GAME) {
             Animation animation = new Animation();
             Image img = new Image("image/overlay/victory.png");
             animation.addFrame(img, 150);
-            animator.addAnimation(EnumAnimation.BASIC, animation);
+            animator.addAnimation(EnumAnimation.IDLE, animation);
 
             Animation animation2 = new Animation();
             Image img2 = new Image("image/overlay/defeat.png");
             animation2.addFrame(img2, 150);
-            animator.addAnimation(EnumAnimation.BASIC, animation2);
+            animator.addAnimation(EnumAnimation.IDLE, animation2);
         } else if (index == EnumSprites.TIMER) {
             Animation animation = new Animation();
             for (int i = 3; i > 0; --i) {
@@ -44,12 +44,12 @@ public class AnimatorOverlayFactory extends AnimatorFactory {
             Image img = new Image("image/overlay/roundGo.png");
             animation.addFrame(img, 1000);
             animation.setLooping(false);
-            animator.addAnimation(EnumAnimation.BASIC, animation);
+            animator.addAnimation(EnumAnimation.IDLE, animation);
         } else if (index == EnumSprites.NEW_ROUND) {
             Animation animation = new Animation();
             Image img = new Image("image/overlay/newRound.png");
             animation.addFrame(img, 150);
-            animator.addAnimation(EnumAnimation.BASIC, animation);
+            animator.addAnimation(EnumAnimation.IDLE, animation);
         }
         return animator;
     }
@@ -62,61 +62,61 @@ public class AnimatorOverlayFactory extends AnimatorFactory {
             Image img = new Image("image/overlay/exit.png");
             animation.addFrame(img, 150);
             animation.setLooping(false);
-            animator.addAnimation(EnumAnimation.BASIC, animation);
+            animator.addAnimation(EnumAnimation.IDLE, animation);
         } else if (index == EnumSprites.SETTINGS) {
             Animation animation = new Animation();
             Image img = new Image("image/overlay/settings.png");
             animation.addFrame(img, 150);
             animation.setLooping(false);
-            animator.addAnimation(EnumAnimation.BASIC, animation);
+            animator.addAnimation(EnumAnimation.IDLE, animation);
         } else if (index == EnumSprites.CONTROLS) {
             Animation animation = new Animation();
             Image img = new Image("image/overlay/controls.png");
             animation.addFrame(img, 150);
             animation.setLooping(false);
-            animator.addAnimation(EnumAnimation.BASIC, animation);
+            animator.addAnimation(EnumAnimation.IDLE, animation);
         } else if (index == EnumSprites.SCREEN) {
             Animation animation = new Animation();
             Image img = new Image("image/overlay/screen.png");
             animation.addFrame(img, 150);
             animation.setLooping(false);
-            animator.addAnimation(EnumAnimation.BASIC, animation);
+            animator.addAnimation(EnumAnimation.IDLE, animation);
         } else if (index == EnumSprites.NEW) {
             Animation animation = new Animation();
             Image img = new Image("image/overlay/new.png");
             animation.addFrame(img, 150);
             animation.setLooping(false);
-            animator.addAnimation(EnumAnimation.BASIC, animation);
+            animator.addAnimation(EnumAnimation.IDLE, animation);
         } else if (index == EnumSprites.GO) {
             Animation animation = new Animation();
             Image img = new Image("image/overlay/go.png");
             animation.addFrame(img, 150);
             animation.setLooping(false);
-            animator.addAnimation(EnumAnimation.BASIC, animation);
+            animator.addAnimation(EnumAnimation.IDLE, animation);
         } else if (index == EnumSprites.NEXT) {
             Animation animation = new Animation();
             Image img = new Image("image/overlay/next.png");
             animation.addFrame(img, 150);
             animation.setLooping(false);
-            animator.addAnimation(EnumAnimation.BASIC, animation);
+            animator.addAnimation(EnumAnimation.IDLE, animation);
         } else if (index == EnumSprites.SAVE) {
             Animation animation = new Animation();
             Image img = new Image("image/overlay/save.png");
             animation.addFrame(img, 150);
             animation.setLooping(false);
-            animator.addAnimation(EnumAnimation.BASIC, animation);
+            animator.addAnimation(EnumAnimation.IDLE, animation);
         } else if (index == EnumSprites.HIGHSCORE) {
             Animation animation = new Animation();
             Image img = new Image("image/overlay/highScore.png");
             animation.addFrame(img, 150);
             animation.setLooping(false);
-            animator.addAnimation(EnumAnimation.BASIC, animation);
+            animator.addAnimation(EnumAnimation.IDLE, animation);
         } else if (index == EnumSprites.TOPSCORE) {
             Animation animation = new Animation();
             Image img = new Image("image/overlay/topScore.png");
             animation.addFrame(img, 150);
             animation.setLooping(false);
-            animator.addAnimation(EnumAnimation.BASIC, animation);
+            animator.addAnimation(EnumAnimation.IDLE, animation);
         } else if (index == EnumSprites.ALPHABET) {
             animator = this.loadAlphabet();
         }
@@ -132,14 +132,14 @@ public class AnimatorOverlayFactory extends AnimatorFactory {
             Image img = new Image("image/characters/numeric/" + String.valueOf(i) + ".png");
             animation.addFrame(img, 150);
             animation.setLooping(false);
-            animator.addAnimation(EnumAnimation.BASIC, animation);
+            animator.addAnimation(EnumAnimation.IDLE, animation);
         }
         for (int i = 0; i < alphabet.length(); ++i) {
             Animation animation = new Animation();
             Image img = new Image("image/characters/alphabet/" + alphabet.charAt(i) + ".png");
             animation.addFrame(img, 150);
             animation.setLooping(false);
-            animator.addAnimation(EnumAnimation.BASIC, animation);
+            animator.addAnimation(EnumAnimation.IDLE, animation);
         }
         return animator;
     }

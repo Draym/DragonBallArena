@@ -9,6 +9,6 @@ import com.andres_k.components.gameComponents.gameObject.objects.Player;
  */
 public class Goku extends Player {
     public Goku(Animator animator, String id, float x, float y) {
-        super(animator, EnumGameObject.GOKU, id, x, y, 200, 1, 100, 5);
+        super(animator, EnumGameObject.GOKU, id, x, y, 400, 1, 100, 5);
     }
 }

@@ -8,10 +8,12 @@ public enum EnumWindow {
     INTERFACE(0), GAME(1);
 
     private int value;
-     EnumWindow(int value) {
-         this.value = value;
+
+    EnumWindow(int value) {
+        this.value = value;
     }
-    public int getValue(){
+
+    public int getValue() {
         return this.value;
     }
 }

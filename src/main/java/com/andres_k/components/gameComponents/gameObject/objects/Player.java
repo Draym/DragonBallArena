@@ -2,6 +2,7 @@ package com.andres_k.components.gameComponents.gameObject.objects;
 
 import com.andres_k.components.gameComponents.animations.Animator;
 import com.andres_k.components.gameComponents.animations.EnumAnimation;
+import com.andres_k.components.gameComponents.collisions.EnumDirection;
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.graphicComponents.input.EnumInput;
@@ -39,6 +40,32 @@ public class Player extends GameObject {
 
     @Override
     public void update() {
+        if (this.animator.getCurrentAnimation() == EnumAnimation.JUMP) {
+            if (this.animator.getCurrentFrame() == 1) {
+                this.movement.setPushY(-2f);
+                this.movement.setOnEarth(false);
+            } else if (this.animator.currentAnimation().isStopped()) {
+                this.movement.setPushY(1.5f);
+                this.animator.setCurrent(EnumAnimation.FALL);
+            }
+        } else if (this.animator.getCurrentAnimation() == EnumAnimation.RUN) {
+            if (this.animator.getDirection() == EnumDirection.LEFT) {
+                this.movement.setPushX(-1);
+                this.movement.setPushY(0);
+            } else {
+                this.movement.setPushX(1);
+                this.movement.setPushY(0);
+            }
+        } else if (this.animator.getCurrentAnimation() == EnumAnimation.FALL) {
+            if (this.isOnEarth()) {
+                this.animator.setCurrent(EnumAnimation.IDLE);
+                this.movement.stopMovement();
+            }
+        } else if (!this.isOnEarth()) {
+            this.movement.setPushX(0f);
+            this.movement.setPushY(1.5f);
+            this.animator.setCurrent(EnumAnimation.FALL);
+        }
     }
 
     @Override
@@ -46,29 +73,21 @@ public class Player extends GameObject {
 
         if (this.isAlive()) {
             if (input.isIn(EnumInput.MOVE_LEFT)) {
-                this.animator.setCurrent(EnumAnimation.MOVE_LEFT);
-                this.moveTo.setV1(-this.calculateWithSpeed());
-                this.moveTo.setV2(0f);
-                this.move = true;
+                this.animator.setDirection(EnumDirection.LEFT);
+                this.animator.setCurrent(EnumAnimation.RUN);
             } else if (input.isIn(EnumInput.MOVE_RIGHT)) {
-                this.animator.setCurrent(EnumAnimation.MOVE_RIGHT);
-                this.moveTo.setV1(this.calculateWithSpeed());
-                this.moveTo.setV2(0f);
-                this.move = true;
+                this.animator.setDirection(EnumDirection.RIGHT);
+                this.animator.setCurrent(EnumAnimation.RUN);
             } else if (input.isIn(EnumInput.MOVE_UP)) {
-                this.animator.setCurrent(EnumAnimation.BASIC);
-                this.moveTo.setV1(0f);
-                this.moveTo.setV2(-this.calculateWithSpeed());
-                this.move = true;
+                this.animator.restartAnimation(EnumAnimation.JUMP);
+                this.animator.setCurrent(EnumAnimation.JUMP);
+                this.movement.setPushY(0);
+                if (!this.isOnEarth())
+                    this.animator.setIndex(1);
             } else if (input.isIn(EnumInput.MOVE_DOWN)) {
-                this.animator.setCurrent(EnumAnimation.BASIC);
-                this.moveTo.setV1(0f);
-                this.moveTo.setV2(this.calculateWithSpeed());
-                this.move = true;
+                this.animator.setCurrent(EnumAnimation.DEF);
             }
-            if (this.move) {
-                this.current = input;
-            }
+            this.current = input;
         }
     }
 
@@ -76,10 +95,16 @@ public class Player extends GameObject {
     public void eventReleased(EnumInput input) {
         if (this.isAlive()) {
             if (input == this.current) {
-                this.animator.setCurrent(EnumAnimation.BASIC);
-                this.moveTo.setV1(0f);
-                this.moveTo.setV2(0f);
-                this.move = false;
+                if (this.animator.getCurrentAnimation() != EnumAnimation.JUMP) {
+                    if (this.isOnEarth()) {
+                        this.animator.setCurrent(EnumAnimation.IDLE);
+                        this.movement.stopMovement();
+                    } else {
+                        this.animator.setCurrent(EnumAnimation.FALL);
+                        this.movement.setPushX(0f);
+                        this.movement.setPushY(1.5f);
+                    }
+                }
             }
         }
     }

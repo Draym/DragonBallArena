@@ -34,8 +34,6 @@ public class Obstacle extends GameObject {
 
     @Override
     public void update() {
-        this.moveTo.setV2(this.calculateWithSpeed());
-        this.move();
     }
 
     @Override

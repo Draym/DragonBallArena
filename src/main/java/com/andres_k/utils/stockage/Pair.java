@@ -18,6 +18,12 @@ public class Pair<T1, T2> extends Object {
             this.v2 = pair.v2;
         }
     }
+
+    public void setPair(Pair<T1, T2> values) {
+        this.v1 = values.getV1();
+        this.v2 = values.getV2();
+    }
+
     public T1 getV1() {
         return this.v1;
     }

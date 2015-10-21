@@ -21,5 +21,5 @@ public enum EnumTask {
     //Game move
     MOVE,
     GRAVITY,
-    LOCAL
+    STATIC
 }
