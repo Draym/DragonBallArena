@@ -8,4 +8,6 @@ public class Config {
     public static final String score = "config/gameScore.json";
     public static final String dataOverlay = "config/configDataOverlay.json";
     public static final String preferenceOverlay = "config/configPreferenceOverlay.json";
+    public static final String jsonCollision = "json/";
+    public static final String images = "image/game";
 }

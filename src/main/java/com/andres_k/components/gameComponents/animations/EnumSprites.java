@@ -19,8 +19,11 @@ public enum EnumSprites {
     NEW(MENU.getIndex()), GO(MENU.getIndex()), NEXT(MENU.getIndex()), SAVE(MENU.getIndex()), HIGHSCORE(MENU.getIndex()),
     TOPSCORE(MENU.getIndex()), ALPHABET(MENU.getIndex()),
 
-    //game
+    //gamePlayer
     GOKU(PLAYER.getIndex()),
+
+    //gameItem
+    WALL(ITEM.getIndex()),
     GROUND(ITEM.getIndex());
 
     private final int index;

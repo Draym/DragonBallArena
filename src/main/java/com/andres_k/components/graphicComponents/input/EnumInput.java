@@ -42,9 +42,8 @@ public enum EnumInput {
 
     public static EnumInput getEnumByIndex(int index) {
         EnumInput[] enums = EnumInput.values();
-        int enumsNumber = enums.length;
-        for (int i = 0; i < enumsNumber; i++) {
-            EnumInput type = enums[i];
+
+        for (EnumInput type : enums) {
             if (index == type.getIndex()) {
                 return type;
             }
@@ -54,9 +53,8 @@ public enum EnumInput {
 
     public static EnumInput getEnumByValue(String value) {
         EnumInput[] enums = EnumInput.values();
-        int enumsNumber = enums.length;
-        for (int i = 0; i < enumsNumber; i++) {
-            EnumInput type = enums[i];
+
+        for (EnumInput type : enums) {
             if (type.getValue().equals(value)) {
                 return type;
             }
@@ -66,9 +64,8 @@ public enum EnumInput {
 
     public static int getIndexByValue(String value) {
         EnumInput[] enums = EnumInput.values();
-        int enumsNumber = enums.length;
-        for (int i = 0; i < enumsNumber; i++) {
-            EnumInput type = enums[i];
+
+        for (EnumInput type : enums) {
             if (type.getValue().equals(value)) {
                 return type.getIndex();
             }
@@ -78,5 +75,16 @@ public enum EnumInput {
 
     public boolean isIn(EnumInput input){
         return this.getValue().contains(input.getValue());
+    }
+
+    public EnumInput returnContainer() {
+        EnumInput[] enums = EnumInput.values();
+
+        for (EnumInput type : enums) {
+            if (this.isIn(type)) {
+                return type;
+            }
+        }
+        return NOTHING;
     }
 }

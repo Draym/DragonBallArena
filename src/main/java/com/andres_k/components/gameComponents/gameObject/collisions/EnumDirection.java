@@ -1,10 +1,10 @@
-package com.andres_k.components.gameComponents.collisions;
+package com.andres_k.components.gameComponents.gameObject.collisions;
 
 /**
  * Created by andres_k on 14/10/2015.
  */
 public enum EnumDirection {
-    NULL(0, 0),
+    NONE(0, 0),
     TOP(0, -1),
     DOWN(0, 1),
     LEFT(-1, 0),

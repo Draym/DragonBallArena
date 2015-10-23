@@ -1,0 +1,25 @@
+{
+  "path": "ground.png",
+  "spriteNumber": 1,
+  "spriteSizeX": 1280,
+  "spriteSizeY": 20,
+  "sprites": [
+    {
+      "centerX": 640,
+      "centerY": 10,
+      "posX": 0,
+      "posY": 0,
+      "sizeX": 1280,
+      "sizeY": 20,
+      "rectangles": [
+        {
+          "type": "blockBody",
+          "posX": 0,
+          "posY": 0,
+          "sizeX": 1280,
+          "sizeY": 20
+        }
+      ]
+    }
+  ]
+}

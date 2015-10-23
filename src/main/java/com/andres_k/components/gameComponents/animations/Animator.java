@@ -1,9 +1,9 @@
 package com.andres_k.components.gameComponents.animations;
 
-import com.andres_k.components.gameComponents.collisions.BodyAnimation;
-import com.andres_k.components.gameComponents.collisions.BodyRect;
-import com.andres_k.components.gameComponents.collisions.BodySprite;
-import com.andres_k.components.gameComponents.collisions.EnumDirection;
+import com.andres_k.components.gameComponents.bodies.BodyAnimation;
+import com.andres_k.components.gameComponents.bodies.BodyRect;
+import com.andres_k.components.gameComponents.bodies.BodySprite;
+import com.andres_k.components.gameComponents.gameObject.collisions.EnumDirection;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ActivatedTimer;
 import com.andres_k.utils.stockage.Pair;
 import org.codehaus.jettison.json.JSONException;
@@ -74,7 +74,7 @@ public class Animator implements Observer {
         this.direction = animator.direction;
     }
 
-    // FUNCTIONS
+    // UPDATE
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof EnumAnimation) {
@@ -82,6 +82,7 @@ public class Animator implements Observer {
         }
     }
 
+    // ADD FUNCTIONS
     public void addAnimation(EnumAnimation type, Animation animation) {
         if (animation.getFrameCount() == 1) {
             animation.setAutoUpdate(false);
@@ -113,12 +114,14 @@ public class Animator implements Observer {
         }
     }
 
+    // CHANGE INDEX
     public void nextCurrentIndex() {
         if (this.canSetIndex(this.index + 1)) {
             this.setIndex(this.index + 1);
         }
     }
 
+    // CHANGE ANIMATION
     public void restart() {
         for (Map.Entry<EnumAnimation, List<Animation>> entry : this.animations.entrySet()) {
             entry.getValue().forEach(org.newdawn.slick.Animation::restart);
@@ -247,6 +250,13 @@ public class Animator implements Observer {
         return this.direction;
     }
 
+    public boolean canSwitchCurrent() {
+        if (this.currentAnimation().isStopped() || EnumAnimation.checkLoop(this.current)) {
+            return true;
+        }
+        return false;
+    }
+
     // SETTERS
 
     public void setPrintable(boolean printable) {
@@ -254,14 +264,14 @@ public class Animator implements Observer {
     }
 
     public void setCurrent(EnumAnimation current) {
-            if (this.animations.containsKey(current)) {
-                if (this.currentAnimation().isStopped() || EnumAnimation.checkLoop(this.current)) {
-                    this.current = current;
-                    this.index = 0;
-                }
-            } else if (current == EnumAnimation.EXPLODE) {
-                this.setDeleted(true);
+        if (this.animations.containsKey(current)) {
+            if (this.currentAnimation().isStopped() || EnumAnimation.checkLoop(this.current)) {
+                this.current = current;
+                this.index = 0;
             }
+        } else if (current == EnumAnimation.EXPLODE) {
+            this.setDeleted(true);
+        }
     }
 
     public void setFilter(Color filter) {

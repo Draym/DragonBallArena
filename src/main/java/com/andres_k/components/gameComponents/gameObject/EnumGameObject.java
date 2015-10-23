@@ -13,9 +13,13 @@ public enum EnumGameObject {
     DEFENSE_BODY("defenseBody"),
     BLOCK_BODY("blockBody"),
 
-    //items
+    //types
     PLATFORM("platform"),
+    BORDER("border"),
+
+    //items
     GROUND("ground"),
+    WALL("wall"),
 
     //players
     GOKU("goku");

@@ -1,7 +1,8 @@
 package com.andres_k.components.gameComponents.gameObject;
 
 import com.andres_k.components.gameComponents.animations.AnimatorGameData;
-import com.andres_k.components.gameComponents.collisions.EnumDirection;
+import com.andres_k.components.gameComponents.gameObject.collisions.CollisionResult;
+import com.andres_k.components.gameComponents.gameObject.collisions.EnumDirection;
 import com.andres_k.components.gameComponents.controllers.ScoreData;
 import com.andres_k.components.gameComponents.gameObject.objects.Player;
 import com.andres_k.components.graphicComponents.input.EnumInput;
@@ -45,7 +46,10 @@ public class GameObjectController extends Observable {
     }
 
     public void initWorld() throws SlickException {
-        this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item1:ground", 640, 680));
+        this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item1:ground", 640, 640));
+        this.obstacles.add(GameObjectFactory.create(EnumGameObject.BORDER, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item2:sky", 640, -1));
+        this.obstacles.add(GameObjectFactory.create(EnumGameObject.BORDER, this.animatorGameData.getAnimator(EnumGameObject.WALL), "item3:leftWall", 0, 340));
+        this.obstacles.add(GameObjectFactory.create(EnumGameObject.BORDER, this.animatorGameData.getAnimator(EnumGameObject.WALL), "item4:rightWall", 1280, 340));
     }
 
     // FUNCTIONS
@@ -79,11 +83,7 @@ public class GameObjectController extends Observable {
     private void doMovement(GameObject item) {
         Pair<Boolean, EnumDirection> result;
 
-        result = this.checkCollision(item, EnumTask.MOVE);
-        if (!result.getV1())
-            item.updatePos();
-       else if (result.getV2() != EnumDirection.NULL)
-            item.forceMove(result.getV2());
+        item.doMovement(this.checkCollision(item, EnumTask.MOVE));
     }
 
     public void update(boolean running) throws SlickException {
@@ -158,7 +158,7 @@ public class GameObjectController extends Observable {
     public void createPlayers(List<String> playerNames) throws SlickException {
         for (int i = 0; i < playerNames.size(); ++i) {
             GameObject player = null;
-            while (player == null || this.checkCollision(player, EnumTask.STATIC).getV1()) {
+            while (player == null || this.checkCollision(player, EnumTask.STATIC).hasCollision()) {
                 int randomX = RandomTools.getInt(WindowConfig.getW2SizeX() - 200) + 100;
                 player = GameObjectFactory.create(EnumGameObject.GOKU, this.animatorGameData.getAnimator(EnumGameObject.GOKU), "player" + String.valueOf(i) + ":" + playerNames.get(i), randomX, WindowConfig.w2_sY - 100);
             }
@@ -168,26 +168,18 @@ public class GameObjectController extends Observable {
 
     // COLLISION
 
-    public Pair<Boolean, EnumDirection> checkCollision(GameObject current, EnumTask type) {
-        Pair<Boolean, EnumDirection> result = new Pair<>(false, EnumDirection.NULL);
+    public CollisionResult checkCollision(GameObject current, EnumTask type) {
+        CollisionResult result = new CollisionResult();
 
         if (current != null) {
             List<GameObject> items = this.getAllExpectHim(current.getId());
-            Pair<Float, Float> pos;
+            Pair<Float, Float> newPos;
 
             if (type == EnumTask.STATIC)
-            pos = new Pair<>(current.getPosX(), current.getPosY());
+                newPos = new Pair<>(current.getPosX(), current.getPosY());
             else
-                pos = current.predictNextPosition();
-            for (GameObject item : items) {
-                Pair<Boolean, EnumDirection> tmp = current.checkCollisionWith(item, pos);
-
-                if (tmp.getV1()) {
-                    result.setV1(tmp.getV1());
-                    if (tmp.getV2() != EnumDirection.NULL)
-                        result.setV2(tmp.getV2());
-                }
-            }
+                newPos = current.predictNextPosition();
+            result.copy(current.checkCollision(items, newPos));
         }
         return result;
     }

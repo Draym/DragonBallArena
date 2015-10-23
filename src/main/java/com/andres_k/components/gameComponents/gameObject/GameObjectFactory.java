@@ -1,6 +1,7 @@
 package com.andres_k.components.gameComponents.gameObject;
 
 import com.andres_k.components.gameComponents.animations.Animator;
+import com.andres_k.components.gameComponents.gameObject.objects.obstacles.Border;
 import com.andres_k.components.gameComponents.gameObject.objects.obstacles.Platform;
 import com.andres_k.components.gameComponents.gameObject.objects.players.Goku;
 
@@ -16,6 +17,8 @@ public class GameObjectFactory {
             object = new Goku(animator, id, x, y);
         } else if (type == EnumGameObject.PLATFORM) {
             object = new Platform(animator, id, x, y);
+        } else if (type == EnumGameObject.BORDER) {
+            object = new Border(animator, id, x, y);
         }
         return object;
     }

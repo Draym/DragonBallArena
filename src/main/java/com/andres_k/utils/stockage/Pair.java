@@ -19,7 +19,7 @@ public class Pair<T1, T2> extends Object {
         }
     }
 
-    public void setPair(Pair<T1, T2> values) {
+    public void copy(Pair<T1, T2> values) {
         this.v1 = values.getV1();
         this.v2 = values.getV2();
     }

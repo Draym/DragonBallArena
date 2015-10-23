@@ -1,4 +1,4 @@
-package com.andres_k.components.gameComponents.collisions;
+package com.andres_k.components.gameComponents.bodies;
 
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.utils.stockage.Pair;

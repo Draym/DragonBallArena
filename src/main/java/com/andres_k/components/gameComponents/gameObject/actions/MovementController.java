@@ -1,4 +1,4 @@
-package com.andres_k.components.gameComponents.gameObject;
+package com.andres_k.components.gameComponents.gameObject.actions;
 
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
@@ -8,7 +8,6 @@ import com.andres_k.utils.stockage.Pair;
  */
 public class MovementController {
     private Pair<Float, Float> positions;
-    private Pair<Float, Float> last;
 
     private float gravity;
     private boolean onEarth;
@@ -20,7 +19,6 @@ public class MovementController {
 
     public MovementController(Pair<Float, Float> positions, float gravity, float speed, float weight, boolean onEarth) {
         this.positions = new Pair<>(positions.getV1(), positions.getV2());
-        this.last = new Pair<>(this.positions.getV1(), this.positions.getV2());
         this.onEarth = onEarth;
         this.gravity = gravity;
         this.speed = speed;
@@ -31,7 +29,6 @@ public class MovementController {
 
     public MovementController(MovementController movement) {
         this.positions = new Pair<>(movement.positions.getV1(), movement.positions.getV2());
-        this.last = new Pair<>(this.positions.getV1(), this.positions.getV2());
         this.onEarth = movement.onEarth;
         this.gravity = movement.gravity;
         this.speed = movement.speed;
@@ -53,17 +50,19 @@ public class MovementController {
         return new Pair<>(nx, ny);
     }
 
+    public void nextPosition(boolean moveX, boolean moveY) {
+        if (moveX)
+            this.positions.setV1(this.positions.getV1() + this.pushX);
+        if (moveY)
+            this.positions.setV2(this.positions.getV2() + this.pushY);
+    }
+
     public void nextPosition() {
-        this.last.setPair(this.positions);
         this.positions.setV1(this.positions.getV1() + this.pushX);
         this.positions.setV2(this.positions.getV2() + this.pushY);
     }
 
-    public void rollBack() {
-        this.positions.setPair(this.last);
-    }
-
-    public float calculateDistance(float msec){
+    public float calculateDistance(float msec) {
         return this.speed * (msec / 1000);
     }
 
@@ -77,8 +76,20 @@ public class MovementController {
         return this.positions.getV2();
     }
 
+    public Pair<Float, Float> getPositions() {
+        return this.positions;
+    }
+
     public boolean isOnEarth() {
         return this.onEarth;
+    }
+
+    public float getPushX() {
+        return this.pushX;
+    }
+
+    public float getPushY() {
+        return this.pushY;
     }
 
     // SETTERS
@@ -94,4 +105,5 @@ public class MovementController {
     public void setOnEarth(boolean value) {
         this.onEarth = value;
     }
+
 }
