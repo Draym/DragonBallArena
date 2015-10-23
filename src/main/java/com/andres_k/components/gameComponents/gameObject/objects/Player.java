@@ -60,8 +60,10 @@ public class Player extends GameObject {
             } else if (this.animator.currentAnimation().isStopped()) {
                 if (this.event.isActivated(EnumInput.MOVE_UP)) {
                     this.moveUp();
-                } else {
+                } else if (this.event.allInactive()){
                     this.moveFall(this.pushDownX);
+                } else {
+                    this.executeLastEvent();
                 }
             }
         } else if (this.animator.getCurrentAnimation() == EnumAnimation.FALL) {
@@ -123,6 +125,8 @@ public class Player extends GameObject {
             if (this.isOnEarth()) {
                 this.animator.setCurrent(EnumAnimation.DEF);
                 return true;
+            } else {
+                this.moveFall(0f);
             }
         }
         return false;

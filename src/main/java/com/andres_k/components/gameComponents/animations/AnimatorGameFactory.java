@@ -26,6 +26,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animator.addCollision(EnumAnimation.IDLE, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(Config.jsonCollision + "/player/goku/gokuIDLE.json")));
 
             animator.addAnimation(EnumAnimation.RUSH, this.loadAnimation(new SpriteSheet(Config.images + "/gokuRUSH.png", 65, 70), EnumAnimation.RUSH.isLoop(), 0, 2, 0, 1, new int[]{200, 200}));
+            animator.addCollision(EnumAnimation.RUSH, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(Config.jsonCollision + "/player/goku/gokuRUSH.json")));
 
             animator.addAnimation(EnumAnimation.RUN, this.loadAnimation(new SpriteSheet(Config.images + "/gokuRUN.png", 56, 70), EnumAnimation.RUN.isLoop(), 0, 4, 0, 1, new int[]{200, 200, 200, 200}));
             animator.addCollision(EnumAnimation.RUN, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(Config.jsonCollision + "/player/goku/gokuRUN.json")));
