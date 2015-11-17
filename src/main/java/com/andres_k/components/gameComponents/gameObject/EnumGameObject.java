@@ -5,56 +5,89 @@ package com.andres_k.components.gameComponents.gameObject;
  */
 public enum EnumGameObject {
     /* Admin */
-    NULL("null"),
-    UNBREAKABLE("unbreakable"),
+    NULL("NULL"),
+
+    // primary
+    UNBREAKABLE("UNBREAKABLE"),
+    SOLID("SOLID"),
+    FILMY("FILMY"),
 
     //collisions
-    ATTACK_BODY("attackBody"),
-    DEFENSE_BODY("defenseBody"),
-    BLOCK_BODY("blockBody"),
+    ATTACK_BODY("attackBody", "FILMY"),
+    DEFENSE_BODY("defenseBody", "SOLID"),
+    BLOCK_BODY("blockBody", "UNBREAKABLE"),
 
     //types
-    PLATFORM("platform"),
-    BORDER("border"),
+    ANIMATED("ANIMATED", "SOLID"),
+    DEADPAN("DEADPAN", "UNBREAKABLE"),
+    PLATFORM("PLATFORM", "DEADPAN"),
+    BORDER("BORDER", "DEADPAN"),
+    PLAYER("PLAYER", "ANIMATED"),
+    MONSTER("MONSTER", "ANIMATED"),
 
     //items
-    GROUND("ground"),
-    WALL("wall"),
-
-    //players
-    GOKU("goku");
-
+    GROUND("GROUND", "PLATFORM"),
+    WALL("WALL", "BORDER"),
+    GOKU("GOKU", "PLAYER");
 
 
     private final String value;
+    private final String type;
 
     EnumGameObject(String value) {
         this.value = value;
+        this.type = value;
+    }
+
+    EnumGameObject(String value, String type) {
+        this.value = value;
+        this.type = type;
     }
 
     public String getValue() {
         return value;
     }
 
+    public String getType() {
+        return this.type;
+    }
+
     public static EnumGameObject getEnumByValue(String value) {
-        EnumGameObject[] tanks = EnumGameObject.values();
-        int valuesNumber = tanks.length;
+        EnumGameObject[] enums = EnumGameObject.values();
+        int valuesNumber = enums.length;
         for (int i = 0; i < valuesNumber; i++) {
-            EnumGameObject type = tanks[i];
+            EnumGameObject type = enums[i];
             if (type.getValue().equals(value))
                 return type;
         }
         return NULL;
     }
 
-    public static EnumGameObject getEnemyEnum(EnumGameObject type){
-        EnumGameObject[] tanks = EnumGameObject.values();
-        int valuesNumber = tanks.length;
-        for (int i = 0; i < valuesNumber; i++) {
-            EnumGameObject enemy = tanks[i];
-            if (enemy.getValue().equals(type.getValue() + "Enemy"))
-                return enemy;
+    public static EnumGameObject getEnumByType(String value) {
+        EnumGameObject[] enums = EnumGameObject.values();
+        int enumsNumber = enums.length;
+        for (int i = 0; i < enumsNumber; i++) {
+            EnumGameObject type = enums[i];
+            if (value.equals(type.getValue())) {
+                return type;
+            }
         }
-        return type;
+        return NULL;
+    }
+
+    public boolean isIn(EnumGameObject dir) {
+        EnumGameObject current = EnumGameObject.getEnumByValue(this.value);
+
+        while (!current.getValue().equals(current.getType())) {
+            if (current == dir) {
+                return true;
+            } else {
+                current = EnumGameObject.getEnumByType(current.getType());
+            }
+        }
+        if (current == dir) {
+            return true;
+        }
+        return false;
     }
 }

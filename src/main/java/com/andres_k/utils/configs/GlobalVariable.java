@@ -11,8 +11,11 @@ public class GlobalVariable {
     public static int currentPlayer = 1;
 
     public static boolean drawCollision = true;
-    public static boolean showFps = false;
+    public static boolean showFps = true;
     public static boolean debug = false;
+
+    public static float speedTravel = 1f;
+    public static float speedJump = 2f;
 
     public static AppGameContainer appGameContainer;
 }

@@ -10,7 +10,7 @@ import java.util.HashMap;
  * Created by andres_k on 13/03/2015.
  */
 public class AnimatorGameData extends AnimatorData{
-    private HashMap<EnumGameObject, Animator> itemAnimator;
+    private HashMap<EnumGameObject, AnimatorController> itemAnimator;
 
 
     public AnimatorGameData() {
@@ -18,28 +18,28 @@ public class AnimatorGameData extends AnimatorData{
         this.itemAnimator = new HashMap<>();
     }
 
-    public void init() throws SlickException, JSONException {
+    public void init() throws SlickException, JSONException, NoSuchMethodException {
         if (this.needInit) {
             this.initItem();
             this.needInit = false;
         }
     }
 
-    public void initItem() throws SlickException, JSONException {
+    public void initItem() throws SlickException, JSONException, NoSuchMethodException {
         this.addItemAnimator(this.animatorFactory.getAnimator(EnumSprites.GOKU), EnumGameObject.GOKU);
         this.addItemAnimator(this.animatorFactory.getAnimator(EnumSprites.GROUND), EnumGameObject.GROUND);
         this.addItemAnimator(this.animatorFactory.getAnimator(EnumSprites.WALL), EnumGameObject.WALL);
     }
 
-    public void addItemAnimator(Animator roundAnimator, EnumGameObject type) {
-        this.itemAnimator.put(type, roundAnimator);
+    public void addItemAnimator(AnimatorController roundAnimatorController, EnumGameObject type) {
+        this.itemAnimator.put(type, roundAnimatorController);
     }
 
 
     // GETTERS
-    public Animator getAnimator(EnumGameObject index) throws SlickException {
+    public AnimatorController getAnimator(EnumGameObject index) throws SlickException {
         if (this.itemAnimator.containsKey(index)) {
-            return new Animator(this.itemAnimator.get(index));
+            return new AnimatorController(this.itemAnimator.get(index));
         }
         return null;
     }

@@ -36,17 +36,24 @@ public class MathTools {
         point.setV2(newPoint[1]);
     }
 
-    public static float getDistance(float p1, float p2){
+    public static float getAbsDistance(float p1, float p2){
         float distance = p1 - p2;
-        distance = (distance < 0 ? distance * (-1) : distance);
-        return distance;
+        return abs(distance);
+    }
+
+    public static float getDistance(float p1, float p2){
+        return p1 - p2;
+    }
+
+    public static float abs(float value) {
+        return (value > 0 ? value : value * -1);
     }
 
     public static Rectangle createRectangle(Pair<Float, Float> p1, Pair<Float, Float> p2){
         float x = p1.getV1();
         float y = p1.getV2();
-        float sizeX = getDistance(p1.getV1(), p2.getV1());
-        float sizeY = getDistance(p1.getV2(), p2.getV2());
+        float sizeX = getAbsDistance(p1.getV1(), p2.getV1());
+        float sizeY = getAbsDistance(p1.getV2(), p2.getV2());
 
         if (p2.getV1() - x < 0){
             x = p2.getV1();

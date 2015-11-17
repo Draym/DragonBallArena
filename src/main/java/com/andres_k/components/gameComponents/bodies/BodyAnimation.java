@@ -32,7 +32,7 @@ public class BodyAnimation {
         }
     }
 
-    public void draw(Graphics g, int currentFrame, float posX, float posY){
+    public void draw(Graphics g, int currentFrame, float posX, float posY) {
         if (GlobalVariable.drawCollision) {
             if (currentFrame < this.bodies.size()) {
                 this.bodies.get(currentFrame).draw(g, posX, posY);

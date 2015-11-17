@@ -1,9 +1,9 @@
 package com.andres_k.components.gameComponents.gameObject;
 
-import com.andres_k.components.gameComponents.animations.Animator;
+import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.animations.EnumAnimation;
 import com.andres_k.components.gameComponents.bodies.BodySprite;
-import com.andres_k.components.gameComponents.gameObject.actions.MovementController;
+import com.andres_k.components.gameComponents.gameObject.commands.MovementController;
 import com.andres_k.components.gameComponents.gameObject.collisions.CollisionController;
 import com.andres_k.components.gameComponents.gameObject.collisions.CollisionResult;
 import com.andres_k.components.gameComponents.gameObject.events.EventController;
@@ -17,7 +17,7 @@ import java.util.List;
  * Created by andres_k on 10/07/2015.
  */
 public abstract class GameObject {
-    protected Animator animator;
+    protected AnimatorController animatorController;
     protected CollisionController collision;
     protected EventController event;
     protected MovementController movement;
@@ -30,15 +30,15 @@ public abstract class GameObject {
     protected float currentLife;
     protected float damage;
 
-    protected GameObject(Animator animator, String id, EnumGameObject type, Pair<Float, Float> pos, float life, float damage, float speed, float weight) {
-        this.movement = new MovementController(pos, 1, speed, weight, false);
+    protected GameObject(AnimatorController animatorController, String id, EnumGameObject type, Pair<Float, Float> pos, float life, float damage, float speed, float weight) {
+        this.movement = new MovementController(pos, 8, speed, weight, false);
         this.collision = new CollisionController(this);
         this.event = new EventController();
 
         this.alive = true;
         this.type = type;
         this.id = id;
-        this.animator = animator;
+        this.animatorController = animatorController;
         this.maxLife = life;
         this.currentLife = life;
         this.damage = damage;
@@ -65,7 +65,7 @@ public abstract class GameObject {
 
     public void doMovement(CollisionResult collisionResult) {
         if (!this.isNeedDelete())
-            this.movement.nextPosition(!collisionResult.getCollisionX().getV1(), !collisionResult.getCollisionY().getV1());
+            this.movement.nextPosition(collisionResult);
     }
 
     public Pair<Float, Float> predictNextPosition() {
@@ -75,7 +75,7 @@ public abstract class GameObject {
     // CHECK COLLISION
 
     public CollisionResult checkCollision(List<GameObject> items, Pair<Float, Float> newPos) {
-        return this.collision.checkCollision(items, this.movement.getPositions(), newPos);
+        return this.collision.checkItemCollision(items, this.movement.getPositions(), newPos);
     }
 
     // TOOLS
@@ -84,11 +84,10 @@ public abstract class GameObject {
 //        ConsoleWrite.debug("\nCURRENT LIFE [" + this.type + "] vs [" + enemy.type + "]: " + this.currentLife + " - " + enemy.getDamage() + " = " + (this.currentLife - enemy.getDamage()));
         this.currentLife -= enemy.getDamage();
         if (this.currentLife <= 0) {
-            this.animator.setCurrent(EnumAnimation.EXPLODE);
+            this.animatorController.setCurrent(EnumAnimation.EXPLODE);
             this.alive = false;
-        } else {
-            this.animator.nextCurrentIndex();
         }
+        // changer l'anim pour recevoir degat
     }
 
     // GETTERS
@@ -110,15 +109,15 @@ public abstract class GameObject {
     }
 
     public BodySprite getBody() {
-        return this.animator.currentBodySprite();
+        return this.animatorController.currentBodySprite();
     }
 
     public float graphicalX() {
-        return this.movement.getX() - (this.animator.currentAnimation().getWidth() / 2);
+        return this.movement.getX() - (this.animatorController.currentAnimation().getWidth() / 2);
     }
 
     public float graphicalY() {
-        return this.movement.getY() - (this.animator.currentAnimation().getHeight() / 2);
+        return this.movement.getY() - (this.animatorController.currentAnimation().getHeight() / 2);
     }
 
     public float getPosX() {
@@ -130,9 +129,9 @@ public abstract class GameObject {
     }
 
     public boolean isNeedDelete() {
-        if (this.animator == null)
+        if (this.animatorController == null)
             return true;
-        return this.animator.isDeleted();
+        return this.animatorController.isDeleted();
     }
 
     public String getId() {
@@ -147,8 +146,8 @@ public abstract class GameObject {
         return this.alive;
     }
 
-    public Animator getAnimator() {
-        return this.animator;
+    public AnimatorController getAnimatorController() {
+        return this.animatorController;
     }
 
     public MovementController getMovement() {

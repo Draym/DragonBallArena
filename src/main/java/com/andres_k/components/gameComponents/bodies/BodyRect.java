@@ -10,11 +10,18 @@ import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 
 /**
  * Created by andres_k on 09/07/2015.
  */
 public class BodyRect {
+    private UUID id;
+    private List<UUID> lastCollisions;
+
     private EnumGameObject type;
     private Pair<Float, Float> positions;
     private Pair<Float, Float> sizes;
@@ -23,6 +30,8 @@ public class BodyRect {
         this.type = EnumGameObject.getEnumByValue(object.getString("type"));
         this.positions = new Pair<>((float) object.getDouble("posX") - decalX, (float) object.getDouble("posY") - decalY);
         this.sizes = new Pair<>((float) object.getDouble("sizeX"), (float) object.getDouble("sizeY"));
+        this.id = UUID.randomUUID();
+        this.lastCollisions = new ArrayList<>();
     }
 
     public void draw(Graphics g, float posX, float posY) {
@@ -36,8 +45,25 @@ public class BodyRect {
         g.draw(this.getBody(posX, posY));
     }
 
+    public void addCollision(UUID id) {
+        if (!this.lastCollisions.contains(id))
+            this.lastCollisions.add(id);
+    }
+
+    public void deleteCollision(UUID id) {
+        if (this.lastCollisions.contains(id))
+            this.lastCollisions.remove(id);
+    }
+
+    public boolean containsCollision(UUID id) {
+        return this.lastCollisions.contains(id);
+    }
 
     // GETTERS
+
+    public UUID getId() {
+        return this.id;
+    }
 
     public Shape getBody(float posX, float posY) {
         if (this.sizes.getV2() < 0) {

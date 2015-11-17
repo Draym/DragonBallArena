@@ -44,4 +44,20 @@ public class Pair<T1, T2> extends Object {
     public String toString(){
         return new String("v1:" + this.getV1() + " v2:"+this.getV2());
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object instanceof Pair) {
+            if (this.getV1().equals(((Pair) object).getV1())
+                    && this.getV2().equals(((Pair) object).getV2())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.v1.hashCode() + this.v2.hashCode();
+    }
 }

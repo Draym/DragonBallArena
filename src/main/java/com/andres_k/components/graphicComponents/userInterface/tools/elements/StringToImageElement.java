@@ -1,6 +1,6 @@
 package com.andres_k.components.graphicComponents.userInterface.tools.elements;
 
-import com.andres_k.components.gameComponents.animations.Animator;
+import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.taskComponent.EnumTask;
@@ -18,23 +18,23 @@ import java.util.List;
  */
 public class StringToImageElement extends Element {
     private String alphabet[] = {"0123456789", "abcdefghijklmnopqrstuvwxyz- "};
-    private Animator animator;
+    private AnimatorController animatorController;
     private List<Integer> images;
     private float sizeXMAX;
     private String value;
 
-    public StringToImageElement(ColorRect body, Animator animator, String value, String id, PositionInBody position) {
+    public StringToImageElement(ColorRect body, AnimatorController animatorController, String value, String id, PositionInBody position) {
         this.init(body, id, position, EnumOverlayElement.IMAGE);
-        this.animator = animator;
+        this.animatorController = animatorController;
         this.sizeXMAX = body.getSizeX();
         this.images = new ArrayList<>();
         this.value = value.toLowerCase();
         this.constructImages();
     }
 
-    public StringToImageElement(Animator animator, String value, String id, PositionInBody position) {
+    public StringToImageElement(AnimatorController animatorController, String value, String id, PositionInBody position) {
         this.init(null, id, position, EnumOverlayElement.IMAGE);
-        this.animator = animator;
+        this.animatorController = animatorController;
         this.sizeXMAX = 0;
         this.images = new ArrayList<>();
         this.value = value.toLowerCase();
@@ -66,7 +66,7 @@ public class StringToImageElement extends Element {
         int addY;
         int addX = 25;
         for (int i = 0; i < this.images.size(); ++i) {
-            Animation tmp = this.animator.getAnimation(this.animator.getCurrentAnimation(), this.images.get(i));
+            Animation tmp = this.animatorController.getAnimation(this.animatorController.getCurrentAnimation(), this.images.get(i));
             if (tmp != null) {
                 if (this.images.get(i) == this.alphabet[1].indexOf("-") + 10) {
                     addY = 10;
@@ -85,7 +85,7 @@ public class StringToImageElement extends Element {
         if (this.body != null && this.body.getMinX() != -1) {
             this.body.draw(g);
 
-            if (this.animator != null && this.animator.isPrintable()) {
+            if (this.animatorController != null && this.animatorController.isPrintable()) {
                 Pair<Float, Float> position = this.getChoicePosition(this.body);
                 this.drawImages(g, position.getV1(), position.getV2());
             }
@@ -99,7 +99,7 @@ public class StringToImageElement extends Element {
                 body.setColor(this.body.getColor());
             }
             body.draw(g);
-            if (this.animator != null && this.animator.isPrintable()) {
+            if (this.animatorController != null && this.animatorController.isPrintable()) {
                 Pair<Float, Float> position = this.getChoicePosition(body);
                 this.drawImages(g, position.getV1(), position.getV2());
             }
@@ -164,9 +164,9 @@ public class StringToImageElement extends Element {
 
     @Override
     public void update() {
-        if (this.animator != null) {
-            if (this.animator.needUpdate() && this.animator.isActivated()) {
-                this.animator.updateAnimator(true, true);
+        if (this.animatorController != null) {
+            if (this.animatorController.needUpdate() && this.animatorController.isActivated()) {
+                this.animatorController.updateAnimator(true, true);
             }
         }
     }
@@ -174,7 +174,7 @@ public class StringToImageElement extends Element {
     @Override
     public boolean replace(Element element) throws SlickException {
         if (element.getType() == EnumOverlayElement.IMAGE) {
-            this.animator = new Animator(((StringToImageElement) element).animator);
+            this.animatorController = new AnimatorController(((StringToImageElement) element).animatorController);
             this.images.clear();
             this.images.addAll(((StringToImageElement) element).images);
             this.constructImages();
@@ -193,8 +193,8 @@ public class StringToImageElement extends Element {
                 this.stop();
             }
         } else if (task instanceof Long) {
-            this.animator.updateAnimator(false, false);
-            this.animator.startTimer((Long) task);
+            this.animatorController.updateAnimator(false, false);
+            this.animatorController.startTimer((Long) task);
 
         } else if (task instanceof Tuple && ((Tuple) task).getV1() instanceof EnumTask) {
             EnumTask order = (EnumTask) ((Tuple) task).getV1();
@@ -202,7 +202,7 @@ public class StringToImageElement extends Element {
             Object value = ((Tuple) task).getV3();
 
             if (order == EnumTask.SETTER) {
-                if (target.equals("value") && value instanceof String && this.animator != null) {
+                if (target.equals("value") && value instanceof String && this.animatorController != null) {
                     this.value = ((String) value).toLowerCase();
                     this.constructImages();
                 }
@@ -229,15 +229,15 @@ public class StringToImageElement extends Element {
 
     @Override
     public String toString() {
-        return "MultipleImageType: " + (this.animator != null ? this.animator.getCurrentAnimation() : "");
+        return "MultipleImageType: " + (this.animatorController != null ? this.animatorController.getCurrentAnimation() : "");
     }
 
     private void start() {
-        this.animator.restart();
+        this.animatorController.restart();
     }
 
     private void stop() {
-        this.animator.restart();
+        this.animatorController.restart();
     }
 
     //GETTERS
@@ -248,7 +248,7 @@ public class StringToImageElement extends Element {
 
     @Override
     public boolean isEmpty() {
-        if (this.animator == null || this.animator.isDeleted()) {
+        if (this.animatorController == null || this.animatorController.isDeleted()) {
             return true;
         }
         return false;
@@ -256,14 +256,14 @@ public class StringToImageElement extends Element {
 
     @Override
     public boolean isNull() {
-        return (this.animator == null);
+        return (this.animatorController == null);
     }
 
     @Override
     public float getAbsoluteWidth() {
         float size = 0;
         for (int i = 0; i < this.images.size(); ++i) {
-            Animation tmp = this.animator.getAnimation(this.animator.getCurrentAnimation(), this.images.get(i));
+            Animation tmp = this.animatorController.getAnimation(this.animatorController.getCurrentAnimation(), this.images.get(i));
             if (tmp != null) {
                 size += tmp.getWidth() - 4;
             } else {
@@ -277,7 +277,7 @@ public class StringToImageElement extends Element {
     public float getAbsoluteHeight() {
         float size = 0;
         for (int i = 0; i < this.images.size(); ++i) {
-            Animation tmp = this.animator.getAnimation(this.animator.getCurrentAnimation(), this.images.get(i));
+            Animation tmp = this.animatorController.getAnimation(this.animatorController.getCurrentAnimation(), this.images.get(i));
             if (tmp != null) {
                 if (size < tmp.getHeight())
                     size = tmp.getHeight();

@@ -5,7 +5,7 @@ import com.andres_k.components.graphicComponents.userInterface.tools.elements.El
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.StringElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.StringTimer;
-import com.andres_k.components.networkComponents.messages.MessageRoundScore;
+import com.andres_k.components.networkComponents.networkSend.messages.MessageRoundScore;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Input;

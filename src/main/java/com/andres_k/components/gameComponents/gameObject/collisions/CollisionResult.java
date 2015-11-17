@@ -1,57 +1,153 @@
 package com.andres_k.components.gameComponents.gameObject.collisions;
 
-import com.andres_k.utils.stockage.Pair;
+import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
+import com.andres_k.utils.tools.ContainerTools;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by andres_k on 21/10/2015.
  */
 public class CollisionResult {
-    private Pair<Boolean, EnumDirection> collisionX;
-    private Pair<Boolean, EnumDirection> collisionY;
+    private List<CollisionItem> collisionsX;
+    private List<CollisionItem> collisionsY;
+    private boolean onEarth;
 
     public CollisionResult() {
-        this.collisionX = new Pair<>(false, EnumDirection.NONE);
-        this.collisionY = new Pair<>(false, EnumDirection.NONE);
-    }
-
-    // FUNCTIONS
-
-    public boolean hasCollision() {
-        if (this.collisionX.getV1() || this.collisionY.getV1())
-            return true;
-        return false;
-    }
-
-    public void copy(CollisionResult collision) {
-        this.collisionX.copy(collision.getCollisionX());
-        this.collisionY.copy(collision.getCollisionY());
+        this.collisionsX = new ArrayList<>();
+        this.collisionsY = new ArrayList<>();
+        this.onEarth = false;
     }
 
     // GETTERS
-    public Pair<Boolean, EnumDirection> getCollisionX() {
-        return this.collisionX;
+    public List<CollisionItem> getCollisionsX() {
+        return this.collisionsX;
     }
 
-    public Pair<Boolean, EnumDirection> getCollisionY() {
-        return this.collisionY;
+    public List<CollisionItem> getCollisionsY() {
+        return this.collisionsY;
+    }
+
+    public boolean hasCollision() {
+        return (hasCollisionX() || hasCollisionY());
+    }
+
+    public boolean hasCollisionXWith(EnumGameObject type) {
+        for (CollisionItem item : this.collisionsX) {
+            if (item.isCollision() && item.getCollisionType() == type)
+                return true;
+        }
+        return false;
+    }
+
+    public boolean hasCollisionYWith(EnumGameObject type) {
+        for (CollisionItem item : this.collisionsY) {
+            if (item.isCollision() && item.getCollisionType() == type)
+                return true;
+        }
+        return false;
+    }
+
+    public boolean hasCollisionX() {
+        for (CollisionItem item : this.collisionsX) {
+            if (item.isCollision())
+                return true;
+        }
+        return false;
+    }
+
+    public boolean hasCollisionY() {
+        for (CollisionItem item : this.collisionsY) {
+            if (item.isCollision())
+                return true;
+        }
+        return false;
+    }
+
+    public CollisionItem getLowCollisionX() {
+        CollisionItem result = null;
+
+        for (CollisionItem tmp : this.collisionsX) {
+            if (result == null)
+                result = tmp;
+            else if (result.getCollisionDistance() > tmp.getCollisionDistance())
+                result = tmp;
+        }
+        return result;
+    }
+
+    public CollisionItem getLowCollisionX(EnumGameObject except[]) {
+        CollisionItem result = null;
+
+        for (CollisionItem tmp : this.collisionsX) {
+            if (!ContainerTools.arrayContains(except, tmp.getCollisionType())) {
+                if (result == null)
+                    result = tmp;
+                else if (result.getCollisionDistance() > tmp.getCollisionDistance())
+                    result = tmp;
+            }
+        }
+        return result;
+    }
+
+    public CollisionItem getLowCollisionY() {
+        CollisionItem result = null;
+
+        for (CollisionItem tmp : this.collisionsY) {
+            if (result == null)
+                result = tmp;
+            else if (result.getCollisionDistance() > tmp.getCollisionDistance())
+                result = tmp;
+        }
+        return result;
+    }
+
+    public CollisionItem getLowCollisionY(EnumGameObject except[]) {
+        CollisionItem result = null;
+
+        for (CollisionItem tmp : this.collisionsY) {
+            if (!ContainerTools.arrayContains(except, tmp.getCollisionType())) {
+                if (result == null)
+                    result = tmp;
+                else if (result.getCollisionDistance() > tmp.getCollisionDistance())
+                    result = tmp;
+            }
+        }
+        return result;
+    }
+
+    public boolean isOnEarth() {
+        return this.onEarth;
     }
 
     // SETTERS
-    public void setCollisionX(boolean collision, EnumDirection direction) {
-        this.collisionX.setV1(collision);
-        this.collisionX.setV2(direction);
+    public void setOnEarth(boolean value) {
+        this.onEarth = value;
     }
 
-    public void setCollisionX(Pair<Boolean, EnumDirection> collision) {
-        this.collisionX.copy(collision);
+    public void addCollisionX(boolean collision, EnumGameObject type, EnumDirection direction, float distance) {
+        this.collisionsX.add(new CollisionItem(collision, type, direction, distance));
     }
 
-    public void setCollisionY(boolean collision, EnumDirection direction) {
-        this.collisionY.setV1(collision);
-        this.collisionY.setV2(direction);
+    public void addCollisionX(CollisionItem collision) {
+        this.collisionsX.add(collision);
     }
 
-    public void setCollisionY(Pair<Boolean, EnumDirection> collision) {
-        this.collisionY.copy(collision);
+    public void addCollisionX(List<CollisionItem> collisions) {
+        this.collisionsX.addAll(collisions.stream().filter(CollisionItem::isCollision).collect(Collectors.toList()));
+    }
+
+    public void addCollisionY(boolean collision, EnumGameObject type, EnumDirection direction, float distance) {
+        this.collisionsY.add(new CollisionItem(collision, type, direction, distance));
+    }
+
+    public void addCollisionY(CollisionItem collision) {
+        this.collisionsY.add(collision);
+    }
+
+    public void addCollisionY(List<CollisionItem> collisions) {
+        this.collisionsY.addAll(collisions.stream().filter(CollisionItem::isCollision).collect(Collectors.toList()));
     }
 }

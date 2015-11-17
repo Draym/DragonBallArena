@@ -5,7 +5,7 @@ import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverl
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.tools.listElements.StringListElement;
-import com.andres_k.components.networkComponents.messages.MessageRoundKill;
+import com.andres_k.components.networkComponents.networkSend.messages.MessageRoundKill;
 import com.andres_k.utils.configs.CurrentUser;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;

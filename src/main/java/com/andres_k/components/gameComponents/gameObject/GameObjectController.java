@@ -1,9 +1,8 @@
 package com.andres_k.components.gameComponents.gameObject;
 
 import com.andres_k.components.gameComponents.animations.AnimatorGameData;
-import com.andres_k.components.gameComponents.gameObject.collisions.CollisionResult;
-import com.andres_k.components.gameComponents.gameObject.collisions.EnumDirection;
 import com.andres_k.components.gameComponents.controllers.ScoreData;
+import com.andres_k.components.gameComponents.gameObject.collisions.CollisionResult;
 import com.andres_k.components.gameComponents.gameObject.objects.Player;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
@@ -31,9 +30,6 @@ public class GameObjectController extends Observable {
 
     private AnimatorGameData animatorGameData;
 
-    private long updateIncrement;
-    private long objectiveIncrement;
-
     public GameObjectController() {
         this.obstacles = new ArrayList<>();
         this.players = new ArrayList<>();
@@ -47,7 +43,8 @@ public class GameObjectController extends Observable {
 
     public void initWorld() throws SlickException {
         this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item1:ground", 640, 640));
-        this.obstacles.add(GameObjectFactory.create(EnumGameObject.BORDER, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item2:sky", 640, -1));
+       // this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item5:ground", 300, 300));
+        this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item2:sky", 640, -1));
         this.obstacles.add(GameObjectFactory.create(EnumGameObject.BORDER, this.animatorGameData.getAnimator(EnumGameObject.WALL), "item3:leftWall", 0, 340));
         this.obstacles.add(GameObjectFactory.create(EnumGameObject.BORDER, this.animatorGameData.getAnimator(EnumGameObject.WALL), "item4:rightWall", 1280, 340));
     }
@@ -56,8 +53,6 @@ public class GameObjectController extends Observable {
 
     public void enter() throws SlickException {
         this.initWorld();
-        this.updateIncrement = 0;
-        this.objectiveIncrement = 20;
     }
 
     public void leave() {
@@ -81,9 +76,8 @@ public class GameObjectController extends Observable {
     }
 
     private void doMovement(GameObject item) {
-        Pair<Boolean, EnumDirection> result;
-
-        item.doMovement(this.checkCollision(item, EnumTask.MOVE));
+        if (item.getType().isIn(EnumGameObject.ANIMATED))
+            item.doMovement(this.checkCollision(item, EnumTask.MOVE));
     }
 
     public void update(boolean running) throws SlickException {
@@ -105,9 +99,6 @@ public class GameObjectController extends Observable {
             } else {
                 this.doMovement(this.obstacles.get(i));
             }
-        }
-        if (running) {
-            ++this.updateIncrement;
         }
     }
 
@@ -144,12 +135,12 @@ public class GameObjectController extends Observable {
 
     public void changeGameState(boolean running) {
         for (GameObject object : this.players) {
-            if (object.getAnimator() != null && object.getAnimator().currentAnimation() != null)
-                object.getAnimator().currentAnimation().setAutoUpdate(running);
+            if (object.getAnimatorController() != null && object.getAnimatorController().currentAnimation() != null)
+                object.getAnimatorController().currentAnimation().setAutoUpdate(running);
         }
         for (GameObject object : this.obstacles) {
-            if (object.getAnimator() != null && object.getAnimator().currentAnimation() != null)
-                object.getAnimator().currentAnimation().setAutoUpdate(running);
+            if (object.getAnimatorController() != null && object.getAnimatorController().currentAnimation() != null)
+                object.getAnimatorController().currentAnimation().setAutoUpdate(running);
         }
     }
 
@@ -179,7 +170,7 @@ public class GameObjectController extends Observable {
                 newPos = new Pair<>(current.getPosX(), current.getPosY());
             else
                 newPos = current.predictNextPosition();
-            result.copy(current.checkCollision(items, newPos));
+            result = current.checkCollision(items, newPos);
         }
         return result;
     }
@@ -209,6 +200,10 @@ public class GameObjectController extends Observable {
             }
         }
         return null;
+    }
+
+    public boolean isTheEndOfTheGame() {
+        return (this.getNumberPlayers() == 0);
     }
 
     public int getNumberPlayers() {

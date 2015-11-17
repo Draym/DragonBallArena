@@ -1,298 +1,93 @@
 package com.andres_k.components.gameComponents.animations;
 
 import com.andres_k.components.gameComponents.bodies.BodyAnimation;
-import com.andres_k.components.gameComponents.bodies.BodyRect;
-import com.andres_k.components.gameComponents.bodies.BodySprite;
-import com.andres_k.components.gameComponents.gameObject.collisions.EnumDirection;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.ActivatedTimer;
+import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.utils.stockage.Pair;
-import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.SlickException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * Created by andres_k on 13/03/2015.
+ * Created by andres_k on 17/11/2015.
  */
-public class Animator implements Observer {
-
-    // collisions
-    private HashMap<EnumAnimation, List<BodyAnimation>> collisions;
-
-    // animations
-    private HashMap<EnumAnimation, List<Animation>> animations;
-    private ActivatedTimer activatedTimer;
-    private EnumAnimation current;
-    private EnumDirection direction;
+public class Animator {
+    private List<Animation> animations;
+    private List<BodyAnimation> bodies;
+    private AnimatorConfig config;
     private Color filter;
 
-    private int index;
-    private boolean printable;
-    private boolean deleted;
-    private boolean needUpdate;
-
     public Animator() {
-        this.animations = new HashMap<>();
-        this.collisions = new HashMap<>();
-        this.current = EnumAnimation.IDLE;
-        this.printable = true;
-        this.deleted = false;
-        this.needUpdate = false;
-        this.index = 0;
+        this.animations = new ArrayList<>();
+        this.bodies = new ArrayList<>();
         this.filter = new Color(1f, 1f, 1f);
-        this.activatedTimer = new ActivatedTimer(true);
-        this.direction = EnumDirection.RIGHT;
+        this.config = null;
     }
 
-    public Animator(Animator animator) throws SlickException {
-        this.animations = new HashMap<>();
-        if (animator == null) {
-            throw new SlickException("image not loaded");
-        }
-        for (Map.Entry<EnumAnimation, List<Animation>> entry : animator.animations.entrySet()) {
-            EnumAnimation type = entry.getKey();
-            List<Animation> values = entry.getValue();
-            List<Animation> newValues = new ArrayList<>();
-            for (Animation value : values) {
-                newValues.add(value.copy());
-            }
-            this.addListAnimation(type, newValues);
-        }
+    public Animator(Animator animator) {
+        this.animations = new ArrayList<>();
+        this.bodies = new ArrayList<>();
 
-        this.collisions = new HashMap<>();
-        this.collisions.putAll(animator.collisions);
-
-        this.current = animator.current;
-        this.index = animator.index;
-        this.printable = animator.printable;
-        this.deleted = animator.deleted;
-        this.needUpdate = animator.needUpdate;
+        this.animations.addAll(animator.animations.stream().map(Animation::copy).collect(Collectors.toList()));
+        this.bodies.addAll(animator.bodies);
         this.filter = animator.filter;
-        this.activatedTimer = new ActivatedTimer(animator.activatedTimer);
-        this.direction = animator.direction;
+        this.config = animator.config;
     }
 
-    // UPDATE
-    @Override
-    public void update(Observable o, Object arg) {
-        if (arg instanceof EnumAnimation) {
-            this.setCurrent((EnumAnimation) arg);
-        }
+    // METHODS
+
+    public void doAction(GameObject object, int frame) {
+        if (config != null)
+            this.config.doAction(object, frame);
+    }
+
+    public void restart() {
+        this.animations.forEach(org.newdawn.slick.Animation::restart);
+        if (config != null)
+            this.config.reset();
     }
 
     // ADD FUNCTIONS
-    public void addAnimation(EnumAnimation type, Animation animation) {
-        if (animation.getFrameCount() == 1) {
-            animation.setAutoUpdate(false);
-            animation.setLooping(false);
-        }
-
-        if (this.animations.containsKey(type)) {
-            this.animations.get(type).add(animation.copy());
-        } else {
-            List<Animation> values = new ArrayList<>();
-            values.add(animation.copy());
-            this.animations.put(type, values);
-        }
+    public void addAnimation(Animation animation) {
+        this.animations.add(animation.copy());
     }
 
-    public void addListAnimation(EnumAnimation type, List<Animation> animation) {
-        for (Animation anAnimation : animation) {
-            this.addAnimation(type, anAnimation);
-        }
+    public void addCollision(BodyAnimation body) {
+        this.bodies.add(body);
     }
 
-    public void addCollision(EnumAnimation type, String jsonValue) throws JSONException {
-        if (this.collisions.containsKey(type)) {
-            this.collisions.get(type).add(new BodyAnimation(jsonValue));
-        } else {
-            List<BodyAnimation> values = new ArrayList<>();
-            values.add(new BodyAnimation(jsonValue));
-            this.collisions.put(type, values);
-        }
-    }
-
-    // CHANGE INDEX
-    public void nextCurrentIndex() {
-        if (this.canSetIndex(this.index + 1)) {
-            this.setIndex(this.index + 1);
-        }
-    }
-
-    // CHANGE ANIMATION
-    public void restart() {
-        for (Map.Entry<EnumAnimation, List<Animation>> entry : this.animations.entrySet()) {
-            entry.getValue().forEach(org.newdawn.slick.Animation::restart);
-        }
-        this.setCurrent(EnumAnimation.IDLE);
-        this.printable = true;
-        this.deleted = false;
-    }
-
-    public void restartAnimation(EnumAnimation animation) {
-        if (this.animations.containsKey(animation)) {
-            this.animations.get(animation).forEach(org.newdawn.slick.Animation::restart);
-        }
-    }
-
-    public void startTimer(long delay) {
-        this.activatedTimer.startTimer(delay);
-        this.needUpdate = true;
-    }
-
-    public void updateAnimator(boolean setPrint, boolean setActivate) {
-        this.setPrintable(setPrint);
-        this.activatedTimer.setActivated(setActivate);
+    public void addConfig(AnimatorConfig config) {
+        this.config = config;
     }
 
     // GETTERS
 
-    public int currentFrame() {
-        try {
-            return this.currentAnimation().getFrame();
-        } catch (Exception e) {
-            return 0;
-        }
-    }
-
-    public Animation currentAnimation() {
-        try {
-            return this.animations.get(this.current).get(this.index);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    public List<BodyRect> currentCollisions() {
-        int currentFrame = this.currentFrame();
-        if (this.collisions.containsKey(this.current)) {
-            return this.collisions.get(this.current).get(this.index).getCurrentCollisions(currentFrame);
+    public Animation getAnimation(int index) {
+        if (index >= 0 && index < this.animations.size()) {
+            return this.animations.get(index);
         }
         return null;
     }
 
-    public BodyAnimation currentBodyAnimation() {
-        if (this.collisions.containsKey(this.current)) {
-            return this.collisions.get(this.current).get(this.index);
-        }
-        return null;
+    public AnimatorConfig getConfig() {
+        return this.config;
     }
 
-    public BodySprite currentBodySprite() {
-        if (this.collisions.containsKey(this.current)) {
-            return currentBodyAnimation().getCurrentBody(this.currentFrame());
-        }
-        return null;
+    public BodyAnimation getBodyAnimation(int index) {
+        return this.bodies.get(index);
     }
 
-    public Pair<Float, Float> currentSizeAnimation() {
-        return new Pair<>((float) this.animations.get(this.current).get(this.index).getWidth(), (float) this.animations.get(this.current).get(this.index).getHeight());
-    }
-
-    public boolean isPrintable() {
-        return this.printable;
-    }
-
-    public boolean isDeleted() {
-        if (this.current == EnumAnimation.EXPLODE && this.currentAnimation().isStopped()) {
-            this.deleted = true;
-        }
-        return this.deleted;
-    }
-
-    public int getCurrentFrame() {
-        try {
-            return this.animations.get(this.current).get(this.index).getFrame();
-        } catch (Exception e) {
-            return -1;
-        }
-    }
-
-    public EnumAnimation getCurrentAnimation() {
-        return this.current;
-    }
-
-    public int getIndex() {
-        return this.index;
+    public Pair<EnumAnimation, Integer> getNext() {
+        return this.config.getNext();
     }
 
     public Color getFilter() {
         return this.filter;
     }
 
-    public Animation getAnimation(EnumAnimation type, int index) {
-        if (this.animations.containsKey(type)) {
-            if (index >= 0 && index < this.animations.get(type).size()) {
-                return this.animations.get(type).get(index);
-            }
-        }
-        return null;
-    }
-
-    public boolean canSetIndex(int index) {
-        if (index < this.animations.get(this.current).size()) {
-            return true;
-        }
-        return false;
-    }
-
-    public boolean needUpdate() {
-        return this.needUpdate;
-    }
-
-    public boolean isActivated() {
-        return this.activatedTimer.isActivated();
-    }
-
-    public EnumDirection getDirection() {
-        return this.direction;
-    }
-
-    public boolean canSwitchCurrent() {
-        if (this.currentAnimation().isStopped() || EnumAnimation.checkLoop(this.current)) {
-            return true;
-        }
-        return false;
-    }
-
-    // SETTERS
-
-    public void setPrintable(boolean printable) {
-        this.printable = printable;
-    }
-
-    public void setCurrent(EnumAnimation current) {
-        if (this.animations.containsKey(current)) {
-            if (this.currentAnimation().isStopped() || EnumAnimation.checkLoop(this.current)) {
-                this.current = current;
-                this.index = 0;
-            }
-        } else if (current == EnumAnimation.EXPLODE) {
-            this.setDeleted(true);
-        }
-    }
-
-    public void setFilter(Color filter) {
-        this.filter = filter;
-    }
-
-    public void setIndex(int index) {
-        if (index < this.animations.get(this.current).size()) {
-            this.index = index;
-        }
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    public void setNeedUpdate(boolean value) {
-        this.needUpdate = value;
-    }
-
-    public void setDirection(EnumDirection direction) {
-        this.direction = direction;
+    public boolean canSetIndex(int value) {
+        return value >= 0 && value < this.animations.size();
     }
 }

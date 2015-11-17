@@ -22,7 +22,6 @@ public class Tuple<T1, T2, T3> {
         }
     }
 
-
     public T1 getV1() {
         return this.v1;
     }
@@ -47,9 +46,32 @@ public class Tuple<T1, T2, T3> {
         this.v3 = value;
     }
 
+    public void copy(Tuple<T1, T2, T3> values) {
+        this.v1 = values.getV1();
+        this.v2 = values.getV2();
+        this.v3 = values.getV3();
+    }
+
     @Override
     public String toString() {
         return "v1:" + this.getV1() + " v2:" + this.getV2() + " v3:" + this.getV3();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object instanceof Tuple) {
+            if (this.getV1().equals(((Tuple) object).getV1())
+                    && this.getV2().equals(((Tuple) object).getV2())
+                    && this.getV3().equals(((Tuple) object).getV3())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.v1.hashCode() + this.v2.hashCode() + this.v3.hashCode();
     }
 
 }

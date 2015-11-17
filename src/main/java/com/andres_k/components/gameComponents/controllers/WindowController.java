@@ -21,7 +21,7 @@ public abstract class WindowController extends Observable implements Observer {
 
     public abstract void leave();
 
-    public abstract void init() throws SlickException, JSONException;
+    public abstract void init() throws SlickException, JSONException, NoSuchMethodException;
 
     public abstract void renderWindow(Graphics g);
 

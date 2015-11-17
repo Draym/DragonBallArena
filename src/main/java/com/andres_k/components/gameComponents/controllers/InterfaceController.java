@@ -2,7 +2,7 @@ package com.andres_k.components.gameComponents.controllers;
 
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
-import com.andres_k.components.networkComponents.messages.MessageGameNew;
+import com.andres_k.components.networkComponents.networkSend.messages.MessageGameNew;
 import com.andres_k.components.taskComponent.EnumTargetTask;
 import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.utils.configs.GlobalVariable;

@@ -11,7 +11,7 @@ import com.andres_k.components.graphicComponents.userInterface.tools.items.Color
 import com.andres_k.components.graphicComponents.userInterface.tools.items.StringTimer;
 import com.andres_k.components.graphicComponents.userInterface.tools.listElements.ListElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.listElements.StringListElement;
-import com.andres_k.components.networkComponents.messages.MessageOverlayChat;
+import com.andres_k.components.networkComponents.networkSend.messages.MessageOverlayChat;
 import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.configs.CurrentUser;
 import com.andres_k.utils.stockage.Pair;

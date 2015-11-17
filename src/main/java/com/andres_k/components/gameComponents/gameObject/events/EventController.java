@@ -1,6 +1,7 @@
 package com.andres_k.components.gameComponents.gameObject.events;
 
 import com.andres_k.components.graphicComponents.input.EnumInput;
+import com.andres_k.utils.stockage.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,10 +14,12 @@ import java.util.Map;
 public class EventController {
     private HashMap<EnumInput, Boolean> activatedEvent;
     private List<EnumInput> eventHistory;
+    private List<Pair<EnumInput, EnumInput>> eventStack;
 
     public EventController() {
         this.activatedEvent = new HashMap<>();
         this.eventHistory = new ArrayList<>();
+        this.eventStack = new ArrayList<>();
     }
 
     // SETTERS
@@ -27,10 +30,14 @@ public class EventController {
     public void setActivated(EnumInput event, boolean value) {
         if (this.activatedEvent.containsKey(event)) {
             this.activatedEvent.put(event, value);
-            if (value)
+            if (value) {
                 this.eventHistory.add(0, event);
-            else if (this.eventHistory.lastIndexOf(event) != -1)
-                this.eventHistory.remove(this.eventHistory.lastIndexOf(event));
+                this.eventStack.add(new Pair<>(EnumInput.PRESSED, event));
+            } else {
+                if (this.eventHistory.lastIndexOf(event) != -1)
+                    this.eventHistory.remove(this.eventHistory.lastIndexOf(event));
+                this.eventStack.add(new Pair<>(EnumInput.RELEASED, event));
+            }
         }
     }
 
@@ -72,5 +79,9 @@ public class EventController {
             return this.eventHistory.get(0);
         else
             return EnumInput.NOTHING;
+    }
+
+    public List<Pair<EnumInput, EnumInput>> getEventStack() {
+        return this.eventStack;
     }
 }

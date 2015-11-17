@@ -4,15 +4,28 @@ package com.andres_k.components.graphicComponents.input;
  * Created by andres_k on 16/03/2015.
  */
 public enum EnumInput {
+    // TYPE
     NOTHING("NOTHING"),
     RELEASED("RELEASED"), PRESSED("PRESSED"),
     KEY_RELEASED("KEY"+RELEASED.value), KEY_PRESSED("KEY" + PRESSED.value),
     MOUSE_RELEASED("MOUSE"+RELEASED.value), MOUSE_PRESSED("MOUSE" + PRESSED.value),
 
 
+    // MENU
     OVERLAY_1("OVERLAY_1"), OVERLAY_2("OVERLAY_2"),
+
+    // MOVES
     MOVE_UP("MOVE_UP"), MOVE_DOWN("MOVE_DOWN"),
     MOVE_LEFT("MOVE_LEFT"), MOVE_RIGHT("MOVE_RIGHT"),
+
+    // ACTIONS
+    RUSH("RUSH"),
+    ATTACK_A("ATTACK_A"),
+    ATTACK_B("ATTACK_B"),
+    ATTACK_C("ATTACK_C"),
+    ATTACK_D("ATTACK_D"),
+
+    // PLAYERS
     MOVE_UP_P1(0, MOVE_UP.value + "_P1"), MOVE_DOWN_P1(0, MOVE_DOWN.value + "_P1"),
     MOVE_LEFT_P1(0, MOVE_LEFT.value + "_P1"), MOVE_RIGHT_P1(0, MOVE_RIGHT.value + "_P1"),
     MOVE_UP_P2(1, MOVE_UP.value + "_P2"), MOVE_DOWN_P2(1, MOVE_DOWN.value + "_P2"),

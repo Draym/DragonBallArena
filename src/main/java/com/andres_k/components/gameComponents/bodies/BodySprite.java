@@ -10,11 +10,13 @@ import org.newdawn.slick.geom.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by andres_k on 09/07/2015.
  */
 public class BodySprite {
+    private UUID id;
     private List<BodyRect> bodies;
     private Pair<Float, Float> sizes;
     private Pair<Float, Float> center;
@@ -25,9 +27,10 @@ public class BodySprite {
         this.sizes = new Pair<>((float) object.getDouble("sizeX"), (float) object.getDouble("sizeY"));
         JSONArray array = object.getJSONArray("rectangles");
 
-        for (int i = 0; i < array.length(); ++i){
+        for (int i = 0; i < array.length(); ++i) {
             this.bodies.add(new BodyRect(array.getJSONObject(i), this.center.getV1(), this.center.getV2()));
         }
+        this.id = UUID.randomUUID();
     }
 
     public void draw(Graphics g, float posX, float posY) {
@@ -42,15 +45,18 @@ public class BodySprite {
     }
 
     // GETTERS
-    public List<BodyRect> getBodies(){
+    public List<BodyRect> getBodies() {
         return this.bodies;
 
     }
 
-    public Rectangle getBody(float posX, float posY){
+    public Rectangle getBody(float posX, float posY) {
         return new Rectangle(posX - this.center.getV1(), posY - this.center.getV2(), this.sizes.getV1(), this.sizes.getV2());
     }
 
+    public UUID getId() {
+        return this.id;
+    }
 
     @Override
     public String toString() {

@@ -12,7 +12,7 @@ import com.andres_k.components.graphicComponents.userInterface.overlay.Overlay;
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.*;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.StringTimer;
-import com.andres_k.components.networkComponents.MessageModel;
+import com.andres_k.components.networkComponents.networkSend.MessageModel;
 import com.andres_k.components.soundComponents.MusicController;
 import com.andres_k.components.soundComponents.SoundController;
 import com.andres_k.components.taskComponent.EnumTargetTask;

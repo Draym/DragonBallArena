@@ -4,17 +4,17 @@ package com.andres_k.components.taskComponent;
  * Created by andres_k on 16/05/2015.
  */
 public enum EnumTargetTask {
-    UNKNOWN("UNKNOWN"),  WINDOWS("WINDOWS"),
+    UNKNOWN("UNKNOWN"),  WINDOWS("WINDOWS"), SERVER("SERVER"),
     INPUT("INPUT", "WINDOWS"), GAME("GAME", "WINDOWS"), INTERFACE("INTERFACE", "WINDOWS"),
-    INTERFACE_OVERLAY("INTERFACE_OVERLAY", "INTERFACE"),
-    GAME_OVERLAY("GAME_OVERLAY", "GAME");
+    INTERFACE_OVERLAY("INTERFACE_OVERLAY", "INTERFACE"), GAME_OVERLAY("GAME_OVERLAY", "GAME"),
+    SERVER_MESSAGE("SERVER_MESSAGE", "SERVER"), SERVER_CONFIG("SERVER_CONFIG", "SERVER");
 
-    private String dir;
     private String value;
+    private String dir;
 
     EnumTargetTask(String dir) {
-        this.dir = dir;
         this.value = dir;
+        this.dir = dir;
     }
 
     EnumTargetTask(String value, String dir) {

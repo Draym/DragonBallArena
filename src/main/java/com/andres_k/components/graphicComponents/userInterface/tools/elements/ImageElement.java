@@ -1,12 +1,11 @@
 package com.andres_k.components.graphicComponents.userInterface.tools.elements;
 
-import com.andres_k.components.gameComponents.animations.Animator;
+import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
 import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
-import com.andres_k.utils.tools.ConsoleWrite;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -15,30 +14,30 @@ import org.newdawn.slick.SlickException;
  * Created by andres_k on 27/06/2015.
  */
 public class ImageElement extends Element {
-    private Animator animator;
+    private AnimatorController animatorController;
     private float sizeXMAX;
 
-    public ImageElement(ColorRect body, Animator animator, PositionInBody position) {
+    public ImageElement(ColorRect body, AnimatorController animatorController, PositionInBody position) {
         this.init(body, "", position, EnumOverlayElement.IMAGE);
-        this.animator = animator;
+        this.animatorController = animatorController;
         this.sizeXMAX = body.getSizeX();
     }
 
-    public ImageElement(ColorRect body, Animator animator, String id, PositionInBody position) {
+    public ImageElement(ColorRect body, AnimatorController animatorController, String id, PositionInBody position) {
         this.init(body, id, position, EnumOverlayElement.IMAGE);
-        this.animator = animator;
+        this.animatorController = animatorController;
         this.sizeXMAX = body.getSizeX();
     }
 
     public ImageElement(ColorRect body, String id, PositionInBody position) {
         this.init(body, id, position, EnumOverlayElement.IMAGE);
-        this.animator = null;
+        this.animatorController = null;
         this.sizeXMAX = body.getSizeX();
     }
 
-    public ImageElement(Animator animator, String id, PositionInBody position) {
+    public ImageElement(AnimatorController animatorController, String id, PositionInBody position) {
         this.init(null, id, position, EnumOverlayElement.IMAGE);
-        this.animator = animator;
+        this.animatorController = animatorController;
         this.sizeXMAX = 0;
     }
 
@@ -51,9 +50,9 @@ public class ImageElement extends Element {
         if (this.body != null && this.body.getMinX() != -1) {
             this.body.draw(g);
 
-            if (this.animator != null && this.animator.isPrintable()) {
+            if (this.animatorController != null && this.animatorController.isPrintable()) {
                 Pair<Float, Float> position = this.getChoicePosition(this.body);
-                g.drawAnimation(this.animator.currentAnimation(), position.getV1(), position.getV2());
+                g.drawAnimation(this.animatorController.currentAnimation(), position.getV1(), position.getV2());
             }
         }
     }
@@ -65,9 +64,9 @@ public class ImageElement extends Element {
                 body.setColor(this.body.getColor());
             }
             body.draw(g);
-            if (this.animator != null && this.animator.isPrintable()) {
+            if (this.animatorController != null && this.animatorController.isPrintable()) {
                 Pair<Float, Float> position = this.getChoicePosition(body);
-                g.drawAnimation(this.animator.currentAnimation(), position.getV1(), position.getV2());
+                g.drawAnimation(this.animatorController.currentAnimation(), position.getV1(), position.getV2());
             }
         }
     }
@@ -77,49 +76,49 @@ public class ImageElement extends Element {
         float y = body.getMinY();
 
         if (this.position == PositionInBody.MIDDLE_MID) {
-            float sizeX = (body.getSizeX() / 2) - (this.animator.currentAnimation().getWidth() / 2);
-            float sizeY = (body.getSizeY() / 2) - (this.animator.currentAnimation().getHeight() / 2);
+            float sizeX = (body.getSizeX() / 2) - (this.animatorController.currentAnimation().getWidth() / 2);
+            float sizeY = (body.getSizeY() / 2) - (this.animatorController.currentAnimation().getHeight() / 2);
 
             sizeX = (sizeX < 0 ? 0 : sizeX);
             sizeY = (sizeY < 0 ? 0 : sizeY);
             x += sizeX;
             y += sizeY;
         } else if (this.position == PositionInBody.RIGHT_MID) {
-            float sizeX = (body.getSizeX() - this.animator.currentAnimation().getWidth());
-            float sizeY = (body.getSizeY() / 2) - (this.animator.currentAnimation().getHeight() / 2);
+            float sizeX = (body.getSizeX() - this.animatorController.currentAnimation().getWidth());
+            float sizeY = (body.getSizeY() / 2) - (this.animatorController.currentAnimation().getHeight() / 2);
 
             sizeX = (sizeX < 0 ? 0 : sizeX);
             sizeY = (sizeY < 0 ? 0 : sizeY);
             x += sizeX;
             y += sizeY;
         } else if (this.position == PositionInBody.MIDDLE_DOWN) {
-            float sizeX = (body.getSizeX() / 2) - (this.animator.currentAnimation().getWidth() / 2);
-            float sizeY = (body.getSizeY() - this.animator.currentAnimation().getHeight());
+            float sizeX = (body.getSizeX() / 2) - (this.animatorController.currentAnimation().getWidth() / 2);
+            float sizeY = (body.getSizeY() - this.animatorController.currentAnimation().getHeight());
 
             sizeX = (sizeX < 0 ? 0 : sizeX);
             sizeY = (sizeY < 0 ? 0 : sizeY);
             x += sizeX;
             y += sizeY;
         } else if (this.position == PositionInBody.RIGHT_DOWN) {
-            float sizeX = (body.getSizeX() - this.animator.currentAnimation().getWidth());
-            float sizeY = (body.getSizeY() - this.animator.currentAnimation().getHeight());
+            float sizeX = (body.getSizeX() - this.animatorController.currentAnimation().getWidth());
+            float sizeY = (body.getSizeY() - this.animatorController.currentAnimation().getHeight());
 
             sizeX = (sizeX < 0 ? 0 : sizeX);
             sizeY = (sizeY < 0 ? 0 : sizeY);
             x += sizeX;
             y += sizeY;
         } else if (this.position == PositionInBody.LEFT_DOWN) {
-            float sizeY = (body.getSizeY() - this.animator.currentAnimation().getHeight());
+            float sizeY = (body.getSizeY() - this.animatorController.currentAnimation().getHeight());
 
             sizeY = (sizeY < 0 ? 0 : sizeY);
             y += sizeY;
         } else if (this.position == PositionInBody.MIDDLE_UP) {
-            float sizeX = (body.getSizeX() / 2) - (this.animator.currentAnimation().getWidth() / 2);
+            float sizeX = (body.getSizeX() / 2) - (this.animatorController.currentAnimation().getWidth() / 2);
 
             sizeX = (sizeX < 0 ? 0 : sizeX);
             x += sizeX;
         } else if (this.position == PositionInBody.RIGHT_UP) {
-            float sizeX = (body.getSizeX() - this.animator.currentAnimation().getWidth());
+            float sizeX = (body.getSizeX() - this.animatorController.currentAnimation().getWidth());
 
             sizeX = (sizeX < 0 ? 0 : sizeX);
             x += sizeX;
@@ -130,9 +129,9 @@ public class ImageElement extends Element {
 
     @Override
     public void update() {
-        if (this.animator != null) {
-            if (this.animator.needUpdate() && this.animator.isActivated()) {
-                this.animator.updateAnimator(true, true);
+        if (this.animatorController != null) {
+            if (this.animatorController.needUpdate() && this.animatorController.isActivated()) {
+                this.animatorController.updateAnimator(true, true);
             }
         }
     }
@@ -140,7 +139,7 @@ public class ImageElement extends Element {
     @Override
     public boolean replace(Element element) throws SlickException {
         if (element.getType() == EnumOverlayElement.IMAGE) {
-            this.animator = new Animator(((ImageElement) element).animator);
+            this.animatorController = new AnimatorController(((ImageElement) element).animatorController);
             return true;
         }
         return false;
@@ -156,8 +155,8 @@ public class ImageElement extends Element {
                 this.stop();
             }
         } else if (task instanceof Long) {
-            this.animator.updateAnimator(false, false);
-            this.animator.startTimer((Long) task);
+            this.animatorController.updateAnimator(false, false);
+            this.animatorController.startTimer((Long) task);
 
         } else if (task instanceof Tuple && ((Tuple) task).getV1() instanceof EnumTask) {
             EnumTask order = (EnumTask) ((Tuple) task).getV1();
@@ -165,8 +164,8 @@ public class ImageElement extends Element {
             Object value = ((Tuple) task).getV3();
 
             if (order == EnumTask.SETTER) {
-                if (target.equals("index") && value instanceof Integer && this.animator != null) {
-                    this.animator.setIndex((Integer) value);
+                if (target.equals("index") && value instanceof Integer && this.animatorController != null) {
+                    this.animatorController.setIndex((Integer) value);
                 }
             } else if (order == EnumTask.CUT) {
                 if (target.equals("body") && value instanceof Float) {
@@ -186,7 +185,7 @@ public class ImageElement extends Element {
                 }
             } else if (order == EnumTask.EVENT) {
                 if (target instanceof Integer && (int) target <= Input.KEY_NUMPAD9 && (int) target >= Input.KEY_NUMPAD0) {
-                    this.animator.setIndex((Integer) value);
+                    this.animatorController.setIndex((Integer) value);
                 }
             }
 
@@ -196,15 +195,15 @@ public class ImageElement extends Element {
 
     @Override
     public String toString() {
-        return "imageType: " + (this.animator != null ? this.animator.getCurrentAnimation() : "");
+        return "imageType: " + (this.animatorController != null ? this.animatorController.getCurrentAnimation() : "");
     }
 
     private void start() {
-        this.animator.restart();
+        this.animatorController.restart();
     }
 
     private void stop() {
-        this.animator.restart();
+        this.animatorController.restart();
     }
 
     //GETTERS
@@ -215,7 +214,7 @@ public class ImageElement extends Element {
 
     @Override
     public boolean isEmpty() {
-        if (this.animator == null || this.animator.isDeleted()) {
+        if (this.animatorController == null || this.animatorController.isDeleted()) {
             return true;
         }
         return false;
@@ -223,17 +222,17 @@ public class ImageElement extends Element {
 
     @Override
     public boolean isNull() {
-        return (this.animator == null);
+        return (this.animatorController == null);
     }
 
     @Override
     public float getAbsoluteWidth() {
-        return this.animator.currentAnimation().getWidth();
+        return this.animatorController.currentAnimation().getWidth();
     }
 
     @Override
     public float getAbsoluteHeight() {
-        return this.animator.currentAnimation().getHeight();
+        return this.animatorController.currentAnimation().getHeight();
     }
 
     // SETTERS

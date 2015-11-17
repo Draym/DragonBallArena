@@ -3,7 +3,7 @@ package com.andres_k.components.graphicComponents.userInterface.elements.table;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.tools.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
-import com.andres_k.components.networkComponents.messages.MessageRoundStart;
+import com.andres_k.components.networkComponents.networkSend.messages.MessageRoundStart;
 import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ConsoleWrite;

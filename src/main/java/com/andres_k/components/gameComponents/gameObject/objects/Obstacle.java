@@ -1,6 +1,6 @@
 package com.andres_k.components.gameComponents.gameObject.objects;
 
-import com.andres_k.components.gameComponents.animations.Animator;
+import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.graphicComponents.input.EnumInput;
@@ -12,8 +12,8 @@ import org.newdawn.slick.Graphics;
  */
 public class Obstacle extends GameObject {
 
-    public Obstacle(Animator animator, String id, EnumGameObject type, float posX, float posY, float life, float damage, float speed, float weight) {
-        super(animator, id, type,new Pair<>(posX, posY), life, damage, speed, weight);
+    public Obstacle(AnimatorController animatorController, String id, EnumGameObject type, float posX, float posY, float life, float damage, float speed, float weight) {
+        super(animatorController, id, type,new Pair<>(posX, posY), life, damage, speed, weight);
     }
 
     @Override
@@ -22,12 +22,12 @@ public class Obstacle extends GameObject {
 
     @Override
     public void draw(Graphics g) {
-        if (this.animator != null) {
-            if (animator.currentAnimation() != null) {
-                g.drawAnimation(this.animator.currentAnimation(), this.graphicalX(), this.graphicalY());
+        if (this.animatorController != null) {
+            if (animatorController.currentAnimation() != null) {
+                g.drawAnimation(this.animatorController.currentAnimation(), this.graphicalX(), this.graphicalY());
             }
-            if (this.animator.currentBodyAnimation() != null) {
-                this.animator.currentBodyAnimation().draw(g, this.animator.currentFrame(), this.getPosX(), this.getPosY());
+            if (this.animatorController.currentBodyAnimation() != null) {
+                this.animatorController.currentBodyAnimation().draw(g, this.animatorController.currentFrame(), this.getPosX(), this.getPosY());
             }
         }
     }

@@ -8,10 +8,10 @@ import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.input.InputGame;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
-import com.andres_k.components.networkComponents.messages.MessageGameNew;
-import com.andres_k.components.networkComponents.messages.MessageOverlayMenu;
-import com.andres_k.components.networkComponents.messages.MessageRoundEnd;
-import com.andres_k.components.networkComponents.messages.MessageRoundStart;
+import com.andres_k.components.networkComponents.networkSend.messages.MessageGameNew;
+import com.andres_k.components.networkComponents.networkSend.messages.MessageOverlayMenu;
+import com.andres_k.components.networkComponents.networkSend.messages.MessageRoundEnd;
+import com.andres_k.components.networkComponents.networkSend.messages.MessageRoundStart;
 import com.andres_k.components.soundComponents.EnumSound;
 import com.andres_k.components.soundComponents.MusicController;
 import com.andres_k.components.taskComponent.EnumTargetTask;
@@ -75,7 +75,7 @@ public class GameController extends WindowController {
     }
 
     @Override
-    public void init() throws SlickException, JSONException {
+    public void init() throws SlickException, JSONException, NoSuchMethodException {
         this.animatorGameData.init();
         this.gameObjectController.init(this.animatorGameData);
 
@@ -92,12 +92,12 @@ public class GameController extends WindowController {
 
     @Override
     public void updateWindow(GameContainer gameContainer) throws SlickException {
-        if (this.running || this.gameObjectController.getNumberPlayers() == 0) {
+        if (this.running || this.gameObjectController.isTheEndOfTheGame()) {
             this.background.update();
             this.gameObjectController.update(this.running);
         }
         if (this.running) {
-            if (this.gameObjectController.getNumberPlayers() == 0) {
+            if (this.gameObjectController.isTheEndOfTheGame()) {
                 this.setChanged();
                 this.notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME, EnumTargetTask.GAME_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundEnd("admin", "admin", "enemy"))));
                 this.running = false;
@@ -115,7 +115,7 @@ public class GameController extends WindowController {
 
     @Override
     public void keyReleased(int key, char c) {
-        if ((!this.running && this.gameObjectController.getNumberPlayers() == 0) && key == Input.KEY_ENTER) {
+        if ((!this.running && this.gameObjectController.isTheEndOfTheGame()) && key == Input.KEY_ENTER) {
             this.leave();
             try {
                 this.enter();

@@ -49,7 +49,7 @@ public class WindowGame extends WindowBasedGame {
         ConsoleWrite.debug("\n START INIT");
         try {
             this.animatorOverlay.init();
-        } catch (JSONException e) {
+        } catch (JSONException | NoSuchMethodException e) {
             throw new SlickException(e.getMessage());
         }
         ConsoleWrite.debug("END INIT");
@@ -58,7 +58,7 @@ public class WindowGame extends WindowBasedGame {
 
         try {
             this.controller.init();
-        } catch (JSONException e) {
+        } catch (JSONException | NoSuchMethodException e) {
             throw new SlickException(e.getMessage());
         }
         this.overlay.initElementsComponent(this.animatorOverlay);

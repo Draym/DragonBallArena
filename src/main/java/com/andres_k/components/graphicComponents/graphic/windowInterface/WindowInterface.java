@@ -49,7 +49,7 @@ public class WindowInterface extends WindowBasedGame {
 
         try {
             this.animatorOverlay.init();
-        } catch (JSONException e) {
+        } catch (JSONException | NoSuchMethodException e) {
             throw new SlickException(e.getMessage());
         }
 
@@ -64,7 +64,7 @@ public class WindowInterface extends WindowBasedGame {
         this.controller.setWindow(this);
         try {
             this.controller.init();
-        } catch (JSONException e) {
+        } catch (JSONException | NoSuchMethodException e) {
             throw new SlickException(e.getMessage());
         }
 
