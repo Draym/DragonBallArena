@@ -1,6 +1,6 @@
 package com.andres_k.components.gameComponents.gameObject;
 
-import com.andres_k.components.gameComponents.animations.AnimatorController;
+import com.andres_k.components.gameComponents.animations.container.AnimatorController;
 import com.andres_k.components.gameComponents.gameObject.objects.obstacles.Border;
 import com.andres_k.components.gameComponents.gameObject.objects.obstacles.Platform;
 import com.andres_k.components.gameComponents.gameObject.objects.players.Goku;

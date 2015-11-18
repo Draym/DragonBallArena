@@ -1,6 +1,6 @@
 package com.andres_k.components.graphicComponents.userInterface.overlay;
 
-import com.andres_k.components.gameComponents.animations.AnimatorOverlayData;
+import com.andres_k.components.gameComponents.animations.data.AnimatorOverlayData;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.userInterface.elements.InterfaceElement;
 import com.andres_k.components.taskComponent.GenericSendTask;
@@ -36,14 +36,10 @@ public abstract class Overlay extends Observable implements Observer {
 
     // INIT
     public abstract void initElements();
-    public abstract void initElementsComponent(AnimatorOverlayData animatorOverlayData) throws SlickException, SlickException;
+    public abstract void initElementsComponent(AnimatorOverlayData animatorOverlayData) throws SlickException;
 
     public void initPreference() {
-        for (Map.Entry<EnumOverlayElement, boolean[]> entry : this.overlayConfigs.getAvailablePreference().entrySet()) {
-            if (this.elements.containsKey(entry.getKey())) {
-                this.elements.get(entry.getKey()).setReachable(entry.getValue());
-            }
-        }
+        this.overlayConfigs.getAvailablePreference().entrySet().stream().filter(entry -> this.elements.containsKey(entry.getKey())).forEach(entry -> this.elements.get(entry.getKey()).setReachable(entry.getValue()));
     }
 
     public abstract void initElement(EnumOverlayElement element) throws SlickException;

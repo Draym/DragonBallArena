@@ -1,5 +1,7 @@
-package com.andres_k.components.gameComponents.animations;
+package com.andres_k.components.gameComponents.animations.data;
 
+import com.andres_k.components.gameComponents.animations.EnumSprites;
+import com.andres_k.components.gameComponents.animations.container.AnimatorController;
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
@@ -9,7 +11,7 @@ import java.util.HashMap;
 /**
  * Created by andres_k on 13/03/2015.
  */
-public class AnimatorGameData extends AnimatorData{
+public class AnimatorGameData extends AnimatorData {
     private HashMap<EnumGameObject, AnimatorController> itemAnimator;
 
 

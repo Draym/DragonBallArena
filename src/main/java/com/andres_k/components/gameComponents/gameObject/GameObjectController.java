@@ -1,6 +1,6 @@
 package com.andres_k.components.gameComponents.gameObject;
 
-import com.andres_k.components.gameComponents.animations.AnimatorGameData;
+import com.andres_k.components.gameComponents.animations.data.AnimatorGameData;
 import com.andres_k.components.gameComponents.controllers.ScoreData;
 import com.andres_k.components.gameComponents.gameObject.collisions.CollisionResult;
 import com.andres_k.components.gameComponents.gameObject.objects.Player;

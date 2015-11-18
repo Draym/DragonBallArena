@@ -1,6 +1,6 @@
 package com.andres_k.components.graphicComponents.graphic.windowInterface;
 
-import com.andres_k.components.gameComponents.animations.AnimatorOverlayData;
+import com.andres_k.components.gameComponents.animations.data.AnimatorOverlayData;
 import com.andres_k.components.gameComponents.controllers.InterfaceController;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
 import com.andres_k.components.graphicComponents.input.EnumInput;

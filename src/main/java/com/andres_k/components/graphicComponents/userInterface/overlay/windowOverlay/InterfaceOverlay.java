@@ -1,6 +1,6 @@
 package com.andres_k.components.graphicComponents.userInterface.overlay.windowOverlay;
 
-import com.andres_k.components.gameComponents.animations.AnimatorOverlayData;
+import com.andres_k.components.gameComponents.animations.data.AnimatorOverlayData;
 import com.andres_k.components.gameComponents.controllers.ScoreData;
 import com.andres_k.components.graphicComponents.input.EnumInput;
 import com.andres_k.components.graphicComponents.input.InputData;

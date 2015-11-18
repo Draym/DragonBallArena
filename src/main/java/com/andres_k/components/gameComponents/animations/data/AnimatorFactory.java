@@ -1,5 +1,7 @@
-package com.andres_k.components.gameComponents.animations;
+package com.andres_k.components.gameComponents.animations.data;
 
+import com.andres_k.components.gameComponents.animations.EnumSprites;
+import com.andres_k.components.gameComponents.animations.container.AnimatorController;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;

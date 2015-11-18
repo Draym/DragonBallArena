@@ -1,6 +1,6 @@
 package com.andres_k.components.gameComponents.gameObject.objects;
 
-import com.andres_k.components.gameComponents.animations.AnimatorController;
+import com.andres_k.components.gameComponents.animations.container.AnimatorController;
 import com.andres_k.components.gameComponents.animations.EnumAnimation;
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
@@ -93,7 +93,10 @@ public class Player extends GameObject {
 
     private boolean moveDown() {
         if (this.animatorController.canSwitchCurrent()) {
-            this.animatorController.setCurrent(EnumAnimation.DEF);
+            if (this.isOnEarth())
+                this.animatorController.setCurrent(EnumAnimation.DEF);
+            else
+                this.animatorController.setCurrent(EnumAnimation.FALL);
         }
         return false;
     }

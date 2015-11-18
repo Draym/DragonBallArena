@@ -1,4 +1,4 @@
-package com.andres_k.components.gameComponents.animations;
+package com.andres_k.components.gameComponents.animations.data;
 
 /**
  * Created by andres_k on 13/07/2015.

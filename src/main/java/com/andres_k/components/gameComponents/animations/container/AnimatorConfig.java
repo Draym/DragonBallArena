@@ -1,5 +1,6 @@
-package com.andres_k.components.gameComponents.animations;
+package com.andres_k.components.gameComponents.animations.container;
 
+import com.andres_k.components.gameComponents.animations.EnumAnimation;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.actions.Actions;
 import com.andres_k.utils.stockage.Pair;

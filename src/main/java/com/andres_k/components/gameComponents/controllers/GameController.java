@@ -1,6 +1,6 @@
 package com.andres_k.components.gameComponents.controllers;
 
-import com.andres_k.components.gameComponents.animations.AnimatorGameData;
+import com.andres_k.components.gameComponents.animations.data.AnimatorGameData;
 import com.andres_k.components.gameComponents.gameObject.GameObjectController;
 import com.andres_k.components.graphicComponents.background.Background;
 import com.andres_k.components.graphicComponents.background.BackgroundEnum;

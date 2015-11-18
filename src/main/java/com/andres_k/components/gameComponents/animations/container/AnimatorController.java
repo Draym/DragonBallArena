@@ -1,5 +1,6 @@
-package com.andres_k.components.gameComponents.animations;
+package com.andres_k.components.gameComponents.animations.container;
 
+import com.andres_k.components.gameComponents.animations.EnumAnimation;
 import com.andres_k.components.gameComponents.bodies.BodyAnimation;
 import com.andres_k.components.gameComponents.bodies.BodySprite;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
@@ -23,12 +24,11 @@ import java.util.Observer;
 public class AnimatorController implements Observer {
 
     // animators
-    private HashMap<EnumAnimation, Animator> animators;
+    private HashMap<EnumAnimation, AnimatorContainer> animators;
     private ActivatedTimer activatedTimer;
     private EnumDirection direction;
 
     private EnumAnimation current;
-    private int index;
 
     private boolean printable;
     private boolean deleted;
@@ -37,7 +37,6 @@ public class AnimatorController implements Observer {
     public AnimatorController() {
         this.animators = new HashMap<>();
         this.current = EnumAnimation.IDLE;
-        this.index = 0;
 
         this.printable = true;
         this.deleted = false;
@@ -52,12 +51,11 @@ public class AnimatorController implements Observer {
         }
 
         this.animators = new HashMap<>();
-        for (Map.Entry<EnumAnimation, Animator> entry : animatorController.animators.entrySet()) {
-            this.animators.put(entry.getKey(), new Animator(entry.getValue()));
+        for (Map.Entry<EnumAnimation, AnimatorContainer> entry : animatorController.animators.entrySet()) {
+            this.animators.put(entry.getKey(), new AnimatorContainer(entry.getValue()));
         }
 
         this.current = animatorController.current;
-        this.index = animatorController.index;
 
         this.printable = animatorController.printable;
         this.deleted = animatorController.deleted;
@@ -71,9 +69,15 @@ public class AnimatorController implements Observer {
     }
 
     public void toCurrentNextAnimation() {
-        Pair<EnumAnimation, Integer> next = this.getCurrent().getConfig().getNext();
-        this.setCurrent(next.getV1());
-        this.setIndex(next.getV2());
+        try {
+            Pair<EnumAnimation, Integer> next = this.getCurrent()
+                    .getConfig()
+                    .getNext();
+            this.setCurrent(next.getV1());
+            this.setIndex(next.getV2());
+        } catch (Exception e){
+            ConsoleWrite.err("AnimatorController", "toCurrentNextAnimation", e.getMessage());
+        }
     }
 
     public void doCurrentAction(GameObject object) {
@@ -94,38 +98,38 @@ public class AnimatorController implements Observer {
     }
 
     // ADD FUNCTIONS
-    public void addCopyAnimator(EnumAnimation type, Animator animator) {
-        this.animators.put(type, new Animator(animator));
+    public void addCopyAnimator(EnumAnimation type, AnimatorContainer animatorContainer) {
+        this.animators.put(type, new AnimatorContainer(animatorContainer));
     }
 
-    public void addAnimator(EnumAnimation type, Animator animator) {
-        this.animators.put(type, animator);
+    public void addAnimator(EnumAnimation type, AnimatorContainer animatorContainer) {
+        this.animators.put(type, animatorContainer);
     }
 
-    public void addAnimation(EnumAnimation type, Animation animation) {
+    public void addAnimation(EnumAnimation type, int index, Animation animation) {
         if (!this.animators.containsKey(type)) {
-            this.animators.put(type, new Animator());
+            this.animators.put(type, new AnimatorContainer());
         }
-        this.animators.get(type).addAnimation(animation);
+        this.animators.get(type).addAnimation(animation, index);
     }
 
-    public void addCollision(EnumAnimation type, String jsonValue) throws JSONException {
+    public void addCollision(EnumAnimation type, int index, String jsonValue) throws JSONException {
         if (!this.animators.containsKey(type)) {
-            this.animators.put(type, new Animator());
+            this.animators.put(type, new AnimatorContainer());
         }
-        this.animators.get(type).addCollision(new BodyAnimation(jsonValue));
+        this.animators.get(type).addCollision(new BodyAnimation(jsonValue), index);
     }
 
-    public void addConfig(EnumAnimation type, AnimatorConfig config) {
+    public void addConfig(EnumAnimation type, int index, AnimatorConfig config) {
         if (!this.animators.containsKey(type)) {
-            this.animators.put(type, new Animator());
+            this.animators.put(type, new AnimatorContainer());
         }
-        this.animators.get(type).addConfig(config);
+        this.animators.get(type).addConfig(config, index);
     }
 
     // METHODS
     public void restart() {
-        for (Map.Entry<EnumAnimation, Animator> entry : this.animators.entrySet()) {
+        for (Map.Entry<EnumAnimation, AnimatorContainer> entry : this.animators.entrySet()) {
             entry.getValue().restart();
         }
 
@@ -152,7 +156,7 @@ public class AnimatorController implements Observer {
 
     // GETTERS
 
-    public Animator getCurrent() {
+    public AnimatorContainer getCurrent() {
         return this.animators.get(this.current);
     }
 
@@ -166,7 +170,7 @@ public class AnimatorController implements Observer {
 
     public Animation currentAnimation() {
         try {
-            return this.getCurrent().getAnimation(this.index);
+            return this.getCurrent().getCurrentAnimation();
         } catch (Exception e) {
             return null;
         }
@@ -174,7 +178,7 @@ public class AnimatorController implements Observer {
 
     public BodyAnimation currentBodyAnimation() {
         try {
-            return this.getCurrent().getBodyAnimation(this.index);
+            return this.getCurrent().getBodyAnimation();
         } catch (Exception e) {
             return null;
         }
@@ -216,7 +220,7 @@ public class AnimatorController implements Observer {
     }
 
     public int getIndex() {
-        return this.index;
+        return this.getCurrent().getIndex();
     }
 
     public Color getFilter() {
@@ -249,9 +253,7 @@ public class AnimatorController implements Observer {
     // SETTERS
 
     public void setIndex(int value) {
-        if (this.getCurrent().canSetIndex(value)) {
-            this.index = value;
-        }
+        this.animators.get(this.current).setIndex(value);
     }
 
     public void setPrintable(boolean printable) {
@@ -262,7 +264,6 @@ public class AnimatorController implements Observer {
         if (this.animators.containsKey(current)) {
             if (this.currentAnimation().isStopped() || EnumAnimation.checkLoop(this.current)) {
                 this.current = current;
-                this.setIndex(0);
                 this.getCurrent().restart();
             }
         } else if (current == EnumAnimation.EXPLODE) {
