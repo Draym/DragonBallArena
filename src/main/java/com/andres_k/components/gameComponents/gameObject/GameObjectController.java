@@ -1,10 +1,10 @@
 package com.andres_k.components.gameComponents.gameObject;
 
 import com.andres_k.components.gameComponents.animations.data.AnimatorGameData;
-import com.andres_k.components.gameComponents.controllers.ScoreData;
-import com.andres_k.components.gameComponents.gameObject.collisions.CollisionResult;
+import com.andres_k.components.controllers.ScoreData;
+import com.andres_k.components.gameComponents.collisions.CollisionResult;
 import com.andres_k.components.gameComponents.gameObject.objects.Player;
-import com.andres_k.components.graphicComponents.input.EnumInput;
+import com.andres_k.components.eventComponent.input.EnumInput;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.taskComponent.EnumTargetTask;
 import com.andres_k.components.taskComponent.EnumTask;

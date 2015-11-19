@@ -1,14 +1,15 @@
 package com.andres_k.master;
 
 
-import com.andres_k.components.gameComponents.controllers.ScoreData;
+import com.andres_k.components.controllers.ScoreData;
 import com.andres_k.components.graphicComponents.graphic.Windows;
-import com.andres_k.components.graphicComponents.input.InputData;
+import com.andres_k.components.eventComponent.input.InputData;
+import com.andres_k.components.networkComponents.networkGame.NetworkController;
 import com.andres_k.components.soundComponents.MusicController;
 import com.andres_k.components.soundComponents.SoundController;
 import com.andres_k.components.taskComponent.EnumTargetTask;
 import com.andres_k.components.taskComponent.GenericSendTask;
-import com.andres_k.utils.configs.Config;
+import com.andres_k.utils.configs.ConfigPath;
 import com.andres_k.utils.configs.CurrentUser;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
@@ -25,18 +26,20 @@ import java.util.Observer;
  */
 public class MasterGame implements Observer {
     private GenericSendTask masterTask;
+    private NetworkController networkController;
     private Windows windows;
 
     public MasterGame() throws SlickException, JSONException {
         SoundController.init();
         MusicController.init();
 
-        InputData.init(Config.input);
-        ScoreData.init(Config.score);
+        InputData.init(ConfigPath.input);
+        ScoreData.init(ConfigPath.score);
         CurrentUser.init("player", "player", "ally");
         this.masterTask = new GenericSendTask();
         this.masterTask.addObserver(this);
         this.windows = new Windows("DragonBallArena", this.masterTask);
+        this.networkController = new NetworkController(this.masterTask);
     }
 
     public void start() {
@@ -63,6 +66,8 @@ public class MasterGame implements Observer {
         //Debug.debug("masterTask " + task);
         if (task.getV2().isIn(EnumTargetTask.WINDOWS)) {
             this.windows.doTask(o, task);
+        } else if (task.getV2().isIn(EnumTargetTask.SERVER)) {
+            this.networkController.doTask(o, task);
         }
     }
 }

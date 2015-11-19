@@ -1,6 +1,5 @@
 package com.andres_k.components.gameComponents.bodies;
 
-import com.andres_k.utils.configs.GlobalVariable;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -33,24 +32,22 @@ public class BodyAnimation {
     }
 
     public void draw(Graphics g, int currentFrame, float posX, float posY) {
-        if (GlobalVariable.drawCollision) {
-            if (currentFrame < this.bodies.size()) {
-                this.bodies.get(currentFrame).draw(g, posX, posY);
-            }
+        if (currentFrame < this.bodies.size()) {
+            this.bodies.get(currentFrame).draw(g, posX, posY);
         }
     }
 
     // GETTERS
 
-    public List<BodyRect> getCurrentCollisions(int currentFrame){
-        if (this.bodies.size() > currentFrame){
+    public List<BodyRect> getCurrentCollisions(int currentFrame) {
+        if (this.bodies.size() > currentFrame) {
             return this.bodies.get(currentFrame).getBodies();
         }
         return null;
     }
 
-    public BodySprite getCurrentBody(int currentFrame){
-        if (this.bodies.size() > currentFrame){
+    public BodySprite getCurrentBody(int currentFrame) {
+        if (this.bodies.size() > currentFrame) {
             return this.bodies.get(currentFrame);
         }
         return null;

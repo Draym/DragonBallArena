@@ -4,8 +4,8 @@ import com.andres_k.components.gameComponents.animations.EnumAnimation;
 import com.andres_k.components.gameComponents.bodies.BodyAnimation;
 import com.andres_k.components.gameComponents.bodies.BodySprite;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
-import com.andres_k.components.gameComponents.gameObject.collisions.EnumDirection;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.ActivatedTimer;
+import com.andres_k.components.gameComponents.gameObject.commands.movement.EnumDirection;
+import com.andres_k.components.graphicComponents.userInterface.items.tools.ActivatedTimer;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ConsoleWrite;
 import org.codehaus.jettison.json.JSONException;
@@ -26,7 +26,7 @@ public class AnimatorController implements Observer {
     // animators
     private HashMap<EnumAnimation, AnimatorContainer> animators;
     private ActivatedTimer activatedTimer;
-    private EnumDirection direction;
+    private EnumDirection eyesDirection;
 
     private EnumAnimation current;
 
@@ -42,7 +42,7 @@ public class AnimatorController implements Observer {
         this.deleted = false;
         this.needUpdate = false;
         this.activatedTimer = new ActivatedTimer(true);
-        this.direction = EnumDirection.NONE;
+        this.eyesDirection = EnumDirection.RIGHT;
     }
 
     public AnimatorController(AnimatorController animatorController) throws SlickException {
@@ -61,7 +61,7 @@ public class AnimatorController implements Observer {
         this.deleted = animatorController.deleted;
         this.needUpdate = animatorController.needUpdate;
         this.activatedTimer = new ActivatedTimer(animatorController.activatedTimer);
-        this.direction = animatorController.direction;
+        this.eyesDirection = animatorController.eyesDirection;
     }
 
     // UPDATE
@@ -242,8 +242,8 @@ public class AnimatorController implements Observer {
         return this.activatedTimer.isActivated();
     }
 
-    public EnumDirection getDirection() {
-        return this.direction;
+    public EnumDirection getEyesDirection() {
+        return this.eyesDirection;
     }
 
     public boolean canSwitchCurrent() {
@@ -279,7 +279,7 @@ public class AnimatorController implements Observer {
         this.needUpdate = value;
     }
 
-    public void setDirection(EnumDirection direction) {
-        this.direction = direction;
+    public void setEyesDirection(EnumDirection direction) {
+        this.eyesDirection = direction;
     }
 }

@@ -1,17 +1,17 @@
 package com.andres_k.components.graphicComponents.userInterface.overlay.windowOverlay;
 
 import com.andres_k.components.gameComponents.animations.data.AnimatorOverlayData;
-import com.andres_k.components.gameComponents.controllers.ScoreData;
-import com.andres_k.components.graphicComponents.input.EnumInput;
-import com.andres_k.components.graphicComponents.input.InputData;
-import com.andres_k.components.graphicComponents.userInterface.elements.InterfaceElement;
-import com.andres_k.components.graphicComponents.userInterface.elements.generic.GenericElement;
-import com.andres_k.components.graphicComponents.userInterface.elements.table.TableMenuElement;
+import com.andres_k.components.controllers.ScoreData;
+import com.andres_k.components.eventComponent.input.EnumInput;
+import com.andres_k.components.eventComponent.input.InputData;
+import com.andres_k.components.graphicComponents.userInterface.types.InterfaceElement;
+import com.andres_k.components.graphicComponents.userInterface.types.generic.GenericElement;
+import com.andres_k.components.graphicComponents.userInterface.types.table.TableMenuElement;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.overlay.Overlay;
-import com.andres_k.components.graphicComponents.userInterface.tools.elements.*;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.ColorRect;
-import com.andres_k.components.graphicComponents.userInterface.tools.items.StringTimer;
+import com.andres_k.components.graphicComponents.userInterface.items.elements.*;
+import com.andres_k.components.graphicComponents.userInterface.items.tools.ColorRect;
+import com.andres_k.components.graphicComponents.userInterface.items.tools.StringTimer;
 import com.andres_k.components.networkComponents.networkSend.MessageModel;
 import com.andres_k.components.soundComponents.MusicController;
 import com.andres_k.components.soundComponents.SoundController;

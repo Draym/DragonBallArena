@@ -1,10 +1,10 @@
 package com.andres_k.components.graphicComponents.graphic.windowGame;
 
 import com.andres_k.components.gameComponents.animations.data.AnimatorOverlayData;
-import com.andres_k.components.gameComponents.controllers.GameController;
+import com.andres_k.components.controllers.GameController;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
-import com.andres_k.components.graphicComponents.input.EnumInput;
+import com.andres_k.components.eventComponent.input.EnumInput;
 import com.andres_k.components.graphicComponents.userInterface.overlay.windowOverlay.GameOverlay;
 import com.andres_k.components.soundComponents.EnumSound;
 import com.andres_k.components.soundComponents.MusicController;
@@ -98,6 +98,7 @@ public class WindowGame extends WindowBasedGame {
         this.delta += i;
 
         if (this.delta > GlobalVariable.timeLoop) {
+            GlobalVariable.currentTimeLoop = this.delta;
             this.controller.updateWindow(gameContainer);
             this.overlay.updateOverlay();
             this.delta = 0;

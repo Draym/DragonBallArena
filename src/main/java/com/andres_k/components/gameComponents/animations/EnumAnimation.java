@@ -10,10 +10,13 @@ public enum EnumAnimation {
     RUSH(true),
     RUN(true),
     JUMP(false),
-    DEF(false),
+    DEFENSE(false),
     BLOCK(false),
     FALL(true),
-    RECEIPT(false);
+    RECEIPT(false),
+
+    // attacks
+    HAND_ATTACK(false);
 
     private boolean loop;
 

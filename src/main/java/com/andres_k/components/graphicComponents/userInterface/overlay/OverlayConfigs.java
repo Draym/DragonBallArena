@@ -17,7 +17,7 @@ public class OverlayConfigs {
     private JSONObject configPreference;
     private String filePreference;
 
-    private Map<EnumOverlayElement, String> datas;
+    private Map<EnumOverlayElement, String> data;
     private JSONObject configData;
     private String fileData;
 
@@ -25,7 +25,7 @@ public class OverlayConfigs {
         this.availablePreference = new LinkedHashMap<>();
         this.filePreference = filePreference;
 
-        this.datas = new LinkedHashMap<>();
+        this.data = new LinkedHashMap<>();
         this.fileData = fileData;
 
         this.initPreference();
@@ -52,7 +52,7 @@ public class OverlayConfigs {
         while (iterator.hasNext()) {
             String key = (String) iterator.next();
             String value = this.configData.getString(key);
-            this.datas.put(EnumOverlayElement.getEnumByValue(key), value);
+            this.data.put(EnumOverlayElement.getEnumByValue(key), value);
         }
     }
 
@@ -75,8 +75,8 @@ public class OverlayConfigs {
     }
 
     public String getData(EnumOverlayElement type){
-        if (this.datas.containsKey(type)){
-            return this.datas.get(type);
+        if (this.data.containsKey(type)){
+            return this.data.get(type);
         }
         return "";
     }

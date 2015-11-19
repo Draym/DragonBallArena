@@ -1,44 +1,39 @@
 package com.andres_k.components.gameComponents.gameObject.objects;
 
-import com.andres_k.components.gameComponents.animations.container.AnimatorController;
+import com.andres_k.components.eventComponent.events.EventController;
+import com.andres_k.components.eventComponent.input.EnumInput;
 import com.andres_k.components.gameComponents.animations.EnumAnimation;
+import com.andres_k.components.gameComponents.animations.container.AnimatorController;
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
-import com.andres_k.components.gameComponents.gameObject.collisions.EnumDirection;
-import com.andres_k.components.graphicComponents.input.EnumInput;
+import com.andres_k.components.gameComponents.gameObject.commands.combo.ComboController;
+import com.andres_k.components.gameComponents.gameObject.commands.movement.EnumDirection;
 import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.stockage.Pair;
-import org.newdawn.slick.Graphics;
 
 /**
  * Created by andres_k on 10/07/2015.
  */
 public class Player extends GameObject {
+    protected EventController event;
+    protected ComboController combos;
     private long score;
 
     public Player(AnimatorController animatorController, EnumGameObject type, String id, float x, float y, float life, float damage, float speed, float weight) {
         super(animatorController, id, type, new Pair<>(x, y), life, damage, speed, weight);
+
+        this.event = new EventController();
         this.event.addEvent(EnumInput.MOVE_UP);
         this.event.addEvent(EnumInput.MOVE_DOWN);
         this.event.addEvent(EnumInput.MOVE_LEFT);
         this.event.addEvent(EnumInput.MOVE_RIGHT);
+
+        this.combos = new ComboController();
     }
 
     @Override
     public void clear() {
 
-    }
-
-    @Override
-    public void draw(Graphics g) {
-        if (this.animatorController != null) {
-            if (this.animatorController.currentAnimation() != null) {
-                g.drawAnimation(this.animatorController.currentAnimation(), this.graphicalX(), this.graphicalY());
-            }
-            if (this.animatorController.currentBodyAnimation() != null) {
-                this.animatorController.currentBodyAnimation().draw(g, this.animatorController.currentFrame(), this.getPosX(), this.getPosY());
-            }
-        }
     }
 
     @Override
@@ -52,6 +47,7 @@ public class Player extends GameObject {
                 this.executeLastEvent();
             }
         }
+        this.updateAnimation();
     }
 
     // ACTIONS
@@ -66,11 +62,10 @@ public class Player extends GameObject {
     }
 
     private boolean moveRight() {
-        if (this.animatorController.canSwitchCurrent()
-                && (this.animatorController.getCurrentAnimation() != EnumAnimation.RUN
-                || this.animatorController.getDirection() != EnumDirection.RIGHT)) {
-            this.animatorController.setDirection(EnumDirection.RIGHT);
+        if (this.animatorController.canSwitchCurrent() && (this.movement.getMoveDirection() != EnumDirection.RIGHT || this.animatorController.getCurrentAnimation() != EnumAnimation.RUN)) {
+            this.animatorController.setEyesDirection(EnumDirection.RIGHT);
             this.animatorController.setCurrent(EnumAnimation.RUN);
+            this.movement.setMoveDirection(EnumDirection.RIGHT);
             if (this.event.isActivated(EnumInput.MOVE_UP))
                 this.moveUp();
             return true;
@@ -79,11 +74,10 @@ public class Player extends GameObject {
     }
 
     private boolean moveLeft() {
-        if (this.animatorController.canSwitchCurrent()
-                && (this.animatorController.getCurrentAnimation() != EnumAnimation.RUN
-                || this.animatorController.getDirection() != EnumDirection.LEFT)) {
-            this.animatorController.setDirection(EnumDirection.LEFT);
+        if (this.animatorController.canSwitchCurrent() && (this.movement.getMoveDirection() != EnumDirection.LEFT || this.animatorController.getCurrentAnimation() != EnumAnimation.RUN)) {
+            this.animatorController.setEyesDirection(EnumDirection.LEFT);
             this.animatorController.setCurrent(EnumAnimation.RUN);
+            this.movement.setMoveDirection(EnumDirection.LEFT);
             if (this.event.isActivated(EnumInput.MOVE_UP))
                 this.moveUp();
             return true;
@@ -94,7 +88,7 @@ public class Player extends GameObject {
     private boolean moveDown() {
         if (this.animatorController.canSwitchCurrent()) {
             if (this.isOnEarth())
-                this.animatorController.setCurrent(EnumAnimation.DEF);
+                this.animatorController.setCurrent(EnumAnimation.DEFENSE);
             else
                 this.animatorController.setCurrent(EnumAnimation.FALL);
         }
@@ -117,11 +111,11 @@ public class Player extends GameObject {
     private void changeDirection() {
         EnumInput recentMove = this.event.getMoreRecentEventBetween(EnumInput.MOVE_RIGHT, EnumInput.MOVE_LEFT);
         if (recentMove == EnumInput.MOVE_RIGHT) {
-            this.animatorController.setDirection(EnumDirection.RIGHT);
+            this.movement.setMoveDirection(EnumDirection.RIGHT);
         } else if (recentMove == EnumInput.MOVE_LEFT) {
-            this.animatorController.setDirection(EnumDirection.LEFT);
+            this.movement.setMoveDirection(EnumDirection.LEFT);
         } else {
-            this.animatorController.setDirection(EnumDirection.NONE);
+            this.movement.setMoveDirection(EnumDirection.NONE);
         }
     }
 

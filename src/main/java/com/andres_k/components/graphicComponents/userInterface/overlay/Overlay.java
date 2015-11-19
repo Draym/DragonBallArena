@@ -1,10 +1,10 @@
 package com.andres_k.components.graphicComponents.userInterface.overlay;
 
 import com.andres_k.components.gameComponents.animations.data.AnimatorOverlayData;
-import com.andres_k.components.graphicComponents.input.EnumInput;
-import com.andres_k.components.graphicComponents.userInterface.elements.InterfaceElement;
+import com.andres_k.components.eventComponent.input.EnumInput;
+import com.andres_k.components.graphicComponents.userInterface.types.InterfaceElement;
 import com.andres_k.components.taskComponent.GenericSendTask;
-import com.andres_k.utils.configs.Config;
+import com.andres_k.utils.configs.ConfigPath;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -26,7 +26,7 @@ public abstract class Overlay extends Observable implements Observer {
 
     protected Overlay() throws JSONException {
         this.current = 0;
-        this.overlayConfigs = new OverlayConfigs(Config.preferenceOverlay, Config.dataOverlay);
+        this.overlayConfigs = new OverlayConfigs(ConfigPath.preferenceOverlay, ConfigPath.dataOverlay);
 
         this.genericSendTask = new GenericSendTask();
         this.genericSendTask.addObserver(this);

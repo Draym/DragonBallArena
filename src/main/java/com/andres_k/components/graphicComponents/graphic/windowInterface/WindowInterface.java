@@ -1,9 +1,9 @@
 package com.andres_k.components.graphicComponents.graphic.windowInterface;
 
 import com.andres_k.components.gameComponents.animations.data.AnimatorOverlayData;
-import com.andres_k.components.gameComponents.controllers.InterfaceController;
+import com.andres_k.components.controllers.InterfaceController;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
-import com.andres_k.components.graphicComponents.input.EnumInput;
+import com.andres_k.components.eventComponent.input.EnumInput;
 import com.andres_k.components.soundComponents.EnumSound;
 import com.andres_k.components.soundComponents.MusicController;
 import com.andres_k.components.graphicComponents.userInterface.overlay.windowOverlay.InterfaceOverlay;
@@ -111,7 +111,8 @@ public class WindowInterface extends WindowBasedGame {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         this.delta += i;
 
-        if (this.delta > 30) {
+        if (this.delta > GlobalVariable.timeLoop) {
+            GlobalVariable.currentTimeLoop = this.delta;
             this.controller.updateWindow(gameContainer);
             this.overlay.updateOverlay();
             this.delta = 0;

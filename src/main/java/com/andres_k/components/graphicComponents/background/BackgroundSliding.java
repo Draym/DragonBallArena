@@ -22,7 +22,7 @@ public class BackgroundSliding extends Background{
     public void update() {
         if (launched == true) {
             for (Pair<Integer, Integer> pos : this.positions) {
-                pos.setV2((int) Math.ceil(((float) pos.getV2() + (this.speed * (GlobalVariable.timeLoop / 1000)))));
+                pos.setV2((int) Math.ceil(((float) pos.getV2() + (this.speed * (GlobalVariable.currentTimeLoop / 1000)))));
             }
             for (int i = 0; i < this.positions.size(); ++i) {
                 if (this.positions.get(i).getV2() > WindowConfig.w2_sY) {

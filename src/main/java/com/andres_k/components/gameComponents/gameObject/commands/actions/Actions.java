@@ -1,7 +1,7 @@
 package com.andres_k.components.gameComponents.gameObject.commands.actions;
 
 import com.andres_k.components.gameComponents.gameObject.GameObject;
-import com.andres_k.components.gameComponents.gameObject.collisions.EnumDirection;
+import com.andres_k.components.gameComponents.gameObject.commands.movement.EnumDirection;
 import com.andres_k.utils.configs.GlobalVariable;
 
 /**
@@ -21,10 +21,14 @@ public class Actions {
     }
 
     public static void block(GameObject object) {
+        object.getMovement().setPushX(GlobalVariable.speedTravel / 5);
+
+        /*
         if (object.getAnimatorController().getDirection() == EnumDirection.LEFT)
             object.getMovement().setPushX(-(GlobalVariable.speedTravel / 5));
         else if (object.getAnimatorController().getDirection() == EnumDirection.RIGHT)
             object.getMovement().setPushX((GlobalVariable.speedTravel / 5));
+        */
         object.getMovement().setPushY(0f);
     }
 
@@ -38,10 +42,16 @@ public class Actions {
         if (object.isOnEarth()) {
             object.getMovement().addPushY(10);
         }
+
+        if (object.getMovement().getMoveDirection() != EnumDirection.NONE) {
+            object.getMovement().setPushX(GlobalVariable.speedTravel * 3);
+        }
+  /*
         if (object.getAnimatorController().getDirection() == EnumDirection.LEFT)
             object.getMovement().setPushX(-GlobalVariable.speedTravel * 3);
         else
             object.getMovement().setPushX(GlobalVariable.speedTravel * 3);
+*/
         object.getMovement().setPushY(0);
     }
 
@@ -49,11 +59,15 @@ public class Actions {
     public static void fall(GameObject object) {
         object.getMovement().setPushY(0f);
 
-        if (object.getAnimatorController().getDirection() == EnumDirection.LEFT)
+        if (object.getMovement().getMoveDirection() != EnumDirection.NONE) {
+            object.getMovement().setPushX(GlobalVariable.speedTravel);
+        }
+        /*
+        if (object.getDirection() == EnumDirection.LEFT)
             object.getMovement().setPushX(-GlobalVariable.speedTravel);
         else if (object.getAnimatorController().getDirection() == EnumDirection.RIGHT)
             object.getMovement().setPushX(GlobalVariable.speedTravel);
-
+*/
         if (!object.isOnEarth()) {
             if (object.getMovement().getGravity() > 8) {
                 object.getAnimatorController().getCurrent().getConfig().setNextIndex(1);
@@ -69,18 +83,35 @@ public class Actions {
         if (object.isOnEarth()) {
             object.getMovement().addPushY(10);
         }
+        object.getMovement().setPushX(GlobalVariable.speedTravel);
+/*
         if (object.getAnimatorController().getDirection() == EnumDirection.LEFT)
             object.getMovement().setPushX(-GlobalVariable.speedTravel);
         else
             object.getMovement().setPushX(GlobalVariable.speedTravel);
+*/
+        if (object.getMovement().getMoveDirection() != EnumDirection.NONE) {
+            object.getMovement().setPushX(GlobalVariable.speedTravel);
+        }
         object.getMovement().setPushY(0);
     }
 
     public static void jump(GameObject object) {
+  /*
         if (object.getAnimatorController().getDirection() == EnumDirection.LEFT)
             object.getMovement().setPushX(-GlobalVariable.speedTravel);
         else if (object.getAnimatorController().getDirection() == EnumDirection.RIGHT)
             object.getMovement().setPushX(GlobalVariable.speedTravel);
+*/
+        if (object.getMovement().getMoveDirection() != EnumDirection.NONE) {
+            object.getMovement().setPushX(GlobalVariable.speedTravel);
+        }
         object.getMovement().setPushY(-GlobalVariable.speedJump);
+    }
+
+    // ATTACKS
+
+    public static void handAttack(GameObject object) {
+
     }
 }

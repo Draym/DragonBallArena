@@ -1,13 +1,13 @@
 package com.andres_k.components.gameComponents.gameObject;
 
-import com.andres_k.components.gameComponents.animations.container.AnimatorController;
+import com.andres_k.components.eventComponent.input.EnumInput;
 import com.andres_k.components.gameComponents.animations.EnumAnimation;
+import com.andres_k.components.gameComponents.animations.container.AnimatorController;
 import com.andres_k.components.gameComponents.bodies.BodySprite;
-import com.andres_k.components.gameComponents.gameObject.commands.MovementController;
-import com.andres_k.components.gameComponents.gameObject.collisions.CollisionController;
-import com.andres_k.components.gameComponents.gameObject.collisions.CollisionResult;
-import com.andres_k.components.gameComponents.gameObject.events.EventController;
-import com.andres_k.components.graphicComponents.input.EnumInput;
+import com.andres_k.components.gameComponents.collisions.CollisionController;
+import com.andres_k.components.gameComponents.collisions.CollisionResult;
+import com.andres_k.components.gameComponents.gameObject.commands.movement.MovementController;
+import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Graphics;
 
@@ -19,7 +19,6 @@ import java.util.List;
 public abstract class GameObject {
     protected AnimatorController animatorController;
     protected CollisionController collision;
-    protected EventController event;
     protected MovementController movement;
     protected String id;
     protected EnumGameObject type;
@@ -33,7 +32,6 @@ public abstract class GameObject {
     protected GameObject(AnimatorController animatorController, String id, EnumGameObject type, Pair<Float, Float> pos, float life, float damage, float speed, float weight) {
         this.movement = new MovementController(pos, 8, speed, weight, false);
         this.collision = new CollisionController(this);
-        this.event = new EventController();
 
         this.alive = true;
         this.type = type;
@@ -51,9 +49,24 @@ public abstract class GameObject {
 
     public abstract void clear();
 
-    public abstract void draw(Graphics g);
+    public void draw(Graphics g) {
+        if (this.animatorController != null) {
+            if (this.animatorController.currentAnimation() != null) {
+                g.drawImage(this.animatorController.currentAnimation().getCurrentFrame().getFlippedCopy(this.animatorController.getEyesDirection().isHorizontalFlip(), false), this.graphicalX(), this.graphicalY());
+            }
+
+            if (GlobalVariable.drawCollision && this.animatorController.currentBodyAnimation() != null) {
+                this.animatorController.currentBodyAnimation().draw(g, this.animatorController.currentFrame(), this.getPosX(), this.getPosY());
+            }
+        }
+    }
 
     public abstract void update();
+
+    protected void updateAnimation() {
+        if (this.animatorController != null && this.animatorController.currentAnimation() != null)
+            this.animatorController.currentAnimation().update(GlobalVariable.currentTimeLoop);
+    }
 
     public abstract void eventPressed(EnumInput input);
 
