@@ -70,7 +70,7 @@ public class AnimatorController implements Observer {
 
     public void toCurrentNextAnimation() {
         try {
-            Pair<EnumAnimation, Integer> next = this.getCurrent()
+            Pair<EnumAnimation, Integer> next = this.getCurrentContainer()
                     .getConfig()
                     .getNext();
             this.setCurrent(next.getV1());
@@ -81,7 +81,7 @@ public class AnimatorController implements Observer {
     }
 
     public void doCurrentAction(GameObject object) {
-        this.getCurrent().doAction(object, this.currentFrame());
+        this.getCurrentContainer().doAction(object, this.currentFrame());
         if (this.currentAnimation().isStopped()) {
             this.toCurrentNextAnimation();
             if (this.current == EnumAnimation.FALL) {
@@ -156,7 +156,7 @@ public class AnimatorController implements Observer {
 
     // GETTERS
 
-    public AnimatorContainer getCurrent() {
+    public AnimatorContainer getCurrentContainer() {
         return this.animators.get(this.current);
     }
 
@@ -170,7 +170,7 @@ public class AnimatorController implements Observer {
 
     public Animation currentAnimation() {
         try {
-            return this.getCurrent().getCurrentAnimation();
+            return this.getCurrentContainer().getCurrentAnimation();
         } catch (Exception e) {
             return null;
         }
@@ -178,7 +178,7 @@ public class AnimatorController implements Observer {
 
     public BodyAnimation currentBodyAnimation() {
         try {
-            return this.getCurrent().getBodyAnimation();
+            return this.getCurrentContainer().getBodyAnimation();
         } catch (Exception e) {
             return null;
         }
@@ -215,16 +215,16 @@ public class AnimatorController implements Observer {
         }
     }
 
-    public EnumAnimation getCurrentAnimation() {
+    public EnumAnimation currentAnimationType() {
         return this.current;
     }
 
     public int getIndex() {
-        return this.getCurrent().getIndex();
+        return this.getCurrentContainer().getIndex();
     }
 
     public Color getFilter() {
-        return this.getCurrent().getFilter();
+        return this.getCurrentContainer().getFilter();
     }
 
     public Animation getAnimation(EnumAnimation type, int index) {
@@ -264,7 +264,7 @@ public class AnimatorController implements Observer {
         if (this.animators.containsKey(current)) {
             if (this.currentAnimation().isStopped() || EnumAnimation.checkLoop(this.current)) {
                 this.current = current;
-                this.getCurrent().restart();
+                this.getCurrentContainer().restart();
             }
         } else if (current == EnumAnimation.EXPLODE) {
             this.setDeleted(true);

@@ -29,6 +29,14 @@ public class MathTools {
         return new Pair<>(x * delta, y * delta);
     }
 
+    public static void flip(int mode, Rectangle container, Pair<Float, Float> point, Pair<Float, Float> sizes) {
+        if (mode == 1) {
+            point.setV1(container.getMaxX() - (point.getV1() - container.getMinX()) - sizes.getV1());
+        } else {
+            point.setV2(container.getMaxY() - (point.getV2() - container.getMinY()) - sizes.getV2());
+        }
+    }
+
     public static void rotate(Pair<Float, Float> center, Pair<Float, Float> point, float angle){
         float[] newPoint = {point.getV1(), point.getV2()};
         AffineTransform.getRotateInstance(Math.toRadians(angle), center.getV1(), center.getV2()).transform(newPoint, 0, newPoint, 0, 1);

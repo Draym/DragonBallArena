@@ -49,8 +49,8 @@ public class CollisionController {
     }
 
     public boolean checkBorderCollision(GameObject object, Pair<Float, Float> pos) {
-        if (this.mine.getAnimatorController().getCurrentAnimation() != EnumAnimation.EXPLODE &&
-                object.getAnimatorController().getCurrentAnimation() != EnumAnimation.EXPLODE) {
+        if (this.mine.getAnimatorController().currentAnimationType() != EnumAnimation.EXPLODE &&
+                object.getAnimatorController().currentAnimationType() != EnumAnimation.EXPLODE) {
             BodySprite myBody = this.mine.getBody();
             BodySprite hisBody = object.getBody();
 
@@ -84,8 +84,10 @@ public class CollisionController {
     }
 
     private boolean checkCollisionInSpecialWay(GameObject enemy, BodyRect myRect, BodyRect hisRect, Pair<Float, Float> pos, Pair<Float, Float> newPos, CollisionResult result, int mode) {
-        Shape myShape = myRect.getBody(newPos.getV1(), newPos.getV2());
-        Shape hisShape = hisRect.getBody(enemy.getPosX(), enemy.getPosY());
+        Shape myShape = myRect.getFlippedBody(this.mine.getAnimatorController().getEyesDirection().isHorizontalFlip(),
+                    this.mine.getBody().getBody(newPos.getV1(), newPos.getV2()), newPos.getV1(), newPos.getV2());
+        Shape hisShape = hisRect.getFlippedBody(enemy.getAnimatorController().getEyesDirection().isHorizontalFlip(),
+                enemy.getBody().getBody(enemy.getPosX(), enemy.getPosY()), enemy.getPosX(), enemy.getPosY());
         if (myShape.intersects(hisShape) || myShape.contains(hisShape) || hisShape.contains(myShape)) {
             myRect.addCollision(hisRect.getId());
             hisRect.addCollision(myRect.getId());
@@ -114,8 +116,10 @@ public class CollisionController {
             float diffAbsNewPos;
             float distance;
 
+            Shape myPreviousShape = myRect.getFlippedBody(this.mine.getAnimatorController().getEyesDirection().isHorizontalFlip(),
+                    this.mine.getBody().getBody(pos.getV1(), pos.getV2()), pos.getV1(), pos.getV2());
             if (mode == 1) {
-                diffPos = MathTools.getDistance(myRect.getBody(pos.getV1(), pos.getV2()).getCenterX(), hisShape.getCenterX());
+                diffPos = MathTools.getDistance(myPreviousShape.getCenterX(), hisShape.getCenterX());
                 diffNewPos = MathTools.getDistance(myShape.getCenterX(), hisShape.getCenterX());
                 diffAbsNewPos = MathTools.abs(diffNewPos);
                 diffAbsPos = MathTools.abs(diffPos);
@@ -123,7 +127,7 @@ public class CollisionController {
                 distance = diffAbsPos - (myShape.getWidth() / 2 + hisShape.getWidth() / 2);
                 result.addCollisionX((diffAbsPos >= diffAbsNewPos), enemy.getType(), (diffPos > 0 ? EnumDirection.RIGHT : EnumDirection.LEFT), distance);
             } else {
-                diffPos = MathTools.getDistance(myRect.getBody(pos.getV1(), pos.getV2()).getCenterY(), hisShape.getCenterY());
+                diffPos = MathTools.getDistance(myPreviousShape.getCenterY(), hisShape.getCenterY());
                 diffNewPos = myShape.getCenterY() - hisShape.getCenterY();
                 diffAbsNewPos = MathTools.abs(diffNewPos);
                 diffAbsPos = MathTools.abs(diffPos);

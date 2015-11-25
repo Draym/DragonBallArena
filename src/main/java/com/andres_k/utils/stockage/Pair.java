@@ -14,8 +14,7 @@ public class Pair<T1, T2> extends Object {
 
     public Pair(Pair<T1, T2> pair){
         if (pair != null) {
-            this.v1 = pair.v1;
-            this.v2 = pair.v2;
+            this.copy(pair);
         }
     }
 

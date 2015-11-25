@@ -195,7 +195,7 @@ public class ImageElement extends Element {
 
     @Override
     public String toString() {
-        return "imageType: " + (this.animatorController != null ? this.animatorController.getCurrentAnimation() : "");
+        return "imageType: " + (this.animatorController != null ? this.animatorController.currentAnimationType() : "");
     }
 
     private void start() {

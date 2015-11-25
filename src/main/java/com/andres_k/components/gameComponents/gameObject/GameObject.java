@@ -56,7 +56,7 @@ public abstract class GameObject {
             }
 
             if (GlobalVariable.drawCollision && this.animatorController.currentBodyAnimation() != null) {
-                this.animatorController.currentBodyAnimation().draw(g, this.animatorController.currentFrame(), this.getPosX(), this.getPosY());
+                this.animatorController.currentBodyAnimation().draw(g, this.animatorController.currentFrame(), this.animatorController.getEyesDirection().isHorizontalFlip(), this.getPosX(), this.getPosY());
             }
         }
     }

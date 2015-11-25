@@ -2,6 +2,7 @@ package com.andres_k.components.gameComponents.bodies;
 
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.MathTools;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.newdawn.slick.Color;
@@ -34,7 +35,7 @@ public class BodyRect {
         this.lastCollisions = new ArrayList<>();
     }
 
-    public void draw(Graphics g, float posX, float posY) {
+    public void draw(Graphics g, boolean haveToFlip, Rectangle container, float posX, float posY) {
         if (this.type == EnumGameObject.DEFENSE_BODY) {
             g.setColor(Color.cyan);
         } else if (this.type == EnumGameObject.ATTACK_BODY) {
@@ -42,7 +43,7 @@ public class BodyRect {
         } else if (this.type == EnumGameObject.BLOCK_BODY) {
             g.setColor(Color.green);
         }
-        g.draw(this.getBody(posX, posY));
+        g.draw(this.getFlippedBody(haveToFlip, container, posX, posY));
     }
 
     public void addCollision(UUID id) {
@@ -65,11 +66,16 @@ public class BodyRect {
         return this.id;
     }
 
-    public Shape getBody(float posX, float posY) {
+    public Shape getFlippedBody(boolean haveToFlip, Rectangle container, float posX, float posY) {
+        Pair<Float, Float> newPoint = new Pair<>(this.positions.getV1() + posX, this.positions.getV2() + posY);
+
+        if (haveToFlip)
+            MathTools.flip(1, container, newPoint, this.sizes);
+
         if (this.sizes.getV2() < 0) {
-            return new Circle(posX + this.positions.getV1(), posY + this.positions.getV2(), this.sizes.getV1());
+            return new Circle(newPoint.getV1(), newPoint.getV2(), this.sizes.getV1());
         } else {
-            return new Rectangle(posX + this.positions.getV1(), posY + this.positions.getV2(), this.sizes.getV1(), this.sizes.getV2());
+            return new Rectangle(newPoint.getV1(), newPoint.getV2(), this.sizes.getV1(), this.sizes.getV2());
         }
     }
 

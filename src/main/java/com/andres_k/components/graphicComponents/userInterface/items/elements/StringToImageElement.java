@@ -66,7 +66,7 @@ public class StringToImageElement extends Element {
         int addY;
         int addX = 25;
         for (int i = 0; i < this.images.size(); ++i) {
-            Animation tmp = this.animatorController.getAnimation(this.animatorController.getCurrentAnimation(), this.images.get(i));
+            Animation tmp = this.animatorController.getAnimation(this.animatorController.currentAnimationType(), this.images.get(i));
             if (tmp != null) {
                 if (this.images.get(i) == this.alphabet[1].indexOf("-") + 10) {
                     addY = 10;
@@ -229,7 +229,7 @@ public class StringToImageElement extends Element {
 
     @Override
     public String toString() {
-        return "MultipleImageType: " + (this.animatorController != null ? this.animatorController.getCurrentAnimation() : "");
+        return "MultipleImageType: " + (this.animatorController != null ? this.animatorController.currentAnimationType() : "");
     }
 
     private void start() {
@@ -263,7 +263,7 @@ public class StringToImageElement extends Element {
     public float getAbsoluteWidth() {
         float size = 0;
         for (int i = 0; i < this.images.size(); ++i) {
-            Animation tmp = this.animatorController.getAnimation(this.animatorController.getCurrentAnimation(), this.images.get(i));
+            Animation tmp = this.animatorController.getAnimation(this.animatorController.currentAnimationType(), this.images.get(i));
             if (tmp != null) {
                 size += tmp.getWidth() - 4;
             } else {
@@ -277,7 +277,7 @@ public class StringToImageElement extends Element {
     public float getAbsoluteHeight() {
         float size = 0;
         for (int i = 0; i < this.images.size(); ++i) {
-            Animation tmp = this.animatorController.getAnimation(this.animatorController.getCurrentAnimation(), this.images.get(i));
+            Animation tmp = this.animatorController.getAnimation(this.animatorController.currentAnimationType(), this.images.get(i));
             if (tmp != null) {
                 if (size < tmp.getHeight())
                     size = tmp.getHeight();

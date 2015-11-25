@@ -70,7 +70,7 @@ public class Actions {
 */
         if (!object.isOnEarth()) {
             if (object.getMovement().getGravity() > 8) {
-                object.getAnimatorController().getCurrent().getConfig().setNextIndex(1);
+                object.getAnimatorController().getCurrentContainer().getConfig().setNextIndex(1);
             }
         }
         if (object.isOnEarth()) {

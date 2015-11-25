@@ -33,11 +33,12 @@ public class BodySprite {
         this.id = UUID.randomUUID();
     }
 
-    public void draw(Graphics g, float posX, float posY) {
+    public void draw(Graphics g, boolean haveToFlip, float posX, float posY) {
         g.setColor(Color.red);
-        g.draw(this.getBody(posX, posY));
-        for (BodyRect body : this.bodies) {
-            body.draw(g, posX, posY);
+        Rectangle myBody = this.getBody(posX, posY);
+        g.draw(myBody);
+        for (BodyRect rect : this.bodies) {
+            rect.draw(g, haveToFlip, myBody, posX, posY);
         }
     }
 

@@ -53,7 +53,7 @@ public class Player extends GameObject {
     // ACTIONS
 
     private boolean moveFall() {
-        if (!this.isOnEarth() && this.animatorController.getCurrentAnimation() != EnumAnimation.FALL) {
+        if (!this.isOnEarth() && this.animatorController.currentAnimationType() != EnumAnimation.FALL) {
             this.animatorController.setCurrent(EnumAnimation.FALL);
             this.movement.resetGravity();
             return true;
@@ -62,7 +62,7 @@ public class Player extends GameObject {
     }
 
     private boolean moveRight() {
-        if (this.animatorController.canSwitchCurrent() && (this.movement.getMoveDirection() != EnumDirection.RIGHT || this.animatorController.getCurrentAnimation() != EnumAnimation.RUN)) {
+        if (this.animatorController.canSwitchCurrent() && (this.movement.getMoveDirection() != EnumDirection.RIGHT || this.animatorController.currentAnimationType() != EnumAnimation.RUN)) {
             this.animatorController.setEyesDirection(EnumDirection.RIGHT);
             this.animatorController.setCurrent(EnumAnimation.RUN);
             this.movement.setMoveDirection(EnumDirection.RIGHT);
@@ -74,7 +74,7 @@ public class Player extends GameObject {
     }
 
     private boolean moveLeft() {
-        if (this.animatorController.canSwitchCurrent() && (this.movement.getMoveDirection() != EnumDirection.LEFT || this.animatorController.getCurrentAnimation() != EnumAnimation.RUN)) {
+        if (this.animatorController.canSwitchCurrent() && (this.movement.getMoveDirection() != EnumDirection.LEFT || this.animatorController.currentAnimationType() != EnumAnimation.RUN)) {
             this.animatorController.setEyesDirection(EnumDirection.LEFT);
             this.animatorController.setCurrent(EnumAnimation.RUN);
             this.movement.setMoveDirection(EnumDirection.LEFT);

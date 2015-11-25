@@ -31,20 +31,13 @@ public class BodyAnimation {
         }
     }
 
-    public void draw(Graphics g, int currentFrame, float posX, float posY) {
+    public void draw(Graphics g, int currentFrame, boolean haveToFlip, float posX, float posY) {
         if (currentFrame < this.bodies.size()) {
-            this.bodies.get(currentFrame).draw(g, posX, posY);
+            this.bodies.get(currentFrame).draw(g, haveToFlip, posX, posY);
         }
     }
 
     // GETTERS
-
-    public List<BodyRect> getCurrentCollisions(int currentFrame) {
-        if (this.bodies.size() > currentFrame) {
-            return this.bodies.get(currentFrame).getBodies();
-        }
-        return null;
-    }
 
     public BodySprite getCurrentBody(int currentFrame) {
         if (this.bodies.size() > currentFrame) {
