@@ -9,6 +9,6 @@ import com.andres_k.components.gameComponents.gameObject.objects.Obstacle;
  */
 public class Platform extends Obstacle {
     public Platform(AnimatorController animatorController, String id, float posX, float posY) {
-        super(animatorController, id, EnumGameObject.PLATFORM, posX, posY, 30, 0, 0, 0);
+        super(animatorController, EnumGameObject.PLATFORM, id, posX, posY, 30, 0, 0, 0);
     }
 }

@@ -14,7 +14,7 @@ public class InputGame extends Observable {
     public InputGame() throws JSONException {
     }
 
-    public EnumInput checkInput(int key, EnumInput mode) {
+    public EnumInput checkInput(int key) {
         String keyName;
 
         if (key == -2) {

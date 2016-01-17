@@ -1,6 +1,5 @@
 package com.andres_k.components.gameComponents.bodies;
 
-import com.andres_k.utils.stockage.Pair;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -18,24 +17,27 @@ import java.util.UUID;
 public class BodySprite {
     private UUID id;
     private List<BodyRect> bodies;
-    private Pair<Float, Float> sizes;
-    private Pair<Float, Float> center;
+    private Rectangle sprite;
+    private Rectangle body;
 
     public BodySprite(JSONObject object) throws JSONException {
         this.bodies = new ArrayList<>();
-        this.center = new Pair<>((float) object.getDouble("centerX"), (float) object.getDouble("centerY"));
-        this.sizes = new Pair<>((float) object.getDouble("sizeX"), (float) object.getDouble("sizeY"));
+        this.sprite = new Rectangle(0, 0, (float) object.getDouble("SpriteSizeX"), (float) object.getDouble("SpriteSizeY"));
+        this.body = new Rectangle((float) object.getDouble("BodyPosX"), (float) object.getDouble("BodyPosY"), (float) object.getDouble("BodySizeX"), (float) object.getDouble("BodySizeY"));
         JSONArray array = object.getJSONArray("rectangles");
 
         for (int i = 0; i < array.length(); ++i) {
-            this.bodies.add(new BodyRect(array.getJSONObject(i), this.center.getV1(), this.center.getV2()));
+            this.bodies.add(new BodyRect(array.getJSONObject(i), this.sprite.getCenterX(), this.sprite.getCenterY()));
         }
         this.id = UUID.randomUUID();
     }
 
     public void draw(Graphics g, boolean haveToFlip, float posX, float posY) {
         g.setColor(Color.red);
-        Rectangle myBody = this.getBody(posX, posY);
+        Rectangle mySprite = this.getFlippedSprite(haveToFlip, posX, posY);
+        g.draw(mySprite);
+        g.setColor(Color.green);
+        Rectangle myBody = this.getFlippedBody(haveToFlip, posX, posY);
         g.draw(myBody);
         for (BodyRect rect : this.bodies) {
             rect.draw(g, haveToFlip, myBody, posX, posY);
@@ -51,8 +53,21 @@ public class BodySprite {
 
     }
 
-    public Rectangle getBody(float posX, float posY) {
-        return new Rectangle(posX - this.center.getV1(), posY - this.center.getV2(), this.sizes.getV1(), this.sizes.getV2());
+    public Rectangle getFlippedSprite(boolean haveToFlip, float posX, float posY) {
+        float flipX = posX - this.sprite.getCenterX();
+
+        Rectangle body = this.getFlippedBody(haveToFlip, posX, posY);
+        if (haveToFlip)
+            flipX = (body.getX() + body.getWidth()) - this.sprite.getWidth();
+        return new Rectangle(flipX, posY - this.sprite.getCenterY(), this.sprite.getWidth(), this.sprite.getHeight());
+    }
+
+    public Rectangle getFlippedBody(boolean haveToFlip, float posX, float posY) {
+        float flipX = posX - this.sprite.getCenterX() + this.body.getMinX();
+
+        //if (haveToFlip && (flipX + this.body.getWidth() > (this.sprite.getMinX() + posX)))
+        //flipX = (this.sprite.getMinX() + posX) - (flipX - this.body.getWidth());
+        return new Rectangle(flipX, posY - this.sprite.getCenterY() + this.body.getMinY(), this.body.getWidth(), this.body.getHeight());
     }
 
     public UUID getId() {
@@ -64,11 +79,11 @@ public class BodySprite {
         JSONObject object = new JSONObject();
 
         try {
-            object.put("centerX", this.center.getV1());
-            object.put("centerY", this.center.getV2());
+            object.put("centerX", this.sprite.getCenterX());
+            object.put("centerY", this.sprite.getCenterY());
 
-            object.put("sizeX", this.sizes.getV1());
-            object.put("sizeY", this.sizes.getV2());
+            object.put("sizeX", this.sprite.getWidth());
+            object.put("sizeY", this.sprite.getHeight());
             JSONArray arrayRect = new JSONArray();
             for (BodyRect body : this.bodies) {
                 arrayRect.put(new JSONObject(body.toString()));

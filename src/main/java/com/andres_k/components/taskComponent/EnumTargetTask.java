@@ -5,8 +5,8 @@ package com.andres_k.components.taskComponent;
  */
 public enum EnumTargetTask {
     UNKNOWN("UNKNOWN"),  WINDOWS("WINDOWS"), SERVER("SERVER"),
-    INPUT("INPUT", "WINDOWS"), GAME("GAME", "WINDOWS"), INTERFACE("INTERFACE", "WINDOWS"),
-    INTERFACE_OVERLAY("INTERFACE_OVERLAY", "INTERFACE"), GAME_OVERLAY("GAME_OVERLAY", "GAME"),
+    INPUT("INPUT", "WINDOWS"), GAME("GAME", "WINDOWS"), INTERFACE("HOME", "WINDOWS"),
+    INTERFACE_OVERLAY("INTERFACE_OVERLAY", "HOME"), GAME_OVERLAY("GAME_OVERLAY", "GAME"),
     SERVER_MESSAGE("SERVER_MESSAGE", "SERVER"), SERVER_CONFIG("SERVER_CONFIG", "SERVER");
 
     private String value;
@@ -32,9 +32,7 @@ public enum EnumTargetTask {
 
     public static EnumTargetTask getEnumByDir(String value) {
         EnumTargetTask[] enums = EnumTargetTask.values();
-        int enumsNumber = enums.length;
-        for (int i = 0; i < enumsNumber; i++) {
-            EnumTargetTask type = enums[i];
+        for (EnumTargetTask type : enums) {
             if (value.equals(type.getValue())) {
                 return type;
             }
@@ -44,9 +42,7 @@ public enum EnumTargetTask {
 
     public static EnumTargetTask getEnumByValue(String value) {
         EnumTargetTask[] enums = EnumTargetTask.values();
-        int enumsNumber = enums.length;
-        for (int i = 0; i < enumsNumber; i++) {
-            EnumTargetTask type = enums[i];
+        for (EnumTargetTask type : enums) {
             if (value.equals(type.getValue())) {
                 return type;
             }
@@ -64,9 +60,6 @@ public enum EnumTargetTask {
                 current = EnumTargetTask.getEnumByDir(current.getDir());
             }
         }
-        if (current == dir) {
-            return true;
-        }
-        return false;
+        return (current == dir);
     }
 }

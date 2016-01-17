@@ -26,9 +26,9 @@ public enum EnumGameObject {
     MONSTER("MONSTER", "ANIMATED"),
 
     //items
-    GROUND("GROUND", "PLATFORM"),
-    WALL("WALL", "BORDER"),
-    GOKU("GOKU", "PLAYER");
+    GROUND("Ground", "PLATFORM"),
+    WALL("Wall", "BORDER"),
+    GOKU("Goku", "PLAYER");
 
 
     private final String value;
@@ -54,9 +54,7 @@ public enum EnumGameObject {
 
     public static EnumGameObject getEnumByValue(String value) {
         EnumGameObject[] enums = EnumGameObject.values();
-        int valuesNumber = enums.length;
-        for (int i = 0; i < valuesNumber; i++) {
-            EnumGameObject type = enums[i];
+        for (EnumGameObject type : enums) {
             if (type.getValue().equals(value))
                 return type;
         }
@@ -65,9 +63,7 @@ public enum EnumGameObject {
 
     public static EnumGameObject getEnumByType(String value) {
         EnumGameObject[] enums = EnumGameObject.values();
-        int enumsNumber = enums.length;
-        for (int i = 0; i < enumsNumber; i++) {
-            EnumGameObject type = enums[i];
+        for (EnumGameObject type : enums) {
             if (value.equals(type.getValue())) {
                 return type;
             }
@@ -85,9 +81,6 @@ public enum EnumGameObject {
                 current = EnumGameObject.getEnumByType(current.getType());
             }
         }
-        if (current == dir) {
-            return true;
-        }
-        return false;
+        return (current == dir);
     }
 }

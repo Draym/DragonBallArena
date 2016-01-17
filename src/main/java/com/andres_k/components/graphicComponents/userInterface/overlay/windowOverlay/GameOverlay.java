@@ -24,7 +24,7 @@ import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.ColorTools;
-import com.andres_k.utils.tools.ConsoleWrite;
+import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.StringTools;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.Color;
@@ -57,7 +57,7 @@ public class GameOverlay extends Overlay {
                 new ColorRect(new Rectangle(0, (WindowConfig.w2_sY / 2) - 250, WindowConfig.w2_sX, 200)), new Pair<>(false, true), false, new boolean[]{true, true}));
 
         this.elements.put(EnumOverlayElement.TABLE_MENU_CONTROLS, new TableMenuElement(EnumOverlayElement.TABLE_MENU_CONTROLS, this.genericSendTask,
-                new ColorRect(new Rectangle((WindowConfig.w2_sX / 2) - 150, (WindowConfig.w2_sY / 2) - 200, 400, 300), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY))));
+                new ColorRect(new Rectangle((WindowConfig.w2_sX / 2) - 350, (WindowConfig.w2_sY / 2) - 200, 700, 320), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY))));
         this.elements.put(EnumOverlayElement.TABLE_MENU_SETTINGS, new GenericElement(EnumOverlayElement.TABLE_MENU_SETTINGS,
                 new ColorRect(new Rectangle((WindowConfig.w2_sX / 2) - 150, (WindowConfig.w2_sY / 2) - 200, 300, 310), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)), new Pair<>(false, true), false, new boolean[]{true, true}));
 
@@ -131,15 +131,22 @@ public class GameOverlay extends Overlay {
     private void initTableMenuControls() throws SlickException {
         InterfaceElement tableMenuControls = this.elements.get(EnumOverlayElement.TABLE_MENU_CONTROLS);
 
-        tableMenuControls.doTask(new ButtonElement(new StringElement(new StringTimer("Controls"), Color.black,
-                EnumOverlayElement.CONTROLS.getValue() + ":" + EnumOverlayElement.CONTROLS.getValue(), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.BUTTON));
-
-        tableMenuControls.doTask(new Pair<>("clear", EnumOverlayElement.CONTROLS.getValue() + ":" + EnumOverlayElement.CONTROLS.getValue()));
+        tableMenuControls.doTask(new ButtonElement(new StringElement(new StringTimer("Player1"), Color.black,
+                EnumOverlayElement.CONTROLS.getValue() + "1:" + EnumOverlayElement.CONTROLS.getValue() + 1, Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.BUTTON));
+        tableMenuControls.doTask(new Pair<>(EnumTask.CLEAR, EnumOverlayElement.CONTROLS.getValue() + "1:" + EnumOverlayElement.CONTROLS.getValue() + 1));
+        if (GlobalVariable.currentPlayer == 2) {
+            tableMenuControls.doTask(new ButtonElement(new StringElement(new StringTimer("Player2"), Color.black,
+                    EnumOverlayElement.CONTROLS.getValue() + "2:" + EnumOverlayElement.CONTROLS.getValue() + 2, Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.BUTTON));
+            tableMenuControls.doTask(new Pair<>(EnumTask.CLEAR, EnumOverlayElement.CONTROLS.getValue() + "2:" + EnumOverlayElement.CONTROLS.getValue() + 2));
+        }
         for (Map.Entry<EnumInput, String> entry : InputData.getAvailableInput().entrySet()) {
-            tableMenuControls.doTask(new ButtonElement(new StringElement(new StringTimer(entry.getKey().getValue() + ":" +
-                    StringTools.duplicateString(" ", 14 - entry.getKey().getValue().length()) + entry.getValue() +
-                    StringTools.duplicateString(" ", 18 - entry.getValue().length())), Color.black,
-                    EnumOverlayElement.CONTROLS.getValue() + ":" + entry.getKey().getValue(), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.CONTROLS));
+            int id = entry.getKey().getIndex() + 1;
+            if (id <= GlobalVariable.currentPlayer) {
+                tableMenuControls.doTask(new ButtonElement(new StringElement(new StringTimer(entry.getKey().getContainer().getValue() + ":" +
+                        StringTools.duplicateString(" ", 14 - entry.getKey().getContainer().getValue().length()) + entry.getValue() +
+                        StringTools.duplicateString(" ", 18 - entry.getValue().length())), Color.black,
+                        EnumOverlayElement.CONTROLS.getValue() + id + ":" + entry.getKey().getValue(), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.CONTROLS));
+            }
         }
     }
 
@@ -178,27 +185,27 @@ public class GameOverlay extends Overlay {
 
                 if (received.getV1().equals(EnumTargetTask.WINDOWS) && received.getV2().isIn(EnumTargetTask.GAME_OVERLAY)) {
 
-                    ConsoleWrite.debug("OVERLAY RECEIVED tuple: " + arg);
+                    Console.debug("OVERLAY RECEIVED tuple: " + arg);
                     if (received.getV3() instanceof Pair && ((Pair) received.getV3()).getV1() instanceof EnumOverlayElement) {
                         Pair<EnumOverlayElement, Object> task = (Pair<EnumOverlayElement, Object>) received.getV3();
 
                         List<EnumOverlayElement> targets = new ArrayList<>();
                         targets.addAll(EnumOverlayElement.getChildren(task.getV1()));
                         for (EnumOverlayElement target : targets) {
-                            ConsoleWrite.debug("CHIDL: " + targets.size() + " -> send to " + target);
+                            Console.debug("CHIDL: " + targets.size() + " -> send to " + target);
                             if (this.elements.containsKey(target)) {
                                 this.elements.get(target).doTask(task.getV2());
                             }
                         }
                     } else {
-                        ConsoleWrite.debug("\n*************\nWARNING!\nyou shouldn't call this method like this : " + received.getV3());
+                        Console.debug("\n*************\nWARNING!\nyou shouldn't call this method like this : " + received.getV3());
                         for (Map.Entry<EnumOverlayElement, InterfaceElement> entry : this.elements.entrySet()) {
                             entry.getValue().doTask(received.getV3());
                         }
                     }
                 }
             } else if (arg instanceof Pair) {
-                ConsoleWrite.debug("OVERLAY RECEIVED pair: " + arg);
+                Console.debug("OVERLAY RECEIVED pair: " + arg);
                 if (((Pair) arg).getV1() instanceof EnumOverlayElement && ((Pair) arg).getV2() instanceof EnumOverlayElement) {
                     Pair<EnumOverlayElement, EnumOverlayElement> received = (Pair<EnumOverlayElement, EnumOverlayElement>) arg;
 
@@ -265,7 +272,7 @@ public class GameOverlay extends Overlay {
 
                         if (task.getV1() instanceof EnumInput && task.getV2() instanceof String) {
 
-                            ConsoleWrite.debug("change input");
+                            Console.debug("change input");
                             if (InputData.setAvailableInput((EnumInput) task.getV1(), (String) task.getV2())) {
                                 this.elements.get(EnumOverlayElement.TABLE_MENU_CONTROLS).doTask(task.getV2());
                             }

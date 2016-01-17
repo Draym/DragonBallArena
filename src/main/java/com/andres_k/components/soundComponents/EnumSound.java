@@ -35,9 +35,9 @@ public enum EnumSound {
     public static EnumSound getSound(EnumGameObject object){
         EnumSound[] sounds = EnumSound.values();
 
-        for (int i = 0; i < sounds.length; ++i){
-            if (sounds[i].getObject() == object){
-                return sounds[i];
+        for (EnumSound sound : sounds) {
+            if (sound.getObject() == object) {
+                return sound;
             }
         }
         return NOTHING;

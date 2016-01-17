@@ -7,7 +7,7 @@ import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EnumDirection;
 import com.andres_k.components.graphicComponents.userInterface.items.tools.ActivatedTimer;
 import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.tools.ConsoleWrite;
+import com.andres_k.utils.tools.Console;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -29,6 +29,7 @@ public class AnimatorController implements Observer {
     private EnumDirection eyesDirection;
 
     private EnumAnimation current;
+    private Pair<EnumAnimation, Integer> nextRequiredAnimation;
 
     private boolean printable;
     private boolean deleted;
@@ -43,47 +44,69 @@ public class AnimatorController implements Observer {
         this.needUpdate = false;
         this.activatedTimer = new ActivatedTimer(true);
         this.eyesDirection = EnumDirection.RIGHT;
+        this.nextRequiredAnimation = new Pair<>(EnumAnimation.NULL, 0);
     }
 
     public AnimatorController(AnimatorController animatorController) throws SlickException {
         if (animatorController == null) {
             throw new SlickException("image not loaded");
         }
-
         this.animators = new HashMap<>();
         for (Map.Entry<EnumAnimation, AnimatorContainer> entry : animatorController.animators.entrySet()) {
             this.animators.put(entry.getKey(), new AnimatorContainer(entry.getValue()));
         }
-
         this.current = animatorController.current;
-
         this.printable = animatorController.printable;
         this.deleted = animatorController.deleted;
         this.needUpdate = animatorController.needUpdate;
         this.activatedTimer = new ActivatedTimer(animatorController.activatedTimer);
         this.eyesDirection = animatorController.eyesDirection;
+        this.nextRequiredAnimation = new Pair<>(animatorController.nextRequiredAnimation);
     }
 
     // UPDATE
     public void update() {
     }
 
-    public void toCurrentNextAnimation() {
+    private void resetNextRequiredAnimation() {
+        this.nextRequiredAnimation.setV1(EnumAnimation.NULL);
+        this.nextRequiredAnimation.setV2(0);
+    }
+
+    private void toNextCurrentAnimation() {
         try {
             Pair<EnumAnimation, Integer> next = this.getCurrentContainer()
                     .getConfig()
                     .getNext();
-            this.setCurrent(next.getV1());
-            this.setIndex(next.getV2());
-        } catch (Exception e){
-            ConsoleWrite.err("AnimatorController", "toCurrentNextAnimation", e.getMessage());
+            this.setCurrentAnimationType(next.getV1());
+            this.setCurrentAnimationIndex(next.getV2());
+        } catch (Exception e) {
+            Console.err("AnimatorController", "toNextCurrentAnimation", e.getMessage());
+        }
+    }
+
+    private void toNextRequiredAnimation() {
+        try {
+            this.setCurrentAnimationType(this.nextRequiredAnimation.getV1());
+            this.setCurrentAnimationIndex(this.nextRequiredAnimation.getV2());
+            this.resetNextRequiredAnimation();
+        } catch (Exception e) {
+            Console.err("AnimatorController", "toNextRequiredAnimation", e.getMessage());
+        }
+    }
+
+    public void toNextAnimation() {
+        if (this.nextRequiredAnimation.getV1() != EnumAnimation.NULL) {
+            this.toNextRequiredAnimation();
+        } else {
+            this.toNextCurrentAnimation();
         }
     }
 
     public void doCurrentAction(GameObject object) {
         this.getCurrentContainer().doAction(object, this.currentFrame());
         if (this.currentAnimation().isStopped()) {
-            this.toCurrentNextAnimation();
+            this.toNextAnimation();
             if (this.current == EnumAnimation.FALL) {
                 object.getMovement().resetGravity();
             }
@@ -93,7 +116,9 @@ public class AnimatorController implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof EnumAnimation) {
-            this.setCurrent((EnumAnimation) arg);
+            this.setCurrentAnimationType((EnumAnimation) arg);
+        } else if (arg instanceof Integer) {
+            this.setCurrentAnimationIndex((Integer) arg);
         }
     }
 
@@ -133,7 +158,7 @@ public class AnimatorController implements Observer {
             entry.getValue().restart();
         }
 
-        this.setCurrent(EnumAnimation.IDLE);
+        this.setCurrentAnimationType(EnumAnimation.IDLE);
         this.printable = true;
         this.deleted = false;
     }
@@ -165,6 +190,14 @@ public class AnimatorController implements Observer {
             return this.currentAnimation().getFrame();
         } catch (Exception e) {
             return 0;
+        }
+    }
+
+    public Animator currentAnimator() {
+        try {
+            return this.getCurrentContainer().getCurrentAnimator();
+        } catch (Exception e) {
+            return null;
         }
     }
 
@@ -207,14 +240,6 @@ public class AnimatorController implements Observer {
         return this.deleted;
     }
 
-    public int getCurrentFrame() {
-        try {
-            return this.currentAnimation().getFrame();
-        } catch (Exception e) {
-            return -1;
-        }
-    }
-
     public EnumAnimation currentAnimationType() {
         return this.current;
     }
@@ -252,22 +277,50 @@ public class AnimatorController implements Observer {
 
     // SETTERS
 
-    public void setIndex(int value) {
-        this.animators.get(this.current).setIndex(value);
-    }
-
     public void setPrintable(boolean printable) {
         this.printable = printable;
     }
 
-    public void setCurrent(EnumAnimation current) {
+    public void setCurrentAnimationIndex(int value) {
+        Console.write("index -> " + value);
+        this.animators.get(this.current).setIndex(value);
+    }
+
+    public void setCurrentAnimationType(EnumAnimation current) {
         if (this.animators.containsKey(current)) {
-            if (this.currentAnimation().isStopped() || EnumAnimation.checkLoop(this.current)) {
-                this.current = current;
-                this.getCurrentContainer().restart();
-            }
+            Console.write("anim -> " + current);
+            this.current = current;
+            this.getCurrentContainer().restart();
         } else if (current == EnumAnimation.EXPLODE) {
             this.setDeleted(true);
+        }
+    }
+
+    private void setNextRequiredAnimation(EnumAnimation type, int index) {
+        this.nextRequiredAnimation.setV1(type);
+        this.nextRequiredAnimation.setV2(index);
+    }
+
+    private void setCurrentAnimation(EnumAnimation type, int index) {
+        this.setCurrentAnimationType(type);
+        this.setCurrentAnimationIndex(index);
+    }
+
+    public void changeAnimation(EnumAnimation type) {
+        if (this.canSwitchCurrent()) {
+            this.setCurrentAnimation(type, this.getIndex());
+        } else {
+            this.setNextRequiredAnimation(type, this.getIndex());
+        }
+    }
+
+    public void changeAnimation(EnumAnimation type, int index) {
+        if (!(type == EnumAnimation.NULL || index < 0)) {
+            if (this.canSwitchCurrent()) {
+                this.setCurrentAnimation(type, index);
+            } else {
+                this.setNextRequiredAnimation(type, index);
+            }
         }
     }
 

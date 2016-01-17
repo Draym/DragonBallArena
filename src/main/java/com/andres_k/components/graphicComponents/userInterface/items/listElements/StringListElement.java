@@ -5,7 +5,7 @@ import com.andres_k.components.graphicComponents.userInterface.items.elements.St
 import com.andres_k.components.graphicComponents.userInterface.items.tools.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.items.tools.StringTimer;
 import com.andres_k.utils.stockage.Tuple;
-import com.andres_k.utils.tools.ConsoleWrite;
+import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -71,13 +71,13 @@ public class StringListElement extends ListElement {
         boolean removed = false;
 
         for (int i = 0; i < this.elements.size(); ++i) {
-            if (this.elements.get(i).isActivated() == false) {
+            if (!this.elements.get(i).isActivated()) {
                 this.elements.remove(i);
                 removed = true;
                 --i;
             }
         }
-        if (removed == true) {
+        if (removed) {
             this.addEmpty();
         }
     }
@@ -85,8 +85,8 @@ public class StringListElement extends ListElement {
     @Override
     public void addAllToPrint(List<Object> messageData, Element.PositionInBody positionInBody) {
         this.elements.clear();
-        for (int i = 0; i < messageData.size(); ++i) {
-            this.addToPrint(messageData.get(i), positionInBody);
+        for (Object message : messageData) {
+            this.addToPrint(message, positionInBody);
         }
         this.addEmpty();
     }
@@ -113,7 +113,7 @@ public class StringListElement extends ListElement {
     public Object isOnFocus(float x, float y) {
         for (int i = 0; i < this.positionMessages.size(); ++i) {
             if (i < this.elements.size() && this.positionMessages.get(i).isOnFocus(x, y)) {
-                if (this.elements.get(i).isEmpty() == false) {
+                if (!this.elements.get(i).isEmpty()) {
                     return elements.get(i);
                 }
             }
@@ -169,7 +169,7 @@ public class StringListElement extends ListElement {
             if (value.contains("\n")) {
                 end = value.indexOf("\n");
                 if (end == 0) {
-                    ConsoleWrite.debug("ERROR WARNING");
+                    Console.debug("ERROR WARNING");
                 } else if (end > this.maxLength) {
                     end = this.maxLength;
                 }

@@ -5,12 +5,14 @@
   "spriteSizeY": 680,
   "sprites": [
     {
-      "centerX": 35,
-      "centerY": 340,
-      "posX": 0,
-      "posY": 0,
-      "sizeX": 70,
-      "sizeY": 680,
+      "SpritePosX": 0,
+      "SpritePosY": 0,
+      "SpriteSizeX": 70,
+      "SpriteSizeY": 680,
+      "BodyPosX": 0,
+      "BodyPosY": 0,
+      "BodySizeX": 70,
+      "BodySizeY": 680,
       "rectangles": [
         {
           "type": "blockBody",

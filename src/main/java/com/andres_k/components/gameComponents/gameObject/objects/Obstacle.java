@@ -2,17 +2,16 @@ package com.andres_k.components.gameComponents.gameObject.objects;
 
 import com.andres_k.components.eventComponent.input.EnumInput;
 import com.andres_k.components.gameComponents.animations.container.AnimatorController;
+import com.andres_k.components.gameComponents.collisions.PhysicalObject;
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
-import com.andres_k.components.gameComponents.gameObject.GameObject;
-import com.andres_k.utils.stockage.Pair;
 
 /**
  * Created by andres_k on 10/07/2015.
  */
-public class Obstacle extends GameObject {
+public class Obstacle extends PhysicalObject {
 
-    public Obstacle(AnimatorController animatorController, String id, EnumGameObject type, float posX, float posY, float life, float damage, float speed, float weight) {
-        super(animatorController, id, type,new Pair<>(posX, posY), life, damage, speed, weight);
+    public Obstacle(AnimatorController animatorController, EnumGameObject type, String id, float posX, float posY, float life, float damage, float speed, float weight) {
+        super(animatorController, type, id, posX, posY, life, damage, speed, weight);
     }
 
     @Override

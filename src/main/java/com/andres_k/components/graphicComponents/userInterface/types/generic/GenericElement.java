@@ -13,7 +13,7 @@ import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.configs.CurrentUser;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
-import com.andres_k.utils.tools.ConsoleWrite;
+import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 
@@ -67,7 +67,7 @@ public class GenericElement extends InterfaceElement {
             } else if (((Pair) task).getV1() instanceof String) {
                 Pair<String, Object> received = (Pair<String, Object>) task;
 
-                ConsoleWrite.debug("GENERIC ELEMENT: " + task);
+                Console.debug("GENERIC ELEMENT: " + task);
                 if (!received.getV1().equals("")) {
                     for (Element element : this.elements) {
                         if (element.getId().contains(received.getV1())) {
@@ -123,13 +123,13 @@ public class GenericElement extends InterfaceElement {
     @Override
     public Object eventReleased(int key, char c) {
         if (key == Input.KEY_ESCAPE) {
-            if (!this.isActivated() && this.canBeActivate.getV1() == true) {
+            if (!this.isActivated() && this.canBeActivate.getV1()) {
                 this.activatedTimer.startTimer();
                 if (this.genericSendTask != null) {
                     this.genericSendTask.sendTask(new MessageOverlayMenu("admin", "admin", true));
                 }
                 return true;
-            } else if (this.canBeActivate.getV2() == true) {
+            } else if (this.canBeActivate.getV2()) {
                 this.activatedTimer.stopTimer();
                 if (this.genericSendTask != null) {
                     this.genericSendTask.sendTask(new MessageOverlayMenu("admin", "admin", false));
@@ -223,8 +223,8 @@ public class GenericElement extends InterfaceElement {
     }
 
     protected void sendTaskToAll(Object task) {
-        for (int i = 0; i < this.elements.size(); ++i) {
-            this.elements.get(i).doTask(task);
+        for (Element element : this.elements) {
+            element.doTask(task);
         }
     }
 

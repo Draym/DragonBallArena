@@ -1,14 +1,15 @@
 package com.andres_k.components.graphicComponents.userInterface.types.table;
 
 import com.andres_k.components.eventComponent.input.EnumInput;
-import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.items.elements.Element;
-import com.andres_k.components.graphicComponents.userInterface.items.tools.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.items.listElements.ListElement;
+import com.andres_k.components.graphicComponents.userInterface.items.tools.ColorRect;
+import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
+import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -34,7 +35,7 @@ public class TableMenuElement extends TableElement {
         if (task instanceof Element) {
             this.addElement((Element) task);
         } else if (task instanceof EnumTask) {
-            if (task == EnumTask.CLEAR){
+            if (task == EnumTask.CLEAR) {
                 this.clearData();
             }
         } else if (task instanceof Pair) {
@@ -43,6 +44,10 @@ public class TableMenuElement extends TableElement {
                 if (received.getV1() < this.reachable.length) {
                     this.reachable[received.getV1()] = received.getV2();
                 }
+            } else if (((Pair) task).getV1() instanceof EnumTask && ((Pair) task).getV2() instanceof String) {
+                Console.write("Commande: " + task);
+                if (((Pair) task).getV1().equals(EnumTask.CLEAR))
+                    this.clearContent((String) ((Pair) task).getV2());
             }
         } else if (task instanceof Integer) {
             int i = 0;
@@ -58,6 +63,7 @@ public class TableMenuElement extends TableElement {
             String value = this.focusedElement.toString();
             String keyString = (String) task;
             String newValue;
+
             if (value.contains(":")) {
                 value = value.substring(0, value.indexOf(":"));
                 newValue = StringTools.duplicateString(" ", 14 - value.length()) + keyString + StringTools.duplicateString(" ", 18 - keyString.length());
@@ -84,10 +90,8 @@ public class TableMenuElement extends TableElement {
         } else {
             if (this.focusedElement != null) {
                 String keyString = Input.getKeyName(key);
-                String value = this.focusedElement.toString();
-                if (value.contains(":")) {
-                    value = value.substring(0, value.indexOf(":"));
-                }
+                String value = this.focusedElement.getId();
+                value = value.substring(value.indexOf(":") + 1);
                 return new Pair<>(EnumInput.getEnumByValue(value), keyString);
             }
         }

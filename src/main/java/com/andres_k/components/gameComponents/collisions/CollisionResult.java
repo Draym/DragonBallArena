@@ -22,6 +22,14 @@ public class CollisionResult {
         this.onEarth = false;
     }
 
+    public void compileWith(CollisionResult item) {
+        this.addCollisionsX(item.getCollisionsX());
+        this.addCollisionsY(item.getCollisionsY());
+        if (item.isOnEarth()) {
+            this.setOnEarth(true);
+        }
+    }
+
     // GETTERS
     public List<CollisionItem> getCollisionsX() {
         return this.collisionsX;
@@ -136,7 +144,7 @@ public class CollisionResult {
         this.collisionsX.add(collision);
     }
 
-    public void addCollisionX(List<CollisionItem> collisions) {
+    public void addCollisionsX(List<CollisionItem> collisions) {
         this.collisionsX.addAll(collisions.stream().filter(CollisionItem::isCollision).collect(Collectors.toList()));
     }
 
@@ -148,7 +156,17 @@ public class CollisionResult {
         this.collisionsY.add(collision);
     }
 
-    public void addCollisionY(List<CollisionItem> collisions) {
+    public void addCollisionsY(List<CollisionItem> collisions) {
         this.collisionsY.addAll(collisions.stream().filter(CollisionItem::isCollision).collect(Collectors.toList()));
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder("CollisionResult: [");
+        this.collisionsX.forEach(item -> result.append(item.toString()).append(", "));
+        result.append("] [");
+        this.collisionsY.forEach(item -> result.append(item.toString()).append(", "));
+        result.append("]");
+        return result.toString();
     }
 }

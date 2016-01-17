@@ -11,7 +11,7 @@ import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
-import com.andres_k.utils.tools.ConsoleWrite;
+import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.RandomTools;
 import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.Graphics;
@@ -43,7 +43,7 @@ public class GameObjectController extends Observable {
 
     public void initWorld() throws SlickException {
         this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item1:ground", 640, 640));
-       // this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item5:ground", 300, 300));
+        // this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item5:ground", 300, 300));
         this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item2:sky", 640, -1));
         this.obstacles.add(GameObjectFactory.create(EnumGameObject.BORDER, this.animatorGameData.getAnimator(EnumGameObject.WALL), "item3:leftWall", 0, 340));
         this.obstacles.add(GameObjectFactory.create(EnumGameObject.BORDER, this.animatorGameData.getAnimator(EnumGameObject.WALL), "item4:rightWall", 1280, 340));
@@ -130,17 +130,19 @@ public class GameObjectController extends Observable {
 
         this.setChanged();
         this.notifyObservers(new Pair<>(EnumTargetTask.GAME_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_ROUND_END, task)));
-        ConsoleWrite.write("\n" + player.getPseudo() + " : '" + score + "' pts.");
+        Console.write("\n" + player.getPseudo() + " : '" + score + "' pts.");
     }
 
     public void changeGameState(boolean running) {
         for (GameObject object : this.players) {
             if (object.getAnimatorController() != null && object.getAnimatorController().currentAnimation() != null)
                 object.getAnimatorController().currentAnimation().setAutoUpdate(running);
+            object.resetActions();
         }
         for (GameObject object : this.obstacles) {
             if (object.getAnimatorController() != null && object.getAnimatorController().currentAnimation() != null)
                 object.getAnimatorController().currentAnimation().setAutoUpdate(running);
+            object.resetActions();
         }
     }
 
@@ -150,8 +152,9 @@ public class GameObjectController extends Observable {
         for (int i = 0; i < playerNames.size(); ++i) {
             GameObject player = null;
             while (player == null || this.checkCollision(player, EnumTask.STATIC).hasCollision()) {
-                int randomX = RandomTools.getInt(WindowConfig.getW2SizeX() - 200) + 100;
-                player = GameObjectFactory.create(EnumGameObject.GOKU, this.animatorGameData.getAnimator(EnumGameObject.GOKU), "player" + String.valueOf(i) + ":" + playerNames.get(i), randomX, WindowConfig.w2_sY - 100);
+                int randomX = RandomTools.getInt(WindowConfig.getW2SizeX() - 300) + 300;
+                player = GameObjectFactory.create(EnumGameObject.GOKU,
+                        this.animatorGameData.getAnimator(EnumGameObject.GOKU), "player" + String.valueOf(i) + ":" + playerNames.get(i), randomX, WindowConfig.w2_sY - 500);
             }
             this.players.add(player);
         }

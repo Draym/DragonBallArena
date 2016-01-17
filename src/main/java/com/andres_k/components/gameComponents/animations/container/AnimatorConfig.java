@@ -2,7 +2,6 @@ package com.andres_k.components.gameComponents.animations.container;
 
 import com.andres_k.components.gameComponents.animations.EnumAnimation;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
-import com.andres_k.components.gameComponents.gameObject.commands.actions.Actions;
 import com.andres_k.utils.stockage.Pair;
 
 import java.lang.reflect.InvocationTargetException;
@@ -44,7 +43,7 @@ public class AnimatorConfig {
     public void doAction(GameObject object, int index) {
         if ((this.start == -1 || this.start == index)) {
             try {
-                this.action.invoke(Actions.class, object);
+                this.action.invoke(this.action.getDeclaringClass(), object);
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }

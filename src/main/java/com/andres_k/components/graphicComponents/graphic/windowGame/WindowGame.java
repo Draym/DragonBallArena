@@ -11,7 +11,7 @@ import com.andres_k.components.soundComponents.MusicController;
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
-import com.andres_k.utils.tools.ConsoleWrite;
+import com.andres_k.utils.tools.Console;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
@@ -46,13 +46,13 @@ public class WindowGame extends WindowBasedGame {
         this.container = gameContainer;
         this.stateWindow = stateBasedGame;
 
-        ConsoleWrite.debug("\n START INIT");
+        Console.debug("\n START INIT");
         try {
             this.animatorOverlay.init();
         } catch (JSONException | NoSuchMethodException e) {
             throw new SlickException(e.getMessage());
         }
-        ConsoleWrite.debug("END INIT");
+        Console.debug("END INIT");
         this.controller.setStateWindow(this.stateWindow);
         this.controller.setWindow(this);
 
@@ -136,7 +136,7 @@ public class WindowGame extends WindowBasedGame {
     @Override
     public void quit() {
         this.clean();
-        this.stateWindow.enterState(EnumWindow.INTERFACE.getValue());
+        this.stateWindow.enterState(EnumWindow.HOME.getValue());
     }
 
     @Override

@@ -25,7 +25,7 @@ public class MovementController {
     private float pushX;
     private float pushY;
     private float pushGravity;
-    private float expo;
+    private float exponential;
 
     public MovementController(Pair<Float, Float> positions, float gravity, float speed, float weight, boolean onEarth) {
         this.positions = new Pair<>(positions.getV1(), positions.getV2());
@@ -52,7 +52,7 @@ public class MovementController {
         this.pushY = movement.pushY;
         this.pushGravity = movement.pushGravity;
         this.useGravity = movement.useGravity;
-        this.expo = movement.expo;
+        this.exponential = movement.exponential;
         this.moveDirection = movement.moveDirection;
     }
 
@@ -61,9 +61,9 @@ public class MovementController {
     public void update() {
         if (!this.onEarth && this.useGravity) {
             this.pushGravity += this.calculateGravity();
-            if (this.expo < 1) {
-                this.expo = this.expo + this.expo / 2;
-                this.expo = (this.expo > 1 ? 1 : this.expo);
+            if (this.exponential < 1) {
+                this.exponential = this.exponential + this.exponential / 2;
+                this.exponential = (this.exponential > 1 ? 1 : this.exponential);
             }
         }
     }
@@ -85,7 +85,7 @@ public class MovementController {
 
     public void resetGravity() {
         this.pushGravity = 0;
-        this.expo = 0.3f;
+        this.exponential = 0.3f;
     }
 
     public Pair<Float, Float> predictNextPosition() {
@@ -106,13 +106,9 @@ public class MovementController {
             CollisionItem item = collisionResult.getLowCollisionX(new EnumGameObject[]{EnumGameObject.PLATFORM});
 
             if (item != null) {
-                //ConsoleWrite.write("itemX: " + item);
-                //ConsoleWrite.write(this.positions.toString());
-
                 int mult = (item.getCollisionDirection() == EnumDirection.RIGHT ? 1 : -1);
                 this.positions.setV1(this.getX() + ((MathTools.abs(item.getCollisionDistance() - 1)) * mult));
                 this.setPushX(0);
-                //ConsoleWrite.write(this.positions.toString() + "\n");
             }
         }
     }
@@ -124,9 +120,6 @@ public class MovementController {
             CollisionItem item = collisionResult.getLowCollisionY(new EnumGameObject[]{EnumGameObject.BORDER});
 
             if (item != null) {
-                //ConsoleWrite.write("itemY: " + item);
-                //ConsoleWrite.write(this.positions.toString());
-
                 if (item.getCollisionDirection() == EnumDirection.TOP) {
                     if (item.getCollisionDistance() > 0)
                         this.positions.setV2(this.getY() + item.getCollisionDistance());
@@ -134,7 +127,6 @@ public class MovementController {
                 } else if (item.getCollisionDirection() == EnumDirection.DOWN) {
                     this.positions.setV2(this.getY() + MathTools.abs(item.getCollisionDistance()));
                 }
-                //ConsoleWrite.write(this.positions.toString() + "\n");
                 this.setPushY(0);
                 this.resetGravity();
             }
@@ -151,7 +143,7 @@ public class MovementController {
     }
 
     public float calculateGravity() {
-        return (((this.weight * this.gravity)) / this.currentSpeed) * this.expo;
+        return (((this.weight * this.gravity)) / this.currentSpeed) * this.exponential;
     }
 
     public float calculatePushX() {
@@ -235,7 +227,6 @@ public class MovementController {
 
     public void setOnEarth(boolean value) {
         this.onEarth = value;
-        //ConsoleWrite.write("onEart: " + value);
         this.useGravity = !value;
     }
 

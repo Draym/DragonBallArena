@@ -2,7 +2,7 @@ package com.andres_k.components.graphicComponents.graphic;
 
 
 import com.andres_k.components.graphicComponents.graphic.windowGame.WindowGame;
-import com.andres_k.components.graphicComponents.graphic.windowInterface.WindowInterface;
+import com.andres_k.components.graphicComponents.graphic.windowHome.WindowHome;
 import com.andres_k.components.taskComponent.EnumTargetTask;
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.components.taskComponent.TaskFactory;
@@ -24,7 +24,7 @@ public class Windows extends StateBasedGame implements Observer {
     private GenericSendTask interfaceTask;
     private GenericSendTask masterTask;
 
-    private WindowBasedGame windowInterface;
+    private WindowBasedGame windowHome;
     private WindowBasedGame windowGame;
 
     public Windows(String name, GenericSendTask masterTask) throws JSONException, SlickException {
@@ -38,17 +38,17 @@ public class Windows extends StateBasedGame implements Observer {
         this.interfaceTask.addObserver(this);
 
 
-        this.windowInterface = new WindowInterface(EnumWindow.INTERFACE.getValue(), this.interfaceTask);
+        this.windowHome = new WindowHome(EnumWindow.HOME.getValue(), this.interfaceTask);
         this.windowGame = new WindowGame(EnumWindow.GAME.getValue(), this.gameTask);
     }
 
 
     @Override
     public void initStatesList(GameContainer gameContainer) throws SlickException {
-        this.addState(this.windowInterface);
+        this.addState(this.windowHome);
         this.addState(this.windowGame);
 
-        this.enterState(EnumWindow.INTERFACE.getValue());
+        this.enterState(EnumWindow.HOME.getValue());
     }
 
     public void update(Observable o, Object arg) {

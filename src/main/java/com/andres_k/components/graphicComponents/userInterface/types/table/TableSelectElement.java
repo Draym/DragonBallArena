@@ -11,7 +11,7 @@ import com.andres_k.components.graphicComponents.userInterface.items.listElement
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
-import com.andres_k.utils.tools.ConsoleWrite;
+import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
@@ -72,7 +72,7 @@ public class TableSelectElement extends InterfaceElement {
         if (task instanceof Element) {
             this.addElement((Element) task);
         } else if (task instanceof Pair) {
-            ConsoleWrite.debug("Table received: " + task);
+            Console.debug("Table received: " + task);
             if (((Pair) task).getV1() instanceof Integer) {
                 Pair<Integer, Boolean> received = (Pair<Integer, Boolean>) task;
                 if (received.getV1() < this.reachable.length) {
@@ -82,7 +82,7 @@ public class TableSelectElement extends InterfaceElement {
                 Pair<EnumOverlayElement, Object> received = (Pair<EnumOverlayElement, Object>) task;
                 Element element = this.containsId(received.getV1().getValue());
 
-                ConsoleWrite.debug("find element: " + element + "\n");
+                Console.debug("find element: " + element + "\n");
                 if (element != null) {
                     element.doTask(received.getV2());
                 }

@@ -21,7 +21,7 @@ public class CollisionItem {
 
     @Override
     public String toString() {
-        return "[" + collision + "] [" + collisionType + "] [" + collisionDirection + "] [" + collisionDistance + "]";
+        return "[" + this.collision + "] [" + this.collisionType + "] [" + this.collisionDirection + "] [" + this.collisionDistance + "]";
     }
 
     // SETTERS

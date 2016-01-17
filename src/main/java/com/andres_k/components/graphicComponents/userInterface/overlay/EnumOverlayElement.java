@@ -86,8 +86,7 @@ public enum EnumOverlayElement {
 
     public EnumOverlayElement getEnumByIndex() {
         EnumOverlayElement[] enums = EnumOverlayElement.values();
-        for (int i = 0; i < enums.length; ++i) {
-            EnumOverlayElement item = enums[i];
+        for (EnumOverlayElement item : enums) {
             if (item.getIndex() == this.index) {
                 return item;
             }
@@ -97,8 +96,7 @@ public enum EnumOverlayElement {
 
     public static EnumOverlayElement getEnumByValue(String value) {
         EnumOverlayElement[] enums = EnumOverlayElement.values();
-        for (int i = 0; i < enums.length; ++i) {
-            EnumOverlayElement item = enums[i];
+        for (EnumOverlayElement item : enums) {
             if (item.getValue().equals(value)) {
                 return item;
             }
@@ -110,8 +108,7 @@ public enum EnumOverlayElement {
         List<EnumOverlayElement> result = new ArrayList<>();
 
         EnumOverlayElement[] enums = EnumOverlayElement.values();
-        for (int i = 0; i < enums.length; ++i) {
-            EnumOverlayElement item = enums[i];
+        for (EnumOverlayElement item : enums) {
             if (item.getIndex() == this.index && item != this) {
                 result.add(item);
             }
@@ -127,8 +124,7 @@ public enum EnumOverlayElement {
         List<EnumOverlayElement> targets = new ArrayList<>();
 
         EnumOverlayElement[] enums = EnumOverlayElement.values();
-        for (int i = 0; i < enums.length; ++i) {
-            EnumOverlayElement item = enums[i];
+        for (EnumOverlayElement item : enums) {
             if (item.getValue().contains(target.getValue())) {
                 targets.add(item);
             }

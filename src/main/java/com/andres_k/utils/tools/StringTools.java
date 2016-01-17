@@ -18,7 +18,7 @@ public class StringTools {
     public static String readFile(String fileName) {
         String content = "";
         File file = new File(fileName);
-        ConsoleWrite.debug("file: " + file.getAbsolutePath());
+        Console.debug("file: " + file.getAbsolutePath());
         try {
             FileReader reader = new FileReader(file);
             char[] chars = new char[(int) file.length()];

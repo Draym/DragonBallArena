@@ -20,7 +20,7 @@ public class BackgroundSliding extends Background{
 
     @Override
     public void update() {
-        if (launched == true) {
+        if (this.launched) {
             for (Pair<Integer, Integer> pos : this.positions) {
                 pos.setV2((int) Math.ceil(((float) pos.getV2() + (this.speed * (GlobalVariable.currentTimeLoop / 1000)))));
             }

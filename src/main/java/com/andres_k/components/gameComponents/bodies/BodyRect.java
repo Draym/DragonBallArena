@@ -43,7 +43,7 @@ public class BodyRect {
         } else if (this.type == EnumGameObject.BLOCK_BODY) {
             g.setColor(Color.green);
         }
-        g.draw(this.getFlippedBody(haveToFlip, container, posX, posY));
+        g.draw(this.getFlippedRect(haveToFlip, container, posX, posY));
     }
 
     public void addCollision(UUID id) {
@@ -66,7 +66,7 @@ public class BodyRect {
         return this.id;
     }
 
-    public Shape getFlippedBody(boolean haveToFlip, Rectangle container, float posX, float posY) {
+    public Shape getFlippedRect(boolean haveToFlip, Rectangle container, float posX, float posY) {
         Pair<Float, Float> newPoint = new Pair<>(this.positions.getV1() + posX, this.positions.getV2() + posY);
 
         if (haveToFlip)

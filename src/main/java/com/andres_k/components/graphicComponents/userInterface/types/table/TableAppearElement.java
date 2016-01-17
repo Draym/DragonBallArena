@@ -6,7 +6,7 @@ import com.andres_k.components.graphicComponents.userInterface.items.tools.Color
 import com.andres_k.components.networkComponents.networkSend.messageInterface.MessageRoundStart;
 import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.tools.ConsoleWrite;
+import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -21,7 +21,7 @@ public class TableAppearElement extends TableElement {
     // FUNCTION
     @Override
     public void doTask(Object task) throws SlickException {
-        ConsoleWrite.debug("\nReceived in " + this.type + " -> " + task);
+        Console.debug("\nReceived in " + this.type + " -> " + task);
         if (task instanceof Element) {
             this.addElement((Element) task);
         } else if (task instanceof Pair) {

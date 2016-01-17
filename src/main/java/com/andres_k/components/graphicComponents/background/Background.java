@@ -30,7 +30,7 @@ public class Background {
 
     // FUNCTIONS
     public void draw(Graphics g) {
-        if (launched == true)
+        if (this.launched)
             for (int i = 0; i < this.images.size(); ++i) {
                 g.drawImage(this.images.get(i), this.positions.get(i).getV1(), this.positions.get(i).getV2());
             }

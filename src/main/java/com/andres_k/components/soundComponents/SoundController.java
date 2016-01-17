@@ -17,7 +17,7 @@ public class SoundController {
     private static float maxVolume;
 
     public static void init() {
-        if (needInit == true) {
+        if (needInit) {
             sounds = new ArrayList<>();
             pitch = 1.0f;
             volume = 1.0f;
@@ -27,9 +27,9 @@ public class SoundController {
     }
 
     public static void clearSounds() {
-        if (needInit == false) {
+        if (!needInit) {
             for (int i = 0; i < sounds.size(); ++i) {
-                if (sounds.get(i).getSound().playing() == false) {
+                if (!sounds.get(i).getSound().playing()) {
                     sounds.remove(i);
                     --i;
                 }
@@ -38,22 +38,20 @@ public class SoundController {
     }
 
     public static void update() {
-        if (needInit == false) {
+        if (!needInit) {
             clearSounds();
         }
     }
 
     public static String play(EnumSound value) {
-        if (needInit == false) {
+        if (!needInit) {
             try {
                 Sound sound = new Sound(value.getPath());
-                if (sound != null) {
-                    SoundElement soundElement = new SoundElement(sound, value);
-                    sounds.add(soundElement);
+                SoundElement soundElement = new SoundElement(sound, value);
+                sounds.add(soundElement);
 
-                    soundElement.getSound().play(pitch, volume);
-                    return soundElement.getId();
-                }
+                soundElement.getSound().play(pitch, volume);
+                return soundElement.getId();
             } catch (SlickException e) {
                 e.printStackTrace();
             }
@@ -62,7 +60,7 @@ public class SoundController {
     }
 
     public static String loop(EnumSound value) {
-        if (needInit == false) {
+        if (!needInit) {
             try {
                 Sound sound = new Sound(value.getPath());
                 SoundElement soundElement = new SoundElement(sound, value);
@@ -78,7 +76,7 @@ public class SoundController {
     }
 
     public static boolean stop(String id) {
-        if (needInit == false) {
+        if (!needInit) {
             for (SoundElement element : sounds) {
                 if (element.getId().equals(id)) {
                     element.getSound().stop();

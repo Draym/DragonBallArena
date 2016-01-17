@@ -1,7 +1,7 @@
 package com.andres_k.components.eventComponent.events;
 
 import com.andres_k.components.eventComponent.input.EnumInput;
-import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.Console;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,12 +14,26 @@ import java.util.Map;
 public class EventController {
     private HashMap<EnumInput, Boolean> activatedEvent;
     private List<EnumInput> eventHistory;
-    private List<Pair<EnumInput, EnumInput>> eventStack;
+    private List<EnumInput> eventStack;
+    private List<EnumInput> validToHistory;
 
     public EventController() {
         this.activatedEvent = new HashMap<>();
         this.eventHistory = new ArrayList<>();
         this.eventStack = new ArrayList<>();
+        this.validToHistory = new ArrayList<>();
+        this.validToHistory.add(EnumInput.MOVE_UP);
+        this.validToHistory.add(EnumInput.MOVE_DOWN);
+        this.validToHistory.add(EnumInput.MOVE_RIGHT);
+        this.validToHistory.add(EnumInput.MOVE_LEFT);
+    }
+
+    public void reset() {
+        for (Map.Entry<EnumInput, Boolean> entry : this.activatedEvent.entrySet()) {
+            entry.setValue(false);
+        }
+        this.eventHistory.clear();
+        this.eventStack.clear();
     }
 
     // SETTERS
@@ -31,12 +45,17 @@ public class EventController {
         if (this.activatedEvent.containsKey(event)) {
             this.activatedEvent.put(event, value);
             if (value) {
-                this.eventHistory.add(0, event);
-                this.eventStack.add(new Pair<>(EnumInput.PRESSED, event));
+                if (this.validToHistory.contains(event)) {
+                    this.eventHistory.add(0, event);
+                }
+                this.eventStack.add(event);
             } else {
-                if (this.eventHistory.lastIndexOf(event) != -1)
+                if (this.eventHistory.contains(event)) {
                     this.eventHistory.remove(this.eventHistory.lastIndexOf(event));
-                this.eventStack.add(new Pair<>(EnumInput.RELEASED, event));
+                }
+                if (this.eventStack.contains(event)) {
+                    this.eventStack.remove(this.eventStack.indexOf(event));
+                }
             }
         }
     }
@@ -75,13 +94,24 @@ public class EventController {
     }
 
     public EnumInput getTheLastEvent() {
-        if (this.eventHistory.size() > 0)
+        if (this.eventHistory.size() > 0) {
             return this.eventHistory.get(0);
-        else
+        } else {
             return EnumInput.NOTHING;
+        }
     }
 
-    public List<Pair<EnumInput, EnumInput>> getEventStack() {
-        return this.eventStack;
+    public EnumInput consumeStackEvent() {
+        if (this.eventStack.size() > 0) {
+            return this.eventStack.remove(0);
+        } else {
+            return EnumInput.NOTHING;
+        }
+    }
+
+    public void addStackEvent(EnumInput input)
+    {
+        Console.write("input: " + input);
+        this.eventStack.add(input);
     }
 }

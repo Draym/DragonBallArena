@@ -11,10 +11,10 @@ import org.newdawn.slick.Color;
  * Created by andres_k on 18/11/2015.
  */
 public class Animator {
-    private Animation animation;
-    private BodyAnimation body;
-    private AnimatorConfig config;
-    private Color filter;
+    protected Animation animation;
+    protected BodyAnimation body;
+    protected AnimatorConfig config;
+    protected Color filter;
 
     public Animator() {
         this.animation = null;
@@ -38,6 +38,10 @@ public class Animator {
     public void doAction(GameObject object, int frame) {
         if (config != null)
             this.config.doAction(object, frame);
+    }
+
+    public void update(long delta) {
+        this.animation.update(delta);
     }
 
     public void restart() {
@@ -85,4 +89,5 @@ public class Animator {
     public Color getFilter() {
         return this.filter;
     }
+
 }

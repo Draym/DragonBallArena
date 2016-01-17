@@ -16,7 +16,7 @@ import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.configs.CurrentUser;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
-import com.andres_k.utils.tools.ConsoleWrite;
+import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -137,12 +137,12 @@ public class ChatElement extends InterfaceElement {
             Object result = this.stringListElement.isOnFocus(x, y);
             if (result instanceof Element) {
                 //todo catach l'element et l'envoyer au selectField pour envois de message by id
-                ConsoleWrite.debug("element CATCH");
+                Console.debug("element CATCH");
                 this.selectionStringField.doTask(new Pair<>(EnumTask.SEND_TO, ((Element) result).getId()));
                 return result;
             }
             if (this.selectionStringField.isOnFocus(x, y) != null) {
-                ConsoleWrite.debug("selection CATCH");
+                Console.debug("selection CATCH");
                 return true;
             }
         }

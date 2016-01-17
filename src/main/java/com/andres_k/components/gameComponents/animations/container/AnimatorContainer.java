@@ -71,6 +71,10 @@ public class AnimatorContainer {
         }
     }
 
+    public Animator getCurrentAnimator() {
+        return this.animators.get(this.index);
+    }
+
     public Animation getCurrentAnimation() {
         return this.animators.get(this.index).getAnimation();
     }

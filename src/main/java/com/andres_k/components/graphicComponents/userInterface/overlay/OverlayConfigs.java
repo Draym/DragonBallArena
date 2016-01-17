@@ -82,12 +82,12 @@ public class OverlayConfigs {
     }
 
     // SETTERS
-    public boolean setAvailableInput(EnumOverlayElement type, boolean[] value) {
+    public boolean setAvailableInput(EnumOverlayElement type, boolean[] values) {
         if (this.availablePreference.containsKey(type)) {
-            this.availablePreference.replace(type, value);
+            this.availablePreference.replace(type, values);
             JSONArray array = new JSONArray();
-            for (int i = 0; i < value.length; ++i) {
-                array.put(value[i]);
+            for (boolean value : values) {
+                array.put(value);
             }
             try {
                 this.configPreference.put(type.getValue(), array);

@@ -1,12 +1,12 @@
 package com.andres_k.components.controllers;
 
+import com.andres_k.components.eventComponent.input.EnumInput;
+import com.andres_k.components.eventComponent.input.InputGame;
 import com.andres_k.components.gameComponents.animations.data.AnimatorGameData;
 import com.andres_k.components.gameComponents.gameObject.GameObjectController;
 import com.andres_k.components.graphicComponents.background.Background;
 import com.andres_k.components.graphicComponents.background.BackgroundEnum;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
-import com.andres_k.components.eventComponent.input.EnumInput;
-import com.andres_k.components.eventComponent.input.InputGame;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.networkComponents.networkSend.messageInterface.MessageGameNew;
 import com.andres_k.components.networkComponents.networkSend.messageInterface.MessageOverlayMenu;
@@ -84,6 +84,16 @@ public class GameController extends WindowController {
         this.background.init();
     }
 
+    public void restart() {
+        this.leave();
+        try {
+            this.enter();
+        } catch (SlickException e) {
+            e.printStackTrace();
+            this.window.quit();
+        }
+    }
+
     @Override
     public void renderWindow(Graphics g) {
         this.background.draw(g);
@@ -108,7 +118,7 @@ public class GameController extends WindowController {
     @Override
     public void keyPressed(int key, char c) {
         if (this.running) {
-            EnumInput result = this.inputGame.checkInput(key, EnumInput.PRESSED);
+            EnumInput result = this.inputGame.checkInput(key);
             this.gameObjectController.event(EnumInput.KEY_PRESSED, result);
         }
     }
@@ -116,17 +126,11 @@ public class GameController extends WindowController {
     @Override
     public void keyReleased(int key, char c) {
         if ((!this.running && this.gameObjectController.isTheEndOfTheGame()) && key == Input.KEY_ENTER) {
-            this.leave();
-            try {
-                this.enter();
-            } catch (SlickException e) {
-                e.printStackTrace();
-                this.window.quit();
-            }
+            this.restart();
         }
 
         if (this.running) {
-            EnumInput result = this.inputGame.checkInput(key, EnumInput.RELEASED);
+            EnumInput result = this.inputGame.checkInput(key);
             this.gameObjectController.event(EnumInput.KEY_RELEASED, result);
         }
     }
@@ -154,9 +158,7 @@ public class GameController extends WindowController {
                     List<String> values = ((MessageGameNew) received.getV3()).getValues();
 
                     this.playerNames.clear();
-                    for (int i = 0; i < values.size(); ++i) {
-                        this.playerNames.add(values.get(i));
-                    }
+                    this.playerNames.addAll(values);
 
                     this.stateWindow.enterState(EnumWindow.GAME.getValue());
                 } else if (received.getV3() instanceof MessageOverlayMenu) {

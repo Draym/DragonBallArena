@@ -43,7 +43,7 @@ public class ImageListElement extends ListElement {
         boolean removed = false;
 
         for (int i = 0; i < this.elements.size(); ++i) {
-            if (this.elements.get(i).isActivated() == false) {
+            if (!this.elements.get(i).isActivated()) {
                 this.elements.remove(i);
                 removed = true;
                 --i;
@@ -60,8 +60,8 @@ public class ImageListElement extends ListElement {
     @Override
     public void addAllToPrint(List<Object> messageData, Element.PositionInBody positionInBody) {
         this.elements.clear();
-        for (int i = 0; i < messageData.size(); ++i) {
-            this.addToPrint(messageData.get(i), positionInBody);
+        for (Object message : messageData) {
+            this.addToPrint(message, positionInBody);
         }
     }
 
@@ -84,10 +84,10 @@ public class ImageListElement extends ListElement {
 
     @Override
     public Object isOnFocus(float x, float y) {
-        for (int i = 0; i < this.elements.size(); ++i) {
-            if (this.elements.get(i).isOnFocus(x, y) != null) {
-                if (this.elements.get(i).isEmpty() == false) {
-                    return elements.get(i);
+        for (Element element : this.elements) {
+            if (element.isOnFocus(x, y) != null) {
+                if (!element.isEmpty()) {
+                    return element;
                 }
             }
         }

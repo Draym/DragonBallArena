@@ -4,9 +4,9 @@ import com.andres_k.components.eventComponent.events.EventController;
 import com.andres_k.components.eventComponent.input.EnumInput;
 import com.andres_k.components.gameComponents.animations.EnumAnimation;
 import com.andres_k.components.gameComponents.animations.container.AnimatorController;
+import com.andres_k.components.gameComponents.collisions.PhysicalObject;
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
-import com.andres_k.components.gameComponents.gameObject.GameObject;
-import com.andres_k.components.gameComponents.gameObject.commands.combo.ComboController;
+import com.andres_k.components.gameComponents.gameObject.commands.comboComponent.ComboController;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EnumDirection;
 import com.andres_k.components.taskComponent.EnumTask;
 import com.andres_k.utils.stockage.Pair;
@@ -14,47 +14,62 @@ import com.andres_k.utils.stockage.Pair;
 /**
  * Created by andres_k on 10/07/2015.
  */
-public class Player extends GameObject {
+public class Player extends PhysicalObject {
     protected EventController event;
-    protected ComboController combos;
+    protected ComboController comboController;
     private long score;
 
     public Player(AnimatorController animatorController, EnumGameObject type, String id, float x, float y, float life, float damage, float speed, float weight) {
-        super(animatorController, id, type, new Pair<>(x, y), life, damage, speed, weight);
+        super(animatorController, type, id, x, y, life, damage, speed, weight);
 
         this.event = new EventController();
         this.event.addEvent(EnumInput.MOVE_UP);
         this.event.addEvent(EnumInput.MOVE_DOWN);
         this.event.addEvent(EnumInput.MOVE_LEFT);
         this.event.addEvent(EnumInput.MOVE_RIGHT);
+        this.event.addEvent(EnumInput.ATTACK_A);
+        this.event.addEvent(EnumInput.ATTACK_B);
 
-        this.combos = new ComboController();
+
+        try {
+            this.comboController = new ComboController(this.type);
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+            this.comboController = null;
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void clear() {
-
+        this.resetActions();
     }
 
     @Override
     public void update() {
+        this.comboController.update();
         this.animatorController.doCurrentAction(this);
         this.movement.update();
-        if (this.animatorController.canSwitchCurrent()) {
-            if (this.event.allInactive()) {
-                this.moveFall();
-            } else {
-                this.executeLastEvent();
-            }
+        if (this.event.allInactive()) {
+            this.moveFall();
+        } else {
+            this.executeEvent();
         }
         this.updateAnimation();
+    }
+
+    @Override
+    public void resetActions() {
+        this.comboController.reset();
+        this.event.reset();
     }
 
     // ACTIONS
 
     private boolean moveFall() {
-        if (!this.isOnEarth() && this.animatorController.currentAnimationType() != EnumAnimation.FALL) {
-            this.animatorController.setCurrent(EnumAnimation.FALL);
+        if (!this.isOnEarth()
+                && this.animatorController.currentAnimationType() != EnumAnimation.FALL
+                && this.animatorController.canSwitchCurrent()) {
+            this.animatorController.changeAnimation(EnumAnimation.FALL);
             this.movement.resetGravity();
             return true;
         }
@@ -62,10 +77,11 @@ public class Player extends GameObject {
     }
 
     private boolean moveRight() {
-        if (this.animatorController.canSwitchCurrent() && (this.movement.getMoveDirection() != EnumDirection.RIGHT || this.animatorController.currentAnimationType() != EnumAnimation.RUN)) {
+        if (this.movement.getMoveDirection() != EnumDirection.RIGHT || this.animatorController.currentAnimationType() != EnumAnimation.RUN) {
             this.animatorController.setEyesDirection(EnumDirection.RIGHT);
-            this.animatorController.setCurrent(EnumAnimation.RUN);
+            this.animatorController.changeAnimation(EnumAnimation.RUN);
             this.movement.setMoveDirection(EnumDirection.RIGHT);
+            this.event.addStackEvent(EnumInput.MOVE_RIGHT);
             if (this.event.isActivated(EnumInput.MOVE_UP))
                 this.moveUp();
             return true;
@@ -74,10 +90,11 @@ public class Player extends GameObject {
     }
 
     private boolean moveLeft() {
-        if (this.animatorController.canSwitchCurrent() && (this.movement.getMoveDirection() != EnumDirection.LEFT || this.animatorController.currentAnimationType() != EnumAnimation.RUN)) {
+        if (this.movement.getMoveDirection() != EnumDirection.LEFT || this.animatorController.currentAnimationType() != EnumAnimation.RUN) {
             this.animatorController.setEyesDirection(EnumDirection.LEFT);
-            this.animatorController.setCurrent(EnumAnimation.RUN);
+            this.animatorController.changeAnimation(EnumAnimation.RUN);
             this.movement.setMoveDirection(EnumDirection.LEFT);
+            this.event.addStackEvent(EnumInput.MOVE_LEFT);
             if (this.event.isActivated(EnumInput.MOVE_UP))
                 this.moveUp();
             return true;
@@ -86,26 +103,23 @@ public class Player extends GameObject {
     }
 
     private boolean moveDown() {
-        if (this.animatorController.canSwitchCurrent()) {
-            if (this.isOnEarth())
-                this.animatorController.setCurrent(EnumAnimation.DEFENSE);
-            else
-                this.animatorController.setCurrent(EnumAnimation.FALL);
-        }
-        return false;
+        if (this.isOnEarth())
+            this.animatorController.changeAnimation(EnumAnimation.DEFENSE);
+        else
+            this.animatorController.changeAnimation(EnumAnimation.FALL);
+        this.event.addStackEvent(EnumInput.MOVE_DOWN);
+        return true;
     }
 
     private boolean moveUp() {
-        if (this.animatorController.canSwitchCurrent()) {
-            this.changeDirection();
-            this.animatorController.setCurrent(EnumAnimation.JUMP);
-            if (!this.isOnEarth())
-                this.animatorController.setIndex(1);
-            this.setOnEarth(false);
-            this.movement.resetGravity();
-            return true;
-        }
-        return false;
+        this.changeDirection();
+        this.animatorController.changeAnimation(EnumAnimation.JUMP);
+        if (!this.isOnEarth())
+            this.animatorController.setCurrentAnimationIndex(1);
+        this.setOnEarth(false);
+        this.movement.resetGravity();
+        this.event.addStackEvent(EnumInput.MOVE_UP);
+        return true;
     }
 
     private void changeDirection() {
@@ -119,32 +133,50 @@ public class Player extends GameObject {
         }
     }
 
-    private void executeLastEvent() {
-        EnumInput last = this.event.getTheLastEvent();
+    private boolean executeEvent() {
+        return this.executeLastActionEvent() || this.executeLastDirectionEvent();
+    }
 
-        if (last == EnumInput.MOVE_RIGHT) {
-            this.moveRight();
-        } else if (last == EnumInput.MOVE_LEFT) {
-            this.moveLeft();
-        } else if (last == EnumInput.MOVE_DOWN) {
-            this.moveDown();
-        } else if (last == EnumInput.MOVE_UP) {
-            this.moveUp();
+    private boolean executeLastDirectionEvent() {
+        if (this.animatorController.canSwitchCurrent()) {
+            EnumInput last = this.event.getTheLastEvent();
+
+            if (last != EnumInput.NOTHING) {
+                if (last == EnumInput.MOVE_RIGHT) {
+                    return this.moveRight();
+                } else if (last == EnumInput.MOVE_LEFT) {
+                    return this.moveLeft();
+                } else if (last == EnumInput.MOVE_DOWN) {
+                    return this.moveDown();
+                } else if (last == EnumInput.MOVE_UP) {
+                    return this.moveUp();
+                }
+            }
         }
+        return false;
+    }
+
+    private boolean executeLastActionEvent() {
+        EnumInput last = this.event.consumeStackEvent();
+
+        if (last != EnumInput.NOTHING && this.comboController != null) {
+            return this.comboController.nextComboStep(this.animatorController, last);
+        }
+        return false;
     }
 
     // EVENT
     @Override
     public void eventPressed(EnumInput input) {
         if (this.isAlive()) {
-            this.event.setActivated(input.returnContainer(), true);
+            this.event.setActivated(input.getContainer(), true);
         }
     }
 
     @Override
     public void eventReleased(EnumInput input) {
         if (this.isAlive()) {
-            this.event.setActivated(input.returnContainer(), false);
+            this.event.setActivated(input.getContainer(), false);
         }
     }
 

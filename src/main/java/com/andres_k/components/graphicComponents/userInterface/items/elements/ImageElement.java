@@ -165,7 +165,7 @@ public class ImageElement extends Element {
 
             if (order == EnumTask.SETTER) {
                 if (target.equals("index") && value instanceof Integer && this.animatorController != null) {
-                    this.animatorController.setIndex((Integer) value);
+                    this.animatorController.setCurrentAnimationIndex((Integer) value);
                 }
             } else if (order == EnumTask.CUT) {
                 if (target.equals("body") && value instanceof Float) {
@@ -185,7 +185,7 @@ public class ImageElement extends Element {
                 }
             } else if (order == EnumTask.EVENT) {
                 if (target instanceof Integer && (int) target <= Input.KEY_NUMPAD9 && (int) target >= Input.KEY_NUMPAD0) {
-                    this.animatorController.setIndex((Integer) value);
+                    this.animatorController.setCurrentAnimationIndex((Integer) value);
                 }
             }
 

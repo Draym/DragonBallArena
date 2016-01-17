@@ -58,6 +58,7 @@ public class NetworkController {
         if (this.client.isConnected()) {
             this.client.sendTCP(request);
         }*/
+        //faire le mode offline avec:
         this.masterTask.sendTask(TaskFactory.createTask(EnumTargetTask.SERVER_MESSAGE, EnumTargetTask.GAME, request));
     }
 

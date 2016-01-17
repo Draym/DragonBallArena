@@ -5,18 +5,41 @@ package com.andres_k.components.gameComponents.animations;
  * Created by andres_k on 13/03/2015.
  */
 public enum EnumAnimation {
+    // STATE
+    NULL(true),
     IDLE(true),
     EXPLODE(false),
+
+    // MOVE
     RUSH(true),
     RUN(true),
     JUMP(false),
-    DEFENSE(false),
-    BLOCK(false),
     FALL(true),
     RECEIPT(false),
 
-    // attacks
-    HAND_ATTACK(false);
+    // DEFENSE
+    DEFENSE(false),
+    BLOCK(false),
+
+    // TOUCHED
+    TOUCHED_SIMPLE(false),
+    TOUCHED_MEDIUM(false),
+    TOUCHED_PROPELS(false),
+    TOUCHED_FLIP(false),
+    TOUCHED_FALL(true),
+    TOUCHED_RECEIPT(false),
+
+    // ATTACK
+    HAND_ATTACK(false),
+    HAND_FLY_PROPELS(false),
+
+    // SPE ATTACK
+
+    // ULTIMATE ATTACK
+
+    // FINAL
+    WIN(false),
+    LOSE(false);
 
     private boolean loop;
 
@@ -30,9 +53,7 @@ public enum EnumAnimation {
 
     public static boolean checkLoop(EnumAnimation value) {
         EnumAnimation[] enums = EnumAnimation.values();
-        int enumsNumber = enums.length;
-        for (int i = 0; i < enumsNumber; i++) {
-            EnumAnimation type = enums[i];
+        for (EnumAnimation type : enums) {
             if (type.equals(value)) {
                 return type.isLoop();
             }

@@ -65,10 +65,10 @@ public class StringToImageElement extends Element {
     private void drawImages(Graphics g, float x, float y) {
         int addY;
         int addX = 25;
-        for (int i = 0; i < this.images.size(); ++i) {
-            Animation tmp = this.animatorController.getAnimation(this.animatorController.currentAnimationType(), this.images.get(i));
+        for (Integer image : this.images) {
+            Animation tmp = this.animatorController.getAnimation(this.animatorController.currentAnimationType(), image);
             if (tmp != null) {
-                if (this.images.get(i) == this.alphabet[1].indexOf("-") + 10) {
+                if (image == this.alphabet[1].indexOf("-") + 10) {
                     addY = 10;
                     addX = 25;
                 } else {
@@ -248,10 +248,7 @@ public class StringToImageElement extends Element {
 
     @Override
     public boolean isEmpty() {
-        if (this.animatorController == null || this.animatorController.isDeleted()) {
-            return true;
-        }
-        return false;
+        return (this.animatorController == null || this.animatorController.isDeleted());
     }
 
     @Override
@@ -262,8 +259,8 @@ public class StringToImageElement extends Element {
     @Override
     public float getAbsoluteWidth() {
         float size = 0;
-        for (int i = 0; i < this.images.size(); ++i) {
-            Animation tmp = this.animatorController.getAnimation(this.animatorController.currentAnimationType(), this.images.get(i));
+        for (Integer image : this.images) {
+            Animation tmp = this.animatorController.getAnimation(this.animatorController.currentAnimationType(), image);
             if (tmp != null) {
                 size += tmp.getWidth() - 4;
             } else {
@@ -276,8 +273,8 @@ public class StringToImageElement extends Element {
     @Override
     public float getAbsoluteHeight() {
         float size = 0;
-        for (int i = 0; i < this.images.size(); ++i) {
-            Animation tmp = this.animatorController.getAnimation(this.animatorController.currentAnimationType(), this.images.get(i));
+        for (Integer image : this.images) {
+            Animation tmp = this.animatorController.getAnimation(this.animatorController.currentAnimationType(), image);
             if (tmp != null) {
                 if (size < tmp.getHeight())
                     size = tmp.getHeight();

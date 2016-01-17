@@ -1,7 +1,7 @@
 package com.andres_k.components.controllers;
 
 import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.tools.ConsoleWrite;
+import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.StringTools;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
@@ -20,7 +20,7 @@ public class ScoreData {
     private static String file;
 
     public static void init(String file) throws JSONException {
-        ConsoleWrite.debug("file: " + file);
+        Console.debug("file: " + file);
         dataScore = new ArrayList<>();
         configs = new JSONObject(StringTools.readFile(file));
         ScoreData.file = file;
@@ -43,13 +43,13 @@ public class ScoreData {
             int compare = -1;
             for (int i = 0; i < dataScore.size(); ++i){
                 if (compare != -1 && compare < Integer.valueOf(dataScore.get(i).getV2())) {
-                    Pair save = new Pair<>(dataScore.get(i).getV1(), dataScore.get(i).getV2());
+                    Pair<String, String> save = new Pair<>(dataScore.get(i).getV1(), dataScore.get(i).getV2());
                     dataScore.remove(i);
                     dataScore.add(i - 1, save);
                 }
-                ConsoleWrite.debug("\n");
-                for (int i2 = 0; i2 < dataScore.size(); ++i2){
-                    ConsoleWrite.debug(dataScore.get(i2).toString());
+                Console.debug("\n");
+                for (Pair<String, String> score : dataScore) {
+                    Console.debug(score.toString());
                 }
                 compare = Integer.valueOf(dataScore.get(i).getV2());
             }
@@ -59,11 +59,11 @@ public class ScoreData {
     public static boolean isParsed() {
         int compare = -1;
 
-        for (int i = 0; i < dataScore.size(); ++i){
-            if (compare != -1 && compare < Integer.valueOf(dataScore.get(i).getV2())) {
+        for (Pair<String, String> score : dataScore) {
+            if (compare != -1 && compare < Integer.valueOf(score.getV2())) {
                 return false;
             }
-            compare = Integer.valueOf(dataScore.get(i).getV2());
+            compare = Integer.valueOf(score.getV2());
         }
         return true;
     }

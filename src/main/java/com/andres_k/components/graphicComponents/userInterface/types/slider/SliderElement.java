@@ -6,7 +6,7 @@ import com.andres_k.components.graphicComponents.userInterface.items.elements.El
 import com.andres_k.components.graphicComponents.userInterface.items.tools.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.items.listElements.ListElement;
 import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.tools.ConsoleWrite;
+import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
@@ -60,11 +60,11 @@ public class SliderElement extends InterfaceElement {
         if (task instanceof Pair && ((Pair) task).getV1() instanceof EnumOverlayElement && ((Pair) task).getV2() instanceof Element) {
 
             if (this.elements.containsKey(((Pair) task).getV1())) {
-                ConsoleWrite.debug("Add new String: " + ((Element) ((Pair) task).getV2()).getType());
+                Console.debug("Add new String: " + ((Element) ((Pair) task).getV2()).getType());
                 this.elements.get(((Pair) task).getV1()).addToPrint(((Pair) task).getV2(), Element.PositionInBody.LEFT_MID);
             }
         } else if (task instanceof Pair && ((Pair) task).getV1() instanceof EnumOverlayElement && ((Pair) task).getV2() instanceof ListElement) {
-            ConsoleWrite.debug("Add new List: " + ((Pair) task).getV2());
+            Console.debug("Add new List: " + ((Pair) task).getV2());
             ((ListElement) ((Pair) task).getV2()).getBody().setPrintable(false);
             this.elements.put((EnumOverlayElement) ((Pair) task).getV1(), (ListElement) ((Pair) task).getV2());
         } else {
