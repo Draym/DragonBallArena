@@ -4,7 +4,8 @@ package com.andres_k.components.graphicComponents.background;
  * Created by andres_k on 12/10/2015.
  */
 public enum BackgroundEnum {
-    ARENA_DAY("arenaday", "image/background/backgroundArenaDay1.png");
+    ARENA_DAY("arenaday", "image/background/backgroundArenaDay1.png"),
+    VALLEY_DAY("valley", "image/background/backgroundValley1.png");
 
     private String name;
     private String path;

@@ -42,11 +42,10 @@ public class GameObjectController extends Observable {
     }
 
     public void initWorld() throws SlickException {
-        this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item1:ground", 640, 640));
-        // this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item5:ground", 300, 300));
-        this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item2:sky", 640, -1));
-        this.obstacles.add(GameObjectFactory.create(EnumGameObject.BORDER, this.animatorGameData.getAnimator(EnumGameObject.WALL), "item3:leftWall", 0, 340));
-        this.obstacles.add(GameObjectFactory.create(EnumGameObject.BORDER, this.animatorGameData.getAnimator(EnumGameObject.WALL), "item4:rightWall", 1280, 340));
+        this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item1:ground", 950, 900));
+        this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item2:sky", 950, 0));
+        this.obstacles.add(GameObjectFactory.create(EnumGameObject.BORDER, this.animatorGameData.getAnimator(EnumGameObject.WALL), "item3:leftWall", 0, 475));
+        this.obstacles.add(GameObjectFactory.create(EnumGameObject.BORDER, this.animatorGameData.getAnimator(EnumGameObject.WALL), "item4:rightWall", 1900, 475));
     }
 
     // FUNCTIONS
@@ -56,13 +55,9 @@ public class GameObjectController extends Observable {
     }
 
     public void leave() {
-        for (GameObject player : this.players) {
-            player.clear();
-        }
+        this.players.forEach(GameObject::clear);
         this.players.clear();
-        for (GameObject object : this.obstacles) {
-            object.clear();
-        }
+        this.obstacles.forEach(GameObject::clear);
         this.obstacles.clear();
     }
 

@@ -1,25 +1,25 @@
 {
   "path": "ground.png",
   "spriteNumber": 1,
-  "spriteSizeX": 1280,
-  "spriteSizeY": 20,
+  "spriteSizeX": 1900,
+  "spriteSizeY": 60,
   "sprites": [
     {
       "SpritePosX": 0,
       "SpritePosY": 0,
-      "SpriteSizeX": 1280,
-      "SpriteSizeY": 20,
+      "SpriteSizeX": 1900,
+      "SpriteSizeY": 60,
       "BodyPosX": 0,
       "BodyPosY": 0,
-      "BodySizeX": 1280,
-      "BodySizeY": 20,
+      "BodySizeX": 1900,
+      "BodySizeY": 60,
       "rectangles": [
         {
           "type": "blockBody",
           "posX": 0,
           "posY": 0,
-          "sizeX": 1280,
-          "sizeY": 20
+          "sizeX": 1900,
+          "sizeY": 60
         }
       ]
     }

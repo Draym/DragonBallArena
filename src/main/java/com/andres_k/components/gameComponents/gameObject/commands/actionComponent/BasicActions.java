@@ -61,7 +61,7 @@ public class BasicActions {
 
     public static void run(GameObject object) {
         object.getMovement().setUseGravity(true);
-        object.getMovement().addPushY(-0.1f);
+        object.getMovement().addPushY(-0.2f);
         object.getMovement().setPushY(0);
         if (object.getMovement().getMoveDirection() != EnumDirection.NONE) {
             object.getMovement().setPushX(GlobalVariable.speedTravel);

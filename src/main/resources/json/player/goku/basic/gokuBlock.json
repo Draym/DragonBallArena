@@ -1,1 +1,34 @@
-{"path":"gokuBlock.png","spriteNumber":1,"spriteSizeX":247,"spriteSizeY":247,"sprites":[{"SpritePosX":0,"SpritePosY":0,"SpriteSizeX":247,"SpriteSizeY":247,"BodyPosX":0.2597401738166809,"BodyPosY":139.22073364257812,"BodySizeX":90.12984466552734,"BodySizeY":107.272705078125,"rectangles":[{"type":"defenseBody","posX":0.9900987148284912,"posY":241.98011779785156,"sizeX":17.821775,"sizeY":4.1584167},{"type":"defenseBody","posX":67.52473449707031,"posY":237.8217010498047,"sizeX":19.40593,"sizeY":6.138611}]}]}
+{
+  "path": "gokuBlock.png",
+  "spriteNumber": 1,
+  "spriteSizeX": 247,
+  "spriteSizeY": 247,
+  "sprites": [
+    {
+      "SpritePosX": 0,
+      "SpritePosY": 0,
+      "SpriteSizeX": 247,
+      "SpriteSizeY": 247,
+      "BodyPosX": 0.2597401738166809,
+      "BodyPosY": 139.22073364257812,
+      "BodySizeX": 90.12984466552734,
+      "BodySizeY": 107.272705078125,
+      "rectangles": [
+        {
+          "type": "defenseBody",
+          "posX": 0.9900987148284912,
+          "posY": 241.98011779785156,
+          "sizeX": 17.821775,
+          "sizeY": 4.1584167
+        },
+        {
+          "type": "defenseBody",
+          "posX": 67.52473449707031,
+          "posY": 237.8217010498047,
+          "sizeX": 19.40593,
+          "sizeY": 6.138611
+        }
+      ]
+    }
+  ]
+}

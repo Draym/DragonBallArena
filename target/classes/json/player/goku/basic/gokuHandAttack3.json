@@ -1,1 +1,60 @@
-{"path":"gokuHandAttack3.png","spriteNumber":2,"spriteSizeX":247,"spriteSizeY":247,"sprites":[{"SpritePosX":0,"SpritePosY":0,"SpriteSizeX":247,"SpriteSizeY":247,"BodyPosX":0,"BodyPosY":149.27993774414062,"BodySizeX":127.6799545288086,"BodySizeY":97.43997192382812,"rectangles":[{"type":"defenseBody","posX":1.1199995279312134,"posY":236.63990783691406,"sizeX":9.439996,"sizeY":8.800003},{"type":"defenseBody","posX":61.11997604370117,"posY":232.63990783691406,"sizeX":15.519993,"sizeY":11.199997}]},{"SpritePosX":247,"SpritePosY":0,"SpriteSizeX":247,"SpriteSizeY":247,"BodyPosX":0.3599090576171875,"BodyPosY":144.6399383544922,"BodySizeX":87.35997009277344,"BodySizeY":101.91996765136719,"rectangles":[{"type":"defenseBody","posX":0.999908447265625,"posY":230.39991760253906,"sizeX":13.919983,"sizeY":15.519989},{"type":"defenseBody","posX":67.07989501953125,"posY":231.99990844726562,"sizeX":17.75998,"sizeY":11.839996}]}]}
+{
+  "path": "gokuHandAttack3.png",
+  "spriteNumber": 2,
+  "spriteSizeX": 247,
+  "spriteSizeY": 247,
+  "sprites": [
+    {
+      "SpritePosX": 0,
+      "SpritePosY": 0,
+      "SpriteSizeX": 247,
+      "SpriteSizeY": 247,
+      "BodyPosX": 0,
+      "BodyPosY": 149.27993774414062,
+      "BodySizeX": 127.6799545288086,
+      "BodySizeY": 97.43997192382812,
+      "rectangles": [
+        {
+          "type": "defenseBody",
+          "posX": 1.1199995279312134,
+          "posY": 236.63990783691406,
+          "sizeX": 9.439996,
+          "sizeY": 8.800003
+        },
+        {
+          "type": "defenseBody",
+          "posX": 61.11997604370117,
+          "posY": 232.63990783691406,
+          "sizeX": 15.519993,
+          "sizeY": 11.199997
+        }
+      ]
+    },
+    {
+      "SpritePosX": 247,
+      "SpritePosY": 0,
+      "SpriteSizeX": 247,
+      "SpriteSizeY": 247,
+      "BodyPosX": 0.3599090576171875,
+      "BodyPosY": 144.6399383544922,
+      "BodySizeX": 87.35997009277344,
+      "BodySizeY": 101.91996765136719,
+      "rectangles": [
+        {
+          "type": "defenseBody",
+          "posX": 0.999908447265625,
+          "posY": 230.39991760253906,
+          "sizeX": 13.919983,
+          "sizeY": 15.519989
+        },
+        {
+          "type": "defenseBody",
+          "posX": 67.07989501953125,
+          "posY": 231.99990844726562,
+          "sizeX": 17.75998,
+          "sizeY": 11.839996
+        }
+      ]
+    }
+  ]
+}

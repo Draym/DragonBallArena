@@ -28,7 +28,7 @@ public abstract class GameObject {
     protected float damage;
 
     protected GameObject(AnimatorController animatorController, EnumGameObject type, String id, Pair<Float, Float> pos, float life, float damage, float speed, float weight) {
-        this.movement = new MovementController(pos, 8, speed, weight, false);
+        this.movement = new MovementController(pos, 9.8f, speed, weight, false);
 
         this.alive = true;
         this.type = type;

@@ -7,8 +7,8 @@ package com.andres_k.utils.configs;
 public class WindowConfig {
     public static float w1_sX = 1280;
     public static float w1_sY = 697;
-    public static float w2_sX = 1280;
-    public static float w2_sY = 679;
+    public static float w2_sX = 1900;
+    public static float w2_sY = 950;
 
 
     public static int getW1SizeX() {

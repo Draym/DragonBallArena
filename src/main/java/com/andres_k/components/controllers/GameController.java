@@ -80,7 +80,7 @@ public class GameController extends WindowController {
         this.gameObjectController.init(this.animatorGameData);
 
         this.background = new Background();
-        this.background.addBackground(BackgroundEnum.ARENA_DAY);
+        this.background.addBackground(BackgroundEnum.VALLEY_DAY);
         this.background.init();
     }
 
