@@ -1,31 +1,51 @@
 package com.andres_k.components.graphicComponents.background;
 
+import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by andres_k on 10/07/2015.
  */
 public class BackgroundSliding extends Background{
 
+    protected List<Pair<Integer, Integer>> positions;
+    protected List<Image> images;
+
+    protected float backgroundSizeY;
     private float speed;
 
-    public BackgroundSliding(float speed) {
-        super();
+    public BackgroundSliding(AnimatorController animator, float speed) throws SlickException {
+        super(animator, 0, 0);
+        this.images = new ArrayList<>();
+        this.positions = new ArrayList<>();
+        this.ready = false;
         this.speed = speed;
     }
 
     @Override
+    public void draw(Graphics g) {
+        if (this.ready)
+            for (int i = 0; i < this.images.size(); ++i) {
+                g.drawImage(this.images.get(i), this.positions.get(i).getV1(), this.positions.get(i).getV2());
+            }
+    }
+
+    @Override
     public void update() {
-        if (this.launched) {
+        if (this.ready) {
             for (Pair<Integer, Integer> pos : this.positions) {
                 pos.setV2((int) Math.ceil(((float) pos.getV2() + (this.speed * (GlobalVariable.currentTimeLoop / 1000)))));
             }
             for (int i = 0; i < this.positions.size(); ++i) {
-                if (this.positions.get(i).getV2() > WindowConfig.w2_sY) {
+                if (this.positions.get(i).getV2() > WindowConfig.wBig_sY) {
                     int posPrev = i - 1;
                     posPrev = (posPrev < 0 ? this.positions.size() - 1 : posPrev);
 
@@ -37,15 +57,15 @@ public class BackgroundSliding extends Background{
 
     @Override
     public void instanceCurrentBackground() throws SlickException {
-        Image background = new Image(this.path.get(this.current));
+        Image background = animator.currentAnimation().getCurrentFrame();
 
         this.images.clear();
         this.positions.clear();
         this.backgroundSizeY = background.getHeight();
-        int number = (int) (WindowConfig.w2_sY / this.backgroundSizeY) + 2;
+        int number = (int) (WindowConfig.wBig_sY / this.backgroundSizeY) + 2;
 
         int x = 0;
-        int y = (int)(WindowConfig.w2_sY - this.backgroundSizeY);
+        int y = (int)(WindowConfig.wBig_sY - this.backgroundSizeY);
 
         y = (y < 0 ? 0 : y);
         for (int i = 0; i < number; ++i) {

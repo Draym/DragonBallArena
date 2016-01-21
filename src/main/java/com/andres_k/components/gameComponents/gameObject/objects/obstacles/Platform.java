@@ -1,6 +1,6 @@
 package com.andres_k.components.gameComponents.gameObject.objects.obstacles;
 
-import com.andres_k.components.gameComponents.animations.container.AnimatorController;
+import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.components.gameComponents.gameObject.objects.Obstacle;
 

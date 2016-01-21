@@ -1,7 +1,7 @@
 package com.andres_k.components.gameComponents.gameObject.commands.comboComponent;
 
 import com.andres_k.components.eventComponent.input.EnumInput;
-import com.andres_k.components.gameComponents.animations.container.AnimatorController;
+import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.comboComponent.components.ComboManager;
 import com.andres_k.utils.configs.GlobalVariable;

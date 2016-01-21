@@ -5,7 +5,7 @@ package com.andres_k.components.graphicComponents.graphic;
  */
 public enum EnumWindow {
     EXIT(-1),
-    HOME(0), GAME(1);
+    LOAD(0), HOME(1), GAME(2);
 
     private int value;
 

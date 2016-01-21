@@ -1,6 +1,5 @@
 package com.andres_k.components.graphicComponents.userInterface.overlay;
 
-import com.andres_k.components.gameComponents.animations.data.AnimatorOverlayData;
 import com.andres_k.components.eventComponent.input.EnumInput;
 import com.andres_k.components.graphicComponents.userInterface.types.InterfaceElement;
 import com.andres_k.components.taskComponent.GenericSendTask;
@@ -21,7 +20,6 @@ public abstract class Overlay extends Observable implements Observer {
     protected int current;
     protected OverlayConfigs overlayConfigs;
     protected Map<EnumOverlayElement, InterfaceElement> elements;
-    protected AnimatorOverlayData animatorOverlayData;
     protected GenericSendTask genericSendTask;
 
     protected Overlay() throws JSONException {
@@ -36,7 +34,7 @@ public abstract class Overlay extends Observable implements Observer {
 
     // INIT
     public abstract void initElements();
-    public abstract void initElementsComponent(AnimatorOverlayData animatorOverlayData) throws SlickException;
+    public abstract void initElementsComponent() throws SlickException;
 
     public void initPreference() {
         this.overlayConfigs.getAvailablePreference().entrySet().stream().filter(entry -> this.elements.containsKey(entry.getKey())).forEach(entry -> this.elements.get(entry.getKey()).setReachable(entry.getValue()));

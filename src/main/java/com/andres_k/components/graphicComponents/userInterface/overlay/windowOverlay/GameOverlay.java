@@ -1,17 +1,17 @@
 package com.andres_k.components.graphicComponents.userInterface.overlay.windowOverlay;
 
-import com.andres_k.components.gameComponents.animations.data.AnimatorOverlayData;
 import com.andres_k.components.eventComponent.input.EnumInput;
 import com.andres_k.components.eventComponent.input.InputData;
+import com.andres_k.components.gameComponents.resources.ResourceManager;
+import com.andres_k.components.graphicComponents.userInterface.items.elements.*;
+import com.andres_k.components.graphicComponents.userInterface.items.tools.ColorRect;
+import com.andres_k.components.graphicComponents.userInterface.items.tools.StringTimer;
+import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
+import com.andres_k.components.graphicComponents.userInterface.overlay.Overlay;
 import com.andres_k.components.graphicComponents.userInterface.types.InterfaceElement;
 import com.andres_k.components.graphicComponents.userInterface.types.generic.GenericElement;
 import com.andres_k.components.graphicComponents.userInterface.types.table.TableAppearElement;
 import com.andres_k.components.graphicComponents.userInterface.types.table.TableMenuElement;
-import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
-import com.andres_k.components.graphicComponents.userInterface.overlay.Overlay;
-import com.andres_k.components.graphicComponents.userInterface.items.elements.*;
-import com.andres_k.components.graphicComponents.userInterface.items.tools.ColorRect;
-import com.andres_k.components.graphicComponents.userInterface.items.tools.StringTimer;
 import com.andres_k.components.networkComponents.networkSend.MessageModel;
 import com.andres_k.components.networkComponents.networkSend.messageInterface.MessageOverlayChat;
 import com.andres_k.components.soundComponents.MusicController;
@@ -52,23 +52,21 @@ public class GameOverlay extends Overlay {
     @Override
     public void initElements() {
         this.elements.put(EnumOverlayElement.TABLE_ROUND_NEW, new TableAppearElement(EnumOverlayElement.TABLE_ROUND_NEW,
-                new ColorRect(new Rectangle((WindowConfig.w2_sX / 2) - 200, (WindowConfig.w2_sY / 2) - 250, 400, 200))));
+                new ColorRect(new Rectangle((WindowConfig.wBig_sX / 2) - 200, (WindowConfig.wBig_sY / 2) - 250, 400, 200))));
         this.elements.put(EnumOverlayElement.TABLE_ROUND_END, new GenericElement(EnumOverlayElement.TABLE_ROUND_END,
-                new ColorRect(new Rectangle(0, (WindowConfig.w2_sY / 2) - 250, WindowConfig.w2_sX, 200)), new Pair<>(false, true), false, new boolean[]{true, true}));
+                new ColorRect(new Rectangle(0, (WindowConfig.wBig_sY / 2) - 250, WindowConfig.wBig_sX, 200)), new Pair<>(false, true), false, new boolean[]{true, true}));
 
         this.elements.put(EnumOverlayElement.TABLE_MENU_CONTROLS, new TableMenuElement(EnumOverlayElement.TABLE_MENU_CONTROLS, this.genericSendTask,
-                new ColorRect(new Rectangle((WindowConfig.w2_sX / 2) - 350, (WindowConfig.w2_sY / 2) - 200, 700, 320), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY))));
+                new ColorRect(new Rectangle((WindowConfig.wBig_sX / 2) - 350, (WindowConfig.wBig_sY / 2) - 200, 700, 320), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY))));
         this.elements.put(EnumOverlayElement.TABLE_MENU_SETTINGS, new GenericElement(EnumOverlayElement.TABLE_MENU_SETTINGS,
-                new ColorRect(new Rectangle((WindowConfig.w2_sX / 2) - 150, (WindowConfig.w2_sY / 2) - 200, 300, 310), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)), new Pair<>(false, true), false, new boolean[]{true, true}));
+                new ColorRect(new Rectangle((WindowConfig.wBig_sX / 2) - 150, (WindowConfig.wBig_sY / 2) - 200, 300, 310), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)), new Pair<>(false, true), false, new boolean[]{true, true}));
 
         this.elements.put(EnumOverlayElement.TABLE_MENU, new GenericElement(EnumOverlayElement.TABLE_MENU, this.genericSendTask,
-                new ColorRect(new Rectangle((WindowConfig.w2_sX / 2) - 150, (WindowConfig.w2_sY / 2) - 200, 300, 240), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), new Pair<>(true, true), false, new boolean[]{true, true}));
+                new ColorRect(new Rectangle((WindowConfig.wBig_sX / 2) - 150, (WindowConfig.wBig_sY / 2) - 200, 300, 240), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), new Pair<>(true, true), false, new boolean[]{true, true}));
     }
 
     @Override
-    public void initElementsComponent(AnimatorOverlayData animatorOverlayData) throws SlickException {
-        this.animatorOverlayData = animatorOverlayData;
-
+    public void initElementsComponent() throws SlickException {
         this.initTableNewRound();
         this.initTableMenu();
         this.initTableMenuControls();
@@ -97,8 +95,8 @@ public class GameOverlay extends Overlay {
 
     private void initTableNewRound() throws SlickException {
         InterfaceElement tableNewRound = this.elements.get(EnumOverlayElement.TABLE_ROUND_NEW);
-        tableNewRound.doTask(new ImageElement(this.animatorOverlayData.getAnimator(EnumOverlayElement.NEW_ROUND), EnumOverlayElement.NEW_ROUND.getValue() + ":" + EnumOverlayElement.NEW_ROUND.getValue(), Element.PositionInBody.MIDDLE_UP));
-        tableNewRound.doTask(new ImageElement(this.animatorOverlayData.getAnimator(EnumOverlayElement.TIMER), EnumOverlayElement.NEW_ROUND.getValue() + ":" + EnumOverlayElement.TIMER.getValue(), Element.PositionInBody.MIDDLE_MID));
+        tableNewRound.doTask(new ImageElement(ResourceManager.get().getOverlayAnimator(EnumOverlayElement.NEW_ROUND), EnumOverlayElement.NEW_ROUND.getValue() + ":" + EnumOverlayElement.NEW_ROUND.getValue(), Element.PositionInBody.MIDDLE_UP));
+        tableNewRound.doTask(new ImageElement(ResourceManager.get().getOverlayAnimator(EnumOverlayElement.TIMER), EnumOverlayElement.NEW_ROUND.getValue() + ":" + EnumOverlayElement.TIMER.getValue(), Element.PositionInBody.MIDDLE_MID));
     }
 
     private void initTableEndRound() throws SlickException {
@@ -109,11 +107,11 @@ public class GameOverlay extends Overlay {
         float sizeX = tableNewRound.getBody().getSizeX();
 
         tableNewRound.doTask(new ImageElement(new ColorRect(new Rectangle(posX, posY, sizeX, 60)),
-                this.animatorOverlayData.getAnimator(EnumOverlayElement.END_GAME), EnumOverlayElement.END_GAME.getValue() + ":" + EnumOverlayElement.END_GAME.getValue(), Element.PositionInBody.MIDDLE_UP));
+                ResourceManager.get().getOverlayAnimator(EnumOverlayElement.END_GAME), EnumOverlayElement.END_GAME.getValue() + ":" + EnumOverlayElement.END_GAME.getValue(), Element.PositionInBody.MIDDLE_UP));
         posY += 110;
 
         for (int i = 0; i < GlobalVariable.currentPlayer; ++i) {
-            tableNewRound.doTask(new StringToImageElement(new ColorRect(new Rectangle(posX, posY, sizeX, 60)), this.animatorOverlayData.getAnimator(EnumOverlayElement.ALPHABET), "", EnumOverlayElement.SCORE.getValue() + String.valueOf(i), Element.PositionInBody.MIDDLE_MID));
+            tableNewRound.doTask(new StringToImageElement(new ColorRect(new Rectangle(posX, posY, sizeX, 60)), ResourceManager.get().getOverlayAnimator(EnumOverlayElement.ALPHABET), "", EnumOverlayElement.SCORE.getValue() + String.valueOf(i), Element.PositionInBody.MIDDLE_MID));
             posY += 50;
         }
     }
@@ -121,11 +119,11 @@ public class GameOverlay extends Overlay {
     private void initTableMenu() throws SlickException {
         InterfaceElement tableMenu = this.elements.get(EnumOverlayElement.TABLE_MENU);
         tableMenu.doTask(new ButtonElement(new ImageElement(new ColorRect(new Rectangle(tableMenu.getBody().getMinX() + 20, tableMenu.getBody().getMinY() + 20, tableMenu.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
-                this.animatorOverlayData.getAnimator(EnumOverlayElement.CONTROLS), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.TABLE_MENU_CONTROLS));
+                ResourceManager.get().getOverlayAnimator(EnumOverlayElement.CONTROLS), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.TABLE_MENU_CONTROLS));
         tableMenu.doTask(new ButtonElement(new ImageElement(new ColorRect(new Rectangle(tableMenu.getBody().getMinX() + 20, tableMenu.getBody().getMinY() + 90, tableMenu.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
-                this.animatorOverlayData.getAnimator(EnumOverlayElement.SETTINGS), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.TABLE_MENU_SETTINGS));
+                ResourceManager.get().getOverlayAnimator(EnumOverlayElement.SETTINGS), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.TABLE_MENU_SETTINGS));
         tableMenu.doTask(new ButtonElement(new ImageElement(new ColorRect(new Rectangle(tableMenu.getBody().getMinX() + 20, tableMenu.getBody().getMinY() + 160, tableMenu.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
-                this.animatorOverlayData.getAnimator(EnumOverlayElement.EXIT), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.EXIT));
+                ResourceManager.get().getOverlayAnimator(EnumOverlayElement.EXIT), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.EXIT));
     }
 
     private void initTableMenuControls() throws SlickException {

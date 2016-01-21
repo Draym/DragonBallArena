@@ -1,6 +1,7 @@
 package com.andres_k.components.soundComponents;
 
 import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
+import com.andres_k.utils.configs.ConfigPath;
 
 /**
  * Created by andres_k on 07/07/2015.
@@ -8,8 +9,12 @@ import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 public enum EnumSound {
     NOTHING(""),
     //music
-    BACKGROUND_HOME("music/backgroundHome.ogg"),
-    BACKGROUND_GAME("music/backgroundGame.ogg");
+    BACKGROUND_LOAD(ConfigPath.musics + "/DBZ_theme.ogg"),
+    BACKGROUND_HOME(ConfigPath.musics + "/DBZ_namek.ogg"),
+    BACKGROUND_MULTI(ConfigPath.musics + "/DBZ_embraceBlueSky.ogg"),
+    BACKGROUND_CREDITS(ConfigPath.musics + "/DBZ_capsuleObtain.ogg"),
+    BACKGROUND_SELECT(ConfigPath.musics + "/DBZ_overTheGalaxy.ogg"),
+    BACKGROUND_GAME(ConfigPath.musics + "/backgroundGame.ogg");
 
     private String path;
     private EnumGameObject object;

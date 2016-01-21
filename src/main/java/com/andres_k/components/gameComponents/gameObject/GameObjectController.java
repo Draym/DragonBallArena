@@ -1,10 +1,10 @@
 package com.andres_k.components.gameComponents.gameObject;
 
-import com.andres_k.components.gameComponents.animations.data.AnimatorGameData;
 import com.andres_k.components.controllers.ScoreData;
+import com.andres_k.components.eventComponent.input.EnumInput;
 import com.andres_k.components.gameComponents.collisions.CollisionResult;
 import com.andres_k.components.gameComponents.gameObject.objects.Player;
-import com.andres_k.components.eventComponent.input.EnumInput;
+import com.andres_k.components.gameComponents.resources.ResourceManager;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.taskComponent.EnumTargetTask;
 import com.andres_k.components.taskComponent.EnumTask;
@@ -28,24 +28,20 @@ public class GameObjectController extends Observable {
     private List<GameObject> obstacles;
     private List<GameObject> players;
 
-    private AnimatorGameData animatorGameData;
-
     public GameObjectController() {
         this.obstacles = new ArrayList<>();
         this.players = new ArrayList<>();
-        this.animatorGameData = null;
     }
 
     // INIT
-    public void init(AnimatorGameData animatorGameData) {
-        this.animatorGameData = animatorGameData;
+    public void init() {
     }
 
     public void initWorld() throws SlickException {
-        this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item1:ground", 950, 900));
-        this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, this.animatorGameData.getAnimator(EnumGameObject.GROUND), "item2:sky", 950, 0));
-        this.obstacles.add(GameObjectFactory.create(EnumGameObject.BORDER, this.animatorGameData.getAnimator(EnumGameObject.WALL), "item3:leftWall", 0, 475));
-        this.obstacles.add(GameObjectFactory.create(EnumGameObject.BORDER, this.animatorGameData.getAnimator(EnumGameObject.WALL), "item4:rightWall", 1900, 475));
+        this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, ResourceManager.get().getGameAnimator(EnumGameObject.GROUND), "item1:ground", 950, 900));
+        this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, ResourceManager.get().getGameAnimator(EnumGameObject.GROUND), "item2:sky", 950, 0));
+        this.obstacles.add(GameObjectFactory.create(EnumGameObject.BORDER, ResourceManager.get().getGameAnimator(EnumGameObject.WALL), "item3:leftWall", 0, 475));
+        this.obstacles.add(GameObjectFactory.create(EnumGameObject.BORDER, ResourceManager.get().getGameAnimator(EnumGameObject.WALL), "item4:rightWall", 1900, 475));
     }
 
     // FUNCTIONS
@@ -147,9 +143,9 @@ public class GameObjectController extends Observable {
         for (int i = 0; i < playerNames.size(); ++i) {
             GameObject player = null;
             while (player == null || this.checkCollision(player, EnumTask.STATIC).hasCollision()) {
-                int randomX = RandomTools.getInt(WindowConfig.getW2SizeX() - 300) + 300;
+                int randomX = RandomTools.getInt(WindowConfig.getWBigSizeX() - 300) + 300;
                 player = GameObjectFactory.create(EnumGameObject.GOKU,
-                        this.animatorGameData.getAnimator(EnumGameObject.GOKU), "player" + String.valueOf(i) + ":" + playerNames.get(i), randomX, WindowConfig.w2_sY - 500);
+                        ResourceManager.get().getGameAnimator(EnumGameObject.GOKU), "player" + String.valueOf(i) + ":" + playerNames.get(i), randomX, WindowConfig.wBig_sY - 500);
             }
             this.players.add(player);
         }

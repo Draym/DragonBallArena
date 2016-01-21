@@ -1,6 +1,6 @@
 package com.andres_k.components.graphicComponents.userInterface.items.elements;
 
-import com.andres_k.components.gameComponents.animations.container.AnimatorController;
+import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.items.tools.ColorRect;
 import com.andres_k.components.taskComponent.EnumTask;

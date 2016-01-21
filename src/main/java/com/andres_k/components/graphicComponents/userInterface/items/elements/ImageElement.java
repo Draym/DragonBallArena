@@ -1,6 +1,6 @@
 package com.andres_k.components.graphicComponents.userInterface.items.elements;
 
-import com.andres_k.components.gameComponents.animations.container.AnimatorController;
+import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.items.tools.ColorRect;
 import com.andres_k.components.taskComponent.EnumTask;
@@ -214,10 +214,7 @@ public class ImageElement extends Element {
 
     @Override
     public boolean isEmpty() {
-        if (this.animatorController == null || this.animatorController.isDeleted()) {
-            return true;
-        }
-        return false;
+        return this.animatorController == null || this.animatorController.isDeleted();
     }
 
     @Override
@@ -227,11 +224,15 @@ public class ImageElement extends Element {
 
     @Override
     public float getAbsoluteWidth() {
+        if (this.animatorController == null || this.animatorController.currentAnimation() == null)
+            return 0;
         return this.animatorController.currentAnimation().getWidth();
     }
 
     @Override
     public float getAbsoluteHeight() {
+        if (this.animatorController == null || this.animatorController.currentAnimation() == null)
+            return 0;
         return this.animatorController.currentAnimation().getHeight();
     }
 

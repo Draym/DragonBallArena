@@ -1,17 +1,17 @@
 package com.andres_k.components.graphicComponents.userInterface.overlay.windowOverlay;
 
-import com.andres_k.components.gameComponents.animations.data.AnimatorOverlayData;
 import com.andres_k.components.controllers.ScoreData;
 import com.andres_k.components.eventComponent.input.EnumInput;
 import com.andres_k.components.eventComponent.input.InputData;
-import com.andres_k.components.graphicComponents.userInterface.types.InterfaceElement;
-import com.andres_k.components.graphicComponents.userInterface.types.generic.GenericElement;
-import com.andres_k.components.graphicComponents.userInterface.types.table.TableMenuElement;
-import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
-import com.andres_k.components.graphicComponents.userInterface.overlay.Overlay;
+import com.andres_k.components.gameComponents.resources.ResourceManager;
 import com.andres_k.components.graphicComponents.userInterface.items.elements.*;
 import com.andres_k.components.graphicComponents.userInterface.items.tools.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.items.tools.StringTimer;
+import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
+import com.andres_k.components.graphicComponents.userInterface.overlay.Overlay;
+import com.andres_k.components.graphicComponents.userInterface.types.InterfaceElement;
+import com.andres_k.components.graphicComponents.userInterface.types.generic.GenericElement;
+import com.andres_k.components.graphicComponents.userInterface.types.table.TableMenuElement;
 import com.andres_k.components.networkComponents.networkSend.MessageModel;
 import com.andres_k.components.soundComponents.MusicController;
 import com.andres_k.components.soundComponents.SoundController;
@@ -49,8 +49,8 @@ public class HomeOverlay extends Overlay {
 
     @Override
     public void initElements() {
-        float menuX = (WindowConfig.w1_sX / 2) - 150;
-        float menuY = (WindowConfig.w1_sY / 2) - 150;
+        float menuX = (WindowConfig.wLow_sX / 2) - 150;
+        float menuY = (WindowConfig.wLow_sY / 2) - 150;
 
         this.elements.put(EnumOverlayElement.TABLE_MENU_HOME, new GenericElement(EnumOverlayElement.TABLE_MENU_HOME, this.genericSendTask,
                 new ColorRect(new Rectangle(menuX - 200, menuY - 10, 320, 170), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), new Pair<>(false, false), true, new boolean[]{true, true}));
@@ -73,9 +73,7 @@ public class HomeOverlay extends Overlay {
     }
 
     @Override
-    public void initElementsComponent(AnimatorOverlayData animatorOverlayData) throws SlickException {
-        this.animatorOverlayData = animatorOverlayData;
-
+    public void initElementsComponent() throws SlickException {
         this.initTableMenu();
         this.initTableMenuHome();
         this.initTableMenuControls();
@@ -113,9 +111,9 @@ public class HomeOverlay extends Overlay {
         InterfaceElement table = this.elements.get(EnumOverlayElement.TABLE_MENU_HOME);
 
         table.doTask(new ButtonElement(new ImageElement(new ColorRect(new Rectangle(table.getBody().getMinX() + 20, table.getBody().getMinY() + 20, table.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLACK)),
-                this.animatorOverlayData.getAnimator(EnumOverlayElement.NEW_GAME), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.TABLE_MENU_NEWGAME));
+                ResourceManager.get().getOverlayAnimator(EnumOverlayElement.NEW_GAME), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.TABLE_MENU_NEWGAME));
         table.doTask(new ButtonElement(new ImageElement(new ColorRect(new Rectangle(table.getBody().getMinX() + 20, table.getBody().getMinY() + 90, table.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLACK)),
-                this.animatorOverlayData.getAnimator(EnumOverlayElement.HIGHSCORE), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.HIGHSCORE));
+                ResourceManager.get().getOverlayAnimator(EnumOverlayElement.HIGHSCORE), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.HIGHSCORE));
     }
 
     public void initHighScore() throws SlickException {
@@ -127,11 +125,11 @@ public class HomeOverlay extends Overlay {
         float sizeY = table.getBody().getSizeY() - 40;
 
         table.doTask(new ImageElement(new ColorRect(new Rectangle(posX, posY + 70, sizeX, sizeY - 70), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)), EnumOverlayElement.BACKGROUND.getValue(), Element.PositionInBody.MIDDLE_MID));
-        table.doTask(new ImageElement(new ColorRect(new Rectangle(posX, posY, sizeX, 70), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLACK)), this.animatorOverlayData.getAnimator(EnumOverlayElement.TOPSCORE), EnumOverlayElement.BACKGROUND.getValue(), Element.PositionInBody.MIDDLE_MID));
+        table.doTask(new ImageElement(new ColorRect(new Rectangle(posX, posY, sizeX, 70), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREYBLACK)), ResourceManager.get().getOverlayAnimator(EnumOverlayElement.TOPSCORE), EnumOverlayElement.BACKGROUND.getValue(), Element.PositionInBody.MIDDLE_MID));
         posY += 90;
         List<Pair<String, String>> data = ScoreData.getDataScore();
         for (int i = 0; i < data.size() && i < 5; ++i) {
-            table.doTask(new StringToImageElement(new ColorRect(new Rectangle(posX, posY, sizeX, 50)), this.animatorOverlayData.getAnimator(EnumOverlayElement.ALPHABET), data.get(i).getV1() + "  -  " + data.get(i).getV2(), EnumOverlayElement.SCORE.getValue() + String.valueOf(i), Element.PositionInBody.MIDDLE_MID));
+            table.doTask(new StringToImageElement(new ColorRect(new Rectangle(posX, posY, sizeX, 50)), ResourceManager.get().getOverlayAnimator(EnumOverlayElement.ALPHABET), data.get(i).getV1() + "  -  " + data.get(i).getV2(), EnumOverlayElement.SCORE.getValue() + String.valueOf(i), Element.PositionInBody.MIDDLE_MID));
             posY += 50;
         }
     }
@@ -153,7 +151,7 @@ public class HomeOverlay extends Overlay {
         posY += (StringTools.charSizeY());
 
         tableMenuNew.doTask(new ButtonElement(new ImageElement(new ColorRect(new Rectangle(posX + 20, posY + 40, tableMenuNew.getBody().getSizeX() - 40, 50)),
-                this.animatorOverlayData.getAnimator(EnumOverlayElement.NEXT), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.NEXT, EnumOverlayElement.TABLE_MENU_NEWGAME_LAUNCH));
+                ResourceManager.get().getOverlayAnimator(EnumOverlayElement.NEXT), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.NEXT, EnumOverlayElement.TABLE_MENU_NEWGAME_LAUNCH));
     }
 
     public void initTableMenuNewGameLaunch() throws SlickException {
@@ -174,18 +172,18 @@ public class HomeOverlay extends Overlay {
                     new StringElement(new StringTimer("unknown"), Color.black, Element.PositionInBody.LEFT_MID), EnumOverlayElement.SELECT_FIELD.getValue() + EnumOverlayElement.NEW.getValue() + "pseudo" + String.valueOf(i), true));
         }
         tableMenuNew.doTask(new ButtonElement(new ImageElement(new ColorRect(new Rectangle(posX + (tableMenuNew.getBody().getSizeX() / 2) - 105, posY + 40, 220, 50)),
-                this.animatorOverlayData.getAnimator(EnumOverlayElement.GO), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.GO, EnumOverlayElement.BUTTON));
+                ResourceManager.get().getOverlayAnimator(EnumOverlayElement.GO), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.GO, EnumOverlayElement.BUTTON));
     }
 
     private void initTableMenu() throws SlickException {
         InterfaceElement tableMenu = this.elements.get(EnumOverlayElement.TABLE_MENU);
 
         tableMenu.doTask(new ButtonElement(new ImageElement(new ColorRect(new Rectangle(tableMenu.getBody().getMinX() + 20, tableMenu.getBody().getMinY() + 20, tableMenu.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
-                this.animatorOverlayData.getAnimator(EnumOverlayElement.CONTROLS), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.TABLE_MENU_CONTROLS));
+                ResourceManager.get().getOverlayAnimator(EnumOverlayElement.CONTROLS), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.TABLE_MENU_CONTROLS));
         tableMenu.doTask(new ButtonElement(new ImageElement(new ColorRect(new Rectangle(tableMenu.getBody().getMinX() + 20, tableMenu.getBody().getMinY() + 90, tableMenu.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
-                this.animatorOverlayData.getAnimator(EnumOverlayElement.SETTINGS), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.TABLE_MENU_SETTINGS));
+                ResourceManager.get().getOverlayAnimator(EnumOverlayElement.SETTINGS), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.TABLE_MENU_SETTINGS));
         tableMenu.doTask(new ButtonElement(new ImageElement(new ColorRect(new Rectangle(tableMenu.getBody().getMinX() + 20, tableMenu.getBody().getMinY() + 160, tableMenu.getBody().getSizeX() - 40, 60), ColorTools.get(ColorTools.Colors.TRANSPARENT_GREY)),
-                this.animatorOverlayData.getAnimator(EnumOverlayElement.EXIT), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.EXIT));
+                ResourceManager.get().getOverlayAnimator(EnumOverlayElement.EXIT), Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.EXIT));
     }
 
     private void initTableMenuControls() throws SlickException {

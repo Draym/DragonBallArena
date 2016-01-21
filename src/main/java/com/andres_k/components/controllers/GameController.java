@@ -2,10 +2,10 @@ package com.andres_k.components.controllers;
 
 import com.andres_k.components.eventComponent.input.EnumInput;
 import com.andres_k.components.eventComponent.input.InputGame;
-import com.andres_k.components.gameComponents.animations.data.AnimatorGameData;
 import com.andres_k.components.gameComponents.gameObject.GameObjectController;
+import com.andres_k.components.gameComponents.resources.ResourceManager;
 import com.andres_k.components.graphicComponents.background.Background;
-import com.andres_k.components.graphicComponents.background.BackgroundEnum;
+import com.andres_k.components.graphicComponents.background.EnumBackground;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.networkComponents.networkSend.messageInterface.MessageGameNew;
@@ -30,7 +30,6 @@ import java.util.*;
  * Created by andres_k on 08/07/2015.
  */
 public class GameController extends WindowController {
-    private AnimatorGameData animatorGameData;
     private GameObjectController gameObjectController;
     private Background background;
     private InputGame inputGame;
@@ -39,8 +38,6 @@ public class GameController extends WindowController {
     private boolean running;
 
     public GameController() throws JSONException {
-        this.animatorGameData = new AnimatorGameData();
-
         this.inputGame = new InputGame();
         this.gameObjectController = new GameObjectController();
         this.gameObjectController.addObserver(this);
@@ -76,12 +73,9 @@ public class GameController extends WindowController {
 
     @Override
     public void init() throws SlickException, JSONException, NoSuchMethodException {
-        this.animatorGameData.init();
-        this.gameObjectController.init(this.animatorGameData);
+        this.gameObjectController.init();
 
-        this.background = new Background();
-        this.background.addBackground(BackgroundEnum.VALLEY_DAY);
-        this.background.init();
+        this.background = new Background(ResourceManager.get().getBackgroundAnimator(EnumBackground.VALLEY_MAP));
     }
 
     public void restart() {

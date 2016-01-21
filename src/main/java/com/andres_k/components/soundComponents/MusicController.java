@@ -17,15 +17,19 @@ public class MusicController {
     private static float maxVolume;
 
 
-    public static void init() throws SlickException {
-        if (needInit == true) {
+    public static void init() {
+        if (needInit) {
             musics = new HashMap<>();
-            //musics.put(EnumSound.BACKGROUND_HOME, new Music(EnumSound.BACKGROUND_HOME.getPath()));
-            //musics.put(EnumSound.BACKGROUND_GAME, new Music(EnumSound.BACKGROUND_GAME.getPath()));
             pitch = 1.0f;
             volume = 1.0f;
             maxVolume = 2.0f;
             needInit = false;
+        }
+    }
+
+    public static void addMusic(EnumSound sound) throws SlickException {
+        if (!needInit) {
+            musics.put(sound, new Music(sound.getPath()));
         }
     }
 

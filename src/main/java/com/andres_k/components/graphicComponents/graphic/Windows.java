@@ -1,8 +1,9 @@
 package com.andres_k.components.graphicComponents.graphic;
 
 
-import com.andres_k.components.graphicComponents.graphic.windowGame.WindowGame;
-import com.andres_k.components.graphicComponents.graphic.windowHome.WindowHome;
+import com.andres_k.components.graphicComponents.graphic.windows.WindowGame;
+import com.andres_k.components.graphicComponents.graphic.windows.WindowHome;
+import com.andres_k.components.graphicComponents.graphic.windows.WindowLoad;
 import com.andres_k.components.taskComponent.EnumTargetTask;
 import com.andres_k.components.taskComponent.GenericSendTask;
 import com.andres_k.components.taskComponent.TaskFactory;
@@ -24,6 +25,7 @@ public class Windows extends StateBasedGame implements Observer {
     private GenericSendTask interfaceTask;
     private GenericSendTask masterTask;
 
+    private WindowBasedGame windowLoad;
     private WindowBasedGame windowHome;
     private WindowBasedGame windowGame;
 
@@ -38,6 +40,7 @@ public class Windows extends StateBasedGame implements Observer {
         this.interfaceTask.addObserver(this);
 
 
+        this.windowLoad = new WindowLoad(EnumWindow.LOAD.getValue());
         this.windowHome = new WindowHome(EnumWindow.HOME.getValue(), this.interfaceTask);
         this.windowGame = new WindowGame(EnumWindow.GAME.getValue(), this.gameTask);
     }
@@ -45,10 +48,11 @@ public class Windows extends StateBasedGame implements Observer {
 
     @Override
     public void initStatesList(GameContainer gameContainer) throws SlickException {
+        this.addState(this.windowLoad);
         this.addState(this.windowHome);
         this.addState(this.windowGame);
 
-        this.enterState(EnumWindow.HOME.getValue());
+        this.enterState(EnumWindow.LOAD.getValue());
     }
 
     public void update(Observable o, Object arg) {
