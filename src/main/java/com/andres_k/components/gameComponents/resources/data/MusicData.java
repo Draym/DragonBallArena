@@ -23,6 +23,7 @@ public class MusicData extends DataManager {
 
     @Override
     protected void initialiseMethods() throws NoSuchMethodException {
+        this.methods.clear();
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initBackgroundHome")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initBackgroundSelect")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initBackgroundMulti")));

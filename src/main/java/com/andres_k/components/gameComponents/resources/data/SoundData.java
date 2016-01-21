@@ -20,6 +20,7 @@ public class SoundData extends DataManager{
 
     @Override
     protected void initialiseMethods() throws NoSuchMethodException {
+        this.methods.clear();
         this.methods.add(new Pair<>(false, this.getClass().getMethod("init")));
     }
 

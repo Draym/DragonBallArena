@@ -6,6 +6,7 @@ import com.andres_k.components.graphicComponents.background.EnumBackground;
 import com.andres_k.components.gameComponents.resources.EnumSprites;
 import com.andres_k.components.gameComponents.resources.factory.AnimatorBackgroundFactory;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.Console;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
 
@@ -57,8 +58,10 @@ public class AnimatorBackgroundData extends DataManager {
     // GETTERS
     public AnimatorController getAnimator(EnumBackground index) throws SlickException {
         if (this.animator.containsKey(index)) {
+            Console.write("animator: " + index);
             return this.animator.get(index);
         }
+        Console.write("Animator not found");
         return null;
     }
 

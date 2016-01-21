@@ -15,29 +15,32 @@ import org.newdawn.slick.SlickException;
 public class AnimatorBackgroundFactory extends AnimatorFactory {
     @Override
     public AnimatorController getAnimator(EnumSprites index) throws SlickException, JSONException, NoSuchMethodException {
-        if (index.getIndex() == EnumSprites.LOAD_SCREEN.getIndex()) {
-            return this.getLoadScreenAnimator();
-        } else if (index.getIndex() == EnumSprites.HOME_SCREEN.getIndex()) {
-            return this.getHomeScreenAnimator();
-        } else if (index.getIndex() == EnumSprites.GAME_SCREEN.getIndex()) {
-            return this.getGameScreenAnimator(index);
+        if (index.getIndex() == EnumSprites.MENU_BACKGROUND.getIndex()) {
+            return this.getMenuBackgroundAnimator(index);
+        } else if (index.getIndex() == EnumSprites.MAP_BACKGROUND.getIndex()) {
+            return this.getMapBackgroundAnimator(index);
         }
         return null;
     }
 
-    public AnimatorController getLoadScreenAnimator() throws SlickException {
+    public AnimatorController getMenuBackgroundAnimator(EnumSprites index) throws SlickException {
         AnimatorController animatorController = new AnimatorController();
 
-        Animation animation = new Animation();
-        Image img = new Image(ConfigPath.backgroundIMG + "/backgroundLoad.jpg");
-        animation.addFrame(img, 150);
-        animation.setLooping(false);
-        animatorController.addAnimation(EnumAnimation.IDLE, 0, animation);
-
+        if (index == EnumSprites.LOAD_SCREEN) {
+            Animation animation = new Animation();
+            Image img = new Image(ConfigPath.backgroundIMG + "/backgroundLoad.jpg");
+            animation.addFrame(img, 150);
+            animation.setLooping(false);
+            animatorController.addAnimation(EnumAnimation.IDLE, 0, animation);
+        } else if (index == EnumSprites.HOME_SCREEN) {
+            Animation animation = AnimationFactory.loadAnimation(ConfigPath.backgroundIMG + "/Home/backgroundHome ", ".jpg", 37, 37 /*125*/ /*192*/, true, 80);
+            animation.setPingPong(true);
+            animatorController.addAnimation(EnumAnimation.IDLE, 0, animation);
+        }
         return animatorController;
     }
 
-    public AnimatorController getGameScreenAnimator(EnumSprites index) throws SlickException {
+    public AnimatorController getMapBackgroundAnimator(EnumSprites index) throws SlickException {
         AnimatorController animatorController = new AnimatorController();
 
         if (index == EnumSprites.VALLEY_MAP) {
@@ -47,14 +50,6 @@ public class AnimatorBackgroundFactory extends AnimatorFactory {
             animation.setLooping(false);
             animatorController.addAnimation(EnumAnimation.IDLE, 0, animation);
         }
-        return animatorController;
-    }
-
-    public AnimatorController getHomeScreenAnimator() throws SlickException {
-        AnimatorController animatorController = new AnimatorController();
-        Animation animation = AnimationFactory.loadAnimation(ConfigPath.backgroundIMG + "/Home/backgroundHome ", ".jpg", 37, 37 /*125*/ /*192*/, true, 80);
-        animation.setPingPong(true);
-        animatorController.addAnimation(EnumAnimation.IDLE, 0, animation);
         return animatorController;
     }
 }

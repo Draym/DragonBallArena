@@ -16,7 +16,7 @@ public class AnimatorOverlayFactory extends AnimatorFactory {
     public AnimatorController getAnimator(EnumSprites index) throws SlickException {
         if (index.getIndex() == EnumSprites.ROUND.getIndex()) {
             return this.getRoundAnimator(index);
-        } else if (index.getIndex() == EnumSprites.MENU.getIndex()) {
+        } else if (index.getIndex() == EnumSprites.MENU_ITEMS.getIndex()) {
             return this.getMenuAnimator(index);
         }
         return null;
