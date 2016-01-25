@@ -1,5 +1,6 @@
 package com.andres_k.components.controllers;
 
+import com.andres_k.components.graphicComponents.background.Background;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
@@ -16,6 +17,7 @@ import java.util.Observer;
 public abstract class WindowController extends Observable implements Observer {
     protected StateBasedGame stateWindow = null;
     protected WindowBasedGame window;
+    protected Background background;
 
     public abstract void enter() throws SlickException;
 
@@ -35,6 +37,12 @@ public abstract class WindowController extends Observable implements Observer {
 
     public abstract void mousePressed(int button, int x, int y);
 
+    // GETTERS
+    public Background getBackground() {
+        return this.background;
+    }
+
+    // SETTERS
     public void setStateWindow(StateBasedGame stateWindow){
         this.stateWindow = stateWindow;
     }

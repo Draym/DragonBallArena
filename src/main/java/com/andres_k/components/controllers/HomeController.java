@@ -1,5 +1,8 @@
 package com.andres_k.components.controllers;
 
+import com.andres_k.components.gameComponents.resources.ResourceManager;
+import com.andres_k.components.graphicComponents.background.Background;
+import com.andres_k.components.graphicComponents.background.EnumBackground;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.networkComponents.networkSend.messageInterface.MessageGameNew;
@@ -33,15 +36,17 @@ public class HomeController extends WindowController {
 
     @Override
     public void init() throws SlickException {
+        this.background = new Background(ResourceManager.get().getBackgroundAnimator(EnumBackground.HOME_SCREEN), 0, -9);
     }
 
     @Override
     public void renderWindow(Graphics g) {
+        this.background.draw(g);
     }
 
     @Override
     public void updateWindow(GameContainer gameContainer) {
-
+        this.background.update();
     }
 
     @Override

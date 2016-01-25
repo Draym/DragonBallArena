@@ -21,8 +21,9 @@ public abstract class Overlay extends Observable implements Observer {
     protected OverlayConfigs overlayConfigs;
     protected Map<EnumOverlayElement, InterfaceElement> elements;
     protected GenericSendTask genericSendTask;
+    private EnumOverlay type;
 
-    protected Overlay() throws JSONException {
+    protected Overlay(EnumOverlay type) throws JSONException {
         this.current = 0;
         this.overlayConfigs = new OverlayConfigs(ConfigPath.preferenceOverlay, ConfigPath.dataOverlay);
 
@@ -30,6 +31,10 @@ public abstract class Overlay extends Observable implements Observer {
         this.genericSendTask.addObserver(this);
 
         this.elements = new LinkedHashMap<>();
+        this.type = type;
+
+        this.initElements();
+        this.initPreference();
     }
 
     // INIT
@@ -98,5 +103,9 @@ public abstract class Overlay extends Observable implements Observer {
             }
         }
         return false;
+    }
+
+    public EnumOverlay getType() {
+        return this.type;
     }
 }

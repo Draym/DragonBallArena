@@ -6,6 +6,7 @@ import com.andres_k.components.gameComponents.resources.ResourceManager;
 import com.andres_k.components.graphicComponents.userInterface.items.elements.*;
 import com.andres_k.components.graphicComponents.userInterface.items.tools.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.items.tools.StringTimer;
+import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlay;
 import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterface.overlay.Overlay;
 import com.andres_k.components.graphicComponents.userInterface.types.InterfaceElement;
@@ -43,10 +44,7 @@ public class GameOverlay extends Overlay {
 
 
     public GameOverlay() throws JSONException {
-        super();
-
-        this.initElements();
-        this.initPreference();
+        super(EnumOverlay.GAME);
     }
 
     @Override

@@ -26,7 +26,7 @@ public class ColorRect {
 
     // FUNCTIONS
     public void draw(Graphics g) {
-        if (this.color != null&& this.isPrintable()) {
+        if (this.color != null && this.isPrintable()) {
             g.setColor(this.color);
             g.fill(this.body);
         }
@@ -83,6 +83,12 @@ public class ColorRect {
         this.color = color;
     }
 
+    public void changeColor(float r, float g, float b, float a) {
+        this.color.r = r / 255.0F;
+        this.color.g = g / 255.0F;
+        this.color.b = b / 255.0F;
+        this.color.a = a / 255.0F;
+    }
     public void setSizes(float sizeX, float sizeY){
         this.body.setSize(sizeX, sizeY);
     }

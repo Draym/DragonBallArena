@@ -13,6 +13,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -21,8 +23,7 @@ import java.util.Observer;
  */
 public class Windows extends StateBasedGame implements Observer {
 
-    private GenericSendTask gameTask;
-    private GenericSendTask interfaceTask;
+    private Map<EnumWindow, GenericSendTask> tasks;
     private GenericSendTask masterTask;
 
     private WindowBasedGame windowLoad;
@@ -33,16 +34,18 @@ public class Windows extends StateBasedGame implements Observer {
         super(name);
         this.masterTask = masterTask;
 
-        this.gameTask = new GenericSendTask();
-        this.gameTask.addObserver(this);
+        this.tasks = new HashMap<>();
+        this.tasks.put(EnumWindow.GAME, new GenericSendTask());
+        this.tasks.put(EnumWindow.HOME, new GenericSendTask());
+        this.tasks.put(EnumWindow.LOAD, new GenericSendTask());
 
-        this.interfaceTask = new GenericSendTask();
-        this.interfaceTask.addObserver(this);
+        this.tasks.get(EnumWindow.GAME).addObserver(this);
+        this.tasks.get(EnumWindow.HOME).addObserver(this);
+        this.tasks.get(EnumWindow.LOAD).addObserver(this);
 
-
-        this.windowLoad = new WindowLoad(EnumWindow.LOAD.getValue());
-        this.windowHome = new WindowHome(EnumWindow.HOME.getValue(), this.interfaceTask);
-        this.windowGame = new WindowGame(EnumWindow.GAME.getValue(), this.gameTask);
+        this.windowLoad = new WindowLoad(EnumWindow.LOAD.getValue(), this.tasks.get(EnumWindow.LOAD));
+        this.windowHome = new WindowHome(EnumWindow.HOME.getValue(), this.tasks.get(EnumWindow.HOME));
+        this.windowGame = new WindowGame(EnumWindow.GAME.getValue(), this.tasks.get(EnumWindow.GAME));
     }
 
 
@@ -74,9 +77,9 @@ public class Windows extends StateBasedGame implements Observer {
 
         if (task.getV2().isIn(EnumTargetTask.GAME)) {
             this.redirectGame(task);
-            this.gameTask.sendTask(TaskFactory.createTask(EnumTargetTask.WINDOWS, task));
+            this.tasks.get(EnumWindow.GAME).sendTask(TaskFactory.createTask(EnumTargetTask.WINDOWS, task));
         } else if (task.getV2().isIn(EnumTargetTask.INTERFACE)) {
-            this.interfaceTask.sendTask(TaskFactory.createTask(EnumTargetTask.WINDOWS, task));
+            this.tasks.get(EnumWindow.HOME).sendTask(TaskFactory.createTask(EnumTargetTask.WINDOWS, task));
         }
     }
 

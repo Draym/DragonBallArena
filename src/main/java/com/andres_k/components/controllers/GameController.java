@@ -31,7 +31,6 @@ import java.util.*;
  */
 public class GameController extends WindowController {
     private GameObjectController gameObjectController;
-    private Background background;
     private InputGame inputGame;
     private List<String> playerNames;
 
