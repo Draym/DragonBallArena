@@ -9,6 +9,7 @@ public abstract class Effect {
     private String id;
     private EnumEffect type;
     protected boolean running;
+    protected int delta;
     private long duration;
 
     protected Effect(String id, EnumEffect type, long duration) {
@@ -16,6 +17,7 @@ public abstract class Effect {
         this.id = id;
         this.type = type;
         this.duration = duration;
+        this.delta = 0;
     }
 
     public abstract void update();

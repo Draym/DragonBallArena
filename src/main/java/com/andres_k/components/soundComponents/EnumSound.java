@@ -8,13 +8,16 @@ import com.andres_k.utils.configs.ConfigPath;
  */
 public enum EnumSound {
     NOTHING(""),
-    //music
+    //musics
     BACKGROUND_LOAD(ConfigPath.musics + "/DBZ_theme.ogg"),
     BACKGROUND_HOME(ConfigPath.musics + "/DBZ_namek.ogg"),
     BACKGROUND_MULTI(ConfigPath.musics + "/DBZ_embraceBlueSky.ogg"),
     BACKGROUND_CREDITS(ConfigPath.musics + "/DBZ_capsuleObtain.ogg"),
     BACKGROUND_SELECT(ConfigPath.musics + "/DBZ_overTheGalaxy.ogg"),
-    BACKGROUND_GAME(ConfigPath.musics + "/backgroundGame.ogg");
+    BACKGROUND_GAME(ConfigPath.musics + "/backgroundGame.ogg"),
+
+    //sounds
+    EFFECT_FLASH(ConfigPath.effects + "/DBZ_effect_flash.ogg");
 
     private String path;
     private EnumGameObject object;
