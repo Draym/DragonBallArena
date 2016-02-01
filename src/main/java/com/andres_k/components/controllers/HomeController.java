@@ -4,12 +4,13 @@ import com.andres_k.components.gameComponents.resources.ResourceManager;
 import com.andres_k.components.graphicComponents.background.Background;
 import com.andres_k.components.graphicComponents.background.EnumBackground;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
-import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
+import com.andres_k.components.graphicComponents.userInterfaceDeprecated.types.EnumOverlayElement;
 import com.andres_k.components.networkComponents.networkSend.messageInterface.MessageGameNew;
-import com.andres_k.components.taskComponent.EnumTargetTask;
+import com.andres_k.components.taskComponent.CentralTaskManager;
+import com.andres_k.components.taskComponent.EnumLocation;
 import com.andres_k.components.taskComponent.TaskFactory;
+import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.configs.GlobalVariable;
-import com.andres_k.utils.stockage.Tuple;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -27,7 +28,7 @@ public class HomeController extends WindowController {
     }
 
     @Override
-    public void enter() {
+    public void enter() throws SlickException {
     }
 
     @Override
@@ -45,7 +46,7 @@ public class HomeController extends WindowController {
     }
 
     @Override
-    public void updateWindow(GameContainer gameContainer) {
+    public void update(GameContainer gameContainer) throws SlickException {
         this.background.update();
     }
 
@@ -69,26 +70,25 @@ public class HomeController extends WindowController {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof Tuple) {
-            Tuple<EnumTargetTask, EnumTargetTask, Object> received = (Tuple<EnumTargetTask, EnumTargetTask, Object>) arg;
+        if (arg instanceof TaskComponent) {
+            TaskComponent received = (TaskComponent) arg;
 
-            if (received.getV1().equals(EnumTargetTask.WINDOWS) && received.getV2().equals(EnumTargetTask.INTERFACE)) {
-                if (received.getV3() instanceof EnumWindow) {
+            if (received.getTarget().equals(EnumLocation.HOME_CONTROLLER)) {
+                if (received.getTask() instanceof EnumWindow) {
                     if (this.stateWindow != null) {
-                        this.stateWindow.enterState(((EnumWindow) received.getV3()).getValue());
+                        this.stateWindow.enterState(((EnumWindow) received.getTask()).getValue());
                     }
-                } else if (received.getV3() instanceof EnumOverlayElement) {
-                    if (received.getV3() == EnumOverlayElement.EXIT) {
+                } else if (received.getTask() instanceof EnumOverlayElement) {
+                    if (received.getTask() == EnumOverlayElement.EXIT) {
                         this.window.quit();
                     }
-                } else if (received.getV3() instanceof MessageGameNew) {
-                    if (((MessageGameNew) received.getV3()).getType() == EnumOverlayElement.GO) {
-                        this.setChanged();
-                        this.notifyObservers(TaskFactory.createTask(EnumTargetTask.INTERFACE, EnumTargetTask.GAME, received.getV3()));
-                    } else if (((MessageGameNew) received.getV3()).getType() == EnumOverlayElement.NEXT) {
-                        List<String> values = ((MessageGameNew) received.getV3()).getValues();
+                } else if (received.getTask() instanceof MessageGameNew) {
+                    if (((MessageGameNew) received.getTask()).getType() == EnumOverlayElement.GO) {
+                        CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.HOME_CONTROLLER, EnumLocation.GAME_CONTROLLER, received.getTask()));
+                    } else if (((MessageGameNew) received.getTask()).getType() == EnumOverlayElement.NEXT) {
+                        List<String> values = ((MessageGameNew) received.getTask()).getValues();
 
-                        if (values.size() > 0){
+                        if (values.size() > 0) {
                             Integer value = Integer.valueOf(values.get(0));
                             GlobalVariable.currentPlayer = value;
                             GlobalVariable.currentPlayer = (GlobalVariable.currentPlayer > GlobalVariable.maxPlayer ? GlobalVariable.maxPlayer : GlobalVariable.currentPlayer);

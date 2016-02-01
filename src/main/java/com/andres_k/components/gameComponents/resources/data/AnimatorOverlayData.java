@@ -4,7 +4,7 @@ import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.resources.EnumSprites;
 import com.andres_k.components.gameComponents.resources.factory.AnimatorFactory;
 import com.andres_k.components.gameComponents.resources.factory.AnimatorOverlayFactory;
-import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
+import com.andres_k.components.graphicComponents.userInterfaceDeprecated.types.EnumOverlayElement;
 import com.andres_k.utils.stockage.Pair;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;

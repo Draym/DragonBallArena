@@ -8,13 +8,12 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import java.util.Observable;
 import java.util.Observer;
 
 /**
  * Created by andres_k on 08/07/2015.
  */
-public abstract class WindowController extends Observable implements Observer {
+public abstract class WindowController implements Observer {
     protected StateBasedGame stateWindow = null;
     protected WindowBasedGame window;
     protected Background background;
@@ -27,7 +26,7 @@ public abstract class WindowController extends Observable implements Observer {
 
     public abstract void renderWindow(Graphics g);
 
-    public abstract void updateWindow(GameContainer gameContainer) throws SlickException;
+    public abstract void update(GameContainer gameContainer) throws SlickException;
 
     public abstract void keyPressed(int key, char c);
 

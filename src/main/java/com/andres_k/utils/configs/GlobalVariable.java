@@ -18,5 +18,8 @@ public class GlobalVariable {
     public static float speedTravel = 1f;
     public static float speedJump = 2f;
 
+    public static String id_delimiter = ".";
+    public static String param_delimiter = ":";
+
     public static AppGameContainer appGameContainer;
 }

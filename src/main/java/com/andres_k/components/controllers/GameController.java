@@ -7,17 +7,18 @@ import com.andres_k.components.gameComponents.resources.ResourceManager;
 import com.andres_k.components.graphicComponents.background.Background;
 import com.andres_k.components.graphicComponents.background.EnumBackground;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
-import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
+import com.andres_k.components.graphicComponents.userInterfaceDeprecated.types.EnumOverlayElement;
 import com.andres_k.components.networkComponents.networkSend.messageInterface.MessageGameNew;
 import com.andres_k.components.networkComponents.networkSend.messageInterface.MessageOverlayMenu;
 import com.andres_k.components.networkComponents.networkSend.messageInterface.MessageRoundEnd;
 import com.andres_k.components.networkComponents.networkSend.messageInterface.MessageRoundStart;
 import com.andres_k.components.soundComponents.EnumSound;
 import com.andres_k.components.soundComponents.MusicController;
-import com.andres_k.components.taskComponent.EnumTargetTask;
+import com.andres_k.components.taskComponent.CentralTaskManager;
+import com.andres_k.components.taskComponent.EnumLocation;
 import com.andres_k.components.taskComponent.TaskFactory;
+import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.stockage.Tuple;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -39,7 +40,6 @@ public class GameController extends WindowController {
     public GameController() throws JSONException {
         this.inputGame = new InputGame();
         this.gameObjectController = new GameObjectController();
-        this.gameObjectController.addObserver(this);
 
         this.playerNames = new ArrayList<>();
     }
@@ -49,15 +49,13 @@ public class GameController extends WindowController {
         this.gameObjectController.enter();
 
         this.createPlayerForGame();
-        this.setChanged();
-        this.notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME, EnumTargetTask.GAME_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundStart("admin", "admin", true))));
+        CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.GAME_CONTROLLER, EnumLocation.GAME_GUI, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundStart("admin", "admin", true))));
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                setChanged();
-                notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME, EnumTargetTask.GAME_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundStart("admin", "admin", false))));
+                CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.GAME_CONTROLLER, EnumLocation.GAME_GUI, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundStart("admin", "admin", false))));
                 running = true;
             }
         }, 3000);
@@ -77,7 +75,7 @@ public class GameController extends WindowController {
         this.background = new Background(ResourceManager.get().getBackgroundAnimator(EnumBackground.VALLEY_MAP));
     }
 
-    public void restart() {
+    public void restart() throws SlickException {
         this.leave();
         try {
             this.enter();
@@ -94,15 +92,14 @@ public class GameController extends WindowController {
     }
 
     @Override
-    public void updateWindow(GameContainer gameContainer) throws SlickException {
+    public void update(GameContainer gameContainer) throws SlickException {
         if (this.running || this.gameObjectController.isTheEndOfTheGame()) {
             this.background.update();
             this.gameObjectController.update(this.running);
         }
         if (this.running) {
             if (this.gameObjectController.isTheEndOfTheGame()) {
-                this.setChanged();
-                this.notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME, EnumTargetTask.GAME_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundEnd("admin", "admin", "enemy"))));
+                CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.GAME_CONTROLLER, EnumLocation.GAME_GUI, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundEnd("admin", "admin", "enemy"))));
                 this.running = false;
             }
         }
@@ -119,7 +116,11 @@ public class GameController extends WindowController {
     @Override
     public void keyReleased(int key, char c) {
         if ((!this.running && this.gameObjectController.isTheEndOfTheGame()) && key == Input.KEY_ENTER) {
-            this.restart();
+            try {
+                this.restart();
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
         }
 
         if (this.running) {
@@ -138,30 +139,30 @@ public class GameController extends WindowController {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof Tuple) {
-            Tuple<EnumTargetTask, EnumTargetTask, Object> received = (Tuple<EnumTargetTask, EnumTargetTask, Object>) arg;
-            if (received.getV1().equals(EnumTargetTask.WINDOWS) && received.getV2().equals(EnumTargetTask.GAME)) {
-                if (received.getV3() instanceof EnumWindow) {
-                    this.stateWindow.enterState(((EnumWindow) received.getV3()).getValue());
-                } else if (received.getV3() instanceof EnumOverlayElement) {
-                    if (received.getV3() == EnumOverlayElement.EXIT) {
+        if (arg instanceof TaskComponent) {
+            TaskComponent received = (TaskComponent) arg;
+
+            if (received.getTarget().equals(EnumLocation.GAME_CONTROLLER)) {
+                if (received.getTask() instanceof EnumWindow) {
+                    this.stateWindow.enterState(((EnumWindow) received.getTask()).getValue());
+                } else if (received.getTask() instanceof EnumOverlayElement) {
+                    if (received.getTask() == EnumOverlayElement.EXIT) {
                         this.window.quit();
                     }
-                } else if (received.getV3() instanceof MessageGameNew) {
-                    List<String> values = ((MessageGameNew) received.getV3()).getValues();
+                } else if (received.getTask() instanceof MessageGameNew) {
+                    List<String> values = ((MessageGameNew) received.getTask()).getValues();
 
                     this.playerNames.clear();
                     this.playerNames.addAll(values);
 
                     this.stateWindow.enterState(EnumWindow.GAME.getValue());
-                } else if (received.getV3() instanceof MessageOverlayMenu) {
-                    this.running = !((MessageOverlayMenu) received.getV3()).isActivated();
+                } else if (received.getTask() instanceof MessageOverlayMenu) {
+                    this.running = !((MessageOverlayMenu) received.getTask()).isActivated();
                     this.gameObjectController.changeGameState(this.running);
                 }
             }
         } else if (arg instanceof Pair) {
-            this.setChanged();
-            this.notifyObservers(TaskFactory.createTask(EnumTargetTask.GAME, (EnumTargetTask) ((Pair) arg).getV1(), ((Pair) arg).getV2()));
+            CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.GAME_CONTROLLER, (EnumLocation) ((Pair) arg).getV1(), ((Pair) arg).getV2()));
         }
     }
 

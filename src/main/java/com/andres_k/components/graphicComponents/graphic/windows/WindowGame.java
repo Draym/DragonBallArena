@@ -3,10 +3,11 @@ package com.andres_k.components.graphicComponents.graphic.windows;
 import com.andres_k.components.controllers.GameController;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
-import com.andres_k.components.graphicComponents.userInterface.overlay.windowOverlay.GameOverlay;
+import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.GameGUI;
 import com.andres_k.components.soundComponents.EnumSound;
 import com.andres_k.components.soundComponents.MusicController;
-import com.andres_k.components.taskComponent.GenericSendTask;
+import com.andres_k.components.taskComponent.EnumLocation;
+import com.andres_k.components.taskComponent.LocalTaskManager;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import org.codehaus.jettison.json.JSONException;
@@ -19,8 +20,10 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class WindowGame extends WindowBasedGame {
 
-    public WindowGame(int idWindow, GenericSendTask taskManager) throws JSONException {
-        super(idWindow, new GameController(), new GameOverlay(), taskManager);
+    public WindowGame(int idWindow, LocalTaskManager windowsTask) throws JSONException {
+        super(idWindow, new GameController(), new GameGUI());
+        windowsTask.register(EnumLocation.GAME_CONTROLLER.getLocation(), this.controller);
+        windowsTask.register(EnumLocation.GAME_GUI.getLocation(), this.gui);
     }
 
     public void initContents() throws SlickException {
@@ -30,7 +33,7 @@ public class WindowGame extends WindowBasedGame {
             } catch (JSONException | NoSuchMethodException e) {
                 throw new SlickException(e.getMessage());
             }
-            this.overlay.initElementsComponent();
+            this.gui.init();
             this.needContentsInit = false;
         }
     }
@@ -47,7 +50,7 @@ public class WindowGame extends WindowBasedGame {
 
         this.delta = 0;
         MusicController.loop(EnumSound.BACKGROUND_GAME);
-        this.overlay.enter();
+        this.gui.enter();
         this.controller.enter();
     }
 

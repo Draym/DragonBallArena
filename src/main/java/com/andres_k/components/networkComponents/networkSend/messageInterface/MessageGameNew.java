@@ -1,6 +1,6 @@
 package com.andres_k.components.networkComponents.networkSend.messageInterface;
 
-import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
+import com.andres_k.components.graphicComponents.userInterfaceDeprecated.types.EnumOverlayElement;
 import com.andres_k.components.networkComponents.networkSend.MessageModel;
 
 import java.util.ArrayList;

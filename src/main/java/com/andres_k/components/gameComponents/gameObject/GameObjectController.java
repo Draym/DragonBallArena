@@ -5,9 +5,11 @@ import com.andres_k.components.eventComponent.input.EnumInput;
 import com.andres_k.components.gameComponents.collisions.CollisionResult;
 import com.andres_k.components.gameComponents.gameObject.objects.Player;
 import com.andres_k.components.gameComponents.resources.ResourceManager;
-import com.andres_k.components.graphicComponents.userInterface.overlay.EnumOverlayElement;
-import com.andres_k.components.taskComponent.EnumTargetTask;
+import com.andres_k.components.graphicComponents.userInterfaceDeprecated.types.EnumOverlayElement;
+import com.andres_k.components.taskComponent.CentralTaskManager;
+import com.andres_k.components.taskComponent.EnumLocation;
 import com.andres_k.components.taskComponent.EnumTask;
+import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
@@ -19,12 +21,11 @@ import org.newdawn.slick.SlickException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 /**
  * Created by andres_k on 10/07/2015.
  */
-public class GameObjectController extends Observable {
+public class GameObjectController {
     private List<GameObject> obstacles;
     private List<GameObject> players;
 
@@ -119,8 +120,7 @@ public class GameObjectController extends Observable {
         score = StringTools.addCharacterEach(score, " ", 3);
         Pair task = new Pair<>(EnumOverlayElement.SCORE.getValue() + player.getIdIndex(), new Tuple<>(EnumTask.SETTER, "value", player.getPseudo() + " - " + score));
 
-        this.setChanged();
-        this.notifyObservers(new Pair<>(EnumTargetTask.GAME_OVERLAY, new Pair<>(EnumOverlayElement.TABLE_ROUND_END, task)));
+        CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.GAME_OBJECT_CONTROLLER, EnumLocation.GAME_GUI, new Pair<>(EnumOverlayElement.TABLE_ROUND_END, task)));
         Console.write("\n" + player.getPseudo() + " : '" + score + "' pts.");
     }
 

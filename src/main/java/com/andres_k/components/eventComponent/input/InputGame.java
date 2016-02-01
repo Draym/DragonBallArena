@@ -4,12 +4,10 @@ package com.andres_k.components.eventComponent.input;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.Input;
 
-import java.util.Observable;
-
 /**
  * Created by andres_k on 11/03/2015.
  */
-public class InputGame extends Observable {
+public class InputGame {
 
     public InputGame() throws JSONException {
     }

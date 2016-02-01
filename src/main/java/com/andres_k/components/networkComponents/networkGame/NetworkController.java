@@ -2,29 +2,30 @@ package com.andres_k.components.networkComponents.networkGame;
 
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.networkComponents.networkSend.MessageModel;
-import com.andres_k.components.taskComponent.EnumTargetTask;
-import com.andres_k.components.taskComponent.GenericSendTask;
+import com.andres_k.components.taskComponent.CentralTaskManager;
+import com.andres_k.components.taskComponent.EnumLocation;
 import com.andres_k.components.taskComponent.TaskFactory;
+import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.configs.NetworkServerConfig;
-import com.andres_k.utils.stockage.Tuple;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 
 import java.io.IOException;
 import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by andres_k on 11/03/2015.
  */
-public class NetworkController {
+public class NetworkController implements Observer {
     private Client client;
-    private GenericSendTask masterTask;
 
-    public NetworkController(GenericSendTask masterTask) {
-        this.masterTask = masterTask;
+    public NetworkController() {
         this.client = new Client();
         NetworkRegister.register(this.client);
+
+        CentralTaskManager.get().register(EnumLocation.SERVER.getLocation(), this);
         this.client.start();
     }
 
@@ -36,11 +37,11 @@ public class NetworkController {
                 public void received(Connection connection, Object object) {
                     if (object instanceof MessageModel) {
                         MessageModel response = (MessageModel) object;
-                        masterTask.sendTask(TaskFactory.createTask(EnumTargetTask.SERVER_MESSAGE, EnumTargetTask.GAME, response));
+                        CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.SERVER_MESSAGE, EnumLocation.GAME_CONTROLLER, response));
                     }
                 }
             });
-            this.masterTask.sendTask(TaskFactory.createTask(EnumTargetTask.SERVER_MESSAGE, EnumTargetTask.INTERFACE, EnumWindow.GAME));
+            CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.SERVER_MESSAGE, EnumLocation.HOME_CONTROLLER, EnumWindow.GAME));
             return true;
         } catch (IOException e) {
             System.err.println("ERROR: " + e.getMessage());
@@ -59,19 +60,22 @@ public class NetworkController {
             this.client.sendTCP(request);
         }*/
         //faire le mode offline avec:
-        this.masterTask.sendTask(TaskFactory.createTask(EnumTargetTask.SERVER_MESSAGE, EnumTargetTask.GAME, request));
+        CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.SERVER_MESSAGE, EnumLocation.GAME_CONTROLLER, request));
     }
 
-    public void doTask(Observable o, Object arg) {
-        Tuple<EnumTargetTask, EnumTargetTask, Object> task = (Tuple<EnumTargetTask, EnumTargetTask, Object>) arg;
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg instanceof TaskComponent) {
+            TaskComponent task = (TaskComponent) arg;
 
-        if (task.getV2().equals(EnumTargetTask.SERVER_MESSAGE)) {
-            if (task.getV3() instanceof MessageModel) {
-                this.call((MessageModel) task.getV3());
-            }
-        } else if (task.getV2().equals(EnumTargetTask.SERVER_CONFIG)) {
-            if (task.getV3() instanceof NetworkServerConfig) {
-                this.connect((NetworkServerConfig) task.getV3());
+            if (task.getTarget().equals(EnumLocation.SERVER_MESSAGE)) {
+                if (task.getTask() instanceof MessageModel) {
+                    this.call((MessageModel) task.getTask());
+                }
+            } else if (task.getTarget().equals(EnumLocation.SERVER_CONFIG)) {
+                if (task.getTask() instanceof NetworkServerConfig) {
+                    this.connect((NetworkServerConfig) task.getTask());
+                }
             }
         }
     }

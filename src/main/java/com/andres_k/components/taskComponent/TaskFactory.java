@@ -1,18 +1,22 @@
 package com.andres_k.components.taskComponent;
 
-import com.andres_k.utils.stockage.Tuple;
+import com.andres_k.components.taskComponent.utils.TaskComponent;
 
 /**
  * Created by andres_k on 30/05/2015.
  */
 public class TaskFactory {
-    public static Tuple<EnumTargetTask, EnumTargetTask, Object> createTask(EnumTargetTask sender, Tuple<EnumTargetTask, EnumTargetTask, Object> task){
-        Tuple<EnumTargetTask, EnumTargetTask, Object> result = new Tuple<>(sender, task.getV2(), task.getV3());
-        return result;
+    public static TaskComponent changeSender(EnumLocation sender, TaskComponent task){
+        task.setSender(sender);
+        return task;
     }
 
-    public static Tuple<EnumTargetTask, EnumTargetTask, Object> createTask(EnumTargetTask sender, EnumTargetTask target, Object task){
-        Tuple<EnumTargetTask, EnumTargetTask, Object> result = new Tuple<>(sender, target, task);
-        return result;
+    public static TaskComponent changeTarget(EnumLocation target, TaskComponent task){
+        task.setTarget(target);
+        return task;
+    }
+
+    public static TaskComponent createTask(EnumLocation sender, EnumLocation target, Object task){
+        return new TaskComponent(sender, target, task);
     }
 }

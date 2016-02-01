@@ -1,7 +1,7 @@
 package com.andres_k.components.graphicComponents.effects.effect.flash;
 
 import com.andres_k.components.graphicComponents.effects.effect.EnumEffect;
-import com.andres_k.components.graphicComponents.userInterface.items.tools.ColorShape;
+import com.andres_k.components.graphicComponents.userInterfaceDeprecated.items.tools.ColorShape;
 import com.andres_k.utils.configs.WindowConfig;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.geom.Rectangle;

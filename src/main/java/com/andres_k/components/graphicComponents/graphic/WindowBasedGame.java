@@ -2,8 +2,7 @@ package com.andres_k.components.graphicComponents.graphic;
 
 import com.andres_k.components.controllers.WindowController;
 import com.andres_k.components.eventComponent.input.EnumInput;
-import com.andres_k.components.graphicComponents.userInterface.overlay.Overlay;
-import com.andres_k.components.taskComponent.GenericSendTask;
+import com.andres_k.components.graphicComponents.userInterface.windowGUI.UserInterface;
 import com.andres_k.utils.configs.GlobalVariable;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -23,21 +22,15 @@ public abstract class WindowBasedGame extends BasicGameState {
     protected StateBasedGame stateWindow;
 
     protected WindowController controller;
-    protected Overlay overlay;
+    protected UserInterface gui;
 
     protected long delta;
 
-    protected WindowBasedGame(int idWindow, WindowController controller, Overlay overlay, GenericSendTask taskManager) {
+    protected WindowBasedGame(int idWindow, WindowController controller, UserInterface gui) {
         this.idWindow = idWindow;
         this.needContentsInit = true;
         this.controller = controller;
-        this.overlay = overlay;
-
-        taskManager.addObserver(this.controller);
-        this.controller.addObserver(taskManager);
-
-        taskManager.addObserver(this.overlay);
-        this.overlay.addObserver(taskManager);
+        this.gui = gui;
     }
 
     public abstract void initContents() throws SlickException;
@@ -49,7 +42,7 @@ public abstract class WindowBasedGame extends BasicGameState {
 
     public void clean() {
         this.controller.leave();
-        this.overlay.leave();
+        this.gui.leave();
     }
 
     @Override
@@ -69,7 +62,7 @@ public abstract class WindowBasedGame extends BasicGameState {
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         this.controller.renderWindow(graphics);
-        this.overlay.draw(graphics);
+        this.gui.draw(graphics);
     }
 
     @Override
@@ -78,15 +71,16 @@ public abstract class WindowBasedGame extends BasicGameState {
 
         if (this.delta > GlobalVariable.timeLoop) {
             GlobalVariable.currentTimeLoop = this.delta;
-            this.controller.updateWindow(gameContainer);
-            this.overlay.updateOverlay();
+            this.controller.update(gameContainer);
+            this.gui.update();
             this.delta = 0;
+            this.myMouseMoved(gameContainer);
         }
     }
 
     @Override
     public void keyPressed(int key, char c) {
-        boolean absorbed = this.overlay.event(key, c, EnumInput.PRESSED);
+        boolean absorbed = this.gui.event(key, c, EnumInput.PRESSED);
         if (!absorbed) {
             this.controller.keyPressed(key, c);
         }
@@ -94,7 +88,7 @@ public abstract class WindowBasedGame extends BasicGameState {
 
     @Override
     public void keyReleased(int key, char c) {
-        boolean absorbed = this.overlay.event(key, c, EnumInput.RELEASED);
+        boolean absorbed = this.gui.event(key, c, EnumInput.RELEASED);
         if (!absorbed) {
             this.controller.keyReleased(key, c);
         }
@@ -107,8 +101,19 @@ public abstract class WindowBasedGame extends BasicGameState {
 
     @Override
     public void mouseReleased(int button, int x, int y) {
-        if (!this.overlay.isOnFocus(x, y)) {
+        if (!this.gui.isOnClick(x, y)) {
             this.controller.mouseReleased(button, x, y);
         }
+    }
+
+    @Override
+    public void mouseWheelMoved(int newValue) {
+    }
+
+    public void myMouseMoved(GameContainer container) {
+        int posX = container.getInput().getMouseX();
+        int posY = container.getInput().getMouseY();
+
+        this.gui.isOnFocus(posX, posY);
     }
 }

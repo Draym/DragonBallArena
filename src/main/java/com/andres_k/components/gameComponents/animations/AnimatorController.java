@@ -4,7 +4,7 @@ import com.andres_k.components.gameComponents.bodies.BodyAnimation;
 import com.andres_k.components.gameComponents.bodies.BodySprite;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EnumDirection;
-import com.andres_k.components.graphicComponents.userInterface.items.tools.ActivatedTimer;
+import com.andres_k.components.graphicComponents.userInterfaceDeprecated.items.tools.ActivatedTimer;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.Console;
 import org.codehaus.jettison.json.JSONException;
