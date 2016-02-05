@@ -1,6 +1,5 @@
 package com.andres_k.components.gameComponents.animations;
 
-import com.andres_k.components.gameComponents.animations.EnumAnimation;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.utils.stockage.Pair;
 
@@ -14,23 +13,23 @@ public class AnimatorConfig {
     private int start;
 
     private Method action;
-    private EnumAnimation nextType;
+    private EAnimation nextType;
     private int nextIndex;
     private int changedNextIndex;
 
     public AnimatorConfig(Method action) {
-        this(action, -1, EnumAnimation.IDLE, 0);
+        this(action, -1, EAnimation.IDLE, 0);
     }
 
-    public AnimatorConfig(Method action, EnumAnimation type) {
+    public AnimatorConfig(Method action, EAnimation type) {
         this(action, -1, type, 0);
     }
 
-    public AnimatorConfig(Method action, EnumAnimation type, int index) {
+    public AnimatorConfig(Method action, EAnimation type, int index) {
         this(action, -1, type, index);
     }
 
-    public AnimatorConfig(Method action, int start, EnumAnimation type, int index) {
+    public AnimatorConfig(Method action, int start, EAnimation type, int index) {
         this.action = action;
         this.start = start;
         this.nextType = type;
@@ -56,7 +55,7 @@ public class AnimatorConfig {
 
     // GETTERS
 
-    public Pair<EnumAnimation, Integer> getNext() {
+    public Pair<EAnimation, Integer> getNext() {
         return new Pair<>(this.nextType, this.changedNextIndex);
     }
 
@@ -66,7 +65,7 @@ public class AnimatorConfig {
 
     // SETTERS
 
-    public void setNextType(EnumAnimation type) {
+    public void setNextType(EAnimation type) {
         this.nextType = type;
     }
 

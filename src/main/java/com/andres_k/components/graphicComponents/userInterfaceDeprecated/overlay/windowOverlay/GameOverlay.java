@@ -129,11 +129,11 @@ public class GameOverlay extends Overlay {
 
         tableMenuControls.doTask(new ButtonElement(new StringElement(new StringTimer("Player1"), Color.black,
                 EnumOverlayElement.CONTROLS.getValue() + "1:" + EnumOverlayElement.CONTROLS.getValue() + 1, Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.BUTTON));
-        tableMenuControls.doTask(new Pair<>(EnumTask.CLEAR, EnumOverlayElement.CONTROLS.getValue() + "1:" + EnumOverlayElement.CONTROLS.getValue() + 1));
+        tableMenuControls.doTask(new Pair<>(EnumTask.CLEAR_ACTIVITY, EnumOverlayElement.CONTROLS.getValue() + "1:" + EnumOverlayElement.CONTROLS.getValue() + 1));
         if (GlobalVariable.currentPlayer == 2) {
             tableMenuControls.doTask(new ButtonElement(new StringElement(new StringTimer("Player2"), Color.black,
                     EnumOverlayElement.CONTROLS.getValue() + "2:" + EnumOverlayElement.CONTROLS.getValue() + 2, Element.PositionInBody.MIDDLE_MID), EnumOverlayElement.BUTTON));
-            tableMenuControls.doTask(new Pair<>(EnumTask.CLEAR, EnumOverlayElement.CONTROLS.getValue() + "2:" + EnumOverlayElement.CONTROLS.getValue() + 2));
+            tableMenuControls.doTask(new Pair<>(EnumTask.CLEAR_ACTIVITY, EnumOverlayElement.CONTROLS.getValue() + "2:" + EnumOverlayElement.CONTROLS.getValue() + 2));
         }
         for (Map.Entry<EnumInput, String> entry : InputData.getAvailableInput().entrySet()) {
             int id = entry.getKey().getIndex() + 1;

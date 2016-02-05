@@ -3,9 +3,9 @@ package com.andres_k.components.graphicComponents.graphic.windows;
 import com.andres_k.components.controllers.HomeController;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.HomeGUI;
-import com.andres_k.components.soundComponents.EnumSound;
+import com.andres_k.components.soundComponents.ESound;
 import com.andres_k.components.soundComponents.MusicController;
-import com.andres_k.components.taskComponent.EnumLocation;
+import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.LocalTaskManager;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
@@ -21,8 +21,8 @@ public class WindowHome extends WindowBasedGame {
 
     public WindowHome(int idWindow, LocalTaskManager windowsTask) throws JSONException, SlickException {
         super(idWindow, new HomeController(), new HomeGUI());
-        windowsTask.register(EnumLocation.HOME_CONTROLLER.getLocation(), this.controller);
-        windowsTask.register(EnumLocation.HOME_GUI.getLocation(), this.gui);
+        windowsTask.register(ELocation.HOME_CONTROLLER.getId(), this.controller);
+        windowsTask.register(ELocation.HOME_GUI.getId(), this.gui);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class WindowHome extends WindowBasedGame {
 
         this.delta = 0;
 
-        MusicController.loop(EnumSound.BACKGROUND_HOME);
+        MusicController.loop(ESound.BACKGROUND_HOME);
         this.gui.enter();
         this.controller.enter();
     }
@@ -58,7 +58,7 @@ public class WindowHome extends WindowBasedGame {
 
     @Override
     public void leave(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        MusicController.stop(EnumSound.BACKGROUND_HOME);
+        MusicController.stop(ESound.BACKGROUND_HOME);
         this.clean();
     }
 

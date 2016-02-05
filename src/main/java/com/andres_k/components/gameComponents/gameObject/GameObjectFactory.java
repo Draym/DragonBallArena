@@ -10,14 +10,14 @@ import com.andres_k.components.gameComponents.gameObject.objects.players.Goku;
  */
 public class GameObjectFactory {
 
-    public static GameObject create(EnumGameObject type, AnimatorController animatorController, String id, float x, float y) {
+    public static GameObject create(EGameObject type, AnimatorController animatorController, String id, float x, float y) {
         GameObject object = null;
 
-        if (type == EnumGameObject.GOKU) {
+        if (type == EGameObject.GOKU) {
             object = new Goku(animatorController, id, x, y);
-        } else if (type == EnumGameObject.PLATFORM) {
+        } else if (type == EGameObject.PLATFORM) {
             object = new Platform(animatorController, id, x, y);
-        } else if (type == EnumGameObject.BORDER) {
+        } else if (type == EGameObject.BORDER) {
             object = new Border(animatorController, id, x, y);
         }
         return object;

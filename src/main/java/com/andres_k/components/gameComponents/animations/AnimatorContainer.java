@@ -86,7 +86,7 @@ public class AnimatorContainer {
         return this.animators.get(this.index).getBodyAnimation();
     }
 
-    public Pair<EnumAnimation, Integer> getNext() {
+    public Pair<EAnimation, Integer> getNext() {
         return this.animators.get(this.index).getNext();
     }
 

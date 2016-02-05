@@ -1,32 +1,32 @@
 package com.andres_k.components.gameComponents.gameObject.commands.comboComponent.combo;
 
-import com.andres_k.components.eventComponent.input.EnumInput;
-import com.andres_k.components.gameComponents.animations.EnumAnimation;
+import com.andres_k.components.eventComponent.input.EInput;
+import com.andres_k.components.gameComponents.animations.EAnimation;
 
 /**
  * Created by andres_k on 07/12/2015.
  */
 public class ComboElement {
-    private EnumInput input;
-    private EnumAnimation animType;
+    private EInput input;
+    private EAnimation animType;
     private int animIndex;
-    private EnumAnimation hitType;
+    private EAnimation hitType;
     private int hitIndex;
     private boolean change;
     private int duration;
 
 
-    public ComboElement(EnumInput input, EnumAnimation animType, int animIndex, boolean change, int duration) {
+    public ComboElement(EInput input, EAnimation animType, int animIndex, boolean change, int duration) {
         this.input = input;
         this.animType = animType;
         this.animIndex = animIndex;
-        this.hitType = EnumAnimation.NULL;
+        this.hitType = EAnimation.NULL;
         this.hitIndex = 0;
         this.change = change;
         this.duration = duration;
     }
 
-    public ComboElement(EnumInput input, EnumAnimation animType, int animIndex, EnumAnimation hitType, int hitIndex, boolean change, int duration) {
+    public ComboElement(EInput input, EAnimation animType, int animIndex, EAnimation hitType, int hitIndex, boolean change, int duration) {
         this.input = input;
         this.animType = animType;
         this.animIndex = animIndex;
@@ -42,15 +42,15 @@ public class ComboElement {
         return this.hitIndex;
     }
 
-    public EnumAnimation getHitType() {
+    public EAnimation getHitType() {
         return this.hitType;
     }
 
-    public EnumInput getInput() {
+    public EInput getInput() {
         return this.input;
     }
 
-    public EnumAnimation getAnimType() {
+    public EAnimation getAnimType() {
         return this.animType;
     }
 

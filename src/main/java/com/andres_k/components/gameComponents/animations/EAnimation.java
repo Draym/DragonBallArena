@@ -4,7 +4,7 @@ package com.andres_k.components.gameComponents.animations;
 /**
  * Created by andres_k on 13/03/2015.
  */
-public enum EnumAnimation {
+public enum EAnimation {
     // STATE
     NULL(true),
     IDLE(true),
@@ -43,7 +43,7 @@ public enum EnumAnimation {
 
     private boolean loop;
 
-    EnumAnimation(boolean loop) {
+    EAnimation(boolean loop) {
         this.loop = loop;
     }
 
@@ -51,9 +51,9 @@ public enum EnumAnimation {
         return this.loop;
     }
 
-    public static boolean checkLoop(EnumAnimation value) {
-        EnumAnimation[] enums = EnumAnimation.values();
-        for (EnumAnimation type : enums) {
+    public static boolean checkLoop(EAnimation value) {
+        EAnimation[] enums = EAnimation.values();
+        for (EAnimation type : enums) {
             if (type.equals(value)) {
                 return type.isLoop();
             }

@@ -7,6 +7,7 @@ import org.newdawn.slick.geom.Shape;
 /**
  * Created by andres_k on 26/01/2016.
  */
+@Deprecated
 public class ColorShape {
     protected Shape body;
     protected Color color;

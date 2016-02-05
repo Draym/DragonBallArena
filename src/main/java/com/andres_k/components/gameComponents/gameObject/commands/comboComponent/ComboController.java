@@ -1,10 +1,10 @@
 package com.andres_k.components.gameComponents.gameObject.commands.comboComponent;
 
-import com.andres_k.components.eventComponent.input.EnumInput;
+import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
-import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
+import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.comboComponent.components.ComboManager;
-import com.andres_k.utils.configs.GlobalVariable;
+import com.andres_k.utils.configs.GameConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +14,10 @@ import java.util.List;
  */
 public class ComboController {
     private ComboManager combos;
-    private List<EnumInput> history;
+    private List<EInput> history;
     private long counter;
 
-    public ComboController(EnumGameObject type) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    public ComboController(EGameObject type) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         StringBuilder myPath = new StringBuilder();
 
         myPath.append("com.andres_k.components.gameComponents.gameObject.commands.comboComponent.components.");
@@ -32,14 +32,14 @@ public class ComboController {
 
     public void update() {
         if (this.counter >= 0)
-            this.counter += GlobalVariable.currentTimeLoop;
+            this.counter += GameConfig.currentTimeLoop;
     }
     public void reset() {
         this.combos.reset();
         this.history.clear();
     }
 
-    public boolean nextComboStep(AnimatorController animatorController, EnumInput input) {
+    public boolean nextComboStep(AnimatorController animatorController, EInput input) {
         if (this.counter >= this.combos.getCurrentDuration() && this.combos.getCurrentDuration() != -1)
             this.history.clear();
         this.history.add(input);

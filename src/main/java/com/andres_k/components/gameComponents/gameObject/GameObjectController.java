@@ -1,18 +1,13 @@
 package com.andres_k.components.gameComponents.gameObject;
 
 import com.andres_k.components.controllers.ScoreData;
-import com.andres_k.components.eventComponent.input.EnumInput;
+import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.gameComponents.collisions.CollisionResult;
 import com.andres_k.components.gameComponents.gameObject.objects.Player;
 import com.andres_k.components.gameComponents.resources.ResourceManager;
-import com.andres_k.components.graphicComponents.userInterfaceDeprecated.types.EnumOverlayElement;
-import com.andres_k.components.taskComponent.CentralTaskManager;
-import com.andres_k.components.taskComponent.EnumLocation;
-import com.andres_k.components.taskComponent.EnumTask;
-import com.andres_k.components.taskComponent.TaskFactory;
+import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.RandomTools;
 import com.andres_k.utils.tools.StringTools;
@@ -39,10 +34,10 @@ public class GameObjectController {
     }
 
     public void initWorld() throws SlickException {
-        this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, ResourceManager.get().getGameAnimator(EnumGameObject.GROUND), "item1:ground", 950, 900));
-        this.obstacles.add(GameObjectFactory.create(EnumGameObject.PLATFORM, ResourceManager.get().getGameAnimator(EnumGameObject.GROUND), "item2:sky", 950, 0));
-        this.obstacles.add(GameObjectFactory.create(EnumGameObject.BORDER, ResourceManager.get().getGameAnimator(EnumGameObject.WALL), "item3:leftWall", 0, 475));
-        this.obstacles.add(GameObjectFactory.create(EnumGameObject.BORDER, ResourceManager.get().getGameAnimator(EnumGameObject.WALL), "item4:rightWall", 1900, 475));
+        this.obstacles.add(GameObjectFactory.create(EGameObject.PLATFORM, ResourceManager.get().getGameAnimator(EGameObject.GROUND), "item1:ground", 950, 900));
+        this.obstacles.add(GameObjectFactory.create(EGameObject.PLATFORM, ResourceManager.get().getGameAnimator(EGameObject.GROUND), "item2:sky", 950, 0));
+        this.obstacles.add(GameObjectFactory.create(EGameObject.BORDER, ResourceManager.get().getGameAnimator(EGameObject.WALL), "item3:leftWall", 0, 475));
+        this.obstacles.add(GameObjectFactory.create(EGameObject.BORDER, ResourceManager.get().getGameAnimator(EGameObject.WALL), "item4:rightWall", 1900, 475));
     }
 
     // FUNCTIONS
@@ -68,8 +63,8 @@ public class GameObjectController {
     }
 
     private void doMovement(GameObject item) {
-        if (item.getType().isIn(EnumGameObject.ANIMATED))
-            item.doMovement(this.checkCollision(item, EnumTask.MOVE));
+        if (item.getType().isIn(EGameObject.ANIMATED))
+            item.doMovement(this.checkCollision(item, ETaskType.MOVE));
     }
 
     public void update(boolean running) throws SlickException {
@@ -95,15 +90,15 @@ public class GameObjectController {
     }
 
     // EVENTS
-    public void event(EnumInput event, EnumInput input) {
-        if (event == EnumInput.KEY_RELEASED) {
+    public void event(EInput event, EInput input) {
+        if (event == EInput.KEY_RELEASED) {
             if (input.getIndex() >= 0 && input.getIndex() < this.players.size()) {
                 GameObject player = this.getPlayerById("player" + String.valueOf(input.getIndex()));
                 if (player != null) {
                     player.eventReleased(input);
                 }
             }
-        } else if (event == EnumInput.KEY_PRESSED) {
+        } else if (event == EInput.KEY_PRESSED) {
             if (input.getIndex() >= 0 && input.getIndex() < this.players.size()) {
                 GameObject player = this.getPlayerById("player" + String.valueOf(input.getIndex()));
                 if (player != null) {
@@ -118,9 +113,9 @@ public class GameObjectController {
 
         ScoreData.setAvailableScore(player.getPseudo(), score);
         score = StringTools.addCharacterEach(score, " ", 3);
-        Pair task = new Pair<>(EnumOverlayElement.SCORE.getValue() + player.getIdIndex(), new Tuple<>(EnumTask.SETTER, "value", player.getPseudo() + " - " + score));
-
-        CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.GAME_OBJECT_CONTROLLER, EnumLocation.GAME_GUI, new Pair<>(EnumOverlayElement.TABLE_ROUND_END, task)));
+        //todo SCORE ?
+        //Pair task = new Pair<>(EnumOverlayElement.SCORE.getValue() + player.getIdIndex(), new Tuple<>(EnumTask.SETTER, "value", player.getPseudo() + " - " + score));
+        // CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.GAME_OBJECT_CONTROLLER, EnumLocation.GAME_GUI, new Pair<>(EnumOverlayElement.TABLE_ROUND_END, task)));
         Console.write("\n" + player.getPseudo() + " : '" + score + "' pts.");
     }
 
@@ -140,27 +135,31 @@ public class GameObjectController {
     // ADD
 
     public void createPlayers(List<String> playerNames) throws SlickException {
-        for (int i = 0; i < playerNames.size(); ++i) {
+        Integer count = 0;
+
+        for (String name : playerNames) {
             GameObject player = null;
-            while (player == null || this.checkCollision(player, EnumTask.STATIC).hasCollision()) {
-                int randomX = RandomTools.getInt(WindowConfig.getWBigSizeX() - 300) + 300;
-                player = GameObjectFactory.create(EnumGameObject.GOKU,
-                        ResourceManager.get().getGameAnimator(EnumGameObject.GOKU), "player" + String.valueOf(i) + ":" + playerNames.get(i), randomX, WindowConfig.wBig_sY - 500);
+            while (player == null || this.checkCollision(player, ETaskType.STATIC).hasCollision()) {
+                int randomX = RandomTools.getInt(WindowConfig.getWBigSizeX() - 600) + 300;
+                EGameObject type = EGameObject.getEnumByValue(name);
+                player = GameObjectFactory.create(type, ResourceManager.get().getGameAnimator(type),
+                        "player" + count + ":" + name, randomX, WindowConfig.wBig_sY - 200);
             }
+            ++count;
             this.players.add(player);
         }
     }
 
     // COLLISION
 
-    public CollisionResult checkCollision(GameObject current, EnumTask type) {
+    public CollisionResult checkCollision(GameObject current, ETaskType type) {
         CollisionResult result = new CollisionResult();
 
         if (current != null) {
             List<GameObject> items = this.getAllExpectHim(current.getId());
             Pair<Float, Float> newPos;
 
-            if (type == EnumTask.STATIC)
+            if (type == ETaskType.STATIC)
                 newPos = new Pair<>(current.getPosX(), current.getPosY());
             else
                 newPos = current.predictNextPosition();

@@ -10,9 +10,9 @@ import java.util.UUID;
 public class SoundElement {
     private Sound sound;
     private String id;
-    private EnumSound type;
+    private ESound type;
 
-    public SoundElement(Sound sound, EnumSound type){
+    public SoundElement(Sound sound, ESound type){
         this.sound = sound;
         this.type = type;
         this.id = UUID.randomUUID().toString();
@@ -23,7 +23,7 @@ public class SoundElement {
         return this.id;
     }
 
-    public EnumSound getType() {
+    public ESound getType() {
         return type;
     }
 

@@ -3,7 +3,7 @@ package com.andres_k.components.networkComponents.networkGame;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.networkComponents.networkSend.MessageModel;
 import com.andres_k.components.taskComponent.CentralTaskManager;
-import com.andres_k.components.taskComponent.EnumLocation;
+import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.configs.NetworkServerConfig;
@@ -25,7 +25,7 @@ public class NetworkController implements Observer {
         this.client = new Client();
         NetworkRegister.register(this.client);
 
-        CentralTaskManager.get().register(EnumLocation.SERVER.getLocation(), this);
+        CentralTaskManager.get().register(ELocation.SERVER.getId(), this);
         this.client.start();
     }
 
@@ -37,11 +37,11 @@ public class NetworkController implements Observer {
                 public void received(Connection connection, Object object) {
                     if (object instanceof MessageModel) {
                         MessageModel response = (MessageModel) object;
-                        CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.SERVER_MESSAGE, EnumLocation.GAME_CONTROLLER, response));
+                        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.SERVER_MESSAGE, ELocation.GAME_CONTROLLER, response));
                     }
                 }
             });
-            CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.SERVER_MESSAGE, EnumLocation.HOME_CONTROLLER, EnumWindow.GAME));
+            CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.SERVER_MESSAGE, ELocation.HOME_CONTROLLER, EnumWindow.GAME));
             return true;
         } catch (IOException e) {
             System.err.println("ERROR: " + e.getMessage());
@@ -60,7 +60,7 @@ public class NetworkController implements Observer {
             this.client.sendTCP(request);
         }*/
         //faire le mode offline avec:
-        CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.SERVER_MESSAGE, EnumLocation.GAME_CONTROLLER, request));
+        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.SERVER_MESSAGE, ELocation.GAME_CONTROLLER, request));
     }
 
     @Override
@@ -68,11 +68,11 @@ public class NetworkController implements Observer {
         if (arg instanceof TaskComponent) {
             TaskComponent task = (TaskComponent) arg;
 
-            if (task.getTarget().equals(EnumLocation.SERVER_MESSAGE)) {
+            if (task.getTarget().equals(ELocation.SERVER_MESSAGE)) {
                 if (task.getTask() instanceof MessageModel) {
                     this.call((MessageModel) task.getTask());
                 }
-            } else if (task.getTarget().equals(EnumLocation.SERVER_CONFIG)) {
+            } else if (task.getTarget().equals(ELocation.SERVER_CONFIG)) {
                 if (task.getTask() instanceof NetworkServerConfig) {
                     this.connect((NetworkServerConfig) task.getTask());
                 }

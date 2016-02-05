@@ -1,27 +1,27 @@
 package com.andres_k.components.taskComponent.utils;
 
-import com.andres_k.components.taskComponent.EnumLocation;
+import com.andres_k.components.taskComponent.ELocation;
 
 /**
  * Created by andres_k on 01/02/2016.
  */
 public class TaskComponent {
-    private EnumLocation sender;
-    private EnumLocation target;
+    private ELocation sender;
+    private ELocation target;
     private Object task;
 
-    public TaskComponent(EnumLocation sender, EnumLocation target, Object task) {
+    public TaskComponent(ELocation sender, ELocation target, Object task) {
         this.sender = sender;
         this.target = target;
         this.task = task;
     }
 
     // GETTERS
-    public EnumLocation getSender() {
+    public ELocation getSender() {
         return this.sender;
     }
 
-    public EnumLocation getTarget() {
+    public ELocation getTarget() {
         return this.target;
     }
 
@@ -30,11 +30,16 @@ public class TaskComponent {
     }
 
     // SETTERS
-    public void setSender(EnumLocation sender) {
+    public void setSender(ELocation sender) {
         this.sender = sender;
     }
 
-    public void setTarget(EnumLocation target) {
+    public void setTarget(ELocation target) {
         this.target = target;
+    }
+
+    @Override
+    public String toString() {
+        return "{" + this.sender + "} -> {" + target + "} : " + task;
     }
 }

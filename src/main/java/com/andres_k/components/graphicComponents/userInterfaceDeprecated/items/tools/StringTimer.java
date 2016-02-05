@@ -3,6 +3,7 @@ package com.andres_k.components.graphicComponents.userInterfaceDeprecated.items.
 /**
  * Created by andres_k on 27/06/2015.
  */
+@Deprecated
 public class StringTimer {
     private StringBuffer value;
     private ActivatedTimer activatedTimer;

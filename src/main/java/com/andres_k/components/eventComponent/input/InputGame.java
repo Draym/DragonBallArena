@@ -12,7 +12,7 @@ public class InputGame {
     public InputGame() throws JSONException {
     }
 
-    public EnumInput checkInput(int key) {
+    public EInput checkInput(int key) {
         String keyName;
 
         if (key == -2) {
@@ -22,6 +22,6 @@ public class InputGame {
         } else {
             keyName = Input.getKeyName(key);
         }
-        return EnumInput.getEnumByValue(InputData.getInputByValue(keyName));
+        return EInput.getEnumByValue(InputData.getInputByValue(keyName));
     }
 }

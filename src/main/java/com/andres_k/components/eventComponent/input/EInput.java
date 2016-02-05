@@ -3,7 +3,7 @@ package com.andres_k.components.eventComponent.input;
 /**
  * Created by andres_k on 16/03/2015.
  */
-public enum EnumInput {
+public enum EInput {
     // TYPE
     NOTHING("NOTHING"),
     INFINITE("INFINITE"),
@@ -42,12 +42,12 @@ public enum EnumInput {
     private final int index;
     private final String value;
 
-    EnumInput(String value) {
+    EInput(String value) {
         this.index = -1;
         this.value = value;
     }
 
-    EnumInput(int index, String value) {
+    EInput(int index, String value) {
         this.index = index;
         this.value = value;
     }
@@ -60,10 +60,10 @@ public enum EnumInput {
         return this.index;
     }
 
-    public static EnumInput getEnumByIndex(int index) {
-        EnumInput[] enums = EnumInput.values();
+    public static EInput getEnumByIndex(int index) {
+        EInput[] enums = EInput.values();
 
-        for (EnumInput type : enums) {
+        for (EInput type : enums) {
             if (index == type.getIndex()) {
                 return type;
             }
@@ -71,10 +71,10 @@ public enum EnumInput {
         return NOTHING;
     }
 
-    public static EnumInput getEnumByValue(String value) {
-        EnumInput[] enums = EnumInput.values();
+    public static EInput getEnumByValue(String value) {
+        EInput[] enums = EInput.values();
 
-        for (EnumInput type : enums) {
+        for (EInput type : enums) {
             if (type.getValue().equals(value)) {
                 return type;
             }
@@ -83,9 +83,9 @@ public enum EnumInput {
     }
 
     public static int getIndexByValue(String value) {
-        EnumInput[] enums = EnumInput.values();
+        EInput[] enums = EInput.values();
 
-        for (EnumInput type : enums) {
+        for (EInput type : enums) {
             if (type.getValue().equals(value)) {
                 return type.getIndex();
             }
@@ -93,14 +93,14 @@ public enum EnumInput {
         return NOTHING.getIndex();
     }
 
-    public boolean isIn(EnumInput input){
+    public boolean isIn(EInput input){
         return this.getValue().contains(input.getValue());
     }
 
-    public EnumInput getContainer() {
-        EnumInput[] enums = EnumInput.values();
+    public EInput getContainer() {
+        EInput[] enums = EInput.values();
 
-        for (EnumInput type : enums) {
+        for (EInput type : enums) {
             if (this.isIn(type)) {
                 return type;
             }

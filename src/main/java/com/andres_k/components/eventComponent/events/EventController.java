@@ -1,6 +1,6 @@
 package com.andres_k.components.eventComponent.events;
 
-import com.andres_k.components.eventComponent.input.EnumInput;
+import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.utils.tools.Console;
 
 import java.util.ArrayList;
@@ -12,24 +12,24 @@ import java.util.Map;
  * Created by andres_k on 23/10/2015.
  */
 public class EventController {
-    private HashMap<EnumInput, Boolean> activatedEvent;
-    private List<EnumInput> eventHistory;
-    private List<EnumInput> eventStack;
-    private List<EnumInput> validToHistory;
+    private HashMap<EInput, Boolean> activatedEvent;
+    private List<EInput> eventHistory;
+    private List<EInput> eventStack;
+    private List<EInput> validToHistory;
 
     public EventController() {
         this.activatedEvent = new HashMap<>();
         this.eventHistory = new ArrayList<>();
         this.eventStack = new ArrayList<>();
         this.validToHistory = new ArrayList<>();
-        this.validToHistory.add(EnumInput.MOVE_UP);
-        this.validToHistory.add(EnumInput.MOVE_DOWN);
-        this.validToHistory.add(EnumInput.MOVE_RIGHT);
-        this.validToHistory.add(EnumInput.MOVE_LEFT);
+        this.validToHistory.add(EInput.MOVE_UP);
+        this.validToHistory.add(EInput.MOVE_DOWN);
+        this.validToHistory.add(EInput.MOVE_RIGHT);
+        this.validToHistory.add(EInput.MOVE_LEFT);
     }
 
     public void reset() {
-        for (Map.Entry<EnumInput, Boolean> entry : this.activatedEvent.entrySet()) {
+        for (Map.Entry<EInput, Boolean> entry : this.activatedEvent.entrySet()) {
             entry.setValue(false);
         }
         this.eventHistory.clear();
@@ -37,11 +37,11 @@ public class EventController {
     }
 
     // SETTERS
-    public void addEvent(EnumInput event) {
+    public void addEvent(EInput event) {
         this.activatedEvent.putIfAbsent(event, false);
     }
 
-    public void setActivated(EnumInput event, boolean value) {
+    public void setActivated(EInput event, boolean value) {
         if (this.activatedEvent.containsKey(event)) {
             this.activatedEvent.put(event, value);
             if (value) {
@@ -61,7 +61,7 @@ public class EventController {
     }
 
     // GETTERS
-    public boolean isActivated(EnumInput event) {
+    public boolean isActivated(EInput event) {
         if (this.activatedEvent.containsKey(event)) {
             return this.activatedEvent.get(event);
         }
@@ -69,7 +69,7 @@ public class EventController {
     }
 
     public boolean allInactive() {
-        for (Map.Entry<EnumInput, Boolean> entry : this.activatedEvent.entrySet()) {
+        for (Map.Entry<EInput, Boolean> entry : this.activatedEvent.entrySet()) {
             if (entry.getValue()) {
                 return false;
             }
@@ -77,12 +77,12 @@ public class EventController {
         return true;
     }
 
-    public EnumInput getMoreRecentEventBetween(EnumInput v1, EnumInput v2) {
+    public EInput getMoreRecentEventBetween(EInput v1, EInput v2) {
         int result1 = this.eventHistory.indexOf(v1);
         int result2 = this.eventHistory.indexOf(v2);
 
         if (result1 == -1 && result2 == -1)
-            return EnumInput.NOTHING;
+            return EInput.NOTHING;
         else if (result1 == -1)
             return v2;
         else if (result2 == -1)
@@ -93,23 +93,23 @@ public class EventController {
             return v2;
     }
 
-    public EnumInput getTheLastEvent() {
+    public EInput getTheLastEvent() {
         if (this.eventHistory.size() > 0) {
             return this.eventHistory.get(0);
         } else {
-            return EnumInput.NOTHING;
+            return EInput.NOTHING;
         }
     }
 
-    public EnumInput consumeStackEvent() {
+    public EInput consumeStackEvent() {
         if (this.eventStack.size() > 0) {
             return this.eventStack.remove(0);
         } else {
-            return EnumInput.NOTHING;
+            return EInput.NOTHING;
         }
     }
 
-    public void addStackEvent(EnumInput input)
+    public void addStackEvent(EInput input)
     {
         Console.write("input: " + input);
         this.eventStack.add(input);

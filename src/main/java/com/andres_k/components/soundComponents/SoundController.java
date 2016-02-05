@@ -43,7 +43,7 @@ public class SoundController {
         }
     }
 
-    public static String play(EnumSound value) {
+    public static String play(ESound value) {
         if (!needInit) {
             try {
                 Sound sound = new Sound(value.getPath());
@@ -59,7 +59,7 @@ public class SoundController {
         return null;
     }
 
-    public static String loop(EnumSound value) {
+    public static String loop(ESound value) {
         if (!needInit) {
             try {
                 Sound sound = new Sound(value.getPath());

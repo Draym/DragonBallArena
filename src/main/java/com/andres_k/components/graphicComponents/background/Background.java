@@ -3,7 +3,7 @@ package com.andres_k.components.graphicComponents.background;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.graphicComponents.effects.EffectManager;
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
-import com.andres_k.components.graphicComponents.effects.effect.EnumEffect;
+import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
@@ -74,7 +74,7 @@ public class Background {
         return this.effectManager.effectIsRunning(id);
     }
 
-    public boolean effectIsActive(EnumEffect type) {
+    public boolean effectIsActive(EffectType type) {
         return this.effectManager.effectIsActive(type);
     }
 }

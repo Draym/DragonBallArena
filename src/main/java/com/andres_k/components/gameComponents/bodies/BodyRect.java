@@ -1,6 +1,6 @@
 package com.andres_k.components.gameComponents.bodies;
 
-import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
+import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.MathTools;
 import org.codehaus.jettison.json.JSONException;
@@ -23,12 +23,12 @@ public class BodyRect {
     private UUID id;
     private List<UUID> lastCollisions;
 
-    private EnumGameObject type;
+    private EGameObject type;
     private Pair<Float, Float> positions;
     private Pair<Float, Float> sizes;
 
     public BodyRect(JSONObject object, Float decalX, Float decalY) throws JSONException {
-        this.type = EnumGameObject.getEnumByValue(object.getString("type"));
+        this.type = EGameObject.getEnumByValue(object.getString("type"));
         this.positions = new Pair<>((float) object.getDouble("posX") - decalX, (float) object.getDouble("posY") - decalY);
         this.sizes = new Pair<>((float) object.getDouble("sizeX"), (float) object.getDouble("sizeY"));
         this.id = UUID.randomUUID();
@@ -36,11 +36,11 @@ public class BodyRect {
     }
 
     public void draw(Graphics g, boolean haveToFlip, Rectangle container, float posX, float posY) {
-        if (this.type == EnumGameObject.DEFENSE_BODY) {
+        if (this.type == EGameObject.DEFENSE_BODY) {
             g.setColor(Color.cyan);
-        } else if (this.type == EnumGameObject.ATTACK_BODY) {
+        } else if (this.type == EGameObject.ATTACK_BODY) {
             g.setColor(Color.orange);
-        } else if (this.type == EnumGameObject.BLOCK_BODY) {
+        } else if (this.type == EGameObject.BLOCK_BODY) {
             g.setColor(Color.green);
         }
         g.draw(this.getFlippedRect(haveToFlip, container, posX, posY));
@@ -79,12 +79,12 @@ public class BodyRect {
         }
     }
 
-    public EnumGameObject getType() {
+    public EGameObject getType() {
         return this.type;
     }
 
     // SETTERS
-    public void setType(EnumGameObject type) {
+    public void setType(EGameObject type) {
         this.type = type;
     }
 

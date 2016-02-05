@@ -1,11 +1,12 @@
 package com.andres_k.components.gameComponents.gameObject;
 
-import com.andres_k.components.eventComponent.input.EnumInput;
-import com.andres_k.components.gameComponents.animations.EnumAnimation;
+import com.andres_k.components.eventComponent.input.EInput;
+import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.bodies.BodySprite;
 import com.andres_k.components.gameComponents.collisions.CollisionResult;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.MovementController;
+import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Graphics;
@@ -19,7 +20,7 @@ public abstract class GameObject {
     protected AnimatorController animatorController;
     protected MovementController movement;
     protected String id;
-    protected EnumGameObject type;
+    protected EGameObject type;
 
     protected boolean alive;
 
@@ -27,7 +28,7 @@ public abstract class GameObject {
     protected float currentLife;
     protected float damage;
 
-    protected GameObject(AnimatorController animatorController, EnumGameObject type, String id, Pair<Float, Float> pos, float life, float damage, float speed, float weight) {
+    protected GameObject(AnimatorController animatorController, EGameObject type, String id, Pair<Float, Float> pos, float life, float damage, float speed, float weight) {
         this.movement = new MovementController(pos, 9.8f, speed, weight, false);
 
         this.alive = true;
@@ -64,13 +65,14 @@ public abstract class GameObject {
     public abstract void update();
 
     protected void updateAnimation() {
-        if (this.animatorController != null && this.animatorController.currentAnimation() != null)
-            this.animatorController.currentAnimator().update(GlobalVariable.currentTimeLoop);
+        if (this.animatorController != null && this.animatorController.currentAnimation() != null) {
+            this.animatorController.currentAnimator().update(GameConfig.currentTimeLoop);
+        }
     }
 
-    public abstract void eventPressed(EnumInput input);
+    public abstract void eventPressed(EInput input);
 
-    public abstract void eventReleased(EnumInput input);
+    public abstract void eventReleased(EInput input);
 
     public abstract Object doTask(Object task);
 
@@ -95,7 +97,7 @@ public abstract class GameObject {
 //        Console.debug("\nCURRENT LIFE [" + this.type + "] vs [" + enemy.type + "]: " + this.currentLife + " - " + enemy.getDamage() + " = " + (this.currentLife - enemy.getDamage()));
         this.currentLife -= enemy.getDamage();
         if (this.currentLife <= 0) {
-            this.animatorController.setCurrentAnimationType(EnumAnimation.EXPLODE);
+            this.animatorController.setCurrentAnimationType(EAnimation.EXPLODE);
             this.alive = false;
         }
         // changer l'anim pour recevoir degat
@@ -147,7 +149,7 @@ public abstract class GameObject {
         return this.id;
     }
 
-    public EnumGameObject getType() {
+    public EGameObject getType() {
         return this.type;
     }
 

@@ -1,7 +1,16 @@
 package com.andres_k.components.graphicComponents.userInterface.windowGUI.windows;
 
+import com.andres_k.components.gameComponents.resources.ResourceManager;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.ImageElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.ComplexElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.UserInterface;
-import com.andres_k.components.taskComponent.EnumLocation;
+import com.andres_k.components.taskComponent.ELocation;
+import com.andres_k.components.taskComponent.ETaskType;
+import com.andres_k.utils.stockage.Tuple;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 
 import java.util.Observable;
 
@@ -11,12 +20,19 @@ import java.util.Observable;
 public class LoadGUI extends UserInterface {
 
     public LoadGUI() {
-        super(EnumLocation.LOAD_GUI);
+        super(ELocation.LOAD_GUI);
     }
 
     @Override
-    public void init() {
-
+    public void init() throws SlickException {
+        // loading Bar
+        ComplexElement loadingBar = new ComplexElement(new ColorRect(new Rectangle(446, 630, 400, 95)), true);
+        loadingBar.addItem(new ImageElement(ResourceManager.get().getGuiAnimator(EGuiElement.LOADING_EMPTY), true));
+        ImageElement loader = new ImageElement(ELocation.LOAD_GUI_LoadingBar.getId(), ResourceManager.get().getGuiAnimator(EGuiElement.LOAD_BAR), true);
+        this.taskManager.register(ELocation.LOAD_GUI_LoadingBar.getId(), loader);
+        loader.doTask(new Tuple<>(ETaskType.CUT, "body", 0.0f));
+        loadingBar.addItem(loader);
+        this.elements.add(loadingBar);
     }
 
     @Override
@@ -26,6 +42,5 @@ public class LoadGUI extends UserInterface {
 
     @Override
     public void update(Observable o, Object arg) {
-
     }
 }

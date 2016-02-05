@@ -1,9 +1,9 @@
 package com.andres_k.components.graphicComponents.effects.effect.flash;
 
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
-import com.andres_k.components.graphicComponents.effects.effect.EnumEffect;
-import com.andres_k.components.graphicComponents.userInterfaceDeprecated.items.tools.ColorShape;
-import com.andres_k.utils.configs.GlobalVariable;
+import com.andres_k.components.graphicComponents.effects.effect.EffectType;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorShape;
+import com.andres_k.utils.configs.GameConfig;
 import org.newdawn.slick.Graphics;
 
 /**
@@ -15,12 +15,12 @@ public class FlashEffect extends Effect {
     protected boolean upLight;
     protected float constant;
 
-    protected FlashEffect(String id, EnumEffect type, long duration, ColorShape shape) {
+    protected FlashEffect(String id, EffectType type, long duration, ColorShape shape) {
         super(id, type, duration);
         this.flash = shape;
         this.light = shape.getColor().getAlpha();
         this.upLight = true;
-        this.constant = (255 / (duration / GlobalVariable.currentTimeLoop));
+        this.constant = (255 / (duration / GameConfig.currentTimeLoop));
     }
 
     @Override

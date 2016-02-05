@@ -1,10 +1,10 @@
 package com.andres_k.components.gameComponents.resources;
 
 import com.andres_k.components.gameComponents.animations.AnimatorController;
-import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
+import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.resources.data.*;
-import com.andres_k.components.graphicComponents.background.EnumBackground;
-import com.andres_k.components.graphicComponents.userInterfaceDeprecated.types.EnumOverlayElement;
+import com.andres_k.components.graphicComponents.background.EBackground;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
 import com.andres_k.components.soundComponents.MusicController;
 import com.andres_k.components.soundComponents.SoundController;
 import com.andres_k.utils.tools.Console;
@@ -18,7 +18,6 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class ResourceManager {
     private AnimatorGameData gameData;
-    private AnimatorOverlayData overlayData;
     private AnimatorGuiData guiData;
     private AnimatorBackgroundData backgroundData;
     private SoundData soundData;
@@ -26,7 +25,6 @@ public class ResourceManager {
 
     private ResourceManager() {
         this.gameData = new AnimatorGameData();
-        this.overlayData = new AnimatorOverlayData();
         this.guiData = new AnimatorGuiData();
         this.backgroundData = new AnimatorBackgroundData();
         this.soundData = new SoundData();
@@ -45,7 +43,6 @@ public class ResourceManager {
 
     public void prerequisiteContents() throws NoSuchMethodException, SlickException, JSONException {
         this.gameData.prerequisite();
-        this.overlayData.prerequisite();
         this.guiData.prerequisite();
         this.backgroundData.prerequisite();
     }
@@ -67,14 +64,13 @@ public class ResourceManager {
     }
 
     public float getPercentInitialised() {
-        return ((this.getTotalToInitialise() - this.getTotalNotInitialised()) * 100) / this.getTotalToInitialise();
+        return ((((float)this.getTotalToInitialise() - (float)this.getTotalNotInitialised()) * 100f) / (float)this.getTotalToInitialise()) / 100f;
     }
 
     public int getTotalToInitialise() {
         int result = 0;
 
         result += this.gameData.getTotalMethods();
-        result += this.overlayData.getTotalMethods();
         result += this.guiData.getTotalMethods();
         result += this.backgroundData.getTotalMethods();
         result += this.musicData.getTotalMethods();
@@ -86,7 +82,6 @@ public class ResourceManager {
         int result = 0;
 
         result += this.gameData.getNotInitialised();
-        result += this.overlayData.getNotInitialised();
         result += this.guiData.getNotInitialised();
         result += this.backgroundData.getNotInitialised();
         result += this.musicData.getNotInitialised();
@@ -98,11 +93,6 @@ public class ResourceManager {
         if ((index = this.gameData.initialise(index)) <= 0) {
             if (this.gameData.getNotInitialised() == 0)
                 Console.write("GameData > complete");
-            return false;
-        }
-        if ((index = this.overlayData.initialise(index)) <= 0) {
-            if (this.overlayData.getNotInitialised() == 0)
-                Console.write("OverlayData > complete");
             return false;
         }
         if ((index = this.guiData.initialise(index)) <= 0) {
@@ -130,19 +120,15 @@ public class ResourceManager {
 
     // GETTERS
 
-    public AnimatorController getGameAnimator(EnumGameObject item) throws SlickException {
+    public AnimatorController getGameAnimator(EGameObject item) throws SlickException {
         return this.gameData.getAnimator(item);
     }
 
-    public AnimatorController getGuiAnimator(EnumOverlayElement item) throws SlickException {
+    public AnimatorController getGuiAnimator(EGuiElement item) throws SlickException {
         return this.guiData.getAnimator(item);
     }
 
-    public AnimatorController getOverlayAnimator(EnumOverlayElement item) throws SlickException {
-        return this.overlayData.getAnimator(item);
-    }
-
-    public AnimatorController getBackgroundAnimator(EnumBackground item) throws SlickException {
+    public AnimatorController getBackgroundAnimator(EBackground item) throws SlickException {
         return this.backgroundData.getAnimator(item);
     }
 }

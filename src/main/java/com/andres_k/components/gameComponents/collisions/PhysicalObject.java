@@ -1,12 +1,12 @@
 package com.andres_k.components.gameComponents.collisions;
 
-import com.andres_k.components.gameComponents.animations.EnumAnimation;
+import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.bodies.BodyRect;
 import com.andres_k.components.gameComponents.bodies.BodySprite;
-import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
+import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
-import com.andres_k.components.gameComponents.gameObject.commands.movement.EnumDirection;
+import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.MathTools;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public abstract class PhysicalObject extends GameObject {
     private Map<UUID, UUID> saveCollisions;
 
-    protected PhysicalObject(AnimatorController animatorController, EnumGameObject type, String id, float x, float y, float life, float damage, float speed, float weight) {
+    protected PhysicalObject(AnimatorController animatorController, EGameObject type, String id, float x, float y, float life, float damage, float speed, float weight) {
         super(animatorController, type, id, new Pair<>(x, y), life, damage, speed, weight);
         this.saveCollisions = new HashMap<>();
     }
@@ -50,8 +50,8 @@ public abstract class PhysicalObject extends GameObject {
     }
 
     public boolean checkBorderCollision(GameObject enemy, Pair<Float, Float> pos) {
-        if (this.getAnimatorController().currentAnimationType() != EnumAnimation.EXPLODE &&
-                enemy.getAnimatorController().currentAnimationType() != EnumAnimation.EXPLODE) {
+        if (this.getAnimatorController().currentAnimationType() != EAnimation.EXPLODE &&
+                enemy.getAnimatorController().currentAnimationType() != EAnimation.EXPLODE) {
             BodySprite myBody = this.getBody();
             BodySprite hisBody = enemy.getBody();
 
@@ -97,7 +97,7 @@ public abstract class PhysicalObject extends GameObject {
             myRect.addCollision(hisRect.getId());
             hisRect.addCollision(myRect.getId());
             this.doCollision(enemy, myRect, hisRect, myShape, hisShape, result, pos, mode);
-            if (enemy.getType() == EnumGameObject.PLATFORM)
+            if (enemy.getType() == EGameObject.PLATFORM)
                 return true;
         } else {
             myRect.deleteCollision(hisRect.getId());
@@ -108,13 +108,13 @@ public abstract class PhysicalObject extends GameObject {
 
     private void doCollision(GameObject enemy, BodyRect myRect, BodyRect hisRect, Shape myShape, Shape hisShape, CollisionResult result, Pair<Float, Float> pos, int mode) {
         if (!myRect.containsCollision(hisRect.getId()) && !hisRect.containsCollision(myRect.getId())) {
-            if (myRect.getType() == EnumGameObject.ATTACK_BODY && hisRect.getType() == EnumGameObject.DEFENSE_BODY) {
+            if (myRect.getType() == EGameObject.ATTACK_BODY && hisRect.getType() == EGameObject.DEFENSE_BODY) {
                 enemy.getHit(this);
-            } else if (myRect.getType() == EnumGameObject.DEFENSE_BODY && hisRect.getType() == EnumGameObject.ATTACK_BODY) {
+            } else if (myRect.getType() == EGameObject.DEFENSE_BODY && hisRect.getType() == EGameObject.ATTACK_BODY) {
                 this.getHit(enemy);
             }
         }
-        if (myRect.getType() != EnumGameObject.ATTACK_BODY && hisRect.getType() != EnumGameObject.ATTACK_BODY) {
+        if (myRect.getType() != EGameObject.ATTACK_BODY && hisRect.getType() != EGameObject.ATTACK_BODY) {
             float diffPos;
             float diffNewPos;
             float diffAbsPos;
@@ -130,7 +130,7 @@ public abstract class PhysicalObject extends GameObject {
                 diffAbsPos = MathTools.abs(diffPos);
 
                 distance = diffAbsPos - (myShape.getWidth() / 2 + hisShape.getWidth() / 2);
-                result.addCollisionX((diffAbsPos >= diffAbsNewPos), enemy.getType(), (diffPos > 0 ? EnumDirection.RIGHT : EnumDirection.LEFT), distance);
+                result.addCollisionX((diffAbsPos >= diffAbsNewPos), enemy.getType(), (diffPos > 0 ? EDirection.RIGHT : EDirection.LEFT), distance);
             } else {
                 diffPos = MathTools.getDistance(myPreviousShape.getCenterY(), hisShape.getCenterY());
                 diffNewPos = myShape.getCenterY() - hisShape.getCenterY();
@@ -138,7 +138,7 @@ public abstract class PhysicalObject extends GameObject {
                 diffAbsPos = MathTools.abs(diffPos);
 
                 distance = diffAbsPos - (myShape.getHeight() / 2 + hisShape.getHeight() / 2);
-                result.addCollisionY((diffAbsPos >= diffAbsNewPos), enemy.getType(), (diffPos <= 0 ? EnumDirection.TOP : EnumDirection.DOWN), distance);
+                result.addCollisionY((diffAbsPos >= diffAbsNewPos), enemy.getType(), (diffPos <= 0 ? EDirection.TOP : EDirection.DOWN), distance);
             }
         }
     }

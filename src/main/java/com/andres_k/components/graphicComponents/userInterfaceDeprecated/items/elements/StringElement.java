@@ -1,8 +1,8 @@
 package com.andres_k.components.graphicComponents.userInterfaceDeprecated.items.elements;
 
-import com.andres_k.components.graphicComponents.userInterfaceDeprecated.types.EnumOverlayElement;
 import com.andres_k.components.graphicComponents.userInterfaceDeprecated.items.tools.ColorRect;
 import com.andres_k.components.graphicComponents.userInterfaceDeprecated.items.tools.StringTimer;
+import com.andres_k.components.graphicComponents.userInterfaceDeprecated.types.EnumOverlayElement;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.Color;

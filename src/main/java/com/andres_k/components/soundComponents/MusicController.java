@@ -10,7 +10,7 @@ import java.util.Map;
  * Created by andres_k on 07/07/2015.
  */
 public class MusicController {
-    private static Map<EnumSound, Music> musics;
+    private static Map<ESound, Music> musics;
     private static boolean needInit = true;
     private static float pitch;
     private static float volume;
@@ -27,13 +27,13 @@ public class MusicController {
         }
     }
 
-    public static void addMusic(EnumSound sound) throws SlickException {
+    public static void addMusic(ESound sound) throws SlickException {
         if (!needInit) {
             musics.put(sound, new Music(sound.getPath()));
         }
     }
 
-    public static boolean play(EnumSound value) {
+    public static boolean play(ESound value) {
         if (!needInit && musics.containsKey(value)) {
             if (musics.get(value).playing()) {
                 musics.get(value).resume();
@@ -45,7 +45,7 @@ public class MusicController {
         return false;
     }
 
-    public static boolean loop(EnumSound value) {
+    public static boolean loop(ESound value) {
         if (!needInit && musics.containsKey(value)) {
             if (musics.get(value).playing()) {
                 musics.get(value).resume();
@@ -57,7 +57,7 @@ public class MusicController {
         return false;
     }
 
-    public static boolean resume(EnumSound value) {
+    public static boolean resume(ESound value) {
         if (!needInit && musics.containsKey(value)) {
             musics.get(value).resume();
             return true;
@@ -65,7 +65,7 @@ public class MusicController {
         return false;
     }
 
-    public static boolean stop(EnumSound value) {
+    public static boolean stop(ESound value) {
         if (!needInit && musics.containsKey(value)) {
             musics.get(value).stop();
             return true;
@@ -76,7 +76,7 @@ public class MusicController {
     public static void changeVolume(float value) {
         volume = value;
 
-        for (Map.Entry<EnumSound, Music> entry : musics.entrySet()) {
+        for (Map.Entry<ESound, Music> entry : musics.entrySet()) {
             entry.getValue().setVolume(volume);
         }
     }

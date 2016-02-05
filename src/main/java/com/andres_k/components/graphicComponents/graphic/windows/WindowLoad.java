@@ -4,9 +4,8 @@ import com.andres_k.components.controllers.LoadController;
 import com.andres_k.components.gameComponents.resources.ResourceManager;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.LoadGUI;
-import com.andres_k.components.soundComponents.EnumSound;
+import com.andres_k.components.soundComponents.ESound;
 import com.andres_k.components.soundComponents.MusicController;
-import com.andres_k.components.taskComponent.EnumLocation;
 import com.andres_k.components.taskComponent.LocalTaskManager;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
@@ -23,8 +22,8 @@ public class WindowLoad extends WindowBasedGame {
 
     public WindowLoad(int idWindow, LocalTaskManager windowsTask) throws JSONException, SlickException {
         super(idWindow, new LoadController(), new LoadGUI());
-        windowsTask.register(EnumLocation.LOAD_CONTROLLER.getLocation(), this.controller);
-        windowsTask.register(EnumLocation.LOAD_GUI.getLocation(), this.gui);
+        this.gui.register(windowsTask);
+        this.controller.register(windowsTask);
     }
 
     @Override
@@ -35,7 +34,7 @@ public class WindowLoad extends WindowBasedGame {
         new Thread(() -> {
             try {
                 ResourceManager.get().prerequisiteMusic();
-                MusicController.loop(EnumSound.BACKGROUND_LOAD);
+                MusicController.loop(ESound.BACKGROUND_LOAD);
             } catch (SlickException e) {
                 e.printStackTrace();
             }
@@ -91,7 +90,7 @@ public class WindowLoad extends WindowBasedGame {
 
     @Override
     public void leave(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        MusicController.stop(EnumSound.BACKGROUND_LOAD);
+        MusicController.stop(ESound.BACKGROUND_LOAD);
         this.clean();
     }
 

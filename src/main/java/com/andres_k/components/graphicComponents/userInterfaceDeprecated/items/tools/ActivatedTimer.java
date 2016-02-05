@@ -6,6 +6,7 @@ import java.util.TimerTask;
 /**
  * Created by andres_k on 29/06/2015.
  */
+@Deprecated
 public class ActivatedTimer {
     private Timer timer;
     private ActivatedTask activatedTask;
@@ -24,7 +25,7 @@ public class ActivatedTimer {
         this.activated = activated;
         this.delay = delay;
         this.running = false;
-        if (run == true) {
+        if (run) {
             this.startTimer();
         }
     }
@@ -51,7 +52,7 @@ public class ActivatedTimer {
 
     public void startTimer() {
         if (this.delay != 0) {
-            if (this.running == true) {
+            if (this.running) {
                 this.stopTimer();
                 this.startTimer();
             } else {
@@ -66,7 +67,7 @@ public class ActivatedTimer {
     }
 
     public void startTimer(long delay) {
-        if (this.running == true) {
+        if (this.running) {
             this.stopTimer();
             this.startTimer();
         } else {

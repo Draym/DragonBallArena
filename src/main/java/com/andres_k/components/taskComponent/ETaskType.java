@@ -3,7 +3,7 @@ package com.andres_k.components.taskComponent;
 /**
  * Created by andres_k on 11/07/2015.
  */
-public enum EnumTask {
+public enum ETaskType {
     //Interface generic
     GETTER,
     SETTER,
@@ -11,9 +11,17 @@ public enum EnumTask {
     SEND_TO,
     EVENT,
     CUT,
+
+    START_ACTIVITY,
+    STOP_ACTIVITY,
+    CLEAR_ACTIVITY,
+    START_TIMER,
+    STOP_TIMER,
+
+    // ACTION
     START,
-    STOP,
-    CLEAR,
+    EXIT,
+    NEXT,
 
     //others
     UPGRADE_SCORE,

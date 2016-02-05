@@ -1,7 +1,7 @@
 package com.andres_k.components.gameComponents.gameObject.commands.comboComponent.combo;
 
-import com.andres_k.components.eventComponent.input.EnumInput;
-import com.andres_k.components.gameComponents.animations.EnumAnimation;
+import com.andres_k.components.eventComponent.input.EInput;
+import com.andres_k.components.gameComponents.animations.EAnimation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ public class Combo {
 
     // METHODS
 
-    public boolean hasInputs(List<EnumInput> inputs) {
+    public boolean hasInputs(List<EInput> inputs) {
         for (int i = 0; i < inputs.size(); ++i) {
             int result = this.checkInput(i, inputs.get(i));
             if (result == -1) {
@@ -45,13 +45,13 @@ public class Combo {
         return true;
     }
 
-    private int checkInput(int index, EnumInput input) {
+    private int checkInput(int index, EInput input) {
         int pos = index;
 
         if (pos >= this.elements.size()) {
             pos = this.elements.size() - 1;
         }
-        if (this.elements.get(pos).getInput() == EnumInput.INFINITE) {
+        if (this.elements.get(pos).getInput() == EInput.INFINITE) {
             if (this.elements.get(pos - 1).getInput() == input) {
                 this.current = pos;
                 return 1;
@@ -74,13 +74,13 @@ public class Combo {
         return this.created;
     }
 
-    public EnumAnimation getCurrentAnimation() {
+    public EAnimation getCurrentAnimation() {
         try {
             if (!this.elements.get(this.current).haveToChange())
-                return EnumAnimation.NULL;
+                return EAnimation.NULL;
             return this.elements.get(this.current).getAnimType();
         } catch (Exception e) {
-            return EnumAnimation.NULL;
+            return EAnimation.NULL;
         }
     }
 

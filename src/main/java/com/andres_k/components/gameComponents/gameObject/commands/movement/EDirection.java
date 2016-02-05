@@ -3,7 +3,7 @@ package com.andres_k.components.gameComponents.gameObject.commands.movement;
 /**
  * Created by andres_k on 14/10/2015.
  */
-public enum EnumDirection {
+public enum EDirection {
     NONE(0, 0, false),
     TOP(0, -1, false),
     DOWN(0, 1, false),
@@ -14,7 +14,7 @@ public enum EnumDirection {
     private int coeffY;
     private boolean horizontalFlip;
 
-    EnumDirection(int coeffX, int coeffY, boolean horizontalFlip){
+    EDirection(int coeffX, int coeffY, boolean horizontalFlip){
         this.coeffX = coeffX;
         this.coeffY = coeffY;
         this.horizontalFlip = horizontalFlip;

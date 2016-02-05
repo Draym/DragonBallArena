@@ -1,9 +1,10 @@
 package com.andres_k.components.gameComponents.resources.data;
 
 import com.andres_k.components.gameComponents.animations.AnimatorController;
+import com.andres_k.components.gameComponents.resources.ESprites;
 import com.andres_k.components.gameComponents.resources.factory.AnimatorFactory;
 import com.andres_k.components.gameComponents.resources.factory.AnimatorGuiFactory;
-import com.andres_k.components.graphicComponents.userInterfaceDeprecated.types.EnumOverlayElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
 import com.andres_k.utils.stockage.Pair;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
@@ -15,7 +16,7 @@ import java.util.HashMap;
  */
 public class AnimatorGuiData extends DataManager {
     private AnimatorFactory animatorFactory;
-    private HashMap<EnumOverlayElement, AnimatorController> animator;
+    private HashMap<EGuiElement, AnimatorController> animator;
 
     public AnimatorGuiData() {
         this.animatorFactory = new AnimatorGuiFactory();
@@ -25,6 +26,9 @@ public class AnimatorGuiData extends DataManager {
     @Override
     public void prerequisite() throws NoSuchMethodException, SlickException, JSONException {
         this.initialiseMethods();
+
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.LOADING_EMPTY), EGuiElement.LOADING_EMPTY);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.LOAD_BAR), EGuiElement.LOAD_BAR);
     }
 
     @Override
@@ -36,16 +40,16 @@ public class AnimatorGuiData extends DataManager {
     public void init() throws NoSuchMethodException, SlickException, JSONException {
     }
 
-    private void addAnimator(AnimatorController animatorController, EnumOverlayElement type) {
+    private void addAnimator(AnimatorController animatorController, EGuiElement type) {
         this.animator.put(type, animatorController);
     }
 
     // GETTERS
-    public AnimatorController getAnimator(EnumOverlayElement index) throws SlickException {
+    public AnimatorController getAnimator(EGuiElement index) throws SlickException {
         if (this.animator.containsKey(index)) {
             return new AnimatorController(this.animator.get(index));
         }
-        return null;
+        throw new SlickException("[ERROR]: The content of " + index.getValue() + " is missing.");
     }
 
 }

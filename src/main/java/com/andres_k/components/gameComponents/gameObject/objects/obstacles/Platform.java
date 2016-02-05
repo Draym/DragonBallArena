@@ -1,7 +1,7 @@
 package com.andres_k.components.gameComponents.gameObject.objects.obstacles;
 
 import com.andres_k.components.gameComponents.animations.AnimatorController;
-import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
+import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.objects.Obstacle;
 
 /**
@@ -9,6 +9,6 @@ import com.andres_k.components.gameComponents.gameObject.objects.Obstacle;
  */
 public class Platform extends Obstacle {
     public Platform(AnimatorController animatorController, String id, float posX, float posY) {
-        super(animatorController, EnumGameObject.PLATFORM, id, posX, posY, 30, 0, 0, 0);
+        super(animatorController, EGameObject.PLATFORM, id, posX, posY, 30, 0, 0, 0);
     }
 }

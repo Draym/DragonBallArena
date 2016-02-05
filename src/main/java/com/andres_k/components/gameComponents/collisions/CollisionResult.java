@@ -1,7 +1,7 @@
 package com.andres_k.components.gameComponents.collisions;
 
-import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
-import com.andres_k.components.gameComponents.gameObject.commands.movement.EnumDirection;
+import com.andres_k.components.gameComponents.gameObject.EGameObject;
+import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.utils.tools.ContainerTools;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class CollisionResult {
         return (hasCollisionX() || hasCollisionY());
     }
 
-    public boolean hasCollisionXWith(EnumGameObject type) {
+    public boolean hasCollisionXWith(EGameObject type) {
         for (CollisionItem item : this.collisionsX) {
             if (item.isCollision() && item.getCollisionType() == type)
                 return true;
@@ -51,7 +51,7 @@ public class CollisionResult {
         return false;
     }
 
-    public boolean hasCollisionYWith(EnumGameObject type) {
+    public boolean hasCollisionYWith(EGameObject type) {
         for (CollisionItem item : this.collisionsY) {
             if (item.isCollision() && item.getCollisionType() == type)
                 return true;
@@ -87,7 +87,7 @@ public class CollisionResult {
         return result;
     }
 
-    public CollisionItem getLowCollisionX(EnumGameObject except[]) {
+    public CollisionItem getLowCollisionX(EGameObject except[]) {
         CollisionItem result = null;
 
         for (CollisionItem tmp : this.collisionsX) {
@@ -113,7 +113,7 @@ public class CollisionResult {
         return result;
     }
 
-    public CollisionItem getLowCollisionY(EnumGameObject except[]) {
+    public CollisionItem getLowCollisionY(EGameObject except[]) {
         CollisionItem result = null;
 
         for (CollisionItem tmp : this.collisionsY) {
@@ -136,7 +136,7 @@ public class CollisionResult {
         this.onEarth = value;
     }
 
-    public void addCollisionX(boolean collision, EnumGameObject type, EnumDirection direction, float distance) {
+    public void addCollisionX(boolean collision, EGameObject type, EDirection direction, float distance) {
         this.collisionsX.add(new CollisionItem(collision, type, direction, distance));
     }
 
@@ -148,7 +148,7 @@ public class CollisionResult {
         this.collisionsX.addAll(collisions.stream().filter(CollisionItem::isCollision).collect(Collectors.toList()));
     }
 
-    public void addCollisionY(boolean collision, EnumGameObject type, EnumDirection direction, float distance) {
+    public void addCollisionY(boolean collision, EGameObject type, EDirection direction, float distance) {
         this.collisionsY.add(new CollisionItem(collision, type, direction, distance));
     }
 

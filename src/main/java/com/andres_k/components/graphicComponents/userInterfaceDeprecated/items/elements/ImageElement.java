@@ -149,9 +149,9 @@ public class ImageElement extends Element {
     public Object doTask(Object task) {
 
         if (task instanceof EnumTask) {
-            if (task == EnumTask.START) {
+            if (task == EnumTask.START_ACTIVITY) {
                 this.start();
-            } else if (task == EnumTask.STOP) {
+            } else if (task == EnumTask.STOP_ACTIVITY) {
                 this.stop();
             }
         } else if (task instanceof Long) {

@@ -2,6 +2,8 @@ package com.andres_k.components.controllers;
 
 import com.andres_k.components.graphicComponents.background.Background;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
+import com.andres_k.components.taskComponent.ELocation;
+import com.andres_k.components.taskComponent.LocalTaskManager;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -17,6 +19,13 @@ public abstract class WindowController implements Observer {
     protected StateBasedGame stateWindow = null;
     protected WindowBasedGame window;
     protected Background background;
+    protected ELocation location;
+    protected LocalTaskManager taskManager;
+
+    protected WindowController(ELocation location) {
+        this.location = location;
+        this.taskManager = new LocalTaskManager(this.location);
+    }
 
     public abstract void enter() throws SlickException;
 
@@ -35,6 +44,10 @@ public abstract class WindowController implements Observer {
     public abstract void mouseReleased(int button, int x, int y);
 
     public abstract void mousePressed(int button, int x, int y);
+
+    public void register(LocalTaskManager manager) {
+        manager.register(this.location.getId(), this.taskManager);
+    }
 
     // GETTERS
     public Background getBackground() {

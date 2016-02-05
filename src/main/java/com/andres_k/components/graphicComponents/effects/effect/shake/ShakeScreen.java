@@ -1,8 +1,8 @@
 package com.andres_k.components.graphicComponents.effects.effect.shake;
 
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
-import com.andres_k.components.graphicComponents.effects.effect.EnumEffect;
-import com.andres_k.utils.configs.GlobalVariable;
+import com.andres_k.components.graphicComponents.effects.effect.EffectType;
+import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.stockage.Pair;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Graphics;
@@ -20,7 +20,7 @@ public class ShakeScreen extends Effect {
     List<Pair<Integer, Integer>> pattern;
 
     public ShakeScreen(String id, long duration, int power, int speed) {
-        super(id, EnumEffect.SCREEN_SHAKE, duration);
+        super(id, EffectType.SCREEN_SHAKE, duration);
         this.timer = duration;
         this.current = 0;
         this.speed = speed;
@@ -33,7 +33,7 @@ public class ShakeScreen extends Effect {
 
     @Override
     public void update() {
-        this.delta += GlobalVariable.currentTimeLoop;
+        this.delta += GameConfig.currentTimeLoop;
 
         if (this.delta >= speed) {
             this.current = (this.current + 1 < this.pattern.size() ? this.current + 1 : 0);

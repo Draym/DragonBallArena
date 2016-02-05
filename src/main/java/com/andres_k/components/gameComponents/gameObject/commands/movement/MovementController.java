@@ -1,9 +1,9 @@
 package com.andres_k.components.gameComponents.gameObject.commands.movement;
 
-import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
 import com.andres_k.components.gameComponents.collisions.CollisionItem;
 import com.andres_k.components.gameComponents.collisions.CollisionResult;
-import com.andres_k.utils.configs.GlobalVariable;
+import com.andres_k.components.gameComponents.gameObject.EGameObject;
+import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.MathTools;
 
@@ -13,7 +13,7 @@ import com.andres_k.utils.tools.MathTools;
 public class MovementController {
     private Pair<Float, Float> positions;
 
-    private EnumDirection moveDirection;
+    private EDirection moveDirection;
 
     private float gravity;
     private boolean onEarth;
@@ -37,7 +37,7 @@ public class MovementController {
         this.pushX = 0;
         this.pushY = 0;
         this.useGravity = true;
-        this.moveDirection = EnumDirection.NONE;
+        this.moveDirection = EDirection.NONE;
         this.resetGravity();
     }
 
@@ -79,7 +79,7 @@ public class MovementController {
     public void stopMovement() {
         this.pushX = 0;
         this.pushY = 0;
-        this.moveDirection = EnumDirection.NONE;
+        this.moveDirection = EDirection.NONE;
         this.resetGravity();
     }
 
@@ -103,10 +103,10 @@ public class MovementController {
         if (!collisionResult.hasCollisionX()) {
             this.positions.setV1(this.getNextX());
         } else if (this.speed != 0) {
-            CollisionItem item = collisionResult.getLowCollisionX(new EnumGameObject[]{EnumGameObject.PLATFORM});
+            CollisionItem item = collisionResult.getLowCollisionX(new EGameObject[]{EGameObject.PLATFORM});
 
             if (item != null) {
-                int mult = (item.getCollisionDirection() == EnumDirection.RIGHT ? 1 : -1);
+                int mult = (item.getCollisionDirection() == EDirection.RIGHT ? 1 : -1);
                 this.positions.setV1(this.getX() + ((MathTools.abs(item.getCollisionDistance() - 1)) * mult));
                 this.setPushX(0);
             }
@@ -117,14 +117,14 @@ public class MovementController {
         if (!collisionResult.hasCollisionY()) {
             this.positions.setV2(this.getNextY());
         } else if (this.speed != 0) {
-            CollisionItem item = collisionResult.getLowCollisionY(new EnumGameObject[]{EnumGameObject.BORDER});
+            CollisionItem item = collisionResult.getLowCollisionY(new EGameObject[]{EGameObject.BORDER});
 
             if (item != null) {
-                if (item.getCollisionDirection() == EnumDirection.TOP) {
+                if (item.getCollisionDirection() == EDirection.TOP) {
                     if (item.getCollisionDistance() > 0)
                         this.positions.setV2(this.getY() + item.getCollisionDistance());
                     this.onEarth = true;
-                } else if (item.getCollisionDirection() == EnumDirection.DOWN) {
+                } else if (item.getCollisionDirection() == EDirection.DOWN) {
                     this.positions.setV2(this.getY() + MathTools.abs(item.getCollisionDistance()));
                 }
                 this.setPushY(0);
@@ -147,11 +147,11 @@ public class MovementController {
     }
 
     public float calculatePushX() {
-        return this.calculateDistance(GlobalVariable.currentTimeLoop) * this.getPushX();
+        return this.calculateDistance(GameConfig.currentTimeLoop) * this.getPushX();
     }
 
     public float calculatePushY() {
-        return this.calculateDistance(GlobalVariable.currentTimeLoop) * this.getPushY();
+        return this.calculateDistance(GameConfig.currentTimeLoop) * this.getPushY();
     }
 
     // GETTERS
@@ -173,9 +173,9 @@ public class MovementController {
     }
 
     public float getPushX() {
-        if (this.moveDirection == EnumDirection.RIGHT)
+        if (this.moveDirection == EDirection.RIGHT)
             return this.pushX;
-        else if (this.moveDirection == EnumDirection.LEFT)
+        else if (this.moveDirection == EDirection.LEFT)
             return -this.pushX;
         return 0;
     }
@@ -211,7 +211,7 @@ public class MovementController {
         return this.currentSpeed;
     }
 
-    public EnumDirection getMoveDirection() {
+    public EDirection getMoveDirection() {
         return this.moveDirection;
     }
 
@@ -239,7 +239,7 @@ public class MovementController {
         this.currentSpeed = value;
     }
 
-    public void setMoveDirection(EnumDirection direction) {
+    public void setMoveDirection(EDirection direction) {
         this.moveDirection = direction;
     }
 }

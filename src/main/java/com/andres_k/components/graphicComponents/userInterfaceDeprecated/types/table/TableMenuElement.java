@@ -32,7 +32,7 @@ public class TableMenuElement extends TableElement {
         if (task instanceof Element) {
             this.addElement((Element) task);
         } else if (task instanceof EnumTask) {
-            if (task == EnumTask.CLEAR) {
+            if (task == EnumTask.CLEAR_ACTIVITY) {
                 this.clearData();
             }
         } else if (task instanceof Pair) {
@@ -43,7 +43,7 @@ public class TableMenuElement extends TableElement {
                 }
             } else if (((Pair) task).getV1() instanceof EnumTask && ((Pair) task).getV2() instanceof String) {
                 Console.write("Commande: " + task);
-                if (((Pair) task).getV1().equals(EnumTask.CLEAR))
+                if (((Pair) task).getV1().equals(EnumTask.CLEAR_ACTIVITY))
                     this.clearContent((String) ((Pair) task).getV2());
             }
         } else if (task instanceof Integer) {

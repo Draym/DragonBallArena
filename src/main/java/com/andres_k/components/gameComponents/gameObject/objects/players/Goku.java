@@ -1,7 +1,7 @@
 package com.andres_k.components.gameComponents.gameObject.objects.players;
 
 import com.andres_k.components.gameComponents.animations.AnimatorController;
-import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
+import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.objects.Player;
 
 /**
@@ -9,6 +9,6 @@ import com.andres_k.components.gameComponents.gameObject.objects.Player;
  */
 public class Goku extends Player {
     public Goku(AnimatorController animatorController, String id, float x, float y) {
-        super(animatorController, EnumGameObject.GOKU, id, x, y, 100, 1, 200, 15);
+        super(animatorController, EGameObject.GOKU, id, x, y, 100, 1, 200, 15);
     }
 }

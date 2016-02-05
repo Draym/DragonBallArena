@@ -1,8 +1,8 @@
 package com.andres_k.components.gameComponents.gameObject.commands.actionComponent;
 
 import com.andres_k.components.gameComponents.gameObject.GameObject;
-import com.andres_k.components.gameComponents.gameObject.commands.movement.EnumDirection;
-import com.andres_k.utils.configs.GlobalVariable;
+import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
+import com.andres_k.utils.configs.GameConfig;
 
 /**
  * Created by andres_k on 17/11/2015.
@@ -21,7 +21,7 @@ public class BasicActions {
     }
 
     public static void block(GameObject object) {
-        object.getMovement().setPushX(GlobalVariable.speedTravel / 5);
+        object.getMovement().setPushX(GameConfig.speedTravel / 5);
         object.getMovement().setPushY(0f);
     }
 
@@ -36,8 +36,8 @@ public class BasicActions {
             object.getMovement().addPushY(10);
         }
 
-        if (object.getMovement().getMoveDirection() != EnumDirection.NONE) {
-            object.getMovement().setPushX(GlobalVariable.speedTravel * 3);
+        if (object.getMovement().getMoveDirection() != EDirection.NONE) {
+            object.getMovement().setPushX(GameConfig.speedTravel * 3);
         }
         object.getMovement().setPushY(0);
     }
@@ -46,8 +46,8 @@ public class BasicActions {
     public static void fall(GameObject object) {
         object.getMovement().setPushY(0f);
 
-        if (object.getMovement().getMoveDirection() != EnumDirection.NONE) {
-            object.getMovement().setPushX(GlobalVariable.speedTravel);
+        if (object.getMovement().getMoveDirection() != EDirection.NONE) {
+            object.getMovement().setPushX(GameConfig.speedTravel);
         }
         if (!object.isOnEarth()) {
             if (object.getMovement().getGravity() > 8) {
@@ -63,15 +63,15 @@ public class BasicActions {
         object.getMovement().setUseGravity(true);
         object.getMovement().addPushY(-0.2f);
         object.getMovement().setPushY(0);
-        if (object.getMovement().getMoveDirection() != EnumDirection.NONE) {
-            object.getMovement().setPushX(GlobalVariable.speedTravel);
+        if (object.getMovement().getMoveDirection() != EDirection.NONE) {
+            object.getMovement().setPushX(GameConfig.speedTravel);
         }
     }
 
     public static void jump(GameObject object) {
-        if (object.getMovement().getMoveDirection() != EnumDirection.NONE) {
-            object.getMovement().setPushX(GlobalVariable.speedTravel);
+        if (object.getMovement().getMoveDirection() != EDirection.NONE) {
+            object.getMovement().setPushX(GameConfig.speedTravel);
         }
-        object.getMovement().setPushY(-GlobalVariable.speedJump);
+        object.getMovement().setPushY(-GameConfig.speedJump);
     }
 }

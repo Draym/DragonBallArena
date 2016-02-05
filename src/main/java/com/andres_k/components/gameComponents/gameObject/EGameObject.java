@@ -3,7 +3,7 @@ package com.andres_k.components.gameComponents.gameObject;
 /**
  * Created by andres_k on 13/03/2015.
  */
-public enum EnumGameObject {
+public enum EGameObject {
     /* Admin */
     NULL("NULL"),
 
@@ -34,12 +34,12 @@ public enum EnumGameObject {
     private final String value;
     private final String type;
 
-    EnumGameObject(String value) {
+    EGameObject(String value) {
         this.value = value;
         this.type = value;
     }
 
-    EnumGameObject(String value, String type) {
+    EGameObject(String value, String type) {
         this.value = value;
         this.type = type;
     }
@@ -52,18 +52,18 @@ public enum EnumGameObject {
         return this.type;
     }
 
-    public static EnumGameObject getEnumByValue(String value) {
-        EnumGameObject[] enums = EnumGameObject.values();
-        for (EnumGameObject type : enums) {
+    public static EGameObject getEnumByValue(String value) {
+        EGameObject[] enums = EGameObject.values();
+        for (EGameObject type : enums) {
             if (type.getValue().equals(value))
                 return type;
         }
         return NULL;
     }
 
-    public static EnumGameObject getEnumByType(String value) {
-        EnumGameObject[] enums = EnumGameObject.values();
-        for (EnumGameObject type : enums) {
+    public static EGameObject getEnumByType(String value) {
+        EGameObject[] enums = EGameObject.values();
+        for (EGameObject type : enums) {
             if (value.equals(type.getValue())) {
                 return type;
             }
@@ -71,14 +71,14 @@ public enum EnumGameObject {
         return NULL;
     }
 
-    public boolean isIn(EnumGameObject dir) {
-        EnumGameObject current = EnumGameObject.getEnumByValue(this.value);
+    public boolean isIn(EGameObject dir) {
+        EGameObject current = EGameObject.getEnumByValue(this.value);
 
         while (!current.getValue().equals(current.getType())) {
             if (current == dir) {
                 return true;
             } else {
-                current = EnumGameObject.getEnumByType(current.getType());
+                current = EGameObject.getEnumByType(current.getType());
             }
         }
         return (current == dir);

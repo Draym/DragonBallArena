@@ -55,7 +55,7 @@ public class GenericElement extends InterfaceElement {
         if (task instanceof Element) {
             this.elements.add((Element) task);
         } else if (task instanceof EnumTask) {
-            if (task == EnumTask.CLEAR) {
+            if (task == EnumTask.CLEAR_ACTIVITY) {
                 this.elements.clear();
             }
         } else if (task instanceof Pair) {
@@ -234,7 +234,7 @@ public class GenericElement extends InterfaceElement {
         if (this.type == EnumOverlayElement.TABLE_ROUND_END) {
             if (task instanceof MessageRoundEnd) {
                 MessageRoundEnd message = (MessageRoundEnd) task;
-                this.sendTaskToAll(EnumTask.START);
+                this.sendTaskToAll(EnumTask.START_ACTIVITY);
                 if (message.getWinnerTeam().equals("ally")) {
                     this.sendTaskToAll(new Tuple<>(EnumTask.SETTER, "index", 0));
                 } else {

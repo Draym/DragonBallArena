@@ -1,12 +1,12 @@
 package com.andres_k.components.soundComponents;
 
-import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
+import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.utils.configs.ConfigPath;
 
 /**
  * Created by andres_k on 07/07/2015.
  */
-public enum EnumSound {
+public enum ESound {
     NOTHING(""),
     //musics
     BACKGROUND_LOAD(ConfigPath.musics + "/DBZ_theme.ogg"),
@@ -20,14 +20,14 @@ public enum EnumSound {
     EFFECT_FLASH(ConfigPath.effects + "/DBZ_effect_flash.ogg");
 
     private String path;
-    private EnumGameObject object;
+    private EGameObject object;
 
-    EnumSound(String path){
+    ESound(String path){
         this.path = path;
-        this.object = EnumGameObject.NULL;
+        this.object = EGameObject.NULL;
     }
 
-    EnumSound(EnumGameObject object, String path){
+    ESound(EGameObject object, String path){
         this.path = path;
         this.object = object;
     }
@@ -36,14 +36,14 @@ public enum EnumSound {
         return this.path;
     }
 
-    public EnumGameObject getObject(){
+    public EGameObject getObject(){
         return this.object;
     }
 
-    public static EnumSound getSound(EnumGameObject object){
-        EnumSound[] sounds = EnumSound.values();
+    public static ESound getSound(EGameObject object){
+        ESound[] sounds = ESound.values();
 
-        for (EnumSound sound : sounds) {
+        for (ESound sound : sounds) {
             if (sound.getObject() == object) {
                 return sound;
             }

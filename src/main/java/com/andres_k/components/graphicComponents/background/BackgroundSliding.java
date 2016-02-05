@@ -1,7 +1,7 @@
 package com.andres_k.components.graphicComponents.background;
 
 import com.andres_k.components.gameComponents.animations.AnimatorController;
-import com.andres_k.utils.configs.GlobalVariable;
+import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Graphics;
@@ -42,7 +42,7 @@ public class BackgroundSliding extends Background{
     public void update() {
         if (this.ready) {
             for (Pair<Integer, Integer> pos : this.positions) {
-                pos.setV2((int) Math.ceil(((float) pos.getV2() + (this.speed * (GlobalVariable.currentTimeLoop / 1000)))));
+                pos.setV2((int) Math.ceil(((float) pos.getV2() + (this.speed * (GameConfig.currentTimeLoop / 1000)))));
             }
             for (int i = 0; i < this.positions.size(); ++i) {
                 if (this.positions.get(i).getV2() > WindowConfig.wBig_sY) {

@@ -1,18 +1,18 @@
 package com.andres_k.components.gameComponents.collisions;
 
-import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
-import com.andres_k.components.gameComponents.gameObject.commands.movement.EnumDirection;
+import com.andres_k.components.gameComponents.gameObject.EGameObject;
+import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 
 /**
  * Created by andres_k on 29/10/2015.
  */
 public class CollisionItem {
     private boolean collision;
-    private EnumGameObject collisionType;
-    private EnumDirection collisionDirection;
+    private EGameObject collisionType;
+    private EDirection collisionDirection;
     private float collisionDistance;
 
-    CollisionItem(boolean collision, EnumGameObject type, EnumDirection direction, float distance) {
+    CollisionItem(boolean collision, EGameObject type, EDirection direction, float distance) {
         this.collision = collision;
         this.collisionType = type;
         this.collisionDirection = direction;
@@ -32,7 +32,7 @@ public class CollisionItem {
         this.collisionDistance = item.collisionDistance;
     }
 
-    public void init(boolean collision, EnumGameObject type, EnumDirection direction, float distance) {
+    public void init(boolean collision, EGameObject type, EDirection direction, float distance) {
         this.collision = collision;
         this.collisionType = type;
         this.collisionDirection = direction;
@@ -44,11 +44,11 @@ public class CollisionItem {
         return this.collision;
     }
 
-    public EnumGameObject getCollisionType() {
+    public EGameObject getCollisionType() {
         return this.collisionType;
     }
 
-    public EnumDirection getCollisionDirection() {
+    public EDirection getCollisionDirection() {
         return this.collisionDirection;
     }
 

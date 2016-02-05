@@ -42,4 +42,12 @@ public class AnimationFactory {
         animation.setLooping(looping);
         return animation;
     }
+
+    public static Animation createUniqueFrame(String file) throws SlickException {
+        Animation animation = new Animation();
+        Image img = new Image(file);
+        animation.addFrame(img, 150);
+        animation.setLooping(false);
+        return animation;
+    }
 }

@@ -2,21 +2,16 @@ package com.andres_k.components.controllers;
 
 import com.andres_k.components.gameComponents.resources.ResourceManager;
 import com.andres_k.components.graphicComponents.background.Background;
-import com.andres_k.components.graphicComponents.background.EnumBackground;
+import com.andres_k.components.graphicComponents.background.EBackground;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
-import com.andres_k.components.graphicComponents.userInterfaceDeprecated.types.EnumOverlayElement;
-import com.andres_k.components.networkComponents.networkSend.messageInterface.MessageGameNew;
-import com.andres_k.components.taskComponent.CentralTaskManager;
-import com.andres_k.components.taskComponent.EnumLocation;
-import com.andres_k.components.taskComponent.TaskFactory;
+import com.andres_k.components.taskComponent.ELocation;
+import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
-import com.andres_k.utils.configs.GlobalVariable;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import java.util.List;
 import java.util.Observable;
 
 /**
@@ -25,6 +20,7 @@ import java.util.Observable;
 public class HomeController extends WindowController {
 
     public HomeController() throws JSONException, SlickException {
+        super(ELocation.HOME_CONTROLLER);
     }
 
     @Override
@@ -37,7 +33,7 @@ public class HomeController extends WindowController {
 
     @Override
     public void init() throws SlickException {
-        this.background = new Background(ResourceManager.get().getBackgroundAnimator(EnumBackground.HOME_SCREEN), 0, -9);
+        this.background = new Background(ResourceManager.get().getBackgroundAnimator(EBackground.HOME_SCREEN), 0, -9);
     }
 
     @Override
@@ -73,28 +69,30 @@ public class HomeController extends WindowController {
         if (arg instanceof TaskComponent) {
             TaskComponent received = (TaskComponent) arg;
 
-            if (received.getTarget().equals(EnumLocation.HOME_CONTROLLER)) {
+            if (received.getTarget().equals(ELocation.HOME_CONTROLLER)) {
                 if (received.getTask() instanceof EnumWindow) {
                     if (this.stateWindow != null) {
                         this.stateWindow.enterState(((EnumWindow) received.getTask()).getValue());
                     }
-                } else if (received.getTask() instanceof EnumOverlayElement) {
-                    if (received.getTask() == EnumOverlayElement.EXIT) {
+                } else if (received.getTask() instanceof ETaskType) {
+                    if (received.getTask() == ETaskType.EVENT) {
                         this.window.quit();
                     }
-                } else if (received.getTask() instanceof MessageGameNew) {
-                    if (((MessageGameNew) received.getTask()).getType() == EnumOverlayElement.GO) {
+                }
+                //todo a refaire !
+                /*
+                else if (received.getTask() instanceof MessageGameNew) {
+                    if (((MessageGameNew) received.getTask()).getType() == EnumTask.START) {
                         CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.HOME_CONTROLLER, EnumLocation.GAME_CONTROLLER, received.getTask()));
-                    } else if (((MessageGameNew) received.getTask()).getType() == EnumOverlayElement.NEXT) {
+                    } else if (((MessageGameNew) received.getTask()).getType() == EnumTask.NEXT) {
                         List<String> values = ((MessageGameNew) received.getTask()).getValues();
 
                         if (values.size() > 0) {
-                            Integer value = Integer.valueOf(values.get(0));
-                            GlobalVariable.currentPlayer = value;
+                            GlobalVariable.currentPlayer = Integer.valueOf(values.get(0));
                             GlobalVariable.currentPlayer = (GlobalVariable.currentPlayer > GlobalVariable.maxPlayer ? GlobalVariable.maxPlayer : GlobalVariable.currentPlayer);
                         }
                     }
-                }
+                }*/
             }
         }
     }

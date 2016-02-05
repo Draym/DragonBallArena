@@ -1,7 +1,7 @@
 package com.andres_k.components.gameComponents.gameObject.objects.obstacles;
 
 import com.andres_k.components.gameComponents.animations.AnimatorController;
-import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
+import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.objects.Obstacle;
 
 /**
@@ -10,6 +10,6 @@ import com.andres_k.components.gameComponents.gameObject.objects.Obstacle;
 
 public class Border extends Obstacle {
     public Border(AnimatorController animatorController, String id, float posX, float posY) {
-        super(animatorController, EnumGameObject.BORDER, id, posX, posY, 30, 0, 0, 0);
+        super(animatorController, EGameObject.BORDER, id, posX, posY, 30, 0, 0, 0);
     }
 }

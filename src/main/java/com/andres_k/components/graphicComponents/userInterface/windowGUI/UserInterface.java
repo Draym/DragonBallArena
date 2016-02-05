@@ -1,10 +1,11 @@
 package com.andres_k.components.graphicComponents.userInterface.windowGUI;
 
-import com.andres_k.components.eventComponent.input.EnumInput;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.GuiElement;
-import com.andres_k.components.graphicComponents.userInterfaceDeprecated.overlay.GUIConfigs;
-import com.andres_k.components.taskComponent.EnumLocation;
+import com.andres_k.components.eventComponent.input.EInput;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
+import com.andres_k.components.taskComponent.ELocation;
+import com.andres_k.components.taskComponent.LocalTaskManager;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,15 +15,17 @@ import java.util.Observer;
  * Created by andres_k on 01/02/2016.
  */
 public abstract class UserInterface implements Observer {
-    protected GUIConfigs GUIConfigs;
     protected List<GuiElement> elements;
-    private EnumLocation location;
+    protected ELocation location;
+    protected LocalTaskManager taskManager;
 
-    protected UserInterface(EnumLocation location) {
+    protected UserInterface(ELocation location) {
         this.elements = new ArrayList<>();
+        this.location = location;
+        this.taskManager = new LocalTaskManager(this.location);
     }
 
-    public abstract void init();
+    public abstract void init() throws SlickException;
 
     public abstract void initOnEnter();
 
@@ -39,7 +42,7 @@ public abstract class UserInterface implements Observer {
         this.elements.forEach(GuiElement::leave);
     }
 
-    public boolean event(int key, char c, EnumInput type) {
+    public boolean event(int key, char c, EInput type) {
         for (GuiElement guiElement : this.elements) {
             if (guiElement.event(key, c, type)) {
                 return true;
@@ -56,6 +59,11 @@ public abstract class UserInterface implements Observer {
         this.elements.forEach((guiElement) -> guiElement.draw(g));
     }
 
+    public void register(LocalTaskManager manager) {
+        manager.register(this.location.getId(), this.taskManager);
+    }
+
+    // GETTERS
     public boolean isOnFocus(int x, int y) {
         for (GuiElement guiElement : this.elements) {
             if (guiElement.isOnFocus(x, y)) {
@@ -84,7 +92,7 @@ public abstract class UserInterface implements Observer {
         return null;
     }
 
-    public EnumLocation getLocation() {
+    public ELocation getLocation() {
         return this.location;
     }
 }

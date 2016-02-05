@@ -13,7 +13,7 @@ import java.util.Map;
  * Created by andres_k on 22/05/2015.
  */
 public class InputData {
-    private static Map<EnumInput, String> availableInput;
+    private static Map<EInput, String> availableInput;
     private static JSONObject configs;
     private static String file;
 
@@ -27,23 +27,23 @@ public class InputData {
         while (iterator.hasNext()) {
             String input = (String) iterator.next();
             String value = configs.getString(input);
-            if (EnumInput.getEnumByValue(input) != EnumInput.NOTHING) {
-                availableInput.put(EnumInput.getEnumByValue(input), value);
+            if (EInput.getEnumByValue(input) != EInput.NOTHING) {
+                availableInput.put(EInput.getEnumByValue(input), value);
             }
         }
     }
 
     // GETTERS
-    public static Map<EnumInput, String> getAvailableInput(){
+    public static Map<EInput, String> getAvailableInput(){
         return availableInput;
     }
 
-    public static String getInputValue(EnumInput input) {
+    public static String getInputValue(EInput input) {
         return availableInput.get(input);
     }
 
     public static String getInputByValue(String value){
-        for (Map.Entry<EnumInput, String> entry : availableInput.entrySet()){
+        for (Map.Entry<EInput, String> entry : availableInput.entrySet()){
             if (entry.getValue().equals(value)){
                 return entry.getKey().getValue();
             }
@@ -53,7 +53,7 @@ public class InputData {
 
     // SETTERS
 
-    public static boolean setAvailableInput(EnumInput type, String value){
+    public static boolean setAvailableInput(EInput type, String value){
         if (availableInput.containsKey(type) && !availableInput.containsValue(value)){
             availableInput.replace(type, value);
             try {

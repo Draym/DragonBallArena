@@ -36,7 +36,7 @@ public class TableAppearElement extends TableElement {
                 MessageRoundStart message = (MessageRoundStart) task;
 
                 if (message.isStarted()) {
-                    this.sendTaskToAll(EnumTask.START);
+                    this.sendTaskToAll(EnumTask.START_ACTIVITY);
                     this.activatedTimer.startTimer();
                 } else {
                     this.activatedTimer.stopTimer();

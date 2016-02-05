@@ -1,9 +1,9 @@
 package com.andres_k.components.graphicComponents.graphic;
 
 import com.andres_k.components.controllers.WindowController;
-import com.andres_k.components.eventComponent.input.EnumInput;
+import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.UserInterface;
-import com.andres_k.utils.configs.GlobalVariable;
+import com.andres_k.utils.configs.GameConfig;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -69,8 +69,8 @@ public abstract class WindowBasedGame extends BasicGameState {
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
         this.delta += i;
 
-        if (this.delta > GlobalVariable.timeLoop) {
-            GlobalVariable.currentTimeLoop = this.delta;
+        if (this.delta > GameConfig.timeLoop) {
+            GameConfig.currentTimeLoop = this.delta;
             this.controller.update(gameContainer);
             this.gui.update();
             this.delta = 0;
@@ -80,7 +80,7 @@ public abstract class WindowBasedGame extends BasicGameState {
 
     @Override
     public void keyPressed(int key, char c) {
-        boolean absorbed = this.gui.event(key, c, EnumInput.PRESSED);
+        boolean absorbed = this.gui.event(key, c, EInput.PRESSED);
         if (!absorbed) {
             this.controller.keyPressed(key, c);
         }
@@ -88,7 +88,7 @@ public abstract class WindowBasedGame extends BasicGameState {
 
     @Override
     public void keyReleased(int key, char c) {
-        boolean absorbed = this.gui.event(key, c, EnumInput.RELEASED);
+        boolean absorbed = this.gui.event(key, c, EInput.RELEASED);
         if (!absorbed) {
             this.controller.keyReleased(key, c);
         }

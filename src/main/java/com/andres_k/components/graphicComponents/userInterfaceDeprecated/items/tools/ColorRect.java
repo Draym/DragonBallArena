@@ -6,6 +6,7 @@ import org.newdawn.slick.geom.Rectangle;
 /**
  * Created by andres_k on 27/06/2015.
  */
+@Deprecated
 public class ColorRect extends ColorShape {
 
     public ColorRect(Rectangle body) {

@@ -1,6 +1,6 @@
 package com.andres_k.components.networkComponents.networkSend.messageInterface;
 
-import com.andres_k.components.gameComponents.gameObject.EnumGameObject;
+import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.networkComponents.networkSend.MessageModel;
 
 /**
@@ -8,10 +8,10 @@ import com.andres_k.components.networkComponents.networkSend.MessageModel;
  */
 public class MessageRoundScore extends MessageModel {
     private String teamId;
-    private EnumGameObject object;
+    private EGameObject object;
     private int score;
 
-    public MessageRoundScore(String pseudo, String id, String teamId, EnumGameObject object, int score){
+    public MessageRoundScore(String pseudo, String id, String teamId, EGameObject object, int score){
         super(pseudo, id);
 
         this.teamId = teamId;
@@ -24,7 +24,7 @@ public class MessageRoundScore extends MessageModel {
         return this.teamId;
     }
 
-    public EnumGameObject getObject() {
+    public EGameObject getObject() {
         return this.object;
     }
 

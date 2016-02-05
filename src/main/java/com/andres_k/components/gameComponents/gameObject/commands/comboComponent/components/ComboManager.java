@@ -1,6 +1,6 @@
 package com.andres_k.components.gameComponents.gameObject.commands.comboComponent.components;
 
-import com.andres_k.components.eventComponent.input.EnumInput;
+import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.gameComponents.gameObject.commands.comboComponent.combo.Combo;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class ComboManager {
         this.current = null;
     }
 
-    public boolean hasCombo(List<EnumInput> inputs) {
+    public boolean hasCombo(List<EInput> inputs) {
         if (this.current != null) {
             if (this.followCurrent(inputs)) {
                 return true;
@@ -40,11 +40,11 @@ public class ComboManager {
         }
     }
 
-    private boolean followCurrent(List<EnumInput> inputs) {
+    private boolean followCurrent(List<EInput> inputs) {
         return this.current.hasInputs(inputs);
     }
 
-    private boolean createCurrent(List<EnumInput> inputs) {
+    private boolean createCurrent(List<EInput> inputs) {
         if (this.current != null)
             this.current.reset();
         for (Combo tmp : this.combos) {

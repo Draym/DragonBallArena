@@ -77,7 +77,7 @@ public class Animator {
         return this.body;
     }
 
-    public Pair<EnumAnimation, Integer> getNext() {
+    public Pair<EAnimation, Integer> getNext() {
         try {
             return this.config.getNext();
         } catch (Exception e) {

@@ -7,12 +7,12 @@ import org.newdawn.slick.Graphics;
  */
 public abstract class Effect {
     private String id;
-    private EnumEffect type;
+    private EffectType type;
     protected boolean running;
     protected int delta;
     private long duration;
 
-    protected Effect(String id, EnumEffect type, long duration) {
+    protected Effect(String id, EffectType type, long duration) {
         this.running = false;
         this.id = id;
         this.type = type;
@@ -32,7 +32,7 @@ public abstract class Effect {
         return this.id;
     }
 
-    public EnumEffect getType() {
+    public EffectType getType() {
         return this.type;
     }
 

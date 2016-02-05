@@ -5,7 +5,7 @@ import com.andres_k.components.graphicComponents.graphic.windows.WindowGame;
 import com.andres_k.components.graphicComponents.graphic.windows.WindowHome;
 import com.andres_k.components.graphicComponents.graphic.windows.WindowLoad;
 import com.andres_k.components.taskComponent.CentralTaskManager;
-import com.andres_k.components.taskComponent.EnumLocation;
+import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.LocalTaskManager;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
@@ -26,8 +26,8 @@ public class Windows extends StateBasedGame {
     public Windows(String name) throws JSONException, SlickException {
         super(name);
 
-        this.windowsTask = new LocalTaskManager(EnumLocation.WINDOWS);
-        CentralTaskManager.get().register(EnumLocation.WINDOWS.getLocation(), this.windowsTask);
+        this.windowsTask = new LocalTaskManager(ELocation.WINDOWS);
+        CentralTaskManager.get().register(ELocation.WINDOWS.getId(), this.windowsTask);
 
         this.windowLoad = new WindowLoad(EnumWindow.LOAD.getValue(), this.windowsTask);
         this.windowHome = new WindowHome(EnumWindow.HOME.getValue(), this.windowsTask);

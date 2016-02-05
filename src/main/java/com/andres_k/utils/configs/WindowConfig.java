@@ -14,11 +14,11 @@ public class WindowConfig {
 
 
     public static int getWMediumSizeX() {
-        return (int) wLow_sX;
+        return (int) wMedium_sX;
     }
 
     public static int getWMediumSizeY() {
-        return (int) wLow_sY;
+        return (int) wMedium_sY;
     }
 
     public static int getWLowSizeX() {

@@ -3,7 +3,7 @@ package com.andres_k.components.gameComponents.gameObject.commands.comboComponen
 /**
  * Created by andres_k on 30/11/2015.
  */
-public enum EnumCombos {
+public enum ECombos {
     // GOKU
     HANDATTACK("HANDATTACK"),
     MOVERIGHT_HANDATTACK("MOVERIGHT_HANDATTACK"),
@@ -15,7 +15,7 @@ public enum EnumCombos {
 
     private String value;
 
-    EnumCombos(String value) {
+    ECombos(String value) {
         this.value = value;
     }
 

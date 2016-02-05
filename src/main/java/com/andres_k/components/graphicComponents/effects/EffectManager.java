@@ -1,8 +1,7 @@
 package com.andres_k.components.graphicComponents.effects;
 
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
-import com.andres_k.components.graphicComponents.effects.effect.EnumEffect;
-import com.andres_k.utils.tools.Console;
+import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 import org.newdawn.slick.Graphics;
 
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ public class EffectManager {
         for (int i = 0; i < this.effects.size(); ++i) {
             this.effects.get(i).update();
             if (!this.effects.get(i).isRunning()) {
-                Console.write("removed");
                 this.effects.remove(i);
             }
         }
@@ -51,7 +49,7 @@ public class EffectManager {
         return this.effects.stream().anyMatch(effect -> effect.getId().equals(id));
     }
 
-    public boolean effectIsActive(EnumEffect type) {
+    public boolean effectIsActive(EffectType type) {
         return this.effects.stream().anyMatch(effect -> effect.getType() == type);
     }
 }
