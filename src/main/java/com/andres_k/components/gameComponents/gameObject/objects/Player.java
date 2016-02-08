@@ -48,13 +48,13 @@ public class Player extends PhysicalObject {
     public void update() {
         this.comboController.update();
         this.animatorController.doCurrentAction(this);
+        this.animatorController.update();
         this.movement.update();
         if (this.event.allInactive()) {
             this.moveFall();
         } else {
             this.executeEvent();
         }
-        this.updateAnimation();
     }
 
     @Override

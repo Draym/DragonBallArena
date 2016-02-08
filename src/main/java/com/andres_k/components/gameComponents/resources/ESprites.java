@@ -31,7 +31,7 @@ public enum ESprites {
     //background
     LOAD_SCREEN(SCREEN_BACKGROUND.getIndex()),
     HOME_SCREEN(SCREEN_BACKGROUND.getIndex()),
-
+    LOGO(SCREEN_BACKGROUND.getIndex()),
 
     //map
     VALLEY_MAP(MAP_BACKGROUND.getIndex());

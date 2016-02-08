@@ -1,0 +1,12 @@
+package com.andres_k.components.graphicComponents.effects.effect.shake;
+
+import com.andres_k.components.graphicComponents.effects.effect.EffectType;
+
+/**
+ * Created by andres_k on 07/02/2016.
+ */
+public class ShakeImage extends ShakeIt {
+    protected ShakeImage(String id, long duration, int power, int speedInterval) {
+        super(id, EffectType.SHAKE_IMAGE, duration, power, speedInterval);
+    }
+}

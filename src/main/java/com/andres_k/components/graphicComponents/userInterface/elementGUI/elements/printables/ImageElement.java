@@ -7,7 +7,6 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorShape;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
-import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
 import org.newdawn.slick.Graphics;
@@ -66,9 +65,7 @@ public class ImageElement extends Element {
             if (this.animatorController.needUpdate() && this.animatorController.isActivated()) {
                 this.animatorController.updateAnimator(true, true);
             }
-            if (this.animatorController.currentAnimation() != null) {
-                this.animatorController.currentAnimator().update(GameConfig.currentTimeLoop);
-            }
+            this.animatorController.update();
         }
     }
 
@@ -101,7 +98,7 @@ public class ImageElement extends Element {
                     body.setColor(this.body.getColor());
                 }
                 body.draw(g);
-                if (this.animatorController != null && this.animatorController.isPrintable()) {
+                if (this.animatorController != null) {
                     Pair<Float, Float> position = this.getChoicePosition(body);
                     this.drawCurrentImage(g, position.getV1(), position.getV2());
                 }
@@ -112,7 +109,7 @@ public class ImageElement extends Element {
     private void drawCurrentImage(Graphics g, float x, float y) {
         int sizeX = (this.body.getSizeX() > this.animatorController.currentAnimation().getCurrentFrame().getWidth() ? this.animatorController.currentAnimation().getCurrentFrame().getWidth() : (int) this.body.getSizeX());
         int sizeY = (this.body.getSizeY() > this.animatorController.currentAnimation().getCurrentFrame().getHeight() ? this.animatorController.currentAnimation().getCurrentFrame().getHeight() : (int) this.body.getSizeY());
-        g.drawImage(this.animatorController.currentAnimation().getCurrentFrame().getSubImage(0, 0, sizeX, sizeY), x, y);
+        this.animatorController.drawImage(g, this.animatorController.currentAnimation().getCurrentFrame().getSubImage(0, 0, sizeX, sizeY), x, y);
     }
 
     private Pair<Float, Float> getChoicePosition(ColorShape body) {

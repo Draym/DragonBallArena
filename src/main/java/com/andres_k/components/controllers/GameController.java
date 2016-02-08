@@ -5,7 +5,7 @@ import com.andres_k.components.eventComponent.input.InputGame;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObjectController;
 import com.andres_k.components.gameComponents.resources.ResourceManager;
-import com.andres_k.components.graphicComponents.background.Background;
+import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
 import com.andres_k.components.graphicComponents.background.EBackground;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.networkComponents.networkSend.messageInterface.MessageOverlayMenu;
@@ -73,7 +73,7 @@ public class GameController extends WindowController {
     public void init() throws SlickException, JSONException, NoSuchMethodException {
         this.gameObjectController.init();
 
-        this.background = new Background(ResourceManager.get().getBackgroundAnimator(EBackground.VALLEY_MAP));
+        this.backgroundManager.addComponent(EBackground.VALLEY_MAP, new Wallpaper(ResourceManager.get().getBackgroundAnimator(EBackground.VALLEY_MAP)));
     }
 
     public void restart() throws SlickException {
@@ -88,14 +88,14 @@ public class GameController extends WindowController {
 
     @Override
     public void renderWindow(Graphics g) {
-        this.background.draw(g);
+        this.backgroundManager.draw(g);
         this.gameObjectController.draw(g);
     }
 
     @Override
     public void update(GameContainer gameContainer) throws SlickException {
         if (this.running || this.gameObjectController.isTheEndOfTheGame()) {
-            this.background.update();
+            this.backgroundManager.update();
             this.gameObjectController.update(this.running);
         }
         if (this.running) {

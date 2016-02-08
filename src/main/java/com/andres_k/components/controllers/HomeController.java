@@ -1,7 +1,7 @@
 package com.andres_k.components.controllers;
 
 import com.andres_k.components.gameComponents.resources.ResourceManager;
-import com.andres_k.components.graphicComponents.background.Background;
+import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
 import com.andres_k.components.graphicComponents.background.EBackground;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.taskComponent.ELocation;
@@ -33,17 +33,17 @@ public class HomeController extends WindowController {
 
     @Override
     public void init() throws SlickException {
-        this.background = new Background(ResourceManager.get().getBackgroundAnimator(EBackground.HOME_SCREEN), 0, -9);
+        this.backgroundManager.addComponent(EBackground.HOME_SCREEN, new Wallpaper(ResourceManager.get().getBackgroundAnimator(EBackground.HOME_SCREEN), 0, -9));
     }
 
     @Override
     public void renderWindow(Graphics g) {
-        this.background.draw(g);
+        this.backgroundManager.draw(g);
     }
 
     @Override
     public void update(GameContainer gameContainer) throws SlickException {
-        this.background.update();
+        this.backgroundManager.update();
     }
 
     @Override

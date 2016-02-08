@@ -20,7 +20,7 @@ public class Obstacle extends PhysicalObject {
 
     @Override
     public void update() {
-        this.updateAnimation();
+        this.animatorController.updateAnimation();
     }
 
     @Override

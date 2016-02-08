@@ -1,6 +1,7 @@
-package com.andres_k.components.graphicComponents.background;
+package com.andres_k.components.graphicComponents.background.wallpaper;
 
 import com.andres_k.components.gameComponents.animations.AnimatorController;
+import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * Created by andres_k on 10/07/2015.
  */
-public class BackgroundSliding extends Background{
+public class WallpaperSliding extends Wallpaper {
 
     protected List<Pair<Integer, Integer>> positions;
     protected List<Image> images;
@@ -22,7 +23,7 @@ public class BackgroundSliding extends Background{
     protected float backgroundSizeY;
     private float speed;
 
-    public BackgroundSliding(AnimatorController animator, float speed) throws SlickException {
+    public WallpaperSliding(AnimatorController animator, float speed) throws SlickException {
         super(animator, 0, 0);
         this.images = new ArrayList<>();
         this.positions = new ArrayList<>();
@@ -56,7 +57,7 @@ public class BackgroundSliding extends Background{
     }
 
     @Override
-    public void instanceCurrentBackground() throws SlickException {
+    public void initialize() throws SlickException {
         Image background = animator.currentAnimation().getCurrentFrame();
 
         this.images.clear();

@@ -4,13 +4,15 @@ import com.andres_k.components.gameComponents.bodies.BodyAnimation;
 import com.andres_k.components.gameComponents.bodies.BodySprite;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
+import com.andres_k.components.graphicComponents.effects.EffectManager;
+import com.andres_k.components.graphicComponents.effects.effect.Effect;
+import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ActivatedTimer;
+import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.Console;
 import org.codehaus.jettison.json.JSONException;
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +27,7 @@ public class AnimatorController implements Observer {
     // animators
     private HashMap<EAnimation, AnimatorContainer> animators;
     private ActivatedTimer activatedTimer;
+    private EffectManager effectManager;
     private EDirection eyesDirection;
 
     private EAnimation current;
@@ -44,6 +47,7 @@ public class AnimatorController implements Observer {
         this.activatedTimer = new ActivatedTimer(true);
         this.eyesDirection = EDirection.RIGHT;
         this.nextRequiredAnimation = new Pair<>(EAnimation.NULL, 0);
+        this.effectManager = new EffectManager();
     }
 
     public AnimatorController(AnimatorController animatorController) throws SlickException {
@@ -61,10 +65,34 @@ public class AnimatorController implements Observer {
         this.activatedTimer = new ActivatedTimer(animatorController.activatedTimer);
         this.eyesDirection = animatorController.eyesDirection;
         this.nextRequiredAnimation = new Pair<>(animatorController.nextRequiredAnimation);
+        this.effectManager = animatorController.effectManager;
+
     }
 
     // UPDATE
     public void update() {
+        this.effectManager.update();
+        this.updateAnimation();
+    }
+
+    public void updateAnimation() {
+        if (this.currentAnimation() != null) {
+            this.currentAnimator().update(GameConfig.currentTimeLoop);
+        }
+    }
+
+    public void draw(Graphics g, float x, float y) {
+        this.drawImage(g, this.currentAnimation().getCurrentFrame().getFlippedCopy(this.getEyesDirection().isHorizontalFlip(), false), x, y);
+    }
+
+    public void drawImage(Graphics g, Image image, float x, float y) {
+        if (this.currentAnimation() != null && this.isPrintable() && !this.isDeleted()) {
+            if (this.effectManager.hasActivity()) {
+                this.effectManager.draw(g, image, x, y);
+            } else {
+                g.drawImage(image, x, y);
+            }
+        }
     }
 
     private void resetNextRequiredAnimation() {
@@ -179,6 +207,25 @@ public class AnimatorController implements Observer {
     }
 
     // GETTERS
+    public void playEffect(int priority, Effect effect) {
+        this.effectManager.playEffect(priority, effect);
+    }
+
+    public void stopEffect(String id) {
+        this.effectManager.stopEffect(id);
+    }
+
+    public boolean hasActivity() {
+        return this.effectManager.hasActivity();
+    }
+
+    public boolean effectIsRunning(String id) {
+        return this.effectManager.effectIsRunning(id);
+    }
+
+    public boolean effectIsActive(EffectType type) {
+        return this.effectManager.effectIsActive(type);
+    }
 
     public AnimatorContainer getCurrentContainer() {
         return this.animators.get(this.current);

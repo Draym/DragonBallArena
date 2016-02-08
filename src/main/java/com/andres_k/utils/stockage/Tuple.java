@@ -52,6 +52,12 @@ public class Tuple<T1, T2, T3> {
         this.v3 = values.getV3();
     }
 
+    public void copy(T1 v1, T2 v2, T3 v3) {
+        this.v1 = v1;
+        this.v2 = v2;
+        this.v3 = v3;
+    }
+
     @Override
     public String toString() {
         return "v1:" + this.getV1() + " v2:" + this.getV2() + " v3:" + this.getV3();

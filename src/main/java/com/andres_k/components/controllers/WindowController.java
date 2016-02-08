@@ -1,6 +1,6 @@
 package com.andres_k.components.controllers;
 
-import com.andres_k.components.graphicComponents.background.Background;
+import com.andres_k.components.graphicComponents.background.BackgroundManager;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.LocalTaskManager;
@@ -18,13 +18,14 @@ import java.util.Observer;
 public abstract class WindowController implements Observer {
     protected StateBasedGame stateWindow = null;
     protected WindowBasedGame window;
-    protected Background background;
+    protected BackgroundManager backgroundManager;
     protected ELocation location;
     protected LocalTaskManager taskManager;
 
     protected WindowController(ELocation location) {
         this.location = location;
         this.taskManager = new LocalTaskManager(this.location);
+        this.backgroundManager = new BackgroundManager();
     }
 
     public abstract void enter() throws SlickException;
@@ -50,8 +51,8 @@ public abstract class WindowController implements Observer {
     }
 
     // GETTERS
-    public Background getBackground() {
-        return this.background;
+    public BackgroundManager getBackgroundManager() {
+        return this.backgroundManager;
     }
 
     // SETTERS

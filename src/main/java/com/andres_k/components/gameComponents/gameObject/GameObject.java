@@ -1,12 +1,11 @@
 package com.andres_k.components.gameComponents.gameObject;
 
 import com.andres_k.components.eventComponent.input.EInput;
-import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
+import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.bodies.BodySprite;
 import com.andres_k.components.gameComponents.collisions.CollisionResult;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.MovementController;
-import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Graphics;
@@ -52,10 +51,7 @@ public abstract class GameObject {
 
     public void draw(Graphics g) {
         if (this.animatorController != null) {
-            if (this.animatorController.currentAnimation() != null) {
-                g.drawImage(this.animatorController.currentAnimation().getCurrentFrame().getFlippedCopy(this.animatorController.getEyesDirection().isHorizontalFlip(), false), this.graphicalX(), this.graphicalY());
-            }
-
+            this.animatorController.draw(g, this.graphicalX(), this.graphicalY());
             if (GlobalVariable.drawCollision && this.animatorController.currentBodyAnimation() != null) {
                 this.animatorController.currentBodyAnimation().draw(g, this.animatorController.currentFrame(), this.animatorController.getEyesDirection().isHorizontalFlip(), this.getPosX(), this.getPosY());
             }
@@ -63,12 +59,6 @@ public abstract class GameObject {
     }
 
     public abstract void update();
-
-    protected void updateAnimation() {
-        if (this.animatorController != null && this.animatorController.currentAnimation() != null) {
-            this.animatorController.currentAnimator().update(GameConfig.currentTimeLoop);
-        }
-    }
 
     public abstract void eventPressed(EInput input);
 

@@ -21,15 +21,18 @@ public class ColorTools {
         TRANSPARENT_BLUE,
         TRANSPARENT_RED,
 
-        SOFT_BLACK
+        SOFT_BLACK,
+
+        FULL_TRANSPARENT_WHITE
     }
 
-    public static void init(){
+    public static void init() {
         colors = new HashMap<>();
         colors.put(Colors.TRANSPARENT_GREYBLUE, new Color(0.1f, 0.2f, 0.3f, 0.5f));
         colors.put(Colors.TRANSPARENT_GREY, new Color(0.5f, 0.5f, 0.5f, 0.5f));
         colors.put(Colors.TRANSPARENT_GREYBLACK, new Color(0.2f, 0.2f, 0.2f, 0.6f));
         colors.put(Colors.TRANSPARENT_BLACK, new Color(0f, 0f, 0f, 0.7f));
+        colors.put(Colors.FULL_TRANSPARENT_WHITE, new Color(1f, 1f, 1f, 0f));
         colors.put(Colors.SOFT_BLACK, new Color(0f, 0f, 0f, 0.95f));
         colors.put(Colors.TRANSPARENT_RED, new Color(1f, 0f, 0f, 0.5f));
         colors.put(Colors.TRANSPARENT_GREEN, new Color(0f, 1f, 0f, 0.5f));
@@ -37,30 +40,30 @@ public class ColorTools {
         colors.put(Colors.TRANSPARENT_YELLOW, new Color(1f, 1f, 0f, 0.5f));
     }
 
-    public static Color get(Colors color){
-        if (colors == null){
+    public static Color get(Colors color) {
+        if (colors == null) {
             init();
         }
         return colors.get(color);
     }
 
-    public static boolean compareColor(Color color, Colors type){
+    public static boolean compareColor(Color color, Colors type) {
         Color compare = colors.get(type);
 
         if (compare.a == color.a &&
                 compare.r == color.r &&
                 compare.g == color.g &&
-                compare.b == color.b){
+                compare.b == color.b) {
             return true;
         }
         return false;
     }
 
-    public static Color getGreenOrRed(boolean choice){
-        if (choice == true){
+    public static Color getGreenOrRed(boolean choice) {
+        if (choice) {
             return colors.get(Colors.TRANSPARENT_GREEN);
         } else {
-            return  colors.get(Colors.TRANSPARENT_RED);
+            return colors.get(Colors.TRANSPARENT_RED);
         }
     }
 }

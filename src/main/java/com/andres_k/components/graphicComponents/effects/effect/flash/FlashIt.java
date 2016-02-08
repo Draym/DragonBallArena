@@ -7,24 +7,29 @@ import com.andres_k.utils.configs.GameConfig;
 import org.newdawn.slick.Graphics;
 
 /**
- * Created by andres_k on 26/01/2016.
+ * Created by andres_k on 07/02/2016.
  */
-public class FlashEffect extends Effect {
+public abstract class FlashIt extends Effect {
     protected ColorShape flash;
     protected float light;
     protected boolean upLight;
     protected float constant;
 
-    protected FlashEffect(String id, EffectType type, long duration, ColorShape shape) {
-        super(id, type, duration);
+    public FlashIt(String id, EffectType type, long speed, ColorShape shape) {
+        super(id, type, (510 / (speed / GameConfig.currentTimeLoop)) * GameConfig.currentTimeLoop);
         this.flash = shape;
         this.light = shape.getColor().getAlpha();
         this.upLight = true;
-        this.constant = (255 / (duration / GameConfig.currentTimeLoop));
+        this.constant = (255 / (speed / GameConfig.currentTimeLoop));
     }
 
     @Override
-    public void update() {
+    public void draw(Graphics g) {
+        this.flash.draw(g);
+    }
+
+    @Override
+    public boolean update() {
         if (this.upLight) {
             this.light = (this.light + this.constant < 255 ? this.light + this.constant : 255);
         } else {
@@ -39,11 +44,6 @@ public class FlashEffect extends Effect {
         else if (this.light == 0) {
             this.running = false;
         }
+        return true;
     }
-
-    @Override
-    public void draw(Graphics g) {
-        this.flash.draw(g);
-    }
-
 }

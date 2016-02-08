@@ -1,8 +1,8 @@
 package com.andres_k.components.controllers;
 
 import com.andres_k.components.gameComponents.resources.ResourceManager;
-import com.andres_k.components.graphicComponents.background.Background;
 import com.andres_k.components.graphicComponents.background.EBackground;
+import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
 import com.andres_k.components.graphicComponents.effects.EffectFactory;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.soundComponents.ESound;
@@ -46,22 +46,27 @@ public class LoadController extends WindowController {
 
     @Override
     public void init() throws SlickException {
-        this.background = new Background(ResourceManager.get().getBackgroundAnimator(EBackground.LOAD_SCREEN));
-        this.background.playEffect(EffectFactory.createFlashScreen(200));
-        this.background.playEffect(EffectFactory.createShakeScreen(300, 5, 150));
+        this.backgroundManager.addComponent(EBackground.LOAD_SCREEN, new Wallpaper(ResourceManager.get().getBackgroundAnimator(EBackground.LOAD_SCREEN)));
+        this.backgroundManager.playEffect(EBackground.LOAD_SCREEN, 0, EffectFactory.createFlashEffect(200));
+        this.backgroundManager.playEffect(EBackground.LOAD_SCREEN, 0, EffectFactory.createShakeScreen(300, 5, 110));
+        this.backgroundManager.addComponent(EBackground.LOGO, new Wallpaper(ResourceManager.get().getBackgroundAnimator(EBackground.LOGO), 370, -50));
+        this.backgroundManager.playEffect(EBackground.LOGO, 0, EffectFactory.hideIt(1000));
+        //todo correct le zoomEffect en combinaison du hideEffect = KO
+        this.backgroundManager.playEffect(EBackground.LOGO, 1, EffectFactory.zoomIt(8, 0.3f, 1.5f));
+        this.backgroundManager.playEffect(EBackground.LOGO, 2, EffectFactory.createShakeScreen(160, 3, 80));
         SoundController.play(ESound.EFFECT_FLASH);
     }
 
     @Override
     public void renderWindow(Graphics g) {
-        this.background.draw(g);
+        this.backgroundManager.draw(g);
     }
 
     @Override
     public void update(GameContainer gameContainer) throws SlickException {
-        this.background.update();
+        this.backgroundManager.update();
 
-        if (!this.loadCompleted && !this.background.hasActivity()) {
+        if (!this.loadCompleted && !this.backgroundManager.hasActivity()) {
             try {
                 this.loadCompleted = ResourceManager.get().initialise(index);
                 CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.LOAD_GUI_LoadingBar, new Tuple<>(ETaskType.CUT, "body", ResourceManager.get().getPercentInitialised())));

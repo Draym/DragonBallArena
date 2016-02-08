@@ -11,7 +11,10 @@ public enum EBackground {
     BEFORE_BATTLE_SCREEN("BEFORE_BATTLE_SCREEN"),
 
     //map
-    VALLEY_MAP("VALLEY_MAP");
+    VALLEY_MAP("VALLEY_MAP"),
+
+    //logo
+    LOGO("LOGO");
 
     String value;
 

@@ -1,5 +1,7 @@
 package com.andres_k.components.graphicComponents.effects.effect;
 
+import com.andres_k.components.graphicComponents.effects.ImageConfiguration;
+import com.andres_k.utils.configs.GameConfig;
 import org.newdawn.slick.Graphics;
 
 /**
@@ -8,6 +10,7 @@ import org.newdawn.slick.Graphics;
 public abstract class Effect {
     private String id;
     private EffectType type;
+    private int priority;
     protected boolean running;
     protected int delta;
     private long duration;
@@ -20,8 +23,15 @@ public abstract class Effect {
         this.delta = 0;
     }
 
-    public abstract void update();
+    public boolean update() {
+        this.delta += GameConfig.currentTimeLoop;
+        return true;
+    }
+
+
     public abstract void draw(Graphics g);
+
+    public abstract boolean applyChanges(ImageConfiguration conf);
 
     public void play() {
         this.running = true;
@@ -42,5 +52,14 @@ public abstract class Effect {
 
     public long getDuration() {
         return this.duration;
+    }
+
+    public int getPriority() {
+        return this.priority;
+    }
+
+    // SETTERS
+    public void setPriority(int value) {
+        this.priority = value;
     }
 }

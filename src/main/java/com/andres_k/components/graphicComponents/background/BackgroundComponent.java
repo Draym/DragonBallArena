@@ -1,55 +1,57 @@
 package com.andres_k.components.graphicComponents.background;
 
 import com.andres_k.components.gameComponents.animations.AnimatorController;
-import com.andres_k.components.graphicComponents.effects.EffectManager;
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 /**
- * Created by andres_k on 07/10/2015.
+ * Created by andres_k on 08/02/2016.
  */
-public class Background {
+public abstract class BackgroundComponent {
     protected AnimatorController animator;
-    protected EffectManager effectManager;
     protected float x;
     protected float y;
 
     protected boolean ready;
     protected boolean running;
 
-    public Background(AnimatorController animator) throws SlickException {
+    public BackgroundComponent(AnimatorController animator) throws SlickException {
         this(animator, 0, 0);
     }
 
-    public Background(AnimatorController animator, float x, float y) throws SlickException {
+    public BackgroundComponent(AnimatorController animator, float x, float y) throws SlickException {
         this.ready = false;
         this.running = false;
-
         this.x = x;
         this.y = y;
-
         this.animator = animator;
-        this.effectManager = new EffectManager();
-        this.instanceCurrentBackground();
+        this.initialize();
         this.ready = true;
     }
 
     // FUNCTIONS
     public void draw(Graphics g) {
-        g.drawAnimation(this.animator.currentAnimation(), this.x, this.y);
-        this.effectManager.render(g);
+        this.animator.draw(g, this.x, this.y);
+    }
+
+    public void update() {
+        this.animator.update();
+    }
+
+    public abstract void initialize() throws SlickException;
+
+    public void playEffect(int priority, Effect effect) {
+        this.animator.playEffect(priority, effect);
+    }
+
+    public void stopEffect(String id) {
+        this.animator.stopEffect(id);
     }
 
 
-    public void update(){
-        this.effectManager.update();
-    }
-
-    public void instanceCurrentBackground() throws SlickException {
-    }
-
+    // GETTERS
     public boolean isReady() {
         return this.ready;
     }
@@ -58,23 +60,15 @@ public class Background {
         return this.running;
     }
 
-    public void playEffect(Effect effect) {
-        this.effectManager.playEffect(effect);
-    }
-
-    public void stopEffect(String id) {
-        this.effectManager.stopEffect(id);
-    }
-
     public boolean hasActivity() {
-        return this.effectManager.hasActivity();
+        return this.animator.hasActivity();
     }
 
     public boolean effectIsRunning(String id) {
-        return this.effectManager.effectIsRunning(id);
+        return this.animator.effectIsRunning(id);
     }
 
     public boolean effectIsActive(EffectType type) {
-        return this.effectManager.effectIsActive(type);
+        return this.animator.effectIsActive(type);
     }
 }
