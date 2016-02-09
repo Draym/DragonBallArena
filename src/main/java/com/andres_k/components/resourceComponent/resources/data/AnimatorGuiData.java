@@ -34,23 +34,25 @@ public class AnimatorGuiData extends DataManager {
     @Override
     protected void initialiseMethods() throws NoSuchMethodException {
         this.methods.clear();
-        this.methods.add(new Pair<>(false, this.getClass().getMethod("initHome")));
-        this.methods.add(new Pair<>(false, this.getClass().getMethod("initGame")));
-        this.methods.add(new Pair<>(false, this.getClass().getMethod("initSelect")));
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initContainers")));
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initButtons")));
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initComponents")));
     }
 
-    public void initHome() throws NoSuchMethodException, SlickException, JSONException {
+    public void initContainers() throws NoSuchMethodException, SlickException, JSONException {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.MENU), EGuiElement.MENU);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.SETTING), EGuiElement.SETTING);
+    }
+
+    public void initButtons() throws NoSuchMethodException, SlickException, JSONException {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_PLAY_SOLO), EGuiElement.BUTTON_PLAY_SOLO);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_PLAY_VERSUS), EGuiElement.BUTTON_PLAY_VERSUS);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_PLAY_MULTI), EGuiElement.BUTTON_PLAY_MULTI);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_SETTING), EGuiElement.BUTTON_SETTING);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_CONTROLS), EGuiElement.BUTTON_CONTROLS);
     }
 
-    public void initGame() throws NoSuchMethodException, SlickException, JSONException {
-    }
-
-    public void initSelect() throws NoSuchMethodException, SlickException, JSONException {
+    public void initComponents() throws NoSuchMethodException, SlickException, JSONException {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.LOADING), EGuiElement.LOADING);
     }
 

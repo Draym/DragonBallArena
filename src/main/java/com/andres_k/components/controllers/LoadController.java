@@ -50,8 +50,8 @@ public class LoadController extends WindowController {
 
         this.backgroundManager.addComponent(EBackground.LOGO, new Wallpaper(ResourceManager.get().getBackgroundAnimator(EBackground.LOGO), 370, -50));
         this.backgroundManager.playEffect(EBackground.LOGO, 0, EffectFactory.hideIt(1000));
-        this.backgroundManager.playEffect(EBackground.LOGO, 1, EffectFactory.zoomIt(12, 0.5f, 1.2f));
-//        this.backgroundManager.playEffect(EBackground.LOGO, 2, EffectFactory.createShakeScreen(160, 3, 80));
+        this.backgroundManager.playEffect(EBackground.LOGO, 1, EffectFactory.zoomIt(10, 0.1f, 1.3f));
+        this.backgroundManager.playEffect(EBackground.LOGO, 2, EffectFactory.createShakeScreen(160, 4, 30));
         SoundController.play(ESound.EFFECT_FLASH);
     }
 

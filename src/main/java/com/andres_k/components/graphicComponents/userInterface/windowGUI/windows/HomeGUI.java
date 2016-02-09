@@ -7,6 +7,7 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.Elemen
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.ImageElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.ComplexElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.list.ListElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.modal.Modal;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.UserInterface;
 import com.andres_k.components.resourceComponent.fonts.EFont;
@@ -14,6 +15,7 @@ import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
+import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
 import org.newdawn.slick.SlickException;
@@ -50,6 +52,12 @@ public class HomeGUI extends UserInterface {
         this.elements.add(menu);
 
         // settings
+        ComplexElement settings = new ComplexElement(new ColorRect(new Rectangle(350, 115, 600, 495)), true);
+        settings.addItem(new ImageElement((ResourceManager.get().getGuiAnimator(EGuiElement.SETTING)), true));
+        Modal modal = new Modal(ELocation.HOME_GUI_Settings.getId(), new ColorRect(new Rectangle(0, 0, WindowConfig.getWLowSizeX(), WindowConfig.getWLowSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), settings);
+        modal.addTasks(ElementFactory.createBasicModalTasks(ELocation.HOME_GUI_Settings, ELocation.HOME_GUI_Menu));
+        this.taskManager.register(ELocation.HOME_GUI_Settings.getId(), modal);
+        this.elements.add(modal);
     }
 
     @Override

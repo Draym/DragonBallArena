@@ -51,16 +51,6 @@ public class ComplexElement extends GuiElement {
     }
 
     @Override
-    public Object doTask(Object task) {
-        Object result;
-
-        if ((result = super.doTask(task)) != null) {
-            return result;
-        }
-        return null;
-    }
-
-    @Override
     public void update() {
         this.items.forEach(GuiElement::update);
     }

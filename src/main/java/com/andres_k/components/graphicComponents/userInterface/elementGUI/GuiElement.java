@@ -5,9 +5,13 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
+import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -22,6 +26,8 @@ public abstract class GuiElement implements Observer {
     protected EGuiType type;
     protected ColorShape body;
 
+    protected List<Pair<EStatus, Object>> tasks;
+
     protected GuiElement(EGuiType type, String id, ColorShape body, boolean activated) {
         this.type = type;
         this.id = id;
@@ -29,8 +35,10 @@ public abstract class GuiElement implements Observer {
         this.activated = activated;
         this.focused = false;
         this.turnOn = false;
+        this.tasks = new ArrayList<>();
     }
 
+    // FUNCTIONS
     public abstract void init();
 
     public abstract void enter();
@@ -58,53 +66,56 @@ public abstract class GuiElement implements Observer {
     }
 
     public Object doTask(Object task) {
+        Console.write("ID: " + this.id + "  , Task: " + task + " , activity:" + this.isActivated());
+
         if (task instanceof ETaskType) {
             ETaskType action = (ETaskType) task;
 
-            if (action == ETaskType.START_ACTIVITY) {
+            if (action == ETaskType.START_ACTIVITY && !this.isActivated()) {
                 this.setActivated(true);
-            } else if (action == ETaskType.STOP_ACTIVITY) {
+                this.OnCreate();
+            } else if (action == ETaskType.STOP_ACTIVITY && this.isActivated()) {
                 this.setActivated(false);
+                this.OnKill();
             } else if (action == ETaskType.GETTER) {
                 return this;
             }
         } else if (task instanceof TaskComponent) {
+            Console.write("send request");
             CentralTaskManager.get().sendRequest((TaskComponent) task);
         }
         return null;
     }
 
     // GETTERS
+
     public boolean isOnFocus(float x, float y) {
-        this.focused = false;
+        boolean result = false;
         if (this.activated && this.body != null) {
-            this.focused = this.body.isOnFocus(x, y);
+            result = this.body.isOnFocus(x, y);
+            if (result) {
+                this.OnFocus();
+            }
         }
+        this.focused = result;
         return this.focused;
     }
+
 
     public boolean isOnClick(float x, float y) {
-        this.turnOn = false;
-        if (this.activated) {
-            this.turnOn = this.isOnFocus(x, y);
+        if (this.activated && this.focused) {
+            this.OnClick();
         }
+        this.turnOn = this.focused;
         return this.turnOn;
-    }
-
-    public boolean isActivated() {
-        return this.activated;
-    }
-
-    public boolean isAlive() {
-        return true;
-    }
-
-    public final boolean isFocused() {
-        return this.focused;
     }
 
     public ColorShape getBody() {
         return this.body;
+    }
+
+    public final boolean isFocused() {
+        return this.focused;
     }
 
     public final String getId() {
@@ -120,6 +131,14 @@ public abstract class GuiElement implements Observer {
             return this;
         }
         return null;
+    }
+
+    public boolean isActivated() {
+        return this.activated;
+    }
+
+    public boolean isAlive() {
+        return true;
     }
 
     public boolean isBodyPrintable() {
@@ -155,6 +174,10 @@ public abstract class GuiElement implements Observer {
     }
 
     // SETTERS
+    public void setId(String value) {
+        this.id = value;
+    }
+
     public void setActivated(boolean value) {
         this.activated = value;
     }
@@ -165,10 +188,6 @@ public abstract class GuiElement implements Observer {
 
     public void setPosY(float value) {
         this.body.setPosY(value);
-    }
-
-    public void setId(String value) {
-        this.id = value;
     }
 
     public void setBody(ColorShape body) {
@@ -186,9 +205,45 @@ public abstract class GuiElement implements Observer {
         }
     }
 
+    // OBSERVER
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof TaskComponent)
+        Console.write("Element task: " + arg);
+        if (arg instanceof TaskComponent) {
             this.doTask(((TaskComponent) arg).getTask());
+        } else {
+            this.doTask(arg);
+        }
     }
+
+    // TASKS
+
+    public final void addTask(Pair<EStatus, Object> task) {
+        this.tasks.add(task);
+    }
+
+    public final void addTasks(List<Pair<EStatus, Object>> tasks) {
+        this.tasks.addAll(tasks);
+    }
+
+    protected final void OnClick() {
+        if (!this.turnOn) {
+            this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_CLICK).forEach(task -> this.doTask(task.getV2()));
+        }
+    }
+
+    protected final void OnFocus() {
+        if (!this.focused) {
+            this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_FOCUS).forEach(task -> this.doTask(task.getV2()));
+        }
+    }
+
+    protected final void OnCreate() {
+        this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_CREATE).forEach(task -> this.doTask(task.getV2()));
+    }
+
+    protected final void OnKill() {
+        this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_KILL).forEach(task -> this.doTask(task.getV2()));
+    }
+
 }

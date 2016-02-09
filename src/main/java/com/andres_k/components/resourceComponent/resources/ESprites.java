@@ -23,10 +23,12 @@ public enum ESprites {
 
     //HomeGui
     MENU(HOME_GUI.getIndex()),
+    SETTING(HOME_GUI.getIndex()),
     BUTTON_PLAY_SOLO(HOME_GUI.getIndex()),
     BUTTON_PLAY_VERSUS(HOME_GUI.getIndex()),
     BUTTON_PLAY_MULTI(HOME_GUI.getIndex()),
     BUTTON_SETTING(HOME_GUI.getIndex()),
+    BUTTON_CONTROLS(HOME_GUI.getIndex()),
 
     //SelectGui
     LOADING(SELECT_GUI.getIndex()),

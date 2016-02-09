@@ -9,6 +9,7 @@ public enum EGuiType {
     TABLE("TABLE"),
     CHAT("CHAT"),
     PRINTABLE("PRINTABLE"),
+    MODAL("MODAL"),
     POP_UP("POP_UP"),
     SELECTOR("SELECTOR"),
     LIST("LIST"),

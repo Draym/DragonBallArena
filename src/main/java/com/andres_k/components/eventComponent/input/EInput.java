@@ -107,4 +107,9 @@ public enum EInput {
         }
         return NOTHING;
     }
+
+    @Override
+    public String toString() {
+        return this.getValue();
+    }
 }

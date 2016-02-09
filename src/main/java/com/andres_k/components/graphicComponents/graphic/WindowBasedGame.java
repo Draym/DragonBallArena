@@ -110,7 +110,7 @@ public abstract class WindowBasedGame extends BasicGameState {
 
     @Override
     public void keyPressed(int key, char c) {
-        boolean absorbed = this.gui.event(key, c, EInput.PRESSED);
+        boolean absorbed = this.gui.event(key, c, EInput.KEY_PRESSED);
         if (!absorbed) {
             this.controller.keyPressed(key, c);
         }
@@ -118,7 +118,7 @@ public abstract class WindowBasedGame extends BasicGameState {
 
     @Override
     public void keyReleased(int key, char c) {
-        boolean absorbed = this.gui.event(key, c, EInput.RELEASED);
+        boolean absorbed = this.gui.event(key, c, EInput.KEY_RELEASED);
         if (!absorbed) {
             this.controller.keyReleased(key, c);
         }

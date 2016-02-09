@@ -140,17 +140,6 @@ public class Button extends Element {
         return focused;
     }
 
-    @Override
-    public boolean isOnClick(float x, float y) {
-        if (this.activated && this.focused) {
-            this.OnClick();
-            this.turnOn = true;
-        } else {
-            this.turnOn = false;
-        }
-        return this.turnOn;
-    }
-
     // SETTERS
     @Override
     public void setBody(ColorShape body) {
