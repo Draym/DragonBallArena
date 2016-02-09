@@ -65,7 +65,7 @@ public class AnimatorController implements Observer {
         this.activatedTimer = new ActivatedTimer(animatorController.activatedTimer);
         this.eyesDirection = animatorController.eyesDirection;
         this.nextRequiredAnimation = new Pair<>(animatorController.nextRequiredAnimation);
-        this.effectManager = animatorController.effectManager;
+        this.effectManager = new EffectManager(animatorController.effectManager);
 
     }
 

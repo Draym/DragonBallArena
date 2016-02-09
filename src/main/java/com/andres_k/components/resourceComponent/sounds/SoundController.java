@@ -48,7 +48,7 @@ public class SoundController {
             try {
                 Sound sound = new Sound(value.getPath());
                 SoundElement soundElement = new SoundElement(sound, value);
-                sounds.add(soundElement);
+                //sounds.add(soundElement);
 
                 soundElement.getSound().play(pitch, volume);
                 return soundElement.getId();
@@ -63,6 +63,7 @@ public class SoundController {
         if (!needInit) {
             try {
                 Sound sound = new Sound(value.getPath());
+
                 SoundElement soundElement = new SoundElement(sound, value);
                 sounds.add(soundElement);
 

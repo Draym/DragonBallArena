@@ -23,6 +23,14 @@ public abstract class Effect {
         this.delta = 0;
     }
 
+    public Effect(Effect effect) {
+        this.running = effect.running;
+        this.id = effect.id;
+        this.type = effect.type;
+        this.duration = effect.duration;
+        this.delta = effect.delta;
+    }
+
     public boolean update() {
         this.delta += GameConfig.currentTimeLoop;
         return true;
@@ -61,5 +69,10 @@ public abstract class Effect {
     // SETTERS
     public void setPriority(int value) {
         this.priority = value;
+    }
+
+    @Override
+    public String toString() {
+        return "{id: " + this.id + ", type: " + this.type + "}";
     }
 }

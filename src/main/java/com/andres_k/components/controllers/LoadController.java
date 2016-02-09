@@ -48,11 +48,11 @@ public class LoadController extends WindowController {
         this.backgroundManager.addComponent(EBackground.LOAD_SCREEN, new Wallpaper(ResourceManager.get().getBackgroundAnimator(EBackground.LOAD_SCREEN)));
         this.backgroundManager.playEffect(EBackground.LOAD_SCREEN, 0, EffectFactory.createFlashEffect(200));
         this.backgroundManager.playEffect(EBackground.LOAD_SCREEN, 0, EffectFactory.createShakeScreen(300, 5, 110));
+
         this.backgroundManager.addComponent(EBackground.LOGO, new Wallpaper(ResourceManager.get().getBackgroundAnimator(EBackground.LOGO), 370, -50));
         this.backgroundManager.playEffect(EBackground.LOGO, 0, EffectFactory.hideIt(1000));
-        //todo correct le zoomEffect en combinaison du hideEffect = KO
-        this.backgroundManager.playEffect(EBackground.LOGO, 1, EffectFactory.zoomIt(8, 0.3f, 1.5f));
-        this.backgroundManager.playEffect(EBackground.LOGO, 2, EffectFactory.createShakeScreen(160, 3, 80));
+        this.backgroundManager.playEffect(EBackground.LOGO, 1, EffectFactory.zoomIt(12, 0.5f, 1.2f));
+//        this.backgroundManager.playEffect(EBackground.LOGO, 2, EffectFactory.createShakeScreen(160, 3, 80));
         SoundController.play(ESound.EFFECT_FLASH);
     }
 
@@ -69,7 +69,7 @@ public class LoadController extends WindowController {
             try {
                 this.loadCompleted = ResourceManager.get().initialise(index);
                 CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.LOAD_GUI_LoadingBar, new Tuple<>(ETaskType.CUT, "body", ResourceManager.get().getPercentInitialised())));
-                Console.write("index {" + this.index + "} -> " + (this.loadCompleted ? "loadCompleted" : "running") + " " + ResourceManager.get().getPercentInitialised() + "%\n");
+                Console.write("index {" + this.index + "} -> " + (this.loadCompleted ? "loadCompleted" : "running") + " " + (ResourceManager.get().getPercentInitialised() * 100f)+ "%\n");
             } catch (Exception e) {
                 throw new SlickException(e.getMessage());
             }

@@ -20,6 +20,13 @@ public class EffectManager {
         this.conf = new ImageConfiguration();
     }
 
+    public EffectManager(EffectManager effectManager) {
+        this.effects = new ArrayList<>();
+
+        this.effects.addAll(effectManager.effects);
+        this.conf = new ImageConfiguration(effectManager.conf);
+    }
+
     public void update() {
         boolean result;
         int level = -1;
@@ -56,14 +63,19 @@ public class EffectManager {
             } else if (level != effect.getPriority()) {
                 break;
             }
-            if (!effect.applyChanges(this.conf))
+            if (!effect.applyChanges(this.conf)) {
                 break;
+            }
         }
 
         if (this.conf.drawable) {
-            image.draw(this.conf.x, this.conf.y, this.conf.scale, this.conf.color);
-            image.setCenterOfRotation(image.getWidth() / 2, image.getHeight() / 2);
+            image.setCenterOfRotation((image.getWidth() * this.conf.scale) / 2, (image.getHeight() * this.conf.scale) / 2);
             image.rotate(this.conf.rotation);
+            if (conf.color == null) {
+                image.draw(this.conf.x, this.conf.y, this.conf.scale);
+            } else {
+                image.draw(this.conf.x, this.conf.y, this.conf.scale, this.conf.color);
+            }
             this.draw(g);
         }
     }

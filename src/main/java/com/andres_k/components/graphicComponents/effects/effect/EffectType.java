@@ -4,9 +4,20 @@ package com.andres_k.components.graphicComponents.effects.effect;
  * Created by andres_k on 25/01/2016.
  */
 public enum EffectType {
-    FLASH,
-    SHAKE_SCREEN,
-    SHAKE_IMAGE,
-    ZOOM,
-    HIDE
+    FLASH("FLASH"),
+    SHAKE_SCREEN("SHAKE_SCREEN"),
+    SHAKE_IMAGE("SHAKE_IMAGE"),
+    ZOOM("ZOOM"),
+    HIDE("HIDE");
+
+    public String value;
+
+    EffectType(String value) {
+        this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return this.value;
+    }
 }

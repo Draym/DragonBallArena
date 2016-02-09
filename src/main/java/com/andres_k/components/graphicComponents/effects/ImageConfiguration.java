@@ -26,6 +26,21 @@ public class ImageConfiguration {
         this.drawable = true;
     }
 
+    public ImageConfiguration(ImageConfiguration conf) {
+        this.x = conf.x;
+        this.y = conf.y;
+        this.imageSizeX = conf.imageSizeX;
+        this.imageSizeY = conf.imageSizeY;
+        this.scale = conf.scale;
+        this.rotation = conf.rotation;
+        if (conf.color == null) {
+            this.color = null;
+        } else {
+            this.color = new Color(conf.color);
+        }
+        this.drawable = conf.drawable;
+    }
+
     public void reset() {
         this.drawable = true;
         this.scale = 1f;
@@ -45,6 +60,6 @@ public class ImageConfiguration {
 
     @Override
     public String toString() {
-        return "[" + this.x + ", " + this.y + "] {" + this.drawable + ", " + this.scale + ", " + this.rotation + "}";
+        return "[" + this.x + ", " + this.y + "] (" + this.imageSizeX + ", " + this.imageSizeY + ") {" + this.drawable + ", " + this.scale + ", " + this.rotation + "}";
     }
 }

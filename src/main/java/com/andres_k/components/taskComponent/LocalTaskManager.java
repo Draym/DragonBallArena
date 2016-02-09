@@ -48,6 +48,18 @@ public class LocalTaskManager implements Observer {
         }
     }
 
+    public void relayRequest(TaskComponent task) {
+        if (this.targets.containsKey(task.getTarget().getId())) {
+            this.targets.get(task.getTarget().getId()).notify(TaskFactory.changeSender(this.location, task));
+        } else {
+            this.targets.entrySet().forEach(entry -> {
+                if (task.getTarget().getId().indexOf(entry.getKey()) == 0) {
+                    entry.getValue().notify(TaskFactory.changeSender(this.location, task));
+                }
+            });
+        }
+    }
+
     public ELocation getLocation() {
         return this.location;
     }
@@ -55,7 +67,7 @@ public class LocalTaskManager implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof TaskComponent) {
-            this.sendRequest((TaskComponent) arg);
+            this.relayRequest((TaskComponent) arg);
         }
     }
 }

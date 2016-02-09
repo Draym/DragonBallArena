@@ -1,9 +1,9 @@
 package com.andres_k.components.graphicComponents.graphic.windows;
 
 import com.andres_k.components.controllers.LoadController;
-import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.LoadGUI;
+import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.resourceComponent.sounds.MusicController;
 import com.andres_k.components.taskComponent.LocalTaskManager;
@@ -14,6 +14,9 @@ import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by andres_k on 08/07/2015.
@@ -33,15 +36,6 @@ public class WindowLoad extends WindowBasedGame {
 
         new Thread(() -> {
             try {
-                ResourceManager.get().prerequisiteMusic();
-                MusicController.loop(ESound.BACKGROUND_LOAD);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
-
-        new Thread(() -> {
-            try {
                 ResourceManager.get().prerequisiteSound();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -49,11 +43,23 @@ public class WindowLoad extends WindowBasedGame {
         }).start();
 
         try {
+            ResourceManager.get().prerequisiteMusic();
+        } catch (Exception e) {
+            throw new SlickException(e.getMessage());
+        }
+
+        try {
             ResourceManager.get().prerequisiteContents();
         } catch (Exception e) {
             throw new SlickException(e.getMessage());
         }
 
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                MusicController.loop(ESound.BACKGROUND_LOAD);
+            }
+        }, 700);
         this.controller.setStateWindow(this.stateWindow);
         this.controller.setWindow(this);
         Console.write("TotalToInitialise : " + ResourceManager.get().getTotalToInitialise());

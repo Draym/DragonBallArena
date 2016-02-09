@@ -58,7 +58,7 @@ public class AnimatorBackgroundData extends DataManager {
     // GETTERS
     public AnimatorController getAnimator(EBackground index) throws SlickException {
         if (this.animator.containsKey(index)) {
-            return this.animator.get(index);
+            return new AnimatorController(this.animator.get(index));
         }
         throw new SlickException("[ERROR]: The content of " + index.getValue() + " is missing.");
     }

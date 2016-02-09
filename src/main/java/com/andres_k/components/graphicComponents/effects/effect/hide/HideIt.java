@@ -31,9 +31,7 @@ public class HideIt extends Effect {
         this.timer -= this.delta;
         conf.drawable = false;
         if (this.timer <= 0) {
-            conf.drawable = true;
             this.running = false;
-            return true;
         }
         this.delta = 0;
         return false;
