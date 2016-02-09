@@ -1,11 +1,11 @@
 package com.andres_k.components.graphicComponents.graphic.windows;
 
 import com.andres_k.components.controllers.LoadController;
-import com.andres_k.components.gameComponents.resources.ResourceManager;
+import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.LoadGUI;
-import com.andres_k.components.soundComponents.ESound;
-import com.andres_k.components.soundComponents.MusicController;
+import com.andres_k.components.resourceComponent.sounds.ESound;
+import com.andres_k.components.resourceComponent.sounds.MusicController;
 import com.andres_k.components.taskComponent.LocalTaskManager;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
@@ -35,7 +35,7 @@ public class WindowLoad extends WindowBasedGame {
             try {
                 ResourceManager.get().prerequisiteMusic();
                 MusicController.loop(ESound.BACKGROUND_LOAD);
-            } catch (SlickException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }).start();
@@ -43,14 +43,14 @@ public class WindowLoad extends WindowBasedGame {
         new Thread(() -> {
             try {
                 ResourceManager.get().prerequisiteSound();
-            } catch (SlickException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }).start();
 
         try {
             ResourceManager.get().prerequisiteContents();
-        } catch (NoSuchMethodException | JSONException e) {
+        } catch (Exception e) {
             throw new SlickException(e.getMessage());
         }
 

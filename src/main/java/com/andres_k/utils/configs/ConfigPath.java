@@ -17,4 +17,5 @@ public class ConfigPath {
     public static final String musics = "sounds/musics";
     public static final String voices = "sounds/voices";
     public static final String effects = "sounds/effects";
+    public static final String fonts = "fonts";
 }

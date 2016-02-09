@@ -98,10 +98,6 @@ public class AnimatorContainer {
         return this.animators.get(this.index).getFilter();
     }
 
-    public boolean canSetIndex(int value) {
-        return value >= 0 && value < this.animators.size();
-    }
-
     // SETTERS
 
     public void setIndex(int value) {

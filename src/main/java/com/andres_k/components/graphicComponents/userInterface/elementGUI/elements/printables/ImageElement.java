@@ -1,6 +1,7 @@
 package com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables;
 
 import com.andres_k.components.gameComponents.animations.AnimatorController;
+import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorRect;
@@ -22,7 +23,7 @@ public class ImageElement extends Element {
     private float sizeXMAX;
 
     public ImageElement(AnimatorController animatorController, boolean activated) {
-        this(ELocation.UNKNOWN.getId(), null, animatorController, PositionInBody.MIDDLE_MID, activated);
+        this(ELocation.UNKNOWN.getId(), null, animatorController, PositionInBody.LEFT_UP, activated);
     }
 
     public ImageElement(String id, ColorShape body, PositionInBody position, boolean activated) {
@@ -30,7 +31,7 @@ public class ImageElement extends Element {
     }
 
     public ImageElement(String id, AnimatorController animatorController, boolean activated) {
-        this(id, null, animatorController, PositionInBody.MIDDLE_MID, activated);
+        this(id, null, animatorController, PositionInBody.LEFT_UP, activated);
     }
 
     public ImageElement(ColorShape body, AnimatorController animatorController, PositionInBody position, boolean activated) {
@@ -40,9 +41,10 @@ public class ImageElement extends Element {
     public ImageElement(String id, ColorShape body, AnimatorController animatorController, PositionInBody position, boolean activated) {
         super(EGuiType.IMAGE, id, body, position, activated);
         this.animatorController = animatorController;
-        if (this.body == null && this.animatorController != null) {
-            this.body = new ColorRect(new Rectangle(0, 0, this.animatorController.currentAnimation().getCurrentFrame().getWidth(),
-                    this.animatorController.currentAnimation().getCurrentFrame().getHeight()));
+        if (this.body == null && animatorController != null) {
+            this.body = new ColorRect(new Rectangle(0, 0, this.animatorController.currentAnimation().getWidth(), this.animatorController.currentAnimation().getHeight()));
+        }
+        if (this.body != null) {
             this.sizeXMAX = this.body.getSizeX();
         }
     }
@@ -79,29 +81,29 @@ public class ImageElement extends Element {
     @Override
     public void draw(Graphics g, float decalX, float decalY) {
         if (this.activated) {
-            if (this.body.getMinX() != -1) {
-                this.body.draw(g);
+            this.body.draw(g);
 
-                if (this.animatorController != null && this.animatorController.isPrintable()) {
-                    Pair<Float, Float> position = this.getChoicePosition(this.body);
-                    this.drawCurrentImage(g, position.getV1() + decalX, position.getV2() + decalY);
-                }
+            if (this.animatorController != null && this.animatorController.isPrintable()) {
+                Pair<Float, Float> position = this.getChoicePosition(this.body);
+                this.drawCurrentImage(g, position.getV1() + decalX, position.getV2() + decalY);
             }
         }
     }
 
     @Override
-    public void draw(Graphics g, ColorShape body) {
+    public void draw(Graphics g, ColorShape container) {
         if (this.activated) {
-            if (body.getMinX() != -1) {
-                if (body.getColor() == null) {
-                    body.setColor(this.body.getColor());
-                }
-                body.draw(g);
-                if (this.animatorController != null) {
-                    Pair<Float, Float> position = this.getChoicePosition(body);
-                    this.drawCurrentImage(g, position.getV1(), position.getV2());
-                }
+            ColorShape body = container.cloneIt();
+            if (body.getColor() == null) {
+                body.setColor(this.body.getColor());
+            }
+            if (this.body != null) {
+                body.setPosition(body.getMinX() + this.body.getMinX(), body.getMinY() + this.body.getMinY());
+            }
+            body.draw(g);
+            if (this.animatorController != null) {
+                Pair<Float, Float> position = this.getChoicePosition(body);
+                this.drawCurrentImage(g, position.getV1(), position.getV2());
             }
         }
     }
@@ -110,62 +112,6 @@ public class ImageElement extends Element {
         int sizeX = (this.body.getSizeX() > this.animatorController.currentAnimation().getCurrentFrame().getWidth() ? this.animatorController.currentAnimation().getCurrentFrame().getWidth() : (int) this.body.getSizeX());
         int sizeY = (this.body.getSizeY() > this.animatorController.currentAnimation().getCurrentFrame().getHeight() ? this.animatorController.currentAnimation().getCurrentFrame().getHeight() : (int) this.body.getSizeY());
         this.animatorController.drawImage(g, this.animatorController.currentAnimation().getCurrentFrame().getSubImage(0, 0, sizeX, sizeY), x, y);
-    }
-
-    private Pair<Float, Float> getChoicePosition(ColorShape body) {
-        float x = body.getMinX();
-        float y = body.getMinY();
-
-        if (this.position == PositionInBody.MIDDLE_MID) {
-            float sizeX = (body.getSizeX() / 2) - (this.animatorController.currentAnimation().getWidth() / 2);
-            float sizeY = (body.getSizeY() / 2) - (this.animatorController.currentAnimation().getHeight() / 2);
-
-            sizeX = (sizeX < 0 ? 0 : sizeX);
-            sizeY = (sizeY < 0 ? 0 : sizeY);
-            x += sizeX;
-            y += sizeY;
-        } else if (this.position == PositionInBody.RIGHT_MID) {
-            float sizeX = (body.getSizeX() - this.animatorController.currentAnimation().getWidth());
-            float sizeY = (body.getSizeY() / 2) - (this.animatorController.currentAnimation().getHeight() / 2);
-
-            sizeX = (sizeX < 0 ? 0 : sizeX);
-            sizeY = (sizeY < 0 ? 0 : sizeY);
-            x += sizeX;
-            y += sizeY;
-        } else if (this.position == PositionInBody.MIDDLE_DOWN) {
-            float sizeX = (body.getSizeX() / 2) - (this.animatorController.currentAnimation().getWidth() / 2);
-            float sizeY = (body.getSizeY() - this.animatorController.currentAnimation().getHeight());
-
-            sizeX = (sizeX < 0 ? 0 : sizeX);
-            sizeY = (sizeY < 0 ? 0 : sizeY);
-            x += sizeX;
-            y += sizeY;
-        } else if (this.position == PositionInBody.RIGHT_DOWN) {
-            float sizeX = (body.getSizeX() - this.animatorController.currentAnimation().getWidth());
-            float sizeY = (body.getSizeY() - this.animatorController.currentAnimation().getHeight());
-
-            sizeX = (sizeX < 0 ? 0 : sizeX);
-            sizeY = (sizeY < 0 ? 0 : sizeY);
-            x += sizeX;
-            y += sizeY;
-        } else if (this.position == PositionInBody.LEFT_DOWN) {
-            float sizeY = (body.getSizeY() - this.animatorController.currentAnimation().getHeight());
-
-            sizeY = (sizeY < 0 ? 0 : sizeY);
-            y += sizeY;
-        } else if (this.position == PositionInBody.MIDDLE_UP) {
-            float sizeX = (body.getSizeX() / 2) - (this.animatorController.currentAnimation().getWidth() / 2);
-
-            sizeX = (sizeX < 0 ? 0 : sizeX);
-            x += sizeX;
-        } else if (this.position == PositionInBody.RIGHT_UP) {
-            float sizeX = (body.getSizeX() - this.animatorController.currentAnimation().getWidth());
-
-            sizeX = (sizeX < 0 ? 0 : sizeX);
-            x += sizeX;
-        }
-
-        return new Pair<>(x, y);
     }
 
     @Override
@@ -246,11 +192,21 @@ public class ImageElement extends Element {
 
     //GETTERS
     @Override
-    public boolean isActivated() {
-        return true;
+    public boolean isOnFocus(float x, float y) {
+        super.isOnFocus(x, y);
+
+        if (this.animatorController != null) {
+            if (this.focused) {
+                if (this.animatorController.currentAnimationType() != EAnimation.ON_FOCUS) {
+                    this.animatorController.changeAnimation(EAnimation.ON_FOCUS);
+                }
+            } else if (this.animatorController.currentAnimationType() != EAnimation.IDLE) {
+                this.animatorController.changeAnimation(EAnimation.IDLE);
+            }
+        }
+        return this.focused;
     }
 
-    @Override
     public boolean isEmpty() {
         return this.animatorController == null || this.animatorController.isDeleted();
     }

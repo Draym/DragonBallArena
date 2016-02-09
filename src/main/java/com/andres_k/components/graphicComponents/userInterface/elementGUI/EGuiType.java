@@ -11,6 +11,7 @@ public enum EGuiType {
     PRINTABLE("PRINTABLE"),
     POP_UP("POP_UP"),
     SELECTOR("SELECTOR"),
+    LIST("LIST"),
 
     BUTTON("BUTTON"),
     TEXT("TEXT"),

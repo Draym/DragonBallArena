@@ -4,18 +4,24 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiTy
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorShape;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.StringTimer;
+import com.andres_k.components.resourceComponent.fonts.EFont;
+import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
+
+import java.awt.*;
 
 /**
  * Created by andres_k on 04/02/2016.
  */
 public class TextElement extends Element {
     private StringTimer textTimer;
+    private TrueTypeFont font;
+    private float size;
     private Color textColor;
 
     public TextElement(StringTimer textTimer, Color textColor, PositionInBody position, boolean activated) {
@@ -23,13 +29,21 @@ public class TextElement extends Element {
     }
 
     public TextElement(String id, StringTimer textTimer, Color textColor, PositionInBody position, boolean activated) {
-        this(id, textTimer, textColor, null, position, activated);
+        this(id, textTimer, textColor, EFont.BASIC, 16, position, activated);
+    }
+    public TextElement(String id, StringTimer textTimer, Color textColor, EFont font, float size, PositionInBody position, boolean activated) {
+        this(id, textTimer, textColor, font, size, null, position, activated);
     }
 
-    public TextElement(String id, StringTimer textTimer, Color textColor, ColorShape body, PositionInBody position, boolean activated) {
+    public TextElement(String id, StringTimer textTimer, Color textColor, EFont font, float size, ColorShape body, PositionInBody position, boolean activated) {
         super(EGuiType.TEXT, id, body, position, activated);
         this.textTimer = textTimer;
         this.textColor = textColor;
+        this.size = size;
+
+        Font item = ResourceManager.get().getFont(font);
+        item = item.deriveFont(this.size);
+        this.font = new TrueTypeFont(item, true);
     }
 
     @Override
@@ -56,60 +70,64 @@ public class TextElement extends Element {
     public void draw(Graphics g, float decalX, float decalY) {
         if (this.activated) {
             if (this.body != null) {
-                int begin = this.textTimer.getValue().length() - (int) (this.body.getSizeX() / StringTools.charSizeX());
-                begin = (begin < 0 ? 0 : begin);
-
-                String value = this.textTimer.getValue().substring(begin);
-
-                Pair<Float, Float> position = this.getChoicePosition(this.body, value);
+                Pair<Float, Float> position = this.getChoicePosition(this.body);
+                position.setV1(position.getV1() + decalX);
+                position.setV2(position.getV2() + decalY);
 
                 this.body.draw(g);
-                g.setColor(this.textColor);
-                g.drawString(value, position.getV1() + decalX, position.getV2() + decalY);
+                this.drawText(this.body, position);
             } else {
-                g.drawString(this.textTimer.getValue(), decalX, decalY);
+                this.drawString(this.textTimer.getValue(), decalX, decalY);
             }
         }
     }
 
     @Override
-    public void draw(Graphics g, ColorShape body) {
+    public void draw(Graphics g, ColorShape container) {
         if (this.activated) {
-            int begin = this.textTimer.getValue().length() - (int) (body.getSizeX() / StringTools.charSizeX());
-            begin = (begin < 0 ? 0 : begin);
+            ColorShape body = container.cloneIt();
 
-            String value = this.textTimer.getValue().substring(begin);
-
-            Pair<Float, Float> position = this.getChoicePosition(body, value);
-
-            ColorShape tmp = body.cloneIt();
-            if (this.body != null && tmp.getColor() == null) {
-                tmp.setColor(this.body.getColor());
+            Pair<Float, Float> position = this.getChoicePosition(body);
+            if (this.body != null) {
+                if (body.getColor() == null) {
+                    body.setColor(this.body.getColor());
+                }
+                position.setV1(this.body.getMinX() + position.getV1());
+                position.setV2(this.body.getMinY() + position.getV2());
             }
 
-            tmp.draw(g);
-            g.setColor(this.textColor);
-            g.drawString(value, position.getV1(), position.getV2());
+            body.draw(g);
+            //Console.write("pos: " + position + " in " + body + "##" + this.getAbsoluteWidth() + ", " + this.getAbsoluteHeight() + "##");
+            this.drawText(body, position);
         }
     }
 
+    private void drawText(ColorShape body, Pair<Float, Float> position) {
+        this.drawString(this.textTimer.getValue(), position.getV1(), position.getV2());
+    }
+
+    private void drawString(String value, float posX, float posY) {
+        this.font.drawString(posX, posY, value, this.textColor);
+    }
+
+    /*
     private Pair<Float, Float> getChoicePosition(ColorShape body, String value) {
         float x = body.getMinX();
         float y = body.getMinY();
 
         if (this.position == PositionInBody.MIDDLE_MID || this.position == PositionInBody.MIDDLE_UP) {
-            float sizeX = (body.getSizeX() / 2) - ((value.length() * StringTools.charSizeX()) / 2);
+            float sizeX = (body.getSizeX() / 2) - ((value.length() * this.size) / 2);
 
             sizeX = (sizeX < 0 ? 0 : sizeX);
             x += sizeX;
         } else if (this.position == PositionInBody.RIGHT_MID || this.position == PositionInBody.RIGHT_UP) {
-            float sizeX = (body.getSizeX() - (value.length() * StringTools.charSizeX()));
+            float sizeX = (body.getSizeX() - (value.length() * this.size));
 
             sizeX = (sizeX < 0 ? 0 : sizeX);
             x += sizeX;
         }
         return new Pair<>(x, y);
-    }
+    }*/
 
     @Override
     public void update() {
@@ -156,7 +174,7 @@ public class TextElement extends Element {
 
     // GETTERS
     @Override
-    public boolean isActivated() {
+    public boolean isAlive() {
         return this.textTimer.isActivated();
     }
 
@@ -172,12 +190,18 @@ public class TextElement extends Element {
 
     @Override
     public float getAbsoluteWidth() {
-        return this.textTimer.getValue().length() * StringTools.charSizeX();
+        if (this.body != null) {
+            return this.body.getSizeX();
+        }
+        return (this.textTimer.getValue().length() * this.size) / 1.40f;
     }
 
     @Override
     public float getAbsoluteHeight() {
-        return StringTools.charSizeY();
+        if (this.body != null) {
+            return this.body.getSizeY();
+        }
+        return this.size * 1.2f;
     }
 
     public String getValue() {

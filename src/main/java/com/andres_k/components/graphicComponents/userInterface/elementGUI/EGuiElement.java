@@ -9,10 +9,19 @@ public enum EGuiElement {
     LOAD_GUI("LOAD_GUI"),
     HOME_GUI("HOME_GUI"),
     GAME_GUI("GAME_GUI"),
+    SELECT_GUI("SELECT_GUI"),
 
     LOAD_BAR("LOAD_BAR", LOAD_GUI.getValue()),
     LOADING_EMPTY("LOADING_EMPTY", LOAD_GUI.getValue()),
-    LOADING_FULL("LOADING_FULL", LOAD_GUI.getValue());
+    LOADING_FULL("LOADING_FULL", LOAD_GUI.getValue()),
+
+    MENU("MENU", HOME_GUI.getValue()),
+    BUTTON_PLAY_SOLO("BUTTON_PLAY_SOLO", HOME_GUI.getValue()),
+    BUTTON_PLAY_VERSUS("BUTTON_PLAY_VERSUS", HOME_GUI.getValue()),
+    BUTTON_PLAY_MULTI("BUTTON_PLAY_MULTI", HOME_GUI.getValue()),
+    BUTTON_SETTING("BUTTON_SETTING", HOME_GUI.getValue()),
+
+    LOADING("LOADING", SELECT_GUI.getValue());
 
     private final String value;
     private final String type;

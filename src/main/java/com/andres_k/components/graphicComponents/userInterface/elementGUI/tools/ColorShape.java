@@ -36,6 +36,13 @@ public abstract class ColorShape {
 
     public abstract ColorShape cloneIt();
 
+    public ColorShape cloneAndDecalFrom(float x, float y) {
+        ColorShape shape = this.cloneIt();
+
+        shape.setPosition(shape.getMinX() + x, shape.getMinY() + y);
+        return shape;
+    }
+
     // GETTERS
 
     public float getMaxX() {
@@ -105,4 +112,9 @@ public abstract class ColorShape {
     }
 
     public abstract void setSizes(float sizeX, float sizeY);
+
+    @Override
+    public String toString() {
+        return "[" + this.getMinX() + ", " + this.getMinY() + "] (" + this.getBody().getWidth() + ", " + this.getBody().getHeight() + ")";
+    }
 }

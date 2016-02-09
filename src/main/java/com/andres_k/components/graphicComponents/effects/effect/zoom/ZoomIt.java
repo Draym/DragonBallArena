@@ -3,7 +3,6 @@ package com.andres_k.components.graphicComponents.effects.effect.zoom;
 import com.andres_k.components.graphicComponents.effects.ImageConfiguration;
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
-import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.MathTools;
 import org.newdawn.slick.Graphics;
 
@@ -62,7 +61,7 @@ public class ZoomIt extends Effect {
         conf.x -= (((conf.imageSizeX * this.current) - conf.imageSizeX) / 2);
         conf.y -= (((conf.imageSizeY * this.current) - conf.imageSizeY) / 2);
         conf.scale = this.current;
-        Console.write("conf: " + conf);
+     //   Console.write("conf: " + conf);
         return true;
     }
 }

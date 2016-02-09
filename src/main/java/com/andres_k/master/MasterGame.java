@@ -5,12 +5,13 @@ import com.andres_k.components.controllers.ScoreData;
 import com.andres_k.components.eventComponent.input.InputData;
 import com.andres_k.components.graphicComponents.graphic.Windows;
 import com.andres_k.components.networkComponents.networkGame.NetworkController;
-import com.andres_k.components.soundComponents.MusicController;
-import com.andres_k.components.soundComponents.SoundController;
+import com.andres_k.components.resourceComponent.sounds.MusicController;
+import com.andres_k.components.resourceComponent.sounds.SoundController;
 import com.andres_k.utils.configs.ConfigPath;
 import com.andres_k.utils.configs.CurrentUser;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
+import com.andres_k.utils.tools.ColorTools;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
@@ -25,7 +26,8 @@ public class MasterGame {
     public MasterGame() throws SlickException, JSONException {
         SoundController.init();
         MusicController.init();
-
+        ColorTools.init();
+        
         InputData.init(ConfigPath.input);
         ScoreData.init(ConfigPath.score);
         CurrentUser.init("player", "player", "ally");

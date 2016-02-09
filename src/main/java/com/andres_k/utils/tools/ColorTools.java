@@ -23,6 +23,12 @@ public class ColorTools {
 
         SOFT_BLACK,
 
+        GUI_GREY,
+        GUI_RED,
+        GUI_ORANGE,
+        GUI_BLUE,
+        GUI_BLUE_LIGHT,
+
         FULL_TRANSPARENT_WHITE
     }
 
@@ -38,13 +44,20 @@ public class ColorTools {
         colors.put(Colors.TRANSPARENT_GREEN, new Color(0f, 1f, 0f, 0.5f));
         colors.put(Colors.TRANSPARENT_BLUE, new Color(0f, 0.8f, 1f, 0.5f));
         colors.put(Colors.TRANSPARENT_YELLOW, new Color(1f, 1f, 0f, 0.5f));
+
+        colors.put(Colors.GUI_GREY, new Color(130, 130, 130));
+        colors.put(Colors.GUI_RED, new Color(210, 55, 53));
+        colors.put(Colors.GUI_ORANGE, new Color(255, 225, 125));
+        colors.put(Colors.GUI_BLUE, new Color(102, 200, 255));
+        colors.put(Colors.GUI_BLUE_LIGHT, new Color(204, 239, 255));
     }
 
     public static Color get(Colors color) {
-        if (colors == null) {
-            init();
+        if (colors.containsKey(color)) {
+            return colors.get(color);
+        } else {
+            return Color.black;
         }
-        return colors.get(color);
     }
 
     public static boolean compareColor(Color color, Colors type) {

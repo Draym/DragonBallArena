@@ -29,5 +29,10 @@ public enum ETaskType {
     //Game move
     MOVE,
     GRAVITY,
-    STATIC
+    STATIC,
+
+    //Switch Screen
+    TO_SELECT_SOLO,
+    TO_SELECT_VERSUS,
+    TO_SELECT_MULTI
 }

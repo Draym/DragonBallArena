@@ -4,7 +4,7 @@ import com.andres_k.components.controllers.ScoreData;
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.gameComponents.collisions.CollisionResult;
 import com.andres_k.components.gameComponents.gameObject.objects.Player;
-import com.andres_k.components.gameComponents.resources.ResourceManager;
+import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;

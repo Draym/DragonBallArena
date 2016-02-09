@@ -1,12 +1,12 @@
 package com.andres_k.components.controllers;
 
-import com.andres_k.components.gameComponents.resources.ResourceManager;
 import com.andres_k.components.graphicComponents.background.EBackground;
 import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
 import com.andres_k.components.graphicComponents.effects.EffectFactory;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
-import com.andres_k.components.soundComponents.ESound;
-import com.andres_k.components.soundComponents.SoundController;
+import com.andres_k.components.resourceComponent.resources.ResourceManager;
+import com.andres_k.components.resourceComponent.sounds.ESound;
+import com.andres_k.components.resourceComponent.sounds.SoundController;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
@@ -19,7 +19,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Observable;
 
 /**
@@ -71,7 +70,7 @@ public class LoadController extends WindowController {
                 this.loadCompleted = ResourceManager.get().initialise(index);
                 CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.LOAD_GUI_LoadingBar, new Tuple<>(ETaskType.CUT, "body", ResourceManager.get().getPercentInitialised())));
                 Console.write("index {" + this.index + "} -> " + (this.loadCompleted ? "loadCompleted" : "running") + " " + ResourceManager.get().getPercentInitialised() + "%\n");
-            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | JSONException e) {
+            } catch (Exception e) {
                 throw new SlickException(e.getMessage());
             }
             ++this.index;

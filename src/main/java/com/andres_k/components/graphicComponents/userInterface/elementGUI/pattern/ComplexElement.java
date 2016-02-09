@@ -14,14 +14,18 @@ import java.util.List;
  * Created by andres_k on 01/02/2016.
  */
 public class ComplexElement extends GuiElement {
-    private List<GuiElement> items;
+    protected List<GuiElement> items;
 
     public ComplexElement(ColorShape container, boolean activated) {
         this(ELocation.UNKNOWN.getId(), container, activated);
     }
 
     public ComplexElement(String id, ColorShape container, boolean activated) {
-        super(EGuiType.COMPLEX, id, container, activated);
+        this(EGuiType.COMPLEX, id, container, activated);
+    }
+
+    protected ComplexElement(EGuiType type, String id, ColorShape container, boolean activated) {
+        super(type, id, container, activated);
         this.items = new ArrayList<>();
     }
 
@@ -41,6 +45,12 @@ public class ComplexElement extends GuiElement {
     }
 
     @Override
+    public void clear() {
+        super.clear();
+        this.clearItems();
+    }
+
+    @Override
     public Object doTask(Object task) {
         Object result;
 
@@ -55,27 +65,29 @@ public class ComplexElement extends GuiElement {
         this.items.forEach(GuiElement::update);
     }
 
+    @Override
     public void draw(Graphics g) {
         if (this.activated) {
-            for (GuiElement item : this.items) {
-                item.draw(g, this.getBody().getMinX(), this.getBody().getMinY());
-            }
+            this.draw(g, 0, 0);
         }
     }
 
+    @Override
     public void draw(Graphics g, float decalX, float decalY) {
         if (this.activated) {
-            ColorShape container = this.body.cloneIt();
-            container.setPosition(container.getMinX() + decalX, container.getMaxY() + decalY);
+            this.body.draw(g);
+
             for (GuiElement item : this.items) {
-                item.draw(g, container);
+                item.draw(g, this.body.getMinX() + decalX, this.body.getMinY() + decalY);
             }
         }
     }
 
     @Override
-    public void draw(Graphics g, ColorShape container) {
+    public void draw(Graphics g, ColorShape body) {
         if (this.activated) {
+            body.draw(g);
+            ColorShape container = body.cloneAndDecalFrom(this.body.getMinX(), this.body.getMinY());
             for (GuiElement item : this.items) {
                 item.draw(g, container);
             }
@@ -99,7 +111,7 @@ public class ComplexElement extends GuiElement {
     public boolean isOnFocus(float x, float y) {
         this.focused = false;
         if (this.activated) {
-            this.items.stream().filter(item -> item.isOnFocus(x, y)).forEach(item -> this.focused = true);
+            this.items.stream().filter(item -> item.isOnFocus(x - this.getBody().getMinX(), y - this.getBody().getMinY())).forEach(item -> this.focused = true);
         }
         return this.focused;
     }
@@ -107,8 +119,8 @@ public class ComplexElement extends GuiElement {
     @Override
     public boolean isOnClick(float x, float y) {
         if (this.activated) {
-            for (GuiElement item : this.items) {
-                if (item.isOnClick(x, y)) {
+            for (int i = this.items.size() - 1; i >= 0; --i) {
+                if (this.items.get(i).isOnClick(x - this.getBody().getMinX(), y - this.getBody().getMinY())) {
                     return true;
                 }
             }
@@ -145,6 +157,7 @@ public class ComplexElement extends GuiElement {
         return false;
     }
 
+    // MODIFIER
     public void addItem(GuiElement item) {
         if (item != null) {
             this.items.add(item);
@@ -167,10 +180,11 @@ public class ComplexElement extends GuiElement {
         }
     }
 
-    public void deleteItems() {
+    public void clearItems() {
         this.items.clear();
     }
 
+    // GETTERS
     public List<GuiElement> getItems() {
         return this.items;
     }

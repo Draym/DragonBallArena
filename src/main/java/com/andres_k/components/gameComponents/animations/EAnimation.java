@@ -10,6 +10,9 @@ public enum EAnimation {
     IDLE(true),
     EXPLODE(false),
 
+    //BUTTON
+    ON_FOCUS(true),
+
     // MOVE
     RUSH(true),
     RUN(true),

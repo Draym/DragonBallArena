@@ -36,6 +36,10 @@ public abstract class GuiElement implements Observer {
 
     public abstract void leave();
 
+    public void clear() {
+        this.leave();
+    }
+
     public void update() {
     }
 
@@ -77,14 +81,22 @@ public abstract class GuiElement implements Observer {
     }
 
     public boolean isOnClick(float x, float y) {
-        return this.activated && this.isOnFocus(x, y);
+        this.turnOn = false;
+        if (this.activated) {
+            this.turnOn = this.isOnFocus(x, y);
+        }
+        return this.turnOn;
     }
 
     public boolean isActivated() {
         return this.activated;
     }
 
-    public boolean isFocused() {
+    public boolean isAlive() {
+        return true;
+    }
+
+    public final boolean isFocused() {
         return this.focused;
     }
 
@@ -92,11 +104,11 @@ public abstract class GuiElement implements Observer {
         return this.body;
     }
 
-    public String getId() {
+    public final String getId() {
         return this.id;
     }
 
-    public EGuiType getType() {
+    public final EGuiType getType() {
         return this.type;
     }
 
@@ -128,10 +140,14 @@ public abstract class GuiElement implements Observer {
     }
 
     public float getAbsoluteWidth() {
+        if (this.body == null)
+            return 0;
         return this.body.getMaxX() - this.body.getMinX();
     }
 
     public float getAbsoluteHeight() {
+        if (this.body == null)
+            return 0;
         return this.body.getMaxY() - this.body.getMinY();
     }
 

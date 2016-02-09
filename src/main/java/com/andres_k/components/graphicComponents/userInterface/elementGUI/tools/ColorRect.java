@@ -24,7 +24,7 @@ public class ColorRect extends ColorShape {
 
     @Override
     public ColorShape cloneIt() {
-        return new ColorRect((Rectangle) this.body, this.color);
+        return new ColorRect(new Rectangle(this.body.getMinX(), this.body.getMinY(), this.body.getWidth(), this.body.getHeight()), this.color);
     }
 
     @Override

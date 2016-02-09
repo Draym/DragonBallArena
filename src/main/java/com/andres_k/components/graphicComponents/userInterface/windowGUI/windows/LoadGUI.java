@@ -1,6 +1,6 @@
 package com.andres_k.components.graphicComponents.userInterface.windowGUI.windows;
 
-import com.andres_k.components.gameComponents.resources.ResourceManager;
+import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.ImageElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.ComplexElement;

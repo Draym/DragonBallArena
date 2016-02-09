@@ -18,7 +18,7 @@ public class Button extends Element {
     private Element content;
     private TaskComponent task;
 
-    protected Button(Element element, TaskComponent task) {
+    public Button(Element element, TaskComponent task) {
         super(EGuiType.BUTTON, element.getId(), element.isActivated());
         this.task = task;
         this.content = element;
@@ -124,10 +124,7 @@ public class Button extends Element {
 
     @Override
     public boolean isOnFocus(float x, float y) {
-        this.focused = false;
-        if (this.activated) {
-            this.focused = this.content.isOnFocus(x, y);
-        }
+        this.focused = this.content.isOnFocus(x, y);
         return focused;
     }
 
@@ -138,7 +135,7 @@ public class Button extends Element {
             CentralTaskManager.get().sendRequest(this.task);
             this.turnOn = true;
         }
-        return turnOn;
+        return this.turnOn;
     }
 
     // SETTERS
