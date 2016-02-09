@@ -26,33 +26,11 @@ public class WindowHome extends WindowBasedGame {
     }
 
     @Override
-    public void initContents() throws SlickException {
-        if (this.needContentsInit) {
-            try {
-                this.controller.init();
-            } catch (JSONException | NoSuchMethodException e) {
-                throw new SlickException(e.getMessage());
-            }
-            this.gui.init();
-            this.needContentsInit = false;
-        }
-    }
-
-    @Override
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+        this.initBeforeEnter();
+
         GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getWLowSizeX(), WindowConfig.getWLowSizeY(), false);
-        this.initContents();
-
-        this.container.setTargetFrameRate(60);
-        this.container.setShowFPS(GlobalVariable.showFps);
-        this.container.setAlwaysRender(false);
-        this.container.setVSync(false);
-
-        this.delta = 0;
-
         MusicController.loop(ESound.BACKGROUND_HOME);
-        this.gui.enter();
-        this.controller.enter();
     }
 
 

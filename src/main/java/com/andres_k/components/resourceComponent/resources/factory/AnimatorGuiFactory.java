@@ -30,9 +30,9 @@ public class AnimatorGuiFactory extends AnimatorFactory {
         AnimatorController animatorController = new AnimatorController();
 
         if (index == ESprites.LOAD_BAR) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.guiIMG + "/Load" + "/loadingBar.png"));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Load" + "/loadingBar.png"));
         } else if (index == ESprites.LOADING_EMPTY) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.guiIMG + "/Load" + "/loadingEmpty.png"));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Load" + "/loadingEmpty.png"));
         }
         return animatorController;
     }
@@ -41,19 +41,19 @@ public class AnimatorGuiFactory extends AnimatorFactory {
         AnimatorController animatorController = new AnimatorController();
 
         if (index == ESprites.MENU) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.guiIMG + "/Home" + "/menu.png"));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/menu.png"));
         } else if (index == ESprites.BUTTON_PLAY_SOLO) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.guiIMG + "/Home" + "/buttonPlaySolo.png"));
-            animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createUniqueFrame(ConfigPath.guiIMG + "/Home" + "/buttonPlaySoloLight.png"));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/buttonPlaySolo.png"));
+            animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/buttonPlaySoloLight.png"));
         } else if (index == ESprites.BUTTON_PLAY_VERSUS) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.guiIMG + "/Home" + "/buttonPlayVersus.png"));
-            animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createUniqueFrame(ConfigPath.guiIMG + "/Home" + "/buttonPlayVersusLight.png"));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/buttonPlayVersus.png"));
+            animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/buttonPlayVersusLight.png"));
         } else if (index == ESprites.BUTTON_PLAY_MULTI) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.guiIMG + "/Home" + "/buttonPlayMulti.png"));
-            animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createUniqueFrame(ConfigPath.guiIMG + "/Home" + "/buttonPlayMultiLight.png"));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/buttonPlayMulti.png"));
+            animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/buttonPlayMultiLight.png"));
         } else if (index == ESprites.BUTTON_SETTING) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.guiIMG + "/Home" + "/buttonSetting.png"));
-            animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createUniqueFrame(ConfigPath.guiIMG + "/Home" + "/buttonSettingLight.png"));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/buttonSetting.png"));
+            animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/buttonSettingLight.png"));
         }
         return animatorController;
     }
@@ -68,7 +68,7 @@ public class AnimatorGuiFactory extends AnimatorFactory {
         AnimatorController animatorController = new AnimatorController();
 
         if (index == ESprites.LOADING) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.guiIMG + "/Select" + "/loading.png", 400, 95), EAnimation.IDLE.isLoop(), 0, 2, 0, 1, new int[]{200, 200}));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_gui + "/Select" + "/loading.png", 400, 95), EAnimation.IDLE.isLoop(), 0, 2, 0, 1, new int[]{200, 200}));
         }
         return animatorController;
     }

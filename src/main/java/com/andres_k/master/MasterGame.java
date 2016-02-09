@@ -28,8 +28,8 @@ public class MasterGame {
         MusicController.init();
         ColorTools.init();
         
-        InputData.init(ConfigPath.input);
-        ScoreData.init(ConfigPath.score);
+        InputData.init(ConfigPath.config_input);
+        ScoreData.init(ConfigPath.config_score);
         CurrentUser.init("player", "player", "ally");
 
         this.windows = new Windows("DragonBallArena");

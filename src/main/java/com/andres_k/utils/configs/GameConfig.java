@@ -9,6 +9,7 @@ import java.util.ArrayList;
  */
 public class GameConfig {
 
+    public static int maxFps = 60;
     public static long timeLoop = 30;
     public static long currentTimeLoop = 30;
 

@@ -26,6 +26,9 @@ public enum ETaskType {
     //others
     UPGRADE_SCORE,
 
+    //Sound
+    PLAY_SOUND,
+
     //Game move
     MOVE,
     GRAVITY,

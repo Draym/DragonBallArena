@@ -1,12 +1,10 @@
 package com.andres_k.components.graphicComponents.graphic.windows;
 
-import com.andres_k.components.controllers.GameController;
-import com.andres_k.components.graphicComponents.graphic.EnumWindow;
+import com.andres_k.components.controllers.SelectSoloController;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
-import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.GameGUI;
+import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.SelectSoloGui;
 import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.resourceComponent.sounds.MusicController;
-import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.LocalTaskManager;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
@@ -16,14 +14,13 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
- * Created by andres_k on 08/07/2015.
+ * Created by andres_k on 09/02/2016.
  */
-public class WindowGame extends WindowBasedGame {
-
-    public WindowGame(int idWindow, LocalTaskManager windowsTask) throws JSONException {
-        super(idWindow, new GameController(), new GameGUI());
-        windowsTask.register(ELocation.GAME_CONTROLLER.getId(), this.controller);
-        windowsTask.register(ELocation.GAME_GUI.getId(), this.gui);
+public class WindowSelectSolo extends WindowBasedGame {
+    public WindowSelectSolo(int idWindow, LocalTaskManager windowsTask) throws JSONException, SlickException {
+        super(idWindow, new SelectSoloController(), new SelectSoloGui());
+        this.gui.register(windowsTask);
+        this.controller.register(windowsTask);
     }
 
     @Override
@@ -31,19 +28,12 @@ public class WindowGame extends WindowBasedGame {
         this.initBeforeEnter();
 
         GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getWBigSizeX(), WindowConfig.getWBigSizeY(), false);
-        MusicController.loop(ESound.BACKGROUND_GAME);
+        MusicController.loop(ESound.BACKGROUND_SELECT);
     }
-
 
     @Override
     public void leave(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        MusicController.stop(ESound.BACKGROUND_GAME);
+        MusicController.stop(ESound.BACKGROUND_SELECT);
         this.clean();
-    }
-
-    @Override
-    public void quit() {
-        this.clean();
-        this.stateWindow.enterState(EnumWindow.HOME.getValue());
     }
 }

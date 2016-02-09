@@ -9,15 +9,20 @@ import com.andres_k.utils.configs.ConfigPath;
 public enum ESound {
     NOTHING(""),
     //musics
-    BACKGROUND_LOAD(ConfigPath.musics + "/DBZ_theme.ogg"),
-    BACKGROUND_HOME(ConfigPath.musics + "/DBZ_namek.ogg"),
-    BACKGROUND_MULTI(ConfigPath.musics + "/DBZ_embraceBlueSky.ogg"),
-    BACKGROUND_CREDITS(ConfigPath.musics + "/DBZ_capsuleObtain.ogg"),
-    BACKGROUND_SELECT(ConfigPath.musics + "/DBZ_overTheGalaxy.ogg"),
-    BACKGROUND_GAME(ConfigPath.musics + "/backgroundGame.ogg"),
+    BACKGROUND_LOAD(ConfigPath.sound_musics + "/DBZ_theme.ogg"),
+    BACKGROUND_HOME(ConfigPath.sound_musics + "/DBZ_namek.ogg"),
+    BACKGROUND_MULTI(ConfigPath.sound_musics + "/DBZ_embraceBlueSky.ogg"),
+    BACKGROUND_CREDITS(ConfigPath.sound_musics + "/DBZ_capsuleObtain.ogg"),
+    BACKGROUND_SELECT(ConfigPath.sound_musics + "/DBZ_overTheGalaxy.ogg"),
+    BACKGROUND_GAME(ConfigPath.sound_musics + "/backgroundGame.ogg"),
 
-    //sounds
-    EFFECT_FLASH(ConfigPath.effects + "/DBZ_effect_flash.ogg");
+    //soundsGame
+    EFFECT_FLASH(ConfigPath.sound_effects + "/DBZ_effect_flash.ogg"),
+
+    //soundsMenu
+    BUTTON_CLICK(ConfigPath.sound_gui + "/buttonClick.wav"),
+    BUTTON_FOCUS(ConfigPath.sound_gui + "/buttonFocus.wav"),
+    VALIDATE(ConfigPath.sound_gui + "/validate");
 
     private String path;
     private EGameObject object;

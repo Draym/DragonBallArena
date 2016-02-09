@@ -1,26 +1,28 @@
 package com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.buttons;
 
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.EStatus;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorShape;
-import com.andres_k.components.taskComponent.CentralTaskManager;
+import com.andres_k.components.resourceComponent.sounds.ESound;
+import com.andres_k.components.resourceComponent.sounds.SoundController;
 import com.andres_k.components.taskComponent.ETaskType;
-import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+
+import java.util.List;
 
 /**
  * Created by andres_k on 01/02/2016.
  */
 public class Button extends Element {
     private Element content;
-    private TaskComponent task;
 
-    public Button(Element element, TaskComponent task) {
+    public Button(Element element, List<Pair<EStatus, Object>> tasks) {
         super(EGuiType.BUTTON, element.getId(), element.isActivated());
-        this.task = task;
+        this.tasks.addAll(tasks);
         this.content = element;
     }
 
@@ -79,11 +81,16 @@ public class Button extends Element {
 
         if ((result = super.doTask(task)) != null) {
             return result;
-        } else if (task instanceof Pair && ((Pair) task).getV1() == ETaskType.GETTER && ((Pair) task).getV2().equals("target")) {
-            return this.task.getTarget();
+        } else if (task instanceof Pair && ((Pair) task).getV1() instanceof ETaskType) {
+            Pair<ETaskType, Object> object = (Pair<ETaskType, Object>) task;
+
+            if (object.getV1() == ETaskType.PLAY_SOUND && object.getV2() instanceof ESound) {
+                SoundController.play((ESound) object.getV2());
+            }
         } else {
             return this.content.doTask(task);
         }
+        return null;
     }
 
     @Override
@@ -124,16 +131,22 @@ public class Button extends Element {
 
     @Override
     public boolean isOnFocus(float x, float y) {
-        this.focused = this.content.isOnFocus(x, y);
+        boolean result = this.content.isOnFocus(x, y);
+
+        if (result) {
+            this.OnFocus();
+        }
+        this.focused = result;
         return focused;
     }
 
     @Override
     public boolean isOnClick(float x, float y) {
-        this.turnOn = false;
-        if (this.activated && this.content.isOnFocus(x, y)) {
-            CentralTaskManager.get().sendRequest(this.task);
+        if (this.activated && this.focused) {
+            this.OnClick();
             this.turnOn = true;
+        } else {
+            this.turnOn = false;
         }
         return this.turnOn;
     }

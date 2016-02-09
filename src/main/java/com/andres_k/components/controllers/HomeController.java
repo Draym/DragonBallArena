@@ -1,16 +1,14 @@
 package com.andres_k.components.controllers;
 
-import com.andres_k.components.resourceComponent.resources.ResourceManager;
-import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
 import com.andres_k.components.graphicComponents.background.EBackground;
+import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
+import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.tools.Console;
 import org.codehaus.jettison.json.JSONException;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import java.util.Observable;
@@ -38,18 +36,7 @@ public class HomeController extends WindowController {
     }
 
     @Override
-    public void renderWindow(Graphics g) {
-        this.backgroundManager.draw(g);
-    }
-
-    @Override
-    public void update(GameContainer gameContainer) throws SlickException {
-        this.backgroundManager.update();
-    }
-
-    @Override
     public void keyPressed(int key, char c) {
-
     }
 
     @Override
@@ -77,7 +64,7 @@ public class HomeController extends WindowController {
                         this.stateWindow.enterState(((EnumWindow) received.getTask()).getValue());
                     }
                 } else if (received.getTask() instanceof ETaskType) {
-                    if (received.getTask() == ETaskType.EVENT) {
+                    if (received.getTask() == ETaskType.EXIT) {
                         this.window.quit();
                     }
                 }

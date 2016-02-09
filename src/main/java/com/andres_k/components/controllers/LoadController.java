@@ -16,7 +16,6 @@ import com.andres_k.utils.tools.Console;
 import org.codehaus.jettison.json.JSONException;
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import java.util.Observable;
@@ -54,11 +53,6 @@ public class LoadController extends WindowController {
         this.backgroundManager.playEffect(EBackground.LOGO, 1, EffectFactory.zoomIt(12, 0.5f, 1.2f));
 //        this.backgroundManager.playEffect(EBackground.LOGO, 2, EffectFactory.createShakeScreen(160, 3, 80));
         SoundController.play(ESound.EFFECT_FLASH);
-    }
-
-    @Override
-    public void renderWindow(Graphics g) {
-        this.backgroundManager.draw(g);
     }
 
     @Override

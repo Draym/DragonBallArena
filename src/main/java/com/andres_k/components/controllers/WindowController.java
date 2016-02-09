@@ -34,9 +34,13 @@ public abstract class WindowController implements Observer {
 
     public abstract void init() throws SlickException, JSONException, NoSuchMethodException;
 
-    public abstract void renderWindow(Graphics g);
+    public void renderWindow(Graphics g) {
+        this.backgroundManager.draw(g);
+    }
 
-    public abstract void update(GameContainer gameContainer) throws SlickException;
+    public void update(GameContainer gameContainer) throws SlickException {
+        this.backgroundManager.update();
+    }
 
     public abstract void keyPressed(int key, char c);
 

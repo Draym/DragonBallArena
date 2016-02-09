@@ -4,6 +4,8 @@ import com.andres_k.components.controllers.WindowController;
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.UserInterface;
 import com.andres_k.utils.configs.GameConfig;
+import com.andres_k.utils.configs.GlobalVariable;
+import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -33,9 +35,6 @@ public abstract class WindowBasedGame extends BasicGameState {
         this.gui = gui;
     }
 
-    public abstract void initContents() throws SlickException;
-
-
     public void quit() {
         this.clean();
     }
@@ -50,6 +49,31 @@ public abstract class WindowBasedGame extends BasicGameState {
         return idWindow;
     }
 
+    public void initContents() throws SlickException {
+        if (this.needContentsInit) {
+            try {
+                this.controller.init();
+            } catch (JSONException | NoSuchMethodException e) {
+                throw new SlickException(e.getMessage());
+            }
+            this.gui.init();
+            this.needContentsInit = false;
+        }
+    }
+
+    protected void initBeforeEnter() throws SlickException {
+        this.initContents();
+
+        this.delta = 0;
+        this.gui.enter();
+        this.controller.enter();
+
+        this.container.setTargetFrameRate(GameConfig.maxFps);
+        this.container.setShowFPS(GlobalVariable.showFps);
+        this.container.setAlwaysRender(false);
+        this.container.setVSync(true);
+    }
+
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.container = gameContainer;
@@ -58,6 +82,12 @@ public abstract class WindowBasedGame extends BasicGameState {
         this.controller.setStateWindow(this.stateWindow);
         this.controller.setWindow(this);
     }
+
+    @Override
+    public abstract void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException;
+
+    @Override
+    public abstract void leave(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException;
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
