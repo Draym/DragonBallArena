@@ -3,7 +3,7 @@ package com.andres_k.components.graphicComponents.userInterface.windowGUI.window
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.ImageElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.ComplexElement;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorRect;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.UserInterface;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.ELocation;

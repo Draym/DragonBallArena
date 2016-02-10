@@ -2,7 +2,7 @@ package com.andres_k.components.graphicComponents.effects.effect.flash;
 
 import com.andres_k.components.graphicComponents.effects.ImageConfiguration;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorShape;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 
 /**
  * Created by andres_k on 26/01/2016.

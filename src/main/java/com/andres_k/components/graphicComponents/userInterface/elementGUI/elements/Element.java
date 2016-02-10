@@ -2,7 +2,7 @@ package com.andres_k.components.graphicComponents.userInterface.elementGUI.eleme
 
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorShape;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.SlickException;
 

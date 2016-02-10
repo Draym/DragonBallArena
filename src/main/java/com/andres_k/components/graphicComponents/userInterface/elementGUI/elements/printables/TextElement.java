@@ -2,7 +2,7 @@ package com.andres_k.components.graphicComponents.userInterface.elementGUI.eleme
 
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorShape;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.StringTimer;
 import com.andres_k.components.resourceComponent.fonts.EFont;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;

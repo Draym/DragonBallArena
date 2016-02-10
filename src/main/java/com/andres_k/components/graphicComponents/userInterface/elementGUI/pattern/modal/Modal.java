@@ -3,7 +3,7 @@ package com.andres_k.components.graphicComponents.userInterface.elementGUI.patte
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorShape;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;

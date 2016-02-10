@@ -6,7 +6,7 @@ import com.andres_k.components.graphicComponents.effects.effect.flash.FlashShape
 import com.andres_k.components.graphicComponents.effects.effect.hide.HideIt;
 import com.andres_k.components.graphicComponents.effects.effect.shake.ShakeScreen;
 import com.andres_k.components.graphicComponents.effects.effect.zoom.ZoomIt;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorShape;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 
 import java.util.UUID;
 

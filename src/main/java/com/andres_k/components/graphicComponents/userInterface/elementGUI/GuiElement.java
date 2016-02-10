@@ -1,7 +1,7 @@
 package com.andres_k.components.graphicComponents.userInterface.elementGUI;
 
 import com.andres_k.components.eventComponent.input.EInput;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorShape;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.components.taskComponent.utils.TaskComponent;

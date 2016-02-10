@@ -44,7 +44,7 @@ public class SoundController {
     }
 
     public static String play(ESound value) {
-        if (!needInit) {
+        if (!needInit && value != ESound.NOTHING) {
             try {
                 Sound sound = new Sound(value.getPath());
                 SoundElement soundElement = new SoundElement(sound, value);

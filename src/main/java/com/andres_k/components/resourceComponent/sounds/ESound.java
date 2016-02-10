@@ -22,7 +22,8 @@ public enum ESound {
     //soundsMenu
     BUTTON_CLICK(ConfigPath.sound_gui + "/buttonClick.wav"),
     BUTTON_FOCUS(ConfigPath.sound_gui + "/buttonFocus.wav"),
-    VALIDATE(ConfigPath.sound_gui + "/validate");
+    VALIDATE(ConfigPath.sound_gui + "/validate.wav"),
+    UNVALIDATE(ConfigPath.sound_gui + "/unValidate.wav");
 
     private String path;
     private EGameObject object;

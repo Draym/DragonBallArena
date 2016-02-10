@@ -4,7 +4,7 @@ import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorShape;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Graphics;

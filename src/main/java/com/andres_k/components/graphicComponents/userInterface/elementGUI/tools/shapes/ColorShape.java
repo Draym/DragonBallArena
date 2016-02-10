@@ -1,4 +1,4 @@
-package com.andres_k.components.graphicComponents.userInterface.elementGUI.tools;
+package com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;

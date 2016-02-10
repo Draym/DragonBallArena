@@ -4,8 +4,8 @@ import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorRect;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorShape;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.utils.stockage.Pair;
@@ -26,12 +26,16 @@ public class ImageElement extends Element {
         this(ELocation.UNKNOWN.getId(), null, animatorController, PositionInBody.LEFT_UP, activated);
     }
 
-    public ImageElement(String id, ColorShape body, PositionInBody position, boolean activated) {
-        this(id, body, null, position, activated);
-    }
-
     public ImageElement(String id, AnimatorController animatorController, boolean activated) {
         this(id, null, animatorController, PositionInBody.LEFT_UP, activated);
+    }
+
+    public ImageElement(ColorShape body, boolean activated) {
+        this(ELocation.UNKNOWN.getId(), body, null, PositionInBody.LEFT_UP, activated);
+    }
+
+    public ImageElement(String id, ColorShape body, boolean activated) {
+        this(id, body, null, PositionInBody.LEFT_UP, activated);
     }
 
     public ImageElement(ColorShape body, AnimatorController animatorController, PositionInBody position, boolean activated) {

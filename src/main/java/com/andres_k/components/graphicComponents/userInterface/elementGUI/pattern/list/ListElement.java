@@ -3,8 +3,8 @@ package com.andres_k.components.graphicComponents.userInterface.elementGUI.patte
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.ComplexElement;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorRect;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorShape;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.geom.Rectangle;

@@ -3,7 +3,7 @@ package com.andres_k.components.graphicComponents.userInterface.elementGUI.eleme
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EStatus;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorShape;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.resourceComponent.sounds.SoundController;
 import com.andres_k.components.taskComponent.ETaskType;

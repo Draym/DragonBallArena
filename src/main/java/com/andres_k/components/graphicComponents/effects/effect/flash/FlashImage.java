@@ -2,7 +2,7 @@ package com.andres_k.components.graphicComponents.effects.effect.flash;
 
 import com.andres_k.components.graphicComponents.effects.ImageConfiguration;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorRect;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
 import com.andres_k.utils.tools.ColorTools;
 import org.newdawn.slick.geom.Rectangle;
 

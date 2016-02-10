@@ -32,10 +32,14 @@ public class ElementFactory {
     }
 
     public static List<Pair<EStatus, Object>> createBasicButtonTasks(ELocation local, ELocation target, Object task) {
+        return createBasicButtonTasks(local, target, task, ESound.BUTTON_CLICK, ESound.BUTTON_FOCUS);
+    }
+
+    public static List<Pair<EStatus, Object>> createBasicButtonTasks(ELocation local, ELocation target, Object task, ESound onClick, ESound onFocus) {
         List<Pair<EStatus, Object>> component = new ArrayList<>();
         component.add(new Pair<>(EStatus.ON_CLICK, new TaskComponent(local, target, task)));
-        component.add(new Pair<>(EStatus.ON_CLICK, new Pair<>(ETaskType.PLAY_SOUND, ESound.BUTTON_CLICK)));
-        component.add(new Pair<>(EStatus.ON_FOCUS, new Pair<>(ETaskType.PLAY_SOUND, ESound.BUTTON_FOCUS)));
+        component.add(new Pair<>(EStatus.ON_CLICK, new Pair<>(ETaskType.PLAY_SOUND, onClick)));
+        component.add(new Pair<>(EStatus.ON_FOCUS, new Pair<>(ETaskType.PLAY_SOUND, onFocus)));
         return component;
     }
 
