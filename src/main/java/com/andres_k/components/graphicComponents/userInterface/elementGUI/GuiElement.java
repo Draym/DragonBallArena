@@ -45,6 +45,16 @@ public abstract class GuiElement implements Observer {
 
     public abstract void leave();
 
+    public void activate() {
+        this.activated = true;
+    }
+
+    public void deactivate() {
+        this.activated = false;
+        this.turnOn = false;
+        this.focused = false;
+    }
+
     public void clear() {
         this.leave();
     }
@@ -72,11 +82,17 @@ public abstract class GuiElement implements Observer {
             ETaskType action = (ETaskType) task;
 
             if (action == ETaskType.START_ACTIVITY && !this.isActivated()) {
-                this.setActivated(true);
-                this.OnCreate();
+                this.activate();
             } else if (action == ETaskType.STOP_ACTIVITY && this.isActivated()) {
-                this.setActivated(false);
+                this.deactivate();
+            } else if (action == ETaskType.ON_CREATE) {
+                this.OnCreate();
+            } else if (action == ETaskType.ON_KILL) {
                 this.OnKill();
+            } else if (action == ETaskType.ON_FOCUS) {
+                this.OnFocus();
+            } else if (action == ETaskType.ON_CLICK) {
+                this.OnClick();
             } else if (action == ETaskType.GETTER) {
                 return this;
             }
@@ -239,11 +255,14 @@ public abstract class GuiElement implements Observer {
     }
 
     protected final void OnCreate() {
-        this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_CREATE).forEach(task -> this.doTask(task.getV2()));
+        if (!this.isActivated()) {
+            this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_CREATE).forEach(task -> this.doTask(task.getV2()));
+        }
     }
 
     protected final void OnKill() {
-        this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_KILL).forEach(task -> this.doTask(task.getV2()));
+        if (this.isActivated()) {
+            this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_KILL).forEach(task -> this.doTask(task.getV2()));
+        }
     }
-
 }

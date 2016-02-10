@@ -36,12 +36,24 @@ public class Button extends Element {
         this.content.leave();
     }
 
-    // FUNCTIONS
     @Override
     public void leave() {
         this.content.leave();
     }
 
+    @Override
+    public void activate() {
+        super.activate();
+        this.content.activate();
+    }
+
+    @Override
+    public void deactivate() {
+        super.deactivate();
+        this.content.deactivate();
+    }
+
+    // FUNCTIONS
     @Override
     public void draw(Graphics g) {
         if (this.activated) {

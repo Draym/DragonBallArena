@@ -45,6 +45,18 @@ public class ComplexElement extends GuiElement {
     }
 
     @Override
+    public void activate() {
+        super.activate();
+        this.items.forEach(GuiElement::activate);
+    }
+
+    @Override
+    public void deactivate() {
+        super.deactivate();
+        this.items.forEach(GuiElement::deactivate);
+    }
+
+    @Override
     public void clear() {
         super.clear();
         this.clearItems();

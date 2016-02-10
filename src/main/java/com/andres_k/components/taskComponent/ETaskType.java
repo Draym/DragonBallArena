@@ -17,6 +17,10 @@ public enum ETaskType {
     CLEAR_ACTIVITY,
     START_TIMER,
     STOP_TIMER,
+    ON_CREATE,
+    ON_KILL,
+    ON_FOCUS,
+    ON_CLICK,
 
     // ACTION
     START,

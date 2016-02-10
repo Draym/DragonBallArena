@@ -4,7 +4,6 @@ import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ColorShape;
-import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -27,12 +26,24 @@ public class Modal extends GuiElement {
 
     @Override
     public void enter() {
-        this.content.clear();
+        this.content.enter();
     }
 
     @Override
     public void leave() {
         this.content.leave();
+    }
+
+    @Override
+    public void activate() {
+        super.activate();
+        this.content.activate();
+    }
+
+    @Override
+    public void deactivate() {
+        super.deactivate();
+        this.content.deactivate();
     }
 
     @Override
@@ -68,10 +79,8 @@ public class Modal extends GuiElement {
     public boolean event(int key, char c, EInput type) {
         if (key == Input.KEY_ESCAPE && type == EInput.KEY_RELEASED) {
             if (!this.activated) {
-                Console.write("EventOnCreate");
                 this.OnCreate();
             } else {
-                Console.write("EventOnKill");
                 this.OnKill();
             }
         }

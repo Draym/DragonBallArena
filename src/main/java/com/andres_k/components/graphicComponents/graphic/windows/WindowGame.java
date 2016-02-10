@@ -6,7 +6,6 @@ import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.GameGUI;
 import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.resourceComponent.sounds.MusicController;
-import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.LocalTaskManager;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
@@ -22,8 +21,8 @@ public class WindowGame extends WindowBasedGame {
 
     public WindowGame(int idWindow, LocalTaskManager windowsTask) throws JSONException {
         super(idWindow, new GameController(), new GameGUI());
-        windowsTask.register(ELocation.GAME_CONTROLLER.getId(), this.controller);
-        windowsTask.register(ELocation.GAME_GUI.getId(), this.gui);
+        this.gui.register(windowsTask);
+        this.controller.register(windowsTask);
     }
 
     @Override

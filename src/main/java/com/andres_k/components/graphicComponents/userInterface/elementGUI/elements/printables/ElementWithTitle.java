@@ -61,6 +61,20 @@ public class ElementWithTitle extends Element {
     }
 
     @Override
+    public void activate() {
+        super.activate();
+        this.title.activate();
+        this.content.activate();
+    }
+
+    @Override
+    public void deactivate() {
+        super.deactivate();
+        this.title.deactivate();
+        this.content.deactivate();
+    }
+
+    @Override
     public void draw(Graphics g) {
         if (this.activated) {
             this.draw(g, 0, 0);
