@@ -67,4 +67,8 @@ public class StringTools {
         }
         return result.toString();
     }
+
+    public static String formatIt(String s1, int length1, String s2, int length2, String s3) {
+        return (s1 + duplicateString(" ", length1 - s1.length()) + s2 + duplicateString(" ", length2 - s3.length()) + s3);
+    }
 }

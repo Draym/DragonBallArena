@@ -17,6 +17,7 @@ public class SelectMultiGui extends UserInterface {
     @Override
     public void init() throws SlickException {
 
+        this.initElements();
     }
 
     @Override

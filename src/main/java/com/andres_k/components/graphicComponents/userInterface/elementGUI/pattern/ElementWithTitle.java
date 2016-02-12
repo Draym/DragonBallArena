@@ -19,8 +19,18 @@ public class ElementWithTitle extends GuiElement {
         this(ELocation.UNKNOWN.getId(), container, title, content, activated);
     }
 
+
+
     public ElementWithTitle(Element title, GuiElement content, boolean activated) {
-        this(ELocation.UNKNOWN.getId(), content.getBody(), title, content, activated);
+        this(ELocation.UNKNOWN.getId(), title, content, activated);
+    }
+
+    public ElementWithTitle(String id, Element title, GuiElement content, boolean activated) {
+        super(EGuiType.PRINTABLE, id, content.getBody().cloneIt(), activated);
+        this.body.setColor(null);
+        this.title = title;
+        this.content = content;
+        this.content.getBody().setPosition(0, 0);
     }
 
     public ElementWithTitle(String id, ColorShape container, Element title, GuiElement content, boolean activated) {
@@ -71,22 +81,19 @@ public class ElementWithTitle extends GuiElement {
     @Override
     public void draw(Graphics g, float decalX, float decalY) {
         if (this.activated) {
-            if (this.body != null) {
-                this.body.draw(g);
-
-                this.content.draw(g, this.body.cloneAndDecalFrom(decalX, decalY));
-                this.title.draw(g, this.body.cloneAndDecalFrom(decalX, decalY));
-            }
+            this.body.draw(g);
+            this.content.draw(g, this.body.cloneAndDecalFrom(decalX, decalY));
+            this.title.draw(g, this.body.cloneAndDecalFrom(decalX, decalY));
         }
     }
 
     @Override
     public void draw(Graphics g, ColorShape body) {
         if (this.activated) {
-
-            body.draw(g);
-            this.content.draw(g, body.cloneAndDecalFrom(this.body.getMinX(), this.body.getMinY()));
-            this.title.draw(g, body.cloneAndDecalFrom(this.body.getMinX(), this.body.getMinY()));
+            ColorShape container = body.cloneAndDecalFrom(this.body.getMinX(), this.body.getMinY());
+            container.draw(g);
+            this.content.draw(g, container);
+            this.title.draw(g, container);
         }
     }
 

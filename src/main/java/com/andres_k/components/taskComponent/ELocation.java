@@ -41,6 +41,7 @@ public enum ELocation {
     HOME_GUI_Menu("Menu", HOME_GUI.getId()),
     HOME_GUI_Settings("Settings", HOME_GUI.getId()),
     HOME_GUI_Controls("Controls", HOME_GUI.getId()),
+    HOME_GUI_Controls_player("Controls_Player", HOME_GUI.getId()),
     HOME_GUI_Volumes("ControlVolume", HOME_GUI.getId());
 
     private String name;

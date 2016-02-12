@@ -60,7 +60,7 @@ public class TextElement extends Element {
         item = item.deriveFont(this.size);
         this.font = new TrueTypeFont(item, true);
 
-        if (this.body != null && this.body.getSizeX() == 0 && this.body.getSizeY() == 0) {
+        if (this.body != null && this.body.getSizeX() <= 0 && this.body.getSizeY() <= 0) {
             this.body.setSizes(textTimer.getAbsoluteWidth(this.size), this.textTimer.getAbsoluteHeight(this.size));
         }
     }

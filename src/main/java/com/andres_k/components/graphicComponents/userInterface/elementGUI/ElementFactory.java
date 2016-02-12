@@ -6,6 +6,7 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.elemen
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.TextElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.ElementWithTitle;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.StringTimer;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
 import com.andres_k.components.resourceComponent.fonts.EFont;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.resourceComponent.sounds.ESound;
@@ -15,6 +16,7 @@ import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,15 @@ public class ElementFactory {
     }
 
     public static ElementWithTitle createButton(String text, Color color, int size, EFont font, EGuiElement animator, List<Pair<EStatus, Object>> tasks) throws SlickException {
-        return new ElementWithTitle(createText(text, color, size, font, 30, 0), new Button(new ImageElement(ResourceManager.get().getGuiAnimator(animator), true), tasks), true);
+        return createButton(text, color, size, font, animator, 0, 0, tasks);
+    }
+
+    public static ElementWithTitle createButton(String text, Color color, int size, EFont font, EGuiElement animator, float decalX, float decalY, List<Pair<EStatus, Object>> tasks) throws SlickException {
+        return createTitleElement(text, color, font, size, 30, 0, new Button(new ImageElement(new ColorRect(new Rectangle(decalX, decalY, 0, 0)), ResourceManager.get().getGuiAnimator(animator), true), tasks));
+    }
+
+    public static ElementWithTitle createTitleElement(String text, Color color, EFont font, int size, float decalX, float decalY, GuiElement element) throws SlickException {
+        return new ElementWithTitle(createText(text, color, size, font, decalX, decalY), element, true);
     }
 
     public static List<Pair<EStatus, Object>> createBasicButtonTasks(ELocation local, ELocation target, Object task) {

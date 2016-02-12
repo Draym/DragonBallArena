@@ -24,6 +24,7 @@ public enum EGuiElement {
     BUTTON_CLOSE("BUTTON_CLOSE", BUTTON.getValue()),
 
 
+    TAB_STATUS("TAB_STATUS", COMPONENT.getValue()),
     SLIDER("SLIDER", COMPONENT.getValue()),
     SLIDER_VALUE("SLIDER_VALUE", COMPONENT.getValue()),
     LOAD_BAR("LOAD_BAR", COMPONENT.getValue()),

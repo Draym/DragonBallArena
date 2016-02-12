@@ -6,7 +6,6 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.patter
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.taskComponent.ELocation;
-import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.geom.Rectangle;
 
 import java.util.List;
@@ -15,15 +14,15 @@ import java.util.List;
  * Created by andres_k on 08/02/2016.
  */
 public class ListElement extends ComplexElement {
-    protected int marginX;
-    protected int marginY;
+    protected float marginX;
+    protected float marginY;
     protected boolean changed;
 
-    public ListElement(ColorShape body, int marginX, int marginY, boolean activated) {
+    public ListElement(ColorShape body, float marginX, float marginY, boolean activated) {
         this(ELocation.UNKNOWN.getId(), body, marginX, marginY, activated);
     }
 
-    public ListElement(String id, ColorShape body, int marginX, int marginY, boolean activated) {
+    public ListElement(String id, ColorShape body, float marginX, float marginY, boolean activated) {
         super(EGuiType.LIST, id, body, activated);
         this.changed = false;
         this.marginX = marginX;
@@ -83,10 +82,8 @@ public class ListElement extends ComplexElement {
                 if (!tooManyItems) {
                     element.setActivated(true);
                     element.setBody(new ColorRect(new Rectangle(currentX, currentY, element.getAbsoluteWidth(), element.getAbsoluteHeight())));
-                    Console.write("add Item");
                 } else {
                     element.setActivated(false);
-                    Console.write("mask Item");
                 }
                 currentY += element.getAbsoluteHeight() + this.marginY;
 

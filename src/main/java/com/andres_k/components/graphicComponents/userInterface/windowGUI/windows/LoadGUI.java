@@ -29,12 +29,13 @@ public class LoadGUI extends UserInterface {
 
         ComplexElement loadingBar = new ComplexElement(new ColorRect(new Rectangle(446, 630, 400, 95)), true);
         loadingBar.addItem(new ImageElement(ResourceManager.get().getGuiAnimator(EGuiElement.PANEL1), true));
+
         ImageElement loader = new ImageElement(ELocation.LOAD_GUI_LoadingBar.getId(), ResourceManager.get().getGuiAnimator(EGuiElement.LOAD_BAR), true);
         this.taskManager.register(ELocation.LOAD_GUI_LoadingBar.getId(), loader);
         loader.doTask(new Tuple<>(ETaskType.CUT, "body", 0.0f));
         loadingBar.addItem(loader);
         this.elements.add(loadingBar);
-
+        this.initElements();
     }
 
     @Override

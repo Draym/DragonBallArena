@@ -48,7 +48,7 @@ public class ImageElement extends Element {
         if (this.animatorController != null) {
             if (this.body == null) {
                 this.body = new ColorRect(new Rectangle(0, 0, this.animatorController.currentSizeAnimation().getV1(), this.animatorController.currentSizeAnimation().getV2()));
-            } else if (this.body.getSizeX() == 0 && this.body.getSizeY() == 0) {
+            } else if (this.body.getSizeX() <= 0 && this.body.getSizeY() <= 0) {
                 this.body.setSizes(this.animatorController.currentSizeAnimation().getV1(), this.animatorController.currentSizeAnimation().getV2());
             }
         }
@@ -109,7 +109,7 @@ public class ImageElement extends Element {
                 body.setPosition(body.getMinX() + this.body.getMinX(), body.getMinY() + this.body.getMinY());
             }
             body.draw(g);
-            if (this.animatorController != null) {
+            if (this.animatorController != null && this.animatorController.isPrintable()) {
                 Pair<Float, Float> position = this.getChoicePosition(body);
                 this.drawCurrentImage(g, position.getV1(), position.getV2());
             }
@@ -138,13 +138,7 @@ public class ImageElement extends Element {
         if ((result = super.doTask(task)) != null) {
             return result;
         }
-        if (task instanceof ETaskType) {
-            if (task == ETaskType.START_ACTIVITY) {
-                this.start();
-            } else if (task == ETaskType.STOP_ACTIVITY) {
-                this.stop();
-            }
-        } else if (task instanceof Pair && ((Pair) task).getV1() instanceof ETaskType) {
+       if (task instanceof Pair && ((Pair) task).getV1() instanceof ETaskType) {
             if (((Pair) task).getV1() == ETaskType.START_TIMER) {
                 this.animatorController.updateAnimator(false, false);
                 this.animatorController.startTimer((Long) ((Pair) task).getV2());
@@ -180,7 +174,6 @@ public class ImageElement extends Element {
                     this.animatorController.setCurrentAnimationIndex((Integer) value);
                 }
             }
-
         }
         return null;
     }

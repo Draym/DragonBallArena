@@ -17,6 +17,7 @@ public enum ESprites {
     CONTAINER(8),
 
     // GUI_COMPONENT
+    TAB_STATUS(COMPONENT.getIndex()),
     LOAD_BAR(COMPONENT.getIndex()),
     SLIDER(COMPONENT.getIndex()),
     SLIDER_VALUE(COMPONENT.getIndex()),

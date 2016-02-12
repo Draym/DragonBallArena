@@ -5,6 +5,7 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiTy
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.taskComponent.ELocation;
+import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Graphics;
 
 import java.util.ArrayList;
@@ -88,8 +89,8 @@ public class ComplexElement extends GuiElement {
     @Override
     public void draw(Graphics g, ColorShape body) {
         if (this.activated) {
-            body.draw(g);
             ColorShape container = body.cloneAndDecalFrom(this.body.getMinX(), this.body.getMinY());
+            container.draw(g);
             for (GuiElement item : this.items) {
                 item.draw(g, container);
             }

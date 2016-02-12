@@ -56,7 +56,6 @@ public abstract class GuiElement implements Observer {
     }
 
     public void clear() {
-        this.leave();
     }
 
     public void update() {
@@ -76,8 +75,7 @@ public abstract class GuiElement implements Observer {
     }
 
     public Object doTask(Object task) {
-        Console.write("ID: " + this.id + "  , Task: " + task + " , activity:" + this.isActivated());
-
+        Console.debug("ID: " + this.id + "  , Task: " + task + " , activity:" + this.isActivated());
         if (task instanceof ETaskType) {
             ETaskType action = (ETaskType) task;
 
@@ -97,7 +95,6 @@ public abstract class GuiElement implements Observer {
                 return this;
             }
         } else if (task instanceof TaskComponent) {
-            Console.write("send request");
             CentralTaskManager.get().sendRequest((TaskComponent) task);
         }
         return null;
@@ -224,7 +221,6 @@ public abstract class GuiElement implements Observer {
     // OBSERVER
     @Override
     public void update(Observable o, Object arg) {
-        Console.write("Element task: " + arg);
         if (arg instanceof TaskComponent) {
             this.doTask(((TaskComponent) arg).getTask());
         } else {

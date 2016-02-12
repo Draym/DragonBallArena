@@ -12,11 +12,11 @@ public abstract class ColorShape {
     protected Color color;
     protected boolean printable;
 
-    public ColorShape(Shape body, Color color) {
+    protected ColorShape(Shape body, Color color) {
         this(body, color, true);
     }
 
-    public ColorShape(Shape body, Color color, boolean printable) {
+    protected ColorShape(Shape body, Color color, boolean printable) {
         this.body = body;
         this.color = color;
         this.printable = printable;

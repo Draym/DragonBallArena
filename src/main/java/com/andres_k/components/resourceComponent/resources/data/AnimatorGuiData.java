@@ -59,6 +59,7 @@ public class AnimatorGuiData extends DataManager {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.LOADING_ANIM), EGuiElement.LOADING_ANIM);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.SLIDER), EGuiElement.SLIDER);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.SLIDER_VALUE), EGuiElement.SLIDER_VALUE);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.TAB_STATUS), EGuiElement.TAB_STATUS);
     }
 
     private void addAnimator(AnimatorController animatorController, EGuiElement type) {

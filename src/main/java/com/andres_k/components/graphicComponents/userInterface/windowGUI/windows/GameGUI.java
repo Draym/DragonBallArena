@@ -17,6 +17,8 @@ public class GameGUI extends UserInterface {
 
     @Override
     public void init() throws SlickException {
+
+        this.initElements();
     }
 
     @Override
