@@ -52,7 +52,7 @@ public class LoadController extends WindowController {
         this.backgroundManager.playEffect(EBackground.LOGO, 0, EffectFactory.hideIt(1000));
         this.backgroundManager.playEffect(EBackground.LOGO, 1, EffectFactory.zoomIt(10, 0.1f, 1.3f));
         this.backgroundManager.playEffect(EBackground.LOGO, 2, EffectFactory.createShakeScreen(160, 4, 30));
-        SoundController.play(ESound.EFFECT_FLASH);
+        SoundController.get().play(ESound.EFFECT_FLASH);
     }
 
     @Override
@@ -65,6 +65,7 @@ public class LoadController extends WindowController {
                 CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.LOAD_GUI_LoadingBar, new Tuple<>(ETaskType.CUT, "body", ResourceManager.get().getPercentInitialised())));
                 Console.write("index {" + this.index + "} -> " + (this.loadCompleted ? "loadCompleted" : "running") + " " + (ResourceManager.get().getPercentInitialised() * 100f)+ "%\n");
             } catch (Exception e) {
+                e.printStackTrace();
                 throw new SlickException(e.getMessage());
             }
             ++this.index;

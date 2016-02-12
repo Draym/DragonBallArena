@@ -29,6 +29,7 @@ public enum ETaskType {
 
     //others
     UPGRADE_SCORE,
+    CHANGE_VOLUME,
 
     //Sound
     PLAY_SOUND,
@@ -36,10 +37,5 @@ public enum ETaskType {
     //Game move
     MOVE,
     GRAVITY,
-    STATIC,
-
-    //Switch Screen
-    TO_SELECT_SOLO,
-    TO_SELECT_VERSUS,
-    TO_SELECT_MULTI
+    STATIC
 }

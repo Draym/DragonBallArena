@@ -57,7 +57,7 @@ public class WindowLoad extends WindowBasedGame {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                MusicController.loop(ESound.BACKGROUND_LOAD);
+                MusicController.get().loop(ESound.BACKGROUND_LOAD);
             }
         }, 700);
         this.controller.setStateWindow(this.stateWindow);
@@ -75,7 +75,7 @@ public class WindowLoad extends WindowBasedGame {
 
     @Override
     public void leave(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        MusicController.stop(ESound.BACKGROUND_LOAD);
+        MusicController.get().stop(ESound.BACKGROUND_LOAD);
         this.clean();
     }
 

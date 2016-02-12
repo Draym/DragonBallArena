@@ -30,13 +30,13 @@ public class WindowGame extends WindowBasedGame {
         this.initBeforeEnter();
 
         GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getWBigSizeX(), WindowConfig.getWBigSizeY(), false);
-        MusicController.loop(ESound.BACKGROUND_GAME);
+        MusicController.get().loop(ESound.BACKGROUND_GAME);
     }
 
 
     @Override
     public void leave(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        MusicController.stop(ESound.BACKGROUND_GAME);
+        MusicController.get().stop(ESound.BACKGROUND_GAME);
         this.clean();
     }
 

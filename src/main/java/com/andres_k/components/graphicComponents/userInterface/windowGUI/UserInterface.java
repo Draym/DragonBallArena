@@ -27,13 +27,13 @@ public abstract class UserInterface implements Observer {
 
     public abstract void init() throws SlickException;
 
-    public abstract void initOnEnter();
+    public abstract void initOnEnter() throws SlickException;
 
     protected void initElements() {
         this.elements.forEach(GuiElement::init);
     }
 
-    public void enter() {
+    public void enter() throws SlickException {
         this.initOnEnter();
         this.elements.forEach(GuiElement::enter);
     }
@@ -82,7 +82,7 @@ public abstract class UserInterface implements Observer {
         return false;
     }
 
-    GuiElement getElementById(String id) {
+    public GuiElement getElementById(String id) {
         for (GuiElement guiElement : this.elements) {
             GuiElement tmp = guiElement.getFromId(id);
             if (tmp != null) {

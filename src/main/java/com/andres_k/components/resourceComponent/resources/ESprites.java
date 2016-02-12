@@ -12,26 +12,30 @@ public enum ESprites {
     MAP_BACKGROUND(5),
 
     // GUI
-    LOAD_GUI(6),
-    HOME_GUI(7),
-    GAME_GUI(8),
-    SELECT_GUI(9),
+    BUTTON(6),
+    COMPONENT(7),
+    CONTAINER(8),
 
-    // LoadGui
-    LOAD_BAR(LOAD_GUI.getIndex()),
-    LOADING_EMPTY(LOAD_GUI.getIndex()),
+    // GUI_COMPONENT
+    LOAD_BAR(COMPONENT.getIndex()),
+    SLIDER(COMPONENT.getIndex()),
+    SLIDER_VALUE(COMPONENT.getIndex()),
+    LOADING_ANIM(COMPONENT.getIndex()),
 
-    //HomeGui
-    MENU(HOME_GUI.getIndex()),
-    SETTING(HOME_GUI.getIndex()),
-    BUTTON_PLAY_SOLO(HOME_GUI.getIndex()),
-    BUTTON_PLAY_VERSUS(HOME_GUI.getIndex()),
-    BUTTON_PLAY_MULTI(HOME_GUI.getIndex()),
-    BUTTON_SETTING(HOME_GUI.getIndex()),
-    BUTTON_CONTROLS(HOME_GUI.getIndex()),
+    // GUI_CONTAINER
+    PANEL1(CONTAINER.getIndex()),
+    PANEL2(CONTAINER.getIndex()),
+    PANEL3(CONTAINER.getIndex()),
+    PANEL4(CONTAINER.getIndex()),
 
-    //SelectGui
-    LOADING(SELECT_GUI.getIndex()),
+    // GUI_BUTTON
+    BUTTON_PLAY_SOLO(BUTTON.getIndex()),
+    BUTTON_PLAY_VERSUS(BUTTON.getIndex()),
+    BUTTON_PLAY_MULTI(BUTTON.getIndex()),
+    BUTTON_SETTING(BUTTON.getIndex()),
+    BUTTON_CONTROLS(BUTTON.getIndex()),
+    BUTTON_SLIDER(BUTTON.getIndex()),
+    BUTTON_CLOSE(BUTTON.getIndex()),
 
     //gamePlayer
     GOKU(PLAYER.getIndex()),

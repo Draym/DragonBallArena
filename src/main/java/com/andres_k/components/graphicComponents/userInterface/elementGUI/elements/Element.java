@@ -13,6 +13,7 @@ public abstract class Element extends GuiElement {
     protected PositionInBody position;
 
     public static enum PositionInBody {
+        NONE,
         LEFT_UP, MIDDLE_UP, RIGHT_UP,
         LEFT_MID, MIDDLE_MID, RIGHT_MID,
         LEFT_DOWN, MIDDLE_DOWN, RIGHT_DOWN

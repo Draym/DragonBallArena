@@ -28,12 +28,12 @@ public class WindowSelectMulti extends WindowBasedGame {
         this.initBeforeEnter();
 
         GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getWBigSizeX(), WindowConfig.getWBigSizeY(), false);
-        MusicController.loop(ESound.BACKGROUND_SELECT);
+        MusicController.get().loop(ESound.BACKGROUND_SELECT);
     }
 
     @Override
     public void leave(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        MusicController.stop(ESound.BACKGROUND_SELECT);
+        MusicController.get().stop(ESound.BACKGROUND_SELECT);
         this.clean();
     }
 }

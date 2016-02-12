@@ -6,8 +6,6 @@ import com.andres_k.components.graphicComponents.background.EBackground;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
 import com.andres_k.components.resourceComponent.fonts.EFont;
 import com.andres_k.components.resourceComponent.resources.data.*;
-import com.andres_k.components.resourceComponent.sounds.MusicController;
-import com.andres_k.components.resourceComponent.sounds.SoundController;
 import com.andres_k.utils.tools.Console;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
@@ -17,7 +15,7 @@ import java.awt.*;
 /**
  * Created by andres_k on 20/01/2016.
  */
-public class ResourceManager {
+public final class ResourceManager {
     private AnimatorGameData gameData;
     private AnimatorGuiData guiData;
     private AnimatorBackgroundData backgroundData;
@@ -32,8 +30,6 @@ public class ResourceManager {
         this.soundData = new SoundData();
         this.musicData = new MusicData();
         this.fontData = new FontData();
-        MusicController.init();
-        SoundController.init();
     }
 
     private static class SingletonHolder {

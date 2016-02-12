@@ -27,7 +27,7 @@ public class ColorCircle extends ColorShape {
     }
 
     @Override
-    public void setSizes(float radius, float unusable){
-        ((Circle)this.body).setRadius(radius);
+    public void setSizes(float sizeX, float sizeY){
+        ((Circle)this.body).setRadius(sizeX / 2);
     }
 }

@@ -14,66 +14,71 @@ import org.newdawn.slick.SpriteSheet;
 public class AnimatorGuiFactory extends AnimatorFactory {
     @Override
     public AnimatorController getAnimator(ESprites index) throws SlickException, JSONException, NoSuchMethodException {
-        if (index.getIndex() == ESprites.LOAD_GUI.getIndex()) {
-            return this.getLoadGuiAnimator(index);
-        } else if (index.getIndex() == ESprites.HOME_GUI.getIndex()) {
-            return this.getHomeGuiAnimator(index);
-        } else if (index.getIndex() == ESprites.GAME_GUI.getIndex()) {
-            return this.getGameGuiAnimator(index);
-        } else if (index.getIndex() == ESprites.SELECT_GUI.getIndex()) {
-            return this.getSelectGuiAnimator(index);
+        if (index.getIndex() == ESprites.BUTTON.getIndex()) {
+            return this.getGuiButtonAnimator(index);
+        } else if (index.getIndex() == ESprites.COMPONENT.getIndex()) {
+            return this.getGuiComponentAnimator(index);
+        } else if (index.getIndex() == ESprites.CONTAINER.getIndex()) {
+            return this.getGuiContainerAnimator(index);
         }
         return null;
     }
 
-    public AnimatorController getLoadGuiAnimator(ESprites index) throws SlickException {
+    public AnimatorController getGuiButtonAnimator(ESprites index) throws SlickException {
+        AnimatorController animatorController = new AnimatorController();
+
+        if (index == ESprites.BUTTON_PLAY_SOLO) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/button" + "/buttonPlaySolo.png"));
+            animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/button" + "/buttonPlaySoloLight.png"));
+        } else if (index == ESprites.BUTTON_PLAY_VERSUS) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/button" + "/buttonPlayVersus.png"));
+            animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/button" + "/buttonPlayVersusLight.png"));
+        } else if (index == ESprites.BUTTON_PLAY_MULTI) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/button" + "/buttonPlayMulti.png"));
+            animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/button" + "/buttonPlayMultiLight.png"));
+        } else if (index == ESprites.BUTTON_SETTING) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/button" + "/buttonSetting.png"));
+            animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/button" + "/buttonSettingLight.png"));
+        } else if (index == ESprites.BUTTON_CONTROLS) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/button" + "/buttonControls.png"));
+            animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/button" + "/buttonControlsLight.png"));
+        } else if (index == ESprites.BUTTON_SLIDER) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/button" + "/buttonSlider.png"));
+        } else if (index == ESprites.BUTTON_CLOSE) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/button" + "/buttonClose.png"));
+            animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/button" + "/buttonCloseLight.png"));
+        }
+
+        return animatorController;
+    }
+
+    public AnimatorController getGuiComponentAnimator(ESprites index) throws SlickException {
         AnimatorController animatorController = new AnimatorController();
 
         if (index == ESprites.LOAD_BAR) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Load" + "/loadingBar.png"));
-        } else if (index == ESprites.LOADING_EMPTY) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Load" + "/loadingEmpty.png"));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/component" + "/loadingBar.png"));
+        } else if (index == ESprites.LOADING_ANIM) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_gui + "/component" + "/loading.png", 400, 95), EAnimation.IDLE.isLoop(), 0, 2, 0, 1, new int[]{200, 200}));
+        } else if (index == ESprites.SLIDER) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/component" + "/slider.png"));
+        } else if (index == ESprites.SLIDER_VALUE) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/component" + "/sliderValue.png"));
         }
         return animatorController;
     }
 
-    public AnimatorController getHomeGuiAnimator(ESprites index) throws SlickException {
+
+    public AnimatorController getGuiContainerAnimator(ESprites index) throws SlickException {
         AnimatorController animatorController = new AnimatorController();
 
-        if (index == ESprites.MENU) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/menu.png"));
-        } else if (index == ESprites.SETTING) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/settings.png"));
-        } else if (index == ESprites.BUTTON_PLAY_SOLO) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/buttonPlaySolo.png"));
-            animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/buttonPlaySoloLight.png"));
-        } else if (index == ESprites.BUTTON_PLAY_VERSUS) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/buttonPlayVersus.png"));
-            animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/buttonPlayVersusLight.png"));
-        } else if (index == ESprites.BUTTON_PLAY_MULTI) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/buttonPlayMulti.png"));
-            animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/buttonPlayMultiLight.png"));
-        } else if (index == ESprites.BUTTON_SETTING) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/buttonSetting.png"));
-            animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/buttonSettingLight.png"));
-        } else if (index == ESprites.BUTTON_CONTROLS) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/buttonControls.png"));
-            animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/Home" + "/buttonControlsLight.png"));
-        }
-        return animatorController;
-    }
-
-    public AnimatorController getGameGuiAnimator(ESprites index) {
-        AnimatorController animatorController = new AnimatorController();
-
-        return animatorController;
-    }
-
-    public AnimatorController getSelectGuiAnimator(ESprites index) throws SlickException {
-        AnimatorController animatorController = new AnimatorController();
-
-        if (index == ESprites.LOADING) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_gui + "/Select" + "/loading.png", 400, 95), EAnimation.IDLE.isLoop(), 0, 2, 0, 1, new int[]{200, 200}));
+        if (index == ESprites.PANEL1) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/container" + "/panel1.png"));
+        } else if (index == ESprites.PANEL2) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/container" + "/panel2.png"));
+        } else if (index == ESprites.PANEL3) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/container" + "/panel3.png"));
+        } else if (index == ESprites.PANEL4) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/container" + "/panel4.png"));
         }
         return animatorController;
     }

@@ -8,6 +8,9 @@ import com.andres_k.utils.configs.GlobalVariable;
 public enum ELocation {
     UNKNOWN("UNKNOWN"), MASTER("MASTER"),
 
+    //tools
+    MUSIC_CONTROLLER("MUSIC_CONTROLLER", MASTER.getId()), SOUND_CONTROLLER("SOUND_CONTROLLER", MASTER.getId()),
+
     //category
     WINDOWS("WINDOWS", MASTER.getId()), SERVER("SERVER", MASTER.getId()),
 
@@ -22,6 +25,7 @@ public enum ELocation {
     SELECT_SOLO_CONTROLLER("SELECT_SOLO_CONTROLLER", WINDOWS.getId()),
     SELECT_VERSUS_CONTROLLER("SELECT_VERSUS_CONTROLLER", WINDOWS.getId()),
     SELECT_MULTI_CONTROLLER("SELECT_MULTI_CONTROLLER", WINDOWS.getId()),
+
     // gui
     HOME_GUI("HOME_GUI", WINDOWS.getId()),
     GAME_GUI("GAME_GUI", WINDOWS.getId()),
@@ -35,7 +39,9 @@ public enum ELocation {
 
     //HOME_GUI
     HOME_GUI_Menu("Menu", HOME_GUI.getId()),
-    HOME_GUI_Settings("Settings", HOME_GUI.getId());
+    HOME_GUI_Settings("Settings", HOME_GUI.getId()),
+    HOME_GUI_Controls("Controls", HOME_GUI.getId()),
+    HOME_GUI_Volumes("ControlVolume", HOME_GUI.getId());
 
     private String name;
     private String parent;

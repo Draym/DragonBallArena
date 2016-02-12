@@ -50,6 +50,14 @@ public class StringTimer {
         return this.activatedTimer.isActivated();
     }
 
+    public float getAbsoluteWidth(float size) {
+        return (this.getValue().length() * size) / 1.40f;
+    }
+
+    public float getAbsoluteHeight(float size) {
+        return size * 1.2f;
+    }
+
     // SETTERS
     public void setValue(String value) {
         this.value = new StringBuffer(value);

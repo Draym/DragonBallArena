@@ -6,24 +6,28 @@ package com.andres_k.components.graphicComponents.userInterface.elementGUI;
 public enum EGuiElement {
     /* Admin */
     NULL("NULL"),
-    LOAD_GUI("LOAD_GUI"),
-    HOME_GUI("HOME_GUI"),
-    GAME_GUI("GAME_GUI"),
-    SELECT_GUI("SELECT_GUI"),
+    BUTTON("BUTTON"),
+    CONTAINER("CONTAINER"),
+    COMPONENT("COMPONENT"),
 
-    LOAD_BAR("LOAD_BAR", LOAD_GUI.getValue()),
-    LOADING_EMPTY("LOADING_EMPTY", LOAD_GUI.getValue()),
-    LOADING_FULL("LOADING_FULL", LOAD_GUI.getValue()),
+    PANEL1("PANEL1", CONTAINER.getValue()),
+    PANEL2("PANEL2", CONTAINER.getValue()),
+    PANEL3("PANEL3", CONTAINER.getValue()),
+    PANEL4("PANEL4", CONTAINER.getValue()),
 
-    MENU("MENU", HOME_GUI.getValue()),
-    SETTING("SETTING", HOME_GUI.getValue()),
-    BUTTON_PLAY_SOLO("BUTTON_PLAY_SOLO", HOME_GUI.getValue()),
-    BUTTON_PLAY_VERSUS("BUTTON_PLAY_VERSUS", HOME_GUI.getValue()),
-    BUTTON_PLAY_MULTI("BUTTON_PLAY_MULTI", HOME_GUI.getValue()),
-    BUTTON_SETTING("BUTTON_SETTING", HOME_GUI.getValue()),
-    BUTTON_CONTROLS("BUTTON_CONTROLS", HOME_GUI.getValue()),
+    BUTTON_PLAY_SOLO("BUTTON_PLAY_SOLO", BUTTON.getValue()),
+    BUTTON_PLAY_VERSUS("BUTTON_PLAY_VERSUS", BUTTON.getValue()),
+    BUTTON_PLAY_MULTI("BUTTON_PLAY_MULTI", BUTTON.getValue()),
+    BUTTON_SETTING("BUTTON_SETTING", BUTTON.getValue()),
+    BUTTON_CONTROLS("BUTTON_CONTROLS", BUTTON.getValue()),
+    BUTTON_SLIDER("BUTTON_SLIDER", BUTTON.getValue()),
+    BUTTON_CLOSE("BUTTON_CLOSE", BUTTON.getValue()),
 
-    LOADING("LOADING", SELECT_GUI.getValue());
+
+    SLIDER("SLIDER", COMPONENT.getValue()),
+    SLIDER_VALUE("SLIDER_VALUE", COMPONENT.getValue()),
+    LOAD_BAR("LOAD_BAR", COMPONENT.getValue()),
+    LOADING_ANIM("LOADING_ANIM", COMPONENT.getValue());
 
     private final String value;
     private final String type;

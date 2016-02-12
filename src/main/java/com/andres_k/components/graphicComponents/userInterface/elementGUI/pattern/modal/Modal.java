@@ -78,9 +78,7 @@ public class Modal extends GuiElement {
     @Override
     public boolean event(int key, char c, EInput type) {
         if (key == Input.KEY_ESCAPE && type == EInput.KEY_RELEASED) {
-            if (!this.activated) {
-                this.OnCreate();
-            } else {
+            if (this.activated) {
                 this.OnKill();
             }
         }
@@ -117,8 +115,16 @@ public class Modal extends GuiElement {
         if (!result && this.activated && this.focused) {
             this.OnClick();
         }
-        this.turnOn = this.focused;
-        return this.turnOn;
+        this.clicked = this.focused;
+        return this.clicked;
+    }
+
+    @Override
+    public GuiElement getFromId(String id) {
+        if (this.getId().equals(id)) {
+            return this;
+        }
+        return this.content.getFromId(id);
     }
 
     @Override

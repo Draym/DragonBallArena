@@ -1,56 +1,60 @@
 package com.andres_k.components.resourceComponent.sounds;
 
+import com.andres_k.components.taskComponent.ETaskType;
+import com.andres_k.components.taskComponent.utils.TaskComponent;
+import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by andres_k on 07/07/2015.
  */
-public class SoundController {
-    private static List<SoundElement> sounds;
-    private static boolean needInit = true;
-    private static float pitch;
-    private static float volume;
-    private static float maxVolume;
+public final class SoundController implements Observer {
+   //private List<SoundElement> sounds;
+    private float pitch;
+    private float volume;
+    private float maxVolume;
 
-    public static void init() {
-        if (needInit) {
-            sounds = new ArrayList<>();
-            pitch = 1.0f;
-            volume = 1.0f;
-            maxVolume = 2.0f;
-            needInit = false;
-        }
+    public SoundController() {
+     //   this.sounds = new ArrayList<>();
+        this.pitch = 1.0f;
+        this.volume = 1.0f;
+        this.maxVolume = 1.0f;
     }
 
-    public static void clearSounds() {
-        if (!needInit) {
-            for (int i = 0; i < sounds.size(); ++i) {
-                if (!sounds.get(i).getSound().playing()) {
-                    sounds.remove(i);
-                    --i;
-                }
+    private static class SingletonHolder {
+        private final static SoundController instance = new SoundController();
+    }
+
+    public static SoundController get() {
+        return SingletonHolder.instance;
+    }
+/*
+    public void clearSounds() {
+        for (int i = 0; i < this.sounds.size(); ++i) {
+            if (!this.sounds.get(i).getSound().playing()) {
+                this.sounds.remove(i);
+                --i;
             }
         }
     }
 
-    public static void update() {
-        if (!needInit) {
-            clearSounds();
-        }
+    public void update() {
+        clearSounds();
     }
+*/
 
-    public static String play(ESound value) {
-        if (!needInit && value != ESound.NOTHING) {
+    public String play(ESound value) {
+        if (value != ESound.NOTHING) {
             try {
                 Sound sound = new Sound(value.getPath());
                 SoundElement soundElement = new SoundElement(sound, value);
                 //sounds.add(soundElement);
 
-                soundElement.getSound().play(pitch, volume);
+                soundElement.getSound().play(this.pitch, this.volume);
                 return soundElement.getId();
             } catch (SlickException e) {
                 e.printStackTrace();
@@ -59,15 +63,14 @@ public class SoundController {
         return null;
     }
 
-    public static String loop(ESound value) {
-        if (!needInit) {
+    public String loop(ESound value) {
+        if (value != ESound.NOTHING) {
             try {
                 Sound sound = new Sound(value.getPath());
-
                 SoundElement soundElement = new SoundElement(sound, value);
-                sounds.add(soundElement);
+//                this.sounds.add(soundElement);
 
-                soundElement.getSound().loop(pitch, volume);
+                soundElement.getSound().loop(this.pitch, this.volume);
                 return soundElement.getId();
             } catch (SlickException e) {
                 e.printStackTrace();
@@ -76,27 +79,39 @@ public class SoundController {
         return null;
     }
 
-    public static boolean stop(String id) {
-        if (!needInit) {
-            for (SoundElement element : sounds) {
-                if (element.getId().equals(id)) {
-                    element.getSound().stop();
-                    return true;
-                }
+    /*
+    public boolean stop(String id) {
+        for (SoundElement element : this.sounds) {
+            if (element.getId().equals(id)) {
+                element.getSound().stop();
+                return true;
             }
         }
         return false;
+    }*/
+
+    public void changeVolume(float value) {
+        this.volume = value;
     }
 
-    public static void changeVolume(float value) {
-        volume = value;
+    public float getVolume() {
+        return this.volume;
     }
 
-    public static float getVolume() {
-        return volume;
+    public float getMaxVolume() {
+        return this.maxVolume;
     }
 
-    public static float getMaxVolume() {
-        return maxVolume;
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg instanceof TaskComponent) {
+            TaskComponent task = (TaskComponent) arg;
+            if (task.getTask() instanceof Pair) {
+                if (((Pair) task.getTask()).getV1().equals(ETaskType.CHANGE_VOLUME) && ((Pair) task.getTask()).getV2() instanceof Float) {
+                    this.changeVolume((Float) ((Pair) task.getTask()).getV2());
+                }
+            }
+        }
     }
 }

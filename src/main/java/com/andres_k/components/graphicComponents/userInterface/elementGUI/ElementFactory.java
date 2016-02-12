@@ -2,9 +2,9 @@ package com.andres_k.components.graphicComponents.userInterface.elementGUI;
 
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.buttons.Button;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.ElementWithTitle;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.ImageElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.TextElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.ElementWithTitle;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.StringTimer;
 import com.andres_k.components.resourceComponent.fonts.EFont;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
@@ -23,19 +23,19 @@ import java.util.List;
  * Created by andres_k on 09/02/2016.
  */
 public class ElementFactory {
-    public static TextElement createText(String text, Color color, int size, EFont font) {
-        return new TextElement(ELocation.UNKNOWN.getId(), new StringTimer(text), color, font, size, Element.PositionInBody.MIDDLE_MID, true);
+    public static TextElement createText(String text, Color color, int size, EFont font, float decalX, float decalY) {
+        return new TextElement(new StringTimer(text), color, font, size, decalX, decalY, Element.PositionInBody.MIDDLE_MID, true);
     }
 
-    public static ElementWithTitle createButton(String text, Color color, int size, EFont font, EGuiElement button, List<Pair<EStatus, Object>> tasks) throws SlickException {
-        return new ElementWithTitle(createText(text, color, size, font), new Pair<>(30f, 0f), new Button(new ImageElement(ResourceManager.get().getGuiAnimator(button), true), tasks), true);
+    public static ElementWithTitle createButton(String text, Color color, int size, EFont font, EGuiElement animator, List<Pair<EStatus, Object>> tasks) throws SlickException {
+        return new ElementWithTitle(createText(text, color, size, font, 30, 0), new Button(new ImageElement(ResourceManager.get().getGuiAnimator(animator), true), tasks), true);
     }
 
     public static List<Pair<EStatus, Object>> createBasicButtonTasks(ELocation local, ELocation target, Object task) {
-        return createBasicButtonTasks(local, target, task, ESound.BUTTON_CLICK, ESound.BUTTON_FOCUS);
+        return createBasicButtonTasks(local, target, task, ESound.BUTTON_FOCUS, ESound.BUTTON_CLICK);
     }
 
-    public static List<Pair<EStatus, Object>> createBasicButtonTasks(ELocation local, ELocation target, Object task, ESound onClick, ESound onFocus) {
+    public static List<Pair<EStatus, Object>> createBasicButtonTasks(ELocation local, ELocation target, Object task, ESound onFocus, ESound onClick) {
         List<Pair<EStatus, Object>> component = new ArrayList<>();
         component.add(new Pair<>(EStatus.ON_CLICK, new TaskComponent(local, target, task)));
         component.add(new Pair<>(EStatus.ON_CLICK, new Pair<>(ETaskType.PLAY_SOUND, onClick)));

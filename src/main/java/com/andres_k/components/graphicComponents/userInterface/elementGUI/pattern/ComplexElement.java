@@ -77,7 +77,7 @@ public class ComplexElement extends GuiElement {
     @Override
     public void draw(Graphics g, float decalX, float decalY) {
         if (this.activated) {
-            this.body.draw(g);
+            this.body.cloneAndDecalFrom(decalX, decalY).draw(g);
 
             for (GuiElement item : this.items) {
                 item.draw(g, this.body.getMinX() + decalX, this.body.getMinY() + decalY);

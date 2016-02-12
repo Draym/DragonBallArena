@@ -1,4 +1,4 @@
-package com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables;
+package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern;
 
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
@@ -6,40 +6,27 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiEle
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.taskComponent.ELocation;
-import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 
 /**
  * Created by andres_k on 04/02/2016.
  */
-public class ElementWithTitle extends Element {
+public class ElementWithTitle extends GuiElement {
     private Element title;
     private GuiElement content;
-    private Pair<Float, Float> decalTitle;
 
-    public ElementWithTitle(Element title, Pair<Float, Float> decalTitle, GuiElement content, boolean activated) {
-        this(null, title, decalTitle, content, activated);
+    public ElementWithTitle(ColorShape container, Element title, GuiElement content, boolean activated) {
+        this(ELocation.UNKNOWN.getId(), container, title, content, activated);
     }
 
-    public ElementWithTitle(ColorShape container, Element title, Pair<Float, Float> decalTitle, GuiElement content, boolean activated) {
-        this(ELocation.UNKNOWN.getId(), container, title, decalTitle, content, activated);
+    public ElementWithTitle(Element title, GuiElement content, boolean activated) {
+        this(ELocation.UNKNOWN.getId(), content.getBody(), title, content, activated);
     }
 
-    public ElementWithTitle(String id, ColorShape container, Element title, Pair<Float, Float> decalTitle, GuiElement content, boolean activated) {
-        super(EGuiType.PRINTABLE, id, container, PositionInBody.MIDDLE_MID, activated);
+    public ElementWithTitle(String id, ColorShape container, Element title, GuiElement content, boolean activated) {
+        super(EGuiType.PRINTABLE, id, container, activated);
         this.title = title;
         this.content = content;
-        this.decalTitle = decalTitle;
-    }
-
-    @Override
-    public boolean replace(Element element) throws SlickException {
-        if (element instanceof TextElement) {
-            this.title.replace(element);
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -88,7 +75,7 @@ public class ElementWithTitle extends Element {
                 this.body.draw(g);
 
                 this.content.draw(g, this.body.cloneAndDecalFrom(decalX, decalY));
-                this.title.draw(g, this.body.cloneAndDecalFrom(decalX + this.decalTitle.getV1(), decalY + this.decalTitle.getV2()));
+                this.title.draw(g, this.body.cloneAndDecalFrom(decalX, decalY));
             }
         }
     }
@@ -99,7 +86,7 @@ public class ElementWithTitle extends Element {
 
             body.draw(g);
             this.content.draw(g, body.cloneAndDecalFrom(this.body.getMinX(), this.body.getMinY()));
-            this.title.draw(g, body.cloneAndDecalFrom(this.body.getMinX() + this.decalTitle.getV1(), this.body.getMinY() + this.decalTitle.getV2()));
+            this.title.draw(g, body.cloneAndDecalFrom(this.body.getMinX(), this.body.getMinY()));
         }
     }
 
@@ -121,12 +108,14 @@ public class ElementWithTitle extends Element {
     public GuiElement getFromId(String id) {
         if (this.getId().equals(id)) {
             return this;
-        } else if (this.title.getId().equals(id)) {
-            return this.title;
-        } else if (this.content.getId().equals(id)) {
-            return this.content;
         }
-        return null;
+        GuiElement result;
+
+        result = this.title.getFromId(id);
+        if (result == null) {
+            result = this.content.getFromId(id);
+        }
+        return result;
     }
 
     @Override
@@ -167,7 +156,7 @@ public class ElementWithTitle extends Element {
     public boolean isOnFocus(float x, float y) {
         this.focused = false;
         if (this.activated) {
-            if (this.title.isOnFocus(x - this.getBody().getMinX() - this.decalTitle.getV1(), y - this.getBody().getMinY() - this.decalTitle.getV2())) {
+            if (this.title.isOnFocus(x - this.getBody().getMinX(), y - this.getBody().getMinY())) {
                 this.focused = true;
             }
             if (this.content.isOnFocus(x - this.getBody().getMinX(), y - this.getBody().getMinY())) {
@@ -179,16 +168,16 @@ public class ElementWithTitle extends Element {
 
     @Override
     public boolean isOnClick(float x, float y) {
-        this.turnOn = false;
+        this.clicked = false;
         if (this.activated) {
-            if (this.title.isOnClick(x - this.getBody().getMinX() - this.decalTitle.getV1(), y - this.getBody().getMinY() - this.decalTitle.getV2())) {
-                this.turnOn = true;
+            if (this.title.isOnClick(x - this.getBody().getMinX(), y - this.getBody().getMinY())) {
+                this.clicked = true;
             }
             if (this.content.isOnClick(x - this.getBody().getMinX(), y - this.getBody().getMinY())) {
-                this.turnOn = true;
+                this.clicked = true;
             }
         }
-        return this.turnOn;
+        return this.clicked;
     }
 
     @Override

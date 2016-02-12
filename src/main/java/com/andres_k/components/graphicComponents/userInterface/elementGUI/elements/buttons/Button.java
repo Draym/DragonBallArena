@@ -97,7 +97,7 @@ public class Button extends Element {
             Pair<ETaskType, Object> object = (Pair<ETaskType, Object>) task;
 
             if (object.getV1() == ETaskType.PLAY_SOUND && object.getV2() instanceof ESound) {
-                SoundController.play((ESound) object.getV2());
+                SoundController.get().play((ESound) object.getV2());
             }
         } else {
             return this.content.doTask(task);

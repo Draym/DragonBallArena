@@ -14,7 +14,7 @@ public class MusicData extends DataManager {
     @Override
     public void prerequisite() throws NoSuchMethodException, SlickException, JSONException {
         this.initialiseMethods();
-        MusicController.addMusic(ESound.BACKGROUND_LOAD);
+        MusicController.get().addMusic(ESound.BACKGROUND_LOAD);
     }
 
     @Override
@@ -27,15 +27,15 @@ public class MusicData extends DataManager {
     }
 
     public void initBackgroundHome() throws NoSuchMethodException, SlickException, JSONException {
-        MusicController.addMusic(ESound.BACKGROUND_HOME);
+        MusicController.get().addMusic(ESound.BACKGROUND_HOME);
     }
     public void initBackgroundSelect() throws NoSuchMethodException, SlickException, JSONException {
-        MusicController.addMusic(ESound.BACKGROUND_SELECT);
+        MusicController.get().addMusic(ESound.BACKGROUND_SELECT);
     }
     public void initBackgroundMulti() throws NoSuchMethodException, SlickException, JSONException {
-        MusicController.addMusic(ESound.BACKGROUND_MULTI);
+        MusicController.get().addMusic(ESound.BACKGROUND_MULTI);
     }
     public void initBackgroundCredits() throws NoSuchMethodException, SlickException, JSONException {
-        MusicController.addMusic(ESound.BACKGROUND_CREDITS);
+        MusicController.get().addMusic(ESound.BACKGROUND_CREDITS);
     }
 }

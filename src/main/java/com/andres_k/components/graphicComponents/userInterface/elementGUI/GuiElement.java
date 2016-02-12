@@ -22,7 +22,7 @@ public abstract class GuiElement implements Observer {
     protected String id;
     protected boolean focused;
     protected boolean activated;
-    protected boolean turnOn;
+    protected boolean clicked;
     protected EGuiType type;
     protected ColorShape body;
 
@@ -34,7 +34,7 @@ public abstract class GuiElement implements Observer {
         this.body = body;
         this.activated = activated;
         this.focused = false;
-        this.turnOn = false;
+        this.clicked = false;
         this.tasks = new ArrayList<>();
     }
 
@@ -51,7 +51,7 @@ public abstract class GuiElement implements Observer {
 
     public void deactivate() {
         this.activated = false;
-        this.turnOn = false;
+        this.clicked = false;
         this.focused = false;
     }
 
@@ -122,8 +122,8 @@ public abstract class GuiElement implements Observer {
         if (this.activated && this.focused) {
             this.OnClick();
         }
-        this.turnOn = this.focused;
-        return this.turnOn;
+        this.clicked = this.focused;
+        return this.clicked;
     }
 
     public ColorShape getBody() {
@@ -243,7 +243,7 @@ public abstract class GuiElement implements Observer {
     }
 
     protected final void OnClick() {
-        if (!this.turnOn) {
+        if (!this.clicked) {
             this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_CLICK).forEach(task -> this.doTask(task.getV2()));
         }
     }

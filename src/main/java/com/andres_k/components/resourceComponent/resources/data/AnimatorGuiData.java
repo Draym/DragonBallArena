@@ -27,7 +27,7 @@ public class AnimatorGuiData extends DataManager {
     public void prerequisite() throws NoSuchMethodException, SlickException, JSONException {
         this.initialiseMethods();
 
-        this.addAnimator(this.animatorFactory.getAnimator(ESprites.LOADING_EMPTY), EGuiElement.LOADING_EMPTY);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.PANEL1), EGuiElement.PANEL1);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.LOAD_BAR), EGuiElement.LOAD_BAR);
     }
 
@@ -40,8 +40,9 @@ public class AnimatorGuiData extends DataManager {
     }
 
     public void initContainers() throws NoSuchMethodException, SlickException, JSONException {
-        this.addAnimator(this.animatorFactory.getAnimator(ESprites.MENU), EGuiElement.MENU);
-        this.addAnimator(this.animatorFactory.getAnimator(ESprites.SETTING), EGuiElement.SETTING);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.PANEL2), EGuiElement.PANEL2);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.PANEL3), EGuiElement.PANEL3);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.PANEL4), EGuiElement.PANEL4);
     }
 
     public void initButtons() throws NoSuchMethodException, SlickException, JSONException {
@@ -50,10 +51,14 @@ public class AnimatorGuiData extends DataManager {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_PLAY_MULTI), EGuiElement.BUTTON_PLAY_MULTI);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_SETTING), EGuiElement.BUTTON_SETTING);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_CONTROLS), EGuiElement.BUTTON_CONTROLS);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_SLIDER), EGuiElement.BUTTON_SLIDER);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_CLOSE), EGuiElement.BUTTON_CLOSE);
     }
 
     public void initComponents() throws NoSuchMethodException, SlickException, JSONException {
-        this.addAnimator(this.animatorFactory.getAnimator(ESprites.LOADING), EGuiElement.LOADING);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.LOADING_ANIM), EGuiElement.LOADING_ANIM);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.SLIDER), EGuiElement.SLIDER);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.SLIDER_VALUE), EGuiElement.SLIDER_VALUE);
     }
 
     private void addAnimator(AnimatorController animatorController, EGuiElement type) {

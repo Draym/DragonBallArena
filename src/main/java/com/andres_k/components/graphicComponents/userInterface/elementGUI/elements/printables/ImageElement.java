@@ -38,15 +38,19 @@ public class ImageElement extends Element {
         this(id, body, null, PositionInBody.LEFT_UP, activated);
     }
 
-    public ImageElement(ColorShape body, AnimatorController animatorController, PositionInBody position, boolean activated) {
-        this(ELocation.UNKNOWN.getId(), body, animatorController, position, activated);
+    public ImageElement(ColorShape body, AnimatorController animatorController, boolean activated) {
+        this(ELocation.UNKNOWN.getId(), body, animatorController, PositionInBody.LEFT_UP, activated);
     }
 
     public ImageElement(String id, ColorShape body, AnimatorController animatorController, PositionInBody position, boolean activated) {
         super(EGuiType.IMAGE, id, body, position, activated);
         this.animatorController = animatorController;
-        if (this.body == null && animatorController != null) {
-            this.body = new ColorRect(new Rectangle(0, 0, this.animatorController.currentAnimation().getWidth(), this.animatorController.currentAnimation().getHeight()));
+        if (this.animatorController != null) {
+            if (this.body == null) {
+                this.body = new ColorRect(new Rectangle(0, 0, this.animatorController.currentSizeAnimation().getV1(), this.animatorController.currentSizeAnimation().getV2()));
+            } else if (this.body.getSizeX() == 0 && this.body.getSizeY() == 0) {
+                this.body.setSizes(this.animatorController.currentSizeAnimation().getV1(), this.animatorController.currentSizeAnimation().getV2());
+            }
         }
         if (this.body != null) {
             this.sizeXMAX = this.body.getSizeX();
@@ -85,7 +89,7 @@ public class ImageElement extends Element {
     @Override
     public void draw(Graphics g, float decalX, float decalY) {
         if (this.activated) {
-            this.body.draw(g);
+            this.body.cloneAndDecalFrom(decalX, decalY).draw(g);
 
             if (this.animatorController != null && this.animatorController.isPrintable()) {
                 Pair<Float, Float> position = this.getChoicePosition(this.body);
@@ -222,16 +226,18 @@ public class ImageElement extends Element {
 
     @Override
     public float getAbsoluteWidth() {
-        if (this.animatorController == null || this.animatorController.currentAnimation() == null)
-            return 0;
-        return this.animatorController.currentAnimation().getWidth();
+        if (this.animatorController != null && this.animatorController.currentAnimation() != null) {
+            return this.animatorController.currentAnimation().getWidth();
+        }
+        return super.getAbsoluteWidth();
     }
 
     @Override
     public float getAbsoluteHeight() {
-        if (this.animatorController == null || this.animatorController.currentAnimation() == null)
-            return 0;
-        return this.animatorController.currentAnimation().getHeight();
+        if (this.animatorController != null && this.animatorController.currentAnimation() != null) {
+            return this.animatorController.currentAnimation().getHeight();
+        }
+        return super.getAbsoluteHeight();
     }
 
     // SETTERS

@@ -1,91 +1,110 @@
 package com.andres_k.components.resourceComponent.sounds;
 
+import com.andres_k.components.taskComponent.ETaskType;
+import com.andres_k.components.taskComponent.utils.TaskComponent;
+import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by andres_k on 07/07/2015.
  */
-public class MusicController {
-    private static Map<ESound, Music> musics;
-    private static boolean needInit = true;
-    private static float pitch;
-    private static float volume;
-    private static float maxVolume;
+public final class MusicController implements Observer {
+    private Map<ESound, Music> musics;
+    private float pitch;
+    private float volume;
+    private float maxVolume;
 
 
-    public static void init() {
-        if (needInit) {
-            musics = new HashMap<>();
-            pitch = 1.0f;
-            volume = 1.0f;
-            maxVolume = 2.0f;
-            needInit = false;
-        }
+    private MusicController() {
+        this.musics = new HashMap<>();
+        this.pitch = 1.0f;
+        this.volume = 1.0f;
+        this.maxVolume = 1.0f;
     }
 
-    public static void addMusic(ESound sound) throws SlickException {
-        if (!needInit) {
-            musics.put(sound, new Music(sound.getPath()));
-        }
+    private static class SingletonHolder {
+        private final static MusicController instance = new MusicController();
     }
 
-    public static boolean play(ESound value) {
-        if (!needInit && musics.containsKey(value)) {
-            if (musics.get(value).playing()) {
-                musics.get(value).resume();
+    public static MusicController get() {
+        return SingletonHolder.instance;
+    }
+
+    public void addMusic(ESound sound) throws SlickException {
+            this.musics.put(sound, new Music(sound.getPath()));
+    }
+
+    public boolean play(ESound value) {
+        if (this.musics.containsKey(value)) {
+            if (this.musics.get(value).playing()) {
+                this.musics.get(value).resume();
             } else {
-                musics.get(value).play(pitch, volume);
+                this.musics.get(value).play(this.pitch, this.volume);
             }
             return true;
         }
         return false;
     }
 
-    public static boolean loop(ESound value) {
-        if (!needInit && musics.containsKey(value)) {
-            if (musics.get(value).playing()) {
-                musics.get(value).resume();
+    public boolean loop(ESound value) {
+        if (this.musics.containsKey(value)) {
+            if (this.musics.get(value).playing()) {
+                this.musics.get(value).resume();
             } else {
-                musics.get(value).loop(pitch, volume);
+                this.musics.get(value).loop(this.pitch, this.volume);
             }
             return true;
         }
         return false;
     }
 
-    public static boolean resume(ESound value) {
-        if (!needInit && musics.containsKey(value)) {
-            musics.get(value).resume();
+    public boolean resume(ESound value) {
+        if (this.musics.containsKey(value)) {
+            this.musics.get(value).resume();
             return true;
         }
         return false;
     }
 
-    public static boolean stop(ESound value) {
-        if (!needInit && musics.containsKey(value)) {
-            musics.get(value).stop();
+    public boolean stop(ESound value) {
+        if (this.musics.containsKey(value)) {
+            this.musics.get(value).stop();
             return true;
         }
         return false;
     }
 
-    public static void changeVolume(float value) {
-        volume = value;
+    public void changeVolume(float value) {
+        this.volume = value;
 
-        for (Map.Entry<ESound, Music> entry : musics.entrySet()) {
-            entry.getValue().setVolume(volume);
+        for (Map.Entry<ESound, Music> entry : this.musics.entrySet()) {
+            entry.getValue().setVolume(this.volume);
         }
     }
 
-    public static float getVolume() {
-        return volume;
+    public float getVolume() {
+        return this.volume;
     }
 
-    public static float getMaxVolume() {
-        return maxVolume;
+    public float getMaxVolume() {
+        return this.maxVolume;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg instanceof TaskComponent) {
+            TaskComponent task = (TaskComponent) arg;
+            if (task.getTask() instanceof Pair) {
+                if (((Pair) task.getTask()).getV1().equals(ETaskType.CHANGE_VOLUME) && ((Pair) task.getTask()).getV2() instanceof Float) {
+                    this.changeVolume((Float) ((Pair) task.getTask()).getV2());
+                }
+            }
+        }
     }
 }

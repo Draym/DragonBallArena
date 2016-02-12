@@ -12,6 +12,7 @@ public enum EAnimation {
 
     //BUTTON
     ON_FOCUS(true),
+    ON_CLICK(true),
 
     // MOVE
     RUSH(true),

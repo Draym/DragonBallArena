@@ -2,8 +2,9 @@ package com.andres_k.components.graphicComponents.userInterface.elementGUI.eleme
 
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.StringTimer;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.resourceComponent.fonts.EFont;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.ELocation;
@@ -12,6 +13,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.geom.Rectangle;
 
 import java.awt.*;
 
@@ -24,15 +26,28 @@ public class TextElement extends Element {
     private float size;
     private Color textColor;
 
-    public TextElement(StringTimer textTimer, Color textColor, PositionInBody position, boolean activated) {
-        this(ELocation.UNKNOWN.getId(), textTimer, textColor, position, activated);
+    public TextElement(StringTimer textTimer, Color textColor, boolean activated) {
+        this(ELocation.UNKNOWN.getId(), textTimer, textColor, activated);
     }
 
-    public TextElement(String id, StringTimer textTimer, Color textColor, PositionInBody position, boolean activated) {
-        this(id, textTimer, textColor, EFont.BASIC, 16, position, activated);
+    public TextElement(String id, StringTimer textTimer, Color textColor, boolean activated) {
+        this(id, textTimer, textColor, EFont.BASIC, 16, activated);
     }
-    public TextElement(String id, StringTimer textTimer, Color textColor, EFont font, float size, PositionInBody position, boolean activated) {
-        this(id, textTimer, textColor, font, size, null, position, activated);
+
+    public TextElement(StringTimer textTimer, Color textColor, EFont font, float size, boolean activated) {
+        this(ELocation.UNKNOWN.getId(), textTimer, textColor, font, size, null, PositionInBody.LEFT_UP, activated);
+    }
+
+    public TextElement(String id, StringTimer textTimer, Color textColor, EFont font, float size, boolean activated) {
+        this(id, textTimer, textColor, font, size, null, PositionInBody.LEFT_UP, activated);
+    }
+
+    public TextElement(StringTimer textTimer, Color textColor, EFont font, float size, float decalX, float decalY, PositionInBody position, boolean activated) {
+        this(ELocation.UNKNOWN.getId(), textTimer, textColor, font, size, decalX, decalY, position, activated);
+    }
+
+    public TextElement(String id, StringTimer textTimer, Color textColor, EFont font, float size, float decalX, float decalY, PositionInBody position, boolean activated) {
+        this(id, textTimer, textColor, font, size, new ColorRect(new Rectangle(decalX, decalY, textTimer.getAbsoluteWidth(size), textTimer.getAbsoluteHeight(size))), position, activated);
     }
 
     public TextElement(String id, StringTimer textTimer, Color textColor, EFont font, float size, ColorShape body, PositionInBody position, boolean activated) {
@@ -44,6 +59,10 @@ public class TextElement extends Element {
         Font item = ResourceManager.get().getFont(font);
         item = item.deriveFont(this.size);
         this.font = new TrueTypeFont(item, true);
+
+        if (this.body != null && this.body.getSizeX() == 0 && this.body.getSizeY() == 0) {
+            this.body.setSizes(textTimer.getAbsoluteWidth(this.size), this.textTimer.getAbsoluteHeight(this.size));
+        }
     }
 
     @Override
@@ -74,8 +93,8 @@ public class TextElement extends Element {
                 position.setV1(position.getV1() + decalX);
                 position.setV2(position.getV2() + decalY);
 
-                this.body.draw(g);
-                this.drawText(this.body, position);
+                this.body.cloneAndDecalFrom(decalX, decalY).draw(g);
+                this.drawText(position);
             } else {
                 this.drawString(this.textTimer.getValue(), decalX, decalY);
             }
@@ -94,15 +113,15 @@ public class TextElement extends Element {
                 }
                 position.setV1(this.body.getMinX() + position.getV1());
                 position.setV2(this.body.getMinY() + position.getV2());
+                body.setPosition(position.getV1(), position.getV2());
             }
 
             body.draw(g);
-            //Console.write("pos: " + position + " in " + body + "##" + this.getAbsoluteWidth() + ", " + this.getAbsoluteHeight() + "##");
-            this.drawText(body, position);
+            this.drawText(position);
         }
     }
 
-    private void drawText(ColorShape body, Pair<Float, Float> position) {
+    private void drawText(Pair<Float, Float> position) {
         this.drawString(this.textTimer.getValue(), position.getV1(), position.getV2());
     }
 
@@ -193,7 +212,7 @@ public class TextElement extends Element {
         if (this.body != null) {
             return this.body.getSizeX();
         }
-        return (this.textTimer.getValue().length() * this.size) / 1.40f;
+        return this.textTimer.getAbsoluteWidth(this.size);
     }
 
     @Override
@@ -201,7 +220,7 @@ public class TextElement extends Element {
         if (this.body != null) {
             return this.body.getSizeY();
         }
-        return this.size * 1.2f;
+        return this.textTimer.getAbsoluteHeight(this.size);
     }
 
     public String getValue() {
