@@ -1,6 +1,6 @@
 package com.andres_k.components.graphicComponents.userInterface.windowGUI;
 
-import com.andres_k.components.eventComponent.input.EInput;
+import com.andres_k.components.eventComponent.input.InputEvent;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.LocalTaskManager;
@@ -42,9 +42,9 @@ public abstract class UserInterface implements Observer {
         this.elements.forEach(GuiElement::leave);
     }
 
-    public boolean event(int key, char c, EInput type) {
+    public boolean event(InputEvent input) {
         for (GuiElement guiElement : this.elements) {
-            if (guiElement.event(key, c, type)) {
+            if (guiElement.event(input)) {
                 return true;
             }
         }

@@ -1,6 +1,6 @@
 package com.andres_k.components.graphicComponents.userInterface.elementGUI;
 
-import com.andres_k.components.eventComponent.input.EInput;
+import com.andres_k.components.eventComponent.input.InputEvent;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ETaskType;
@@ -70,8 +70,8 @@ public abstract class GuiElement implements Observer {
     public void draw(Graphics g, ColorShape container) {
     }
 
-    public boolean event(int key, char c, EInput type) {
-        return false;
+    public boolean event(InputEvent input) {
+        return this.OnEvent(input);
     }
 
     public Object doTask(Object task) {
@@ -89,8 +89,12 @@ public abstract class GuiElement implements Observer {
                 this.OnKill();
             } else if (action == ETaskType.ON_FOCUS) {
                 this.OnFocus();
+            } else if (action == ETaskType.OFF_FOCUS) {
+                this.OffFocus();
             } else if (action == ETaskType.ON_CLICK) {
                 this.OnClick();
+            } else if (action == ETaskType.OFF_CLICK) {
+                this.OffClick();
             } else if (action == ETaskType.GETTER) {
                 return this;
             }
@@ -110,6 +114,9 @@ public abstract class GuiElement implements Observer {
                 this.OnFocus();
             }
         }
+        if (!result) {
+            this.OffFocus();
+        }
         this.focused = result;
         return this.focused;
     }
@@ -118,6 +125,8 @@ public abstract class GuiElement implements Observer {
     public boolean isOnClick(float x, float y) {
         if (this.activated && this.focused) {
             this.OnClick();
+        } else {
+            this.OffClick();
         }
         this.clicked = this.focused;
         return this.clicked;
@@ -239,8 +248,16 @@ public abstract class GuiElement implements Observer {
     }
 
     protected final void OnClick() {
+        Console.write("OnClick: " + this.id);
         if (!this.clicked) {
+            Console.write("do task: " + this.tasks.stream().filter(task-> task.getV1() == EStatus.ON_CLICK).count());
             this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_CLICK).forEach(task -> this.doTask(task.getV2()));
+        }
+    }
+
+    protected final void OffClick() {
+        if (!this.clicked) {
+            this.tasks.stream().filter(task -> task.getV1() == EStatus.OFF_CLICK).forEach(task -> this.doTask(task.getV2()));
         }
     }
 
@@ -248,6 +265,19 @@ public abstract class GuiElement implements Observer {
         if (!this.focused) {
             this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_FOCUS).forEach(task -> this.doTask(task.getV2()));
         }
+    }
+
+    protected final void OffFocus() {
+        if (!this.focused) {
+            this.tasks.stream().filter(task -> task.getV1() == EStatus.OFF_FOCUS).forEach(task -> this.doTask(task.getV2()));
+        }
+    }
+
+    protected final boolean OnEvent(InputEvent input) {
+        if (!this.isActivated()) {
+            this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_EVENT).forEach(task -> this.doTask(task.getV2()));
+        }
+        return false;
     }
 
     protected final void OnCreate() {

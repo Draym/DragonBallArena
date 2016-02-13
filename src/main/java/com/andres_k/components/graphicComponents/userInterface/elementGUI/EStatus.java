@@ -5,7 +5,10 @@ package com.andres_k.components.graphicComponents.userInterface.elementGUI;
  */
 public enum EStatus {
     ON_CLICK,
+    OFF_CLICK,
     ON_FOCUS,
+    OFF_FOCUS,
+    ON_EVENT,
     ON_CREATE,
     ON_KILL
 }

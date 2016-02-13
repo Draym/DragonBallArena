@@ -20,7 +20,9 @@ public enum ETaskType {
     ON_CREATE,
     ON_KILL,
     ON_FOCUS,
+    OFF_FOCUS,
     ON_CLICK,
+    OFF_CLICK,
 
     // ACTION
     START,

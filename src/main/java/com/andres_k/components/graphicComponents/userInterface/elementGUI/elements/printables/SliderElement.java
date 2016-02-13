@@ -1,6 +1,6 @@
 package com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables;
 
-import com.andres_k.components.eventComponent.input.EInput;
+import com.andres_k.components.eventComponent.input.InputEvent;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
@@ -181,9 +181,9 @@ public class SliderElement extends Element {
     }
 
     @Override
-    public boolean event(int key, char c, EInput type) {
+    public boolean event(InputEvent input) {
         if (this.activated) {
-            if (this.sliderValue.event(key, c, type)) {
+            if (this.sliderValue.event(input)) {
                 return true;
             }
         }

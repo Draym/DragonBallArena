@@ -1,11 +1,10 @@
 package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern;
 
-import com.andres_k.components.eventComponent.input.EInput;
+import com.andres_k.components.eventComponent.input.InputEvent;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.taskComponent.ELocation;
-import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Graphics;
 
 import java.util.ArrayList;
@@ -98,10 +97,10 @@ public class ComplexElement extends GuiElement {
     }
 
     @Override
-    public boolean event(int key, char c, EInput type) {
+    public boolean event(InputEvent input) {
         if (this.activated) {
             for (GuiElement item : this.items) {
-                if (item.event(key, c, type)) {
+                if (item.event(input)) {
                     return true;
                 }
             }

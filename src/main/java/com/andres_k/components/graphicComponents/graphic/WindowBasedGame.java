@@ -2,6 +2,7 @@ package com.andres_k.components.graphicComponents.graphic;
 
 import com.andres_k.components.controllers.WindowController;
 import com.andres_k.components.eventComponent.input.EInput;
+import com.andres_k.components.eventComponent.input.InputEvent;
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.UserInterface;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.GlobalVariable;
@@ -110,7 +111,7 @@ public abstract class WindowBasedGame extends BasicGameState {
 
     @Override
     public void keyPressed(int key, char c) {
-        boolean absorbed = this.gui.event(key, c, EInput.KEY_PRESSED);
+        boolean absorbed = this.gui.event(new InputEvent(key, c, EInput.KEY_PRESSED));
         if (!absorbed) {
             this.controller.keyPressed(key, c);
         }
@@ -118,7 +119,7 @@ public abstract class WindowBasedGame extends BasicGameState {
 
     @Override
     public void keyReleased(int key, char c) {
-        boolean absorbed = this.gui.event(key, c, EInput.KEY_RELEASED);
+        boolean absorbed = this.gui.event(new InputEvent(key, c, EInput.KEY_RELEASED));
         if (!absorbed) {
             this.controller.keyReleased(key, c);
         }

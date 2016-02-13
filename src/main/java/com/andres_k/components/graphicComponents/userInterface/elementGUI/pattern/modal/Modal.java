@@ -1,6 +1,7 @@
 package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.modal;
 
 import com.andres_k.components.eventComponent.input.EInput;
+import com.andres_k.components.eventComponent.input.InputEvent;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
@@ -76,8 +77,8 @@ public class Modal extends GuiElement {
     }
 
     @Override
-    public boolean event(int key, char c, EInput type) {
-        if (key == Input.KEY_ESCAPE && type == EInput.KEY_RELEASED) {
+    public boolean event(InputEvent input) {
+        if (input.key == Input.KEY_ESCAPE && input.type == EInput.KEY_RELEASED) {
             if (this.activated) {
                 this.OnKill();
             }

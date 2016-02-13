@@ -11,6 +11,8 @@ import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
+import com.andres_k.utils.tools.ColorTools;
+import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -110,6 +112,7 @@ public class TextElement extends Element {
             if (container.getColor() == null) {
                 container.setColor(this.body.getColor());
             }
+            //container.setColor(Color.white);
             container.draw(g);
             this.drawText(position);
         }
@@ -143,6 +146,7 @@ public class TextElement extends Element {
     public Object doTask(Object task) {
         Object result;
 
+        Console.write("Received: " + task);
         if ((result = super.doTask(task)) != null) {
             return result;
         } else if (task instanceof Tuple && ((Tuple) task).getV1() instanceof ETaskType) {
@@ -153,6 +157,9 @@ public class TextElement extends Element {
             if (order == ETaskType.SETTER) {
                 if (target.equals("value") && value instanceof String) {
                     this.textTimer.setValue((String) value);
+                } else if (target.equals("color") && value instanceof ColorTools.Colors) {
+                    Console.write("change color");
+                    this.body.setColor(ColorTools.get((ColorTools.Colors) value));
                 }
             }
         }

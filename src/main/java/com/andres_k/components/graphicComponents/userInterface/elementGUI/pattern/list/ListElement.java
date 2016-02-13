@@ -112,7 +112,7 @@ public class ListElement extends ComplexElement {
             float currentY = 0;
 
             for (GuiElement element : this.items) {
-                this.positions.add(new ColorRect(new Rectangle(currentX, currentY, this.body.getSizeX() - (2 * this.marginX) - element.getBody().getMinX(), element.getAbsoluteHeight())));
+                this.positions.add(new ColorRect(new Rectangle(currentX, currentY, this.body.getSizeX() - (2 * this.marginX), element.getAbsoluteHeight())));
                 currentY += element.getAbsoluteHeight() + this.marginY;
 
                 if (currentY >= this.body.getSizeY()) {

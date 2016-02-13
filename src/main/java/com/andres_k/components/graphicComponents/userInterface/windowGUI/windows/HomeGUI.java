@@ -3,6 +3,7 @@ package com.andres_k.components.graphicComponents.userInterface.windowGUI.window
 import com.andres_k.components.eventComponent.input.InputData;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.EStatus;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.ElementFactory;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.buttons.Button;
@@ -26,6 +27,7 @@ import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.ColorTools;
 import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.SlickException;
@@ -104,7 +106,10 @@ public class HomeGUI extends UserInterface {
 
         InputData.getAvailableInput().entrySet().forEach(entry -> {
             TextElement title = new TextElement(new StringTimer(StringTools.formatIt(entry.getKey().getContainer().getValue(), 20, ":", 10, "")), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.BASIC, 16, true);
-            controls.addItem("Player " + (entry.getKey().getIndex() + 1), new ElementWithTitle(new ColorRect(new Rectangle(0, 0, 0, 0)), title, ElementFactory.createText(entry.getValue(), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 200, 0), true));
+            TextElement content = ElementFactory.createText(entry.getValue(), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 200, 0);
+            content.addTask(new Pair<>(EStatus.ON_CLICK, new Tuple<>(ETaskType.SETTER, "color", ColorTools.Colors.TRANSPARENT_YELLOW)));
+            content.addTask(new Pair<>(EStatus.OFF_CLICK, new Tuple<>(ETaskType.SETTER, "color", null)));
+            controls.addItem("Player " + (entry.getKey().getIndex() + 1), new ElementWithTitle(new ColorRect(new Rectangle(0, 0, 0, 0)), title, content, true));
         });
     }
 
