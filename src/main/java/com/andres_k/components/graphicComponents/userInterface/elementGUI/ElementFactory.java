@@ -25,11 +25,11 @@ import java.util.List;
  * Created by andres_k on 09/02/2016.
  */
 public class ElementFactory {
-    public static TextElement createText(String text, Color color, int size, EFont font, float decalX, float decalY) {
+    public static TextElement createText(String text, Color color, EFont font, int size,float decalX, float decalY) {
         return new TextElement(new StringTimer(text), color, font, size, decalX, decalY, Element.PositionInBody.MIDDLE_MID, true);
     }
 
-    public static ElementWithTitle createButton(String text, Color color, int size, EFont font, EGuiElement animator, List<Pair<EStatus, Object>> tasks) throws SlickException {
+    public static ElementWithTitle createButton(String text, Color color, EFont font, int size, EGuiElement animator, List<Pair<EStatus, Object>> tasks) throws SlickException {
         return createButton(text, color, size, font, animator, 0, 0, tasks);
     }
 
@@ -38,7 +38,7 @@ public class ElementFactory {
     }
 
     public static ElementWithTitle createTitleElement(String text, Color color, EFont font, int size, float decalX, float decalY, GuiElement element) throws SlickException {
-        return new ElementWithTitle(createText(text, color, size, font, decalX, decalY), element, true);
+        return new ElementWithTitle(createText(text, color, font, size, decalX, decalY), element, true);
     }
 
     public static List<Pair<EStatus, Object>> createBasicButtonTasks(ELocation local, ELocation target, Object task) {

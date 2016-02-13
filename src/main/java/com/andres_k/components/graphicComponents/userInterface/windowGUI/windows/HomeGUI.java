@@ -10,6 +10,7 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.elemen
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.SliderElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.TextElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.ComplexElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.ElementWithTitle;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.list.ListElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.list.PaginatedList;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.modal.Modal;
@@ -49,10 +50,10 @@ public class HomeGUI extends UserInterface {
         menu.addItem(new ImageElement(ResourceManager.get().getGuiAnimator(EGuiElement.PANEL4), true));
 
         ListElement buttonList = new ListElement(new ColorRect(new Rectangle(32, 74, 259, 279)), 0, 9, true);
-        buttonList.addItem(ElementFactory.createButton("Practice", ColorTools.get(ColorTools.Colors.GUI_BLUE), 25, EFont.MODERN, EGuiElement.BUTTON_PLAY_SOLO, ElementFactory.createBasicButtonTasks(ELocation.HOME_GUI, ELocation.HOME_CONTROLLER, EnumWindow.SELECT_SOLO)));
-        buttonList.addItem(ElementFactory.createButton("Versus !", ColorTools.get(ColorTools.Colors.GUI_BLUE), 25, EFont.MODERN, EGuiElement.BUTTON_PLAY_VERSUS, ElementFactory.createBasicButtonTasks(ELocation.HOME_GUI, ELocation.HOME_CONTROLLER, EnumWindow.SELECT_VERSUS)));
-        buttonList.addItem(ElementFactory.createButton("Battle  ", ColorTools.get(ColorTools.Colors.GUI_ORANGE), 25, EFont.MODERN, EGuiElement.BUTTON_PLAY_MULTI, ElementFactory.createBasicButtonTasks(ELocation.HOME_GUI, ELocation.HOME_CONTROLLER, EnumWindow.SELECT_MULTI)));
-        buttonList.addItem(ElementFactory.createButton("Settings", ColorTools.get(ColorTools.Colors.GUI_GREY), 25, EFont.MODERN, EGuiElement.BUTTON_SETTING,  ElementFactory.createBasicButtonTasks(ELocation.HOME_GUI_Menu, ELocation.HOME_GUI_Settings, ETaskType.ON_CREATE)));
+        buttonList.addItem(ElementFactory.createButton("Practice", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 25, EGuiElement.BUTTON_PLAY_SOLO, ElementFactory.createBasicButtonTasks(ELocation.HOME_GUI, ELocation.HOME_CONTROLLER, EnumWindow.SELECT_SOLO)));
+        buttonList.addItem(ElementFactory.createButton("Versus !", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 25, EGuiElement.BUTTON_PLAY_VERSUS, ElementFactory.createBasicButtonTasks(ELocation.HOME_GUI, ELocation.HOME_CONTROLLER, EnumWindow.SELECT_VERSUS)));
+        buttonList.addItem(ElementFactory.createButton("Battle  ", ColorTools.get(ColorTools.Colors.GUI_ORANGE), EFont.MODERN, 25, EGuiElement.BUTTON_PLAY_MULTI, ElementFactory.createBasicButtonTasks(ELocation.HOME_GUI, ELocation.HOME_CONTROLLER, EnumWindow.SELECT_MULTI)));
+        buttonList.addItem(ElementFactory.createButton("Settings", ColorTools.get(ColorTools.Colors.GUI_GREY), EFont.MODERN, 25, EGuiElement.BUTTON_SETTING,  ElementFactory.createBasicButtonTasks(ELocation.HOME_GUI_Menu, ELocation.HOME_GUI_Settings, ETaskType.ON_CREATE)));
         menu.addItem(buttonList);
         this.taskManager.register(ELocation.HOME_GUI_Menu.getId(), menu);
         this.elements.add(menu);
@@ -75,8 +76,8 @@ public class HomeGUI extends UserInterface {
         controls.addItem(new Button(new ImageElement(new ColorCircle(new Circle(530, 15, 0)), ResourceManager.get().getGuiAnimator(EGuiElement.BUTTON_CLOSE), true), ElementFactory.createBasicButtonTasks(ELocation.UNKNOWN, ELocation.HOME_GUI_Controls, ETaskType.ON_KILL, ESound.NOTHING, ESound.UNVALIDATE)));
 
         PaginatedList playerControls = new PaginatedList(ELocation.HOME_GUI_Controls_player.getId(), new ColorRect(new Rectangle(5, 50, 570, 390)), new ColorRect(new Rectangle(20, 60, 540, 310)), EGuiElement.TAB_STATUS, 10, 0, 20, 0, true);
-        playerControls.addList(ElementFactory.createText("Player 1", ColorTools.get(ColorTools.Colors.GUI_BLUE), 16, EFont.MODERN, 0, 0), 0, 20);
-        playerControls.addList(ElementFactory.createText("Player 2", ColorTools.get(ColorTools.Colors.GUI_BLUE), 16, EFont.MODERN, 0, 0), 0, 20);
+        playerControls.addList(ElementFactory.createText("Player 1", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 0, 0), 0, 20);
+        playerControls.addList(ElementFactory.createText("Player 2", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 0, 0), 0, 20);
         controls.addItem(playerControls);
 
         Modal controlModal = new Modal(ELocation.HOME_GUI_Controls.getId(), new ColorRect(new Rectangle(0, 0, WindowConfig.getWLowSizeX(), WindowConfig.getWLowSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), controls);
@@ -101,7 +102,10 @@ public class HomeGUI extends UserInterface {
         PaginatedList controls = (PaginatedList) this.getElementById(ELocation.HOME_GUI_Controls_player.getId());
         controls.clearListItems();
 
-        InputData.getAvailableInput().entrySet().forEach(entry -> controls.addItem("Player " + (entry.getKey().getIndex() + 1), ElementFactory.createText(StringTools.formatIt(entry.getKey().getContainer().getValue(), 20, ":", 30, entry.getValue()), ColorTools.get(ColorTools.Colors.GUI_BLUE), 15, EFont.BASIC, 0, 0)));
+        InputData.getAvailableInput().entrySet().forEach(entry -> {
+            TextElement title = new TextElement(new StringTimer(StringTools.formatIt(entry.getKey().getContainer().getValue(), 20, ":", 10, "")), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.BASIC, 16, true);
+            controls.addItem("Player " + (entry.getKey().getIndex() + 1), new ElementWithTitle(new ColorRect(new Rectangle(0, 0, 0, 0)), title, ElementFactory.createText(entry.getValue(), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 200, 0), true));
+        });
     }
 
     @Override

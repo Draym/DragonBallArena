@@ -35,7 +35,8 @@ public enum ELocation {
     SELECT_MULTI_GUI("SELECT_MULTI_GUI", WINDOWS.getId()),
 
     //LOAD_GUI
-    LOAD_GUI_LoadingBar("LoadingBar", LOAD_GUI.getId()),
+    LOAD_GUI_LoadingBar_value("LoadingBar_value", LOAD_GUI.getId()),
+    LOAD_GUI_LoadingBar_title("LoadingBar_title", LOAD_GUI.getId()),
 
     //HOME_GUI
     HOME_GUI_Menu("Menu", HOME_GUI.getId()),

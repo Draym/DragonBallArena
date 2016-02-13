@@ -8,6 +8,7 @@ import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -22,9 +23,9 @@ public class FontData extends DataManager {
     }
 
     @Override
-    public void prerequisite() throws NoSuchMethodException, SlickException, JSONException {
+    public void prerequisite() throws NoSuchMethodException, SlickException, JSONException, IOException, FontFormatException {
+        this.addFont(EFont.MODERN, FontFactory.createFont(ConfigPath.fonts + "/modern.ttf"));
         this.initialiseMethods();
-
     }
 
     @Override
@@ -35,7 +36,6 @@ public class FontData extends DataManager {
 
     public void init() throws Exception {
         this.addFont(EFont.BASIC, new Font("Times New Roman", Font.BOLD, 16));
-        this.addFont(EFont.MODERN, FontFactory.createFont(ConfigPath.fonts + "/modern.ttf"));
     }
 
     private void addFont(EFont type, Font item) {

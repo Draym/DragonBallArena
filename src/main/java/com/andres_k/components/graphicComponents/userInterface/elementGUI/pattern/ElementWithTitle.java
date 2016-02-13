@@ -81,9 +81,10 @@ public class ElementWithTitle extends GuiElement {
     @Override
     public void draw(Graphics g, float decalX, float decalY) {
         if (this.activated) {
-            this.body.draw(g);
-            this.content.draw(g, this.body.cloneAndDecalFrom(decalX, decalY));
-            this.title.draw(g, this.body.cloneAndDecalFrom(decalX, decalY));
+            ColorShape container = this.body.cloneAndDecalFrom(decalX, decalY);
+            container.draw(g);
+            this.content.draw(g, container);
+            this.title.draw(g, container);
         }
     }
 
@@ -92,7 +93,7 @@ public class ElementWithTitle extends GuiElement {
         if (this.activated) {
             ColorShape container = body.cloneAndDecalFrom(this.body.getMinX(), this.body.getMinY());
             container.draw(g);
-            this.content.draw(g, container);
+            this.content.draw(g, container.cloneAndChangeSize(container.getSizeX() - this.content.getBody().getMinX(), container.getSizeY()));
             this.title.draw(g, container);
         }
     }
@@ -189,12 +190,12 @@ public class ElementWithTitle extends GuiElement {
 
     @Override
     public float getAbsoluteWidth() {
-        return this.content.getAbsoluteWidth();
+        return this.title.getBody().compileWidth(this.content.getBody());
     }
 
     @Override
     public float getAbsoluteHeight() {
-        return this.content.getAbsoluteHeight();
+        return this.title.getBody().compileHeight(this.content.getBody());
     }
 
 }

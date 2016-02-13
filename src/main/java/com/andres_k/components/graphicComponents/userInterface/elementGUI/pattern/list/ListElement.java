@@ -6,8 +6,10 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.patter
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.taskComponent.ELocation;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +19,7 @@ public class ListElement extends ComplexElement {
     protected float marginX;
     protected float marginY;
     protected boolean changed;
+    protected List<ColorShape> positions;
 
     public ListElement(ColorShape body, float marginX, float marginY, boolean activated) {
         this(ELocation.UNKNOWN.getId(), body, marginX, marginY, activated);
@@ -27,6 +30,7 @@ public class ListElement extends ComplexElement {
         this.changed = false;
         this.marginX = marginX;
         this.marginY = marginY;
+        this.positions = new ArrayList<>();
     }
 
     @Override
@@ -48,6 +52,36 @@ public class ListElement extends ComplexElement {
         }
     }
 
+    @Override
+    public void draw(Graphics g, float decalX, float decalY) {
+        if (this.activated) {
+            this.body.cloneAndDecalFrom(decalX, decalY).draw(g);
+
+            for (int i = 0; i < this.positions.size(); ++i) {
+                if (i >= this.items.size()) {
+                    break;
+                }
+                this.items.get(i).draw(g, this.positions.get(i).cloneAndDecalFrom(this.body.getMinX() + decalX, this.body.getMinY() + decalY));
+            }
+        }
+    }
+
+    @Override
+    public void draw(Graphics g, ColorShape body) {
+        if (this.activated) {
+            ColorShape container = body.cloneAndDecalFrom(this.body.getMinX(), this.body.getMinY());
+            container.draw(g);
+
+            for (int i = 0; i < this.positions.size(); ++i) {
+                if (i >= this.items.size()) {
+                    break;
+                }
+                this.items.get(i).draw(g, container.cloneAndDecalFrom(this.positions.get(i)));
+            }
+        }
+    }
+
+    // MODIFIER
     @Override
     public void addItem(GuiElement item) {
         super.addItem(item);
@@ -76,23 +110,46 @@ public class ListElement extends ComplexElement {
         if (this.body != null) {
             float currentX = this.marginX;
             float currentY = 0;
-            boolean tooManyItems = false;
 
             for (GuiElement element : this.items) {
-                if (!tooManyItems) {
-                    element.setActivated(true);
-                    element.setBody(new ColorRect(new Rectangle(currentX, currentY, element.getAbsoluteWidth(), element.getAbsoluteHeight())));
-                } else {
-                    element.setActivated(false);
-                }
+                this.positions.add(new ColorRect(new Rectangle(currentX, currentY, this.body.getSizeX() - (2 * this.marginX) - element.getBody().getMinX(), element.getAbsoluteHeight())));
                 currentY += element.getAbsoluteHeight() + this.marginY;
 
                 if (currentY >= this.body.getSizeY()) {
-                    tooManyItems = true;
+                    break;
                 }
             }
             this.changed = false;
         }
+    }
+
+    // GETTER
+    @Override
+    public boolean isOnFocus(float x, float y) {
+        this.focused = false;
+        if (this.activated) {
+            for (int i = 0; i < this.positions.size(); ++i) {
+                if (i >= this.items.size()) {
+                    break;
+                }
+                this.items.get(i).isOnFocus(x - this.getBody().getMinX() - this.positions.get(i).getMinX(), y - this.getBody().getMinY() - this.positions.get(i).getMinY());
+            }
+        }
+        return this.focused;
+    }
+
+    @Override
+    public boolean isOnClick(float x, float y) {
+        if (this.activated) {
+            for (int i = 0; i < this.positions.size(); ++i) {
+                if (i >= this.items.size()) {
+                    break;
+                }
+                if (this.items.get(i).isOnClick(x - this.getBody().getMinX() - this.positions.get(i).getMinX(), y - this.getBody().getMinY() - this.positions.get(i).getMinY()))
+                    return true;
+            }
+        }
+        return false;
     }
 
 

@@ -8,7 +8,9 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.
 import com.andres_k.components.resourceComponent.fonts.EFont;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.ELocation;
+import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.stockage.Tuple;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -60,7 +62,10 @@ public class TextElement extends Element {
         item = item.deriveFont(this.size);
         this.font = new TrueTypeFont(item, true);
 
-        if (this.body != null && this.body.getSizeX() <= 0 && this.body.getSizeY() <= 0) {
+        if (this.body == null) {
+            this.body = new ColorRect(new Rectangle(0, 0, 0, 0));
+        }
+        if (this.body.getSizeX() <= 0 && this.body.getSizeY() <= 0) {
             this.body.setSizes(textTimer.getAbsoluteWidth(this.size), this.textTimer.getAbsoluteHeight(this.size));
         }
     }
@@ -88,35 +93,24 @@ public class TextElement extends Element {
     @Override
     public void draw(Graphics g, float decalX, float decalY) {
         if (this.activated) {
-            if (this.body != null) {
-                Pair<Float, Float> position = this.getChoicePosition(this.body);
-                position.setV1(position.getV1() + decalX);
-                position.setV2(position.getV2() + decalY);
-
-                this.body.cloneAndDecalFrom(decalX, decalY).draw(g);
-                this.drawText(position);
-            } else {
-                this.drawString(this.textTimer.getValue(), decalX, decalY);
-            }
+            ColorShape container = this.body.cloneAndDecalFrom(decalX, decalY);
+            Pair<Float, Float> position = this.getChoicePosition(container);
+            container.draw(g);
+            this.drawText(position);
         }
     }
 
     @Override
-    public void draw(Graphics g, ColorShape container) {
+    public void draw(Graphics g, ColorShape body) {
         if (this.activated) {
-            ColorShape body = container.cloneIt();
+            ColorShape container = body.cloneAndDecalFrom(this.body.getMinX(), this.body.getMinY());
 
-            Pair<Float, Float> position = this.getChoicePosition(body);
-            if (this.body != null) {
-                if (body.getColor() == null) {
-                    body.setColor(this.body.getColor());
-                }
-                position.setV1(this.body.getMinX() + position.getV1());
-                position.setV2(this.body.getMinY() + position.getV2());
-                body.setPosition(position.getV1(), position.getV2());
+            Pair<Float, Float> position = this.getChoicePosition(container);
+
+            if (container.getColor() == null) {
+                container.setColor(this.body.getColor());
             }
-
-            body.draw(g);
+            container.draw(g);
             this.drawText(position);
         }
     }
@@ -128,25 +122,6 @@ public class TextElement extends Element {
     private void drawString(String value, float posX, float posY) {
         this.font.drawString(posX, posY, value, this.textColor);
     }
-
-    /*
-    private Pair<Float, Float> getChoicePosition(ColorShape body, String value) {
-        float x = body.getMinX();
-        float y = body.getMinY();
-
-        if (this.position == PositionInBody.MIDDLE_MID || this.position == PositionInBody.MIDDLE_UP) {
-            float sizeX = (body.getSizeX() / 2) - ((value.length() * this.size) / 2);
-
-            sizeX = (sizeX < 0 ? 0 : sizeX);
-            x += sizeX;
-        } else if (this.position == PositionInBody.RIGHT_MID || this.position == PositionInBody.RIGHT_UP) {
-            float sizeX = (body.getSizeX() - (value.length() * this.size));
-
-            sizeX = (sizeX < 0 ? 0 : sizeX);
-            x += sizeX;
-        }
-        return new Pair<>(x, y);
-    }*/
 
     @Override
     public void update() {
@@ -170,14 +145,15 @@ public class TextElement extends Element {
 
         if ((result = super.doTask(task)) != null) {
             return result;
-        } else if (task instanceof String) {
-            if (this.textTimer.getValue().contains(":")) {
-                String v1 = this.textTimer.getValue().substring(0, this.textTimer.getValue().indexOf(":") + 1);
-                String v2 = (String) task;
-                this.textTimer.setValue(v1 + v2);
-                return true;
-            } else {
-                this.textTimer.setValue((String) task);
+        } else if (task instanceof Tuple && ((Tuple) task).getV1() instanceof ETaskType) {
+            ETaskType order = (ETaskType) ((Tuple) task).getV1();
+            Object target = ((Tuple) task).getV2();
+            Object value = ((Tuple) task).getV3();
+
+            if (order == ETaskType.SETTER) {
+                if (target.equals("value") && value instanceof String) {
+                    this.textTimer.setValue((String) value);
+                }
             }
         }
         return null;

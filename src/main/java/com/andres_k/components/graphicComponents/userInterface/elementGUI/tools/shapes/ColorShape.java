@@ -1,5 +1,6 @@
 package com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes;
 
+import com.andres_k.utils.tools.MathTools;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Shape;
@@ -36,11 +37,39 @@ public abstract class ColorShape {
 
     public abstract ColorShape cloneIt();
 
+    public ColorShape cloneAndChangeSize(float width, float height) {
+        ColorShape shape = this.cloneIt();
+
+        shape.setSizes(width, height);
+        return shape;
+    }
+
     public ColorShape cloneAndDecalFrom(float x, float y) {
         ColorShape shape = this.cloneIt();
 
         shape.setPosition(shape.getMinX() + x, shape.getMinY() + y);
         return shape;
+    }
+
+    public ColorShape cloneAndDecalFrom(ColorShape container) {
+        ColorShape shape = this.cloneIt();
+
+        shape.setPosition(shape.getMinX() + container.getMinX(), shape.getMinY() + container.getMinY());
+        return shape;
+    }
+
+    public float compileWidth(ColorShape shape) {
+        float min = (shape.getMinX() < this.getMinX() ? shape.getMinX() : this.getMinX());
+        float max = (shape.getMaxX() > this.getMaxX() ? shape.getMaxX() : this.getMaxX());
+
+        return MathTools.getAbsDistance(min, max);
+    }
+
+    public float compileHeight(ColorShape shape) {
+        float min = (shape.getMinY() < this.getMinY() ? shape.getMinY() : this.getMinY());
+        float max = (shape.getMaxY() > this.getMaxY() ? shape.getMaxY() : this.getMaxY());
+
+        return MathTools.getAbsDistance(min, max);
     }
 
     // GETTERS

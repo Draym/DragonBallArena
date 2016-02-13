@@ -4,6 +4,8 @@ import com.andres_k.utils.stockage.Pair;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
 
+import java.awt.*;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ public abstract class DataManager {
         this.methods = new ArrayList<>();
     }
 
-    public abstract void prerequisite() throws NoSuchMethodException, SlickException, JSONException;
+    public abstract void prerequisite() throws NoSuchMethodException, SlickException, JSONException, IOException, FontFormatException;
 
     public int initialise(int index) throws NoSuchMethodException, SlickException, JSONException, InvocationTargetException, IllegalAccessException {
         for (Pair<Boolean, Method> item : this.methods) {
