@@ -44,6 +44,13 @@ public abstract class ColorShape {
         return shape;
     }
 
+    public ColorShape cloneAndChangeColor(Color color) {
+        ColorShape shape = this.cloneIt();
+
+        shape.setColor(color);
+        return shape;
+    }
+
     public ColorShape cloneAndDecalFrom(float x, float y) {
         ColorShape shape = this.cloneIt();
 

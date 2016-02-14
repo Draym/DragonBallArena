@@ -112,7 +112,6 @@ public class TextElement extends Element {
             if (container.getColor() == null) {
                 container.setColor(this.body.getColor());
             }
-            //container.setColor(Color.white);
             container.draw(g);
             this.drawText(position);
         }

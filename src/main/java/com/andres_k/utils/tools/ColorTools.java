@@ -12,6 +12,7 @@ public class ColorTools {
     private static Map<Colors, Color> colors;
 
     public enum Colors {
+        NONE,
         TRANSPARENT_GREYBLUE,
         TRANSPARENT_GREYBLACK,
         TRANSPARENT_GREY,
@@ -53,6 +54,9 @@ public class ColorTools {
     }
 
     public static Color get(Colors color) {
+        if (color == Colors.NONE) {
+            return null;
+        }
         if (colors.containsKey(color)) {
             return colors.get(color);
         } else {

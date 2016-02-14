@@ -3,6 +3,7 @@ package com.andres_k.components.graphicComponents.userInterface.elementGUI.eleme
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.EStatus;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
@@ -21,6 +22,7 @@ import org.newdawn.slick.geom.Rectangle;
 public class ImageElement extends Element {
     private AnimatorController animatorController;
     private float sizeXMAX;
+    private Pair<EAnimation, Integer> saveAnimation;
 
     public ImageElement(AnimatorController animatorController, boolean activated) {
         this(ELocation.UNKNOWN.getId(), null, animatorController, PositionInBody.LEFT_UP, activated);
@@ -51,10 +53,13 @@ public class ImageElement extends Element {
             } else if (this.body.getSizeX() <= 0 && this.body.getSizeY() <= 0) {
                 this.body.setSizes(this.animatorController.currentSizeAnimation().getV1(), this.animatorController.currentSizeAnimation().getV2());
             }
+            this.saveAnimation = new Pair<>(this.animatorController.currentAnimationType(), this.animatorController.getIndex());
         }
         if (this.body != null) {
             this.sizeXMAX = this.body.getSizeX();
         }
+        this.tasks.add(new Pair<>(EStatus.ON_FOCUS, new Tuple<>(ETaskType.SETTER, "animation", EAnimation.ON_FOCUS)));
+        this.tasks.add(new Pair<>(EStatus.OFF_FOCUS, new Tuple<>(ETaskType.SETTER, "animation", EAnimation.IDLE)));
     }
 
     @Override
@@ -67,6 +72,14 @@ public class ImageElement extends Element {
 
     @Override
     public void leave() {
+    }
+
+    @Override
+    public void deactivate() {
+        super.deactivate();
+        if (this.animatorController != null) {
+            this.animatorController.changeAnimation(this.saveAnimation.getV1(), this.saveAnimation.getV2());
+        }
     }
 
     @Override
@@ -153,6 +166,9 @@ public class ImageElement extends Element {
                 if (target.equals("index") && value instanceof Integer && this.animatorController != null) {
                     this.animatorController.setCurrentAnimationIndex((Integer) value);
                 }
+                else if (target.equals("animation") && value instanceof EAnimation && this.animatorController != null) {
+                    this.animatorController.changeAnimation((EAnimation) value);
+                }
             } else if (order == ETaskType.CUT) {
                 if (target.equals("body") && value instanceof Float) {
                     float percent = (float) value;
@@ -189,23 +205,6 @@ public class ImageElement extends Element {
 
     private void stop() {
         this.animatorController.restart();
-    }
-
-    //GETTERS
-    @Override
-    public boolean isOnFocus(float x, float y) {
-        super.isOnFocus(x, y);
-
-        if (this.animatorController != null) {
-            if (this.focused) {
-                if (this.animatorController.currentAnimationType() != EAnimation.ON_FOCUS) {
-                    this.animatorController.changeAnimation(EAnimation.ON_FOCUS);
-                }
-            } else if (this.animatorController.currentAnimationType() != EAnimation.IDLE) {
-                this.animatorController.changeAnimation(EAnimation.IDLE);
-            }
-        }
-        return this.focused;
     }
 
     public boolean isEmpty() {

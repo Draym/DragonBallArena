@@ -65,7 +65,7 @@ public class AnimatorGuiFactory extends AnimatorFactory {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/component" + "/sliderValue.png"));
         } else if (index == ESprites.TAB_STATUS) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/component" + "/tabOFF.png"));
-            animatorController.addAnimation(EAnimation.IDLE, 1, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/component" + "/tabON.png"));
+            animatorController.addAnimation(EAnimation.ON_CLICK, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/component" + "/tabON.png"));
         }
         return animatorController;
     }

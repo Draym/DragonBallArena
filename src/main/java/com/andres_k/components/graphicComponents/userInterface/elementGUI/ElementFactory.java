@@ -55,10 +55,8 @@ public class ElementFactory {
 
     public static List<Pair<EStatus, Object>> createBasicModalTasks(ELocation local, ELocation target) {
         List<Pair<EStatus, Object>> component = new ArrayList<>();
-        component.add(new Pair<>(EStatus.ON_CREATE, ETaskType.START_ACTIVITY));
         component.add(new Pair<>(EStatus.ON_CREATE, new TaskComponent(local, target, ETaskType.STOP_ACTIVITY)));
         component.add(new Pair<>(EStatus.ON_KILL, new TaskComponent(local, target, ETaskType.START_ACTIVITY)));
-        component.add(new Pair<>(EStatus.ON_KILL, ETaskType.STOP_ACTIVITY));
         return component;
     }
 }

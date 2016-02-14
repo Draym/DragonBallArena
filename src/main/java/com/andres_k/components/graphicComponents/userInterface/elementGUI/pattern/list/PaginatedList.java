@@ -1,6 +1,7 @@
 package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.list;
 
 import com.andres_k.components.eventComponent.input.InputEvent;
+import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
@@ -14,6 +15,7 @@ import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
+import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
@@ -147,9 +149,10 @@ public class PaginatedList extends GuiElement {
     public boolean isOnFocus(float x, float y) {
         this.focused = false;
         if (this.activated) {
+            this.tabs.forEach(tab -> tab.isOnFocus(x - this.body.getMinX(), y - this.body.getMinY()));
             ListElement current = this.getCurrentList();
             if (current != null) {
-                if (current.isOnFocus(this.body.getMinX() + x, this.body.getMinY() + y)) {
+                if (current.isOnFocus(x - this.body.getMinX(), y - this.body.getMinY())) {
                     this.focused = true;
                 }
             }
@@ -160,16 +163,10 @@ public class PaginatedList extends GuiElement {
     @Override
     public boolean isOnClick(float x, float y) {
         if (this.activated) {
+            this.tabs.stream().filter(tab -> tab.isOnClick(x - this.body.getMinX(), y - this.body.getMinY())).forEach(tab -> this.switchCurrent(tab.getId()));
             ListElement current = this.getCurrentList();
             if (current != null) {
-                if (current.isOnFocus(x - this.body.getMinX(), y - this.body.getMinY())) {
-                    return true;
-                }
-            }
-
-            for (ElementWithTitle tab : this.tabs) {
-                if (tab.isOnFocus(x - this.body.getMinX(), y - this.body.getMinY())) {
-                    this.switchCurrent(tab.getId());
+                if (current.isOnClick(x - this.body.getMinX(), y - this.body.getMinY())) {
                     return true;
                 }
             }
@@ -239,11 +236,13 @@ public class PaginatedList extends GuiElement {
     private void switchCurrent(String id) {
         if (!this.current.equals(id) && this.lists.containsKey(id)) {
             this.current = id;
+
+            Console.write("switch to " + id);
             this.tabs.forEach(tab -> {
                 if (tab.getId().equals(id)) {
-                    tab.doTask(new Tuple<>(ETaskType.SETTER, "index", 1));
+                    tab.doTask(new Tuple<>(ETaskType.SETTER, "animation", EAnimation.ON_CLICK));
                 } else {
-                    tab.doTask(new Tuple<>(ETaskType.SETTER, "index", 0));
+                    tab.doTask(new Tuple<>(ETaskType.SETTER, "animation", EAnimation.IDLE));
                 }
             });
         }
@@ -254,6 +253,15 @@ public class PaginatedList extends GuiElement {
     public ListElement getCurrentList() {
         if (this.lists.containsKey(this.current)) {
             return this.lists.get(this.current);
+        }
+        return null;
+    }
+
+    public GuiElement getTab(String id) {
+        for (GuiElement tab : this.tabs) {
+            if (tab.getId().equals(id)) {
+                return tab;
+            }
         }
         return null;
     }

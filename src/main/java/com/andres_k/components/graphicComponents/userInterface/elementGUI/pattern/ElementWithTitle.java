@@ -164,10 +164,9 @@ public class ElementWithTitle extends GuiElement {
     public boolean isOnFocus(float x, float y) {
         this.focused = false;
         if (this.activated) {
-            /*if (this.title.isOnFocus(x - this.getBody().getMinX(), y - this.getBody().getMinY())) {
+            if (this.title.isOnFocus(x - this.getBody().getMinX(), y - this.getBody().getMinY())) {
                 this.focused = true;
             }
-            */
             if (this.content.isOnFocus(x - this.getBody().getMinX(), y - this.getBody().getMinY())) {
                 this.focused = true;
             }
@@ -179,9 +178,10 @@ public class ElementWithTitle extends GuiElement {
     public boolean isOnClick(float x, float y) {
         this.clicked = false;
         if (this.activated) {
-            /*if (this.title.isOnClick(x - this.getBody().getMinX(), y - this.getBody().getMinY())) {
+            if (this.title.isOnClick(x - this.getBody().getMinX(), y - this.getBody().getMinY())) {
                 this.clicked = true;
-            }*/
+            }
+
             if (this.content.isOnClick(x - this.getBody().getMinX(), y - this.getBody().getMinY())) {
                 this.clicked = true;
             }
@@ -197,6 +197,11 @@ public class ElementWithTitle extends GuiElement {
     @Override
     public float getAbsoluteHeight() {
         return this.title.getBody().compileHeight(this.content.getBody());
+    }
+
+    @Override
+    public void setSizes(float sizeX, float sizeY) {
+        this.content.setSizes(sizeX - this.content.getBody().getMinX(), sizeY);
     }
 
 }

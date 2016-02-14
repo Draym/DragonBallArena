@@ -36,6 +36,8 @@ public abstract class GuiElement implements Observer {
         this.focused = false;
         this.clicked = false;
         this.tasks = new ArrayList<>();
+        this.tasks.add(new Pair<>(EStatus.ON_CREATE, ETaskType.START_ACTIVITY));
+        this.tasks.add(new Pair<>(EStatus.ON_KILL, ETaskType.STOP_ACTIVITY));
     }
 
     // FUNCTIONS
@@ -79,9 +81,9 @@ public abstract class GuiElement implements Observer {
         if (task instanceof ETaskType) {
             ETaskType action = (ETaskType) task;
 
-            if (action == ETaskType.START_ACTIVITY && !this.isActivated()) {
+            if (action == ETaskType.START_ACTIVITY) {
                 this.activate();
-            } else if (action == ETaskType.STOP_ACTIVITY && this.isActivated()) {
+            } else if (action == ETaskType.STOP_ACTIVITY) {
                 this.deactivate();
             } else if (action == ETaskType.ON_CREATE) {
                 this.OnCreate();
@@ -204,12 +206,22 @@ public abstract class GuiElement implements Observer {
         this.activated = value;
     }
 
+    public void setSizes(float sizeX, float sizeY) {
+        if (this.body != null) {
+            this.body.setSizes(sizeX, sizeY);
+        }
+    }
+
     public void setPosX(float value) {
-        this.body.setPosX(value);
+        if (this.body != null) {
+            this.body.setPosX(value);
+        }
     }
 
     public void setPosY(float value) {
-        this.body.setPosY(value);
+        if (this.body != null) {
+            this.body.setPosY(value);
+        }
     }
 
     public void setBody(ColorShape body) {
@@ -248,7 +260,7 @@ public abstract class GuiElement implements Observer {
     }
 
     protected final void OnClick() {
-        Console.write("OnClick: " + this.id);
+        Console.write("OnClick: " + this.id + " type: " + this.type);
         if (!this.clicked) {
             Console.write("do task: " + this.tasks.stream().filter(task-> task.getV1() == EStatus.ON_CLICK).count());
             this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_CLICK).forEach(task -> this.doTask(task.getV2()));
@@ -256,7 +268,7 @@ public abstract class GuiElement implements Observer {
     }
 
     protected final void OffClick() {
-        if (!this.clicked) {
+        if (this.clicked) {
             this.tasks.stream().filter(task -> task.getV1() == EStatus.OFF_CLICK).forEach(task -> this.doTask(task.getV2()));
         }
     }
@@ -268,13 +280,13 @@ public abstract class GuiElement implements Observer {
     }
 
     protected final void OffFocus() {
-        if (!this.focused) {
+        if (this.focused) {
             this.tasks.stream().filter(task -> task.getV1() == EStatus.OFF_FOCUS).forEach(task -> this.doTask(task.getV2()));
         }
     }
 
     protected final boolean OnEvent(InputEvent input) {
-        if (!this.isActivated()) {
+        if (this.isActivated()) {
             this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_EVENT).forEach(task -> this.doTask(task.getV2()));
         }
         return false;

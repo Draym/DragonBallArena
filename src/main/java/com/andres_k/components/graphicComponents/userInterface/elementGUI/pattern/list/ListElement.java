@@ -112,9 +112,11 @@ public class ListElement extends ComplexElement {
             float currentY = 0;
 
             for (GuiElement element : this.items) {
-                this.positions.add(new ColorRect(new Rectangle(currentX, currentY, this.body.getSizeX() - (2 * this.marginX), element.getAbsoluteHeight())));
+                ColorShape container = new ColorRect(new Rectangle(currentX, currentY, this.body.getSizeX() - (2 * this.marginX), element.getAbsoluteHeight()));
+                this.positions.add(container);
                 currentY += element.getAbsoluteHeight() + this.marginY;
 
+                element.setSizes(container.getSizeX(), container.getSizeY());
                 if (currentY >= this.body.getSizeY()) {
                     break;
                 }
@@ -140,16 +142,18 @@ public class ListElement extends ComplexElement {
 
     @Override
     public boolean isOnClick(float x, float y) {
+        boolean result = false;
+
         if (this.activated) {
             for (int i = 0; i < this.positions.size(); ++i) {
                 if (i >= this.items.size()) {
                     break;
                 }
                 if (this.items.get(i).isOnClick(x - this.getBody().getMinX() - this.positions.get(i).getMinX(), y - this.getBody().getMinY() - this.positions.get(i).getMinY()))
-                    return true;
+                    result = true;
             }
         }
-        return false;
+        return result;
     }
 
 
