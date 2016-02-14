@@ -36,12 +36,13 @@ public class PaginatedList extends GuiElement {
     protected EGuiElement tabImage;
     protected Pair<Float, Float> marginTab;
     protected Pair<Float, Float> startTab;
+    protected boolean scrollable;
 
-    public PaginatedList(ColorShape container, ColorShape bodyList, EGuiElement tabImage, float marginTabX, float marginTabY, float startTabX, float startTabY, boolean activated) {
-        this(ELocation.UNKNOWN.getId(), container, bodyList, tabImage, marginTabX, marginTabY, startTabX, startTabY, activated);
+    public PaginatedList(ColorShape container, ColorShape bodyList, EGuiElement tabImage, float marginTabX, float marginTabY, float startTabX, float startTabY, boolean scrollable, boolean activated) {
+        this(ELocation.UNKNOWN.getId(), container, bodyList, tabImage, marginTabX, marginTabY, startTabX, startTabY, scrollable, activated);
     }
 
-    public PaginatedList(String id, ColorShape container, ColorShape bodyList, EGuiElement tabImage, float marginTabX, float marginTabY, float startTabX, float startTabY, boolean activated) {
+    public PaginatedList(String id, ColorShape container, ColorShape bodyList, EGuiElement tabImage, float marginTabX, float marginTabY, float startTabX, float startTabY, boolean scrollable, boolean activated) {
         super(EGuiType.LIST, id, container, activated);
         this.lists = new LinkedHashMap<>();
         this.tabs = new ArrayList<>();
@@ -50,6 +51,7 @@ public class PaginatedList extends GuiElement {
         this.marginTab = new Pair<>(marginTabX, marginTabY);
         this.startTab = new Pair<>(startTabX, startTabY);
         this.current = "";
+        this.scrollable = scrollable;
     }
 
     @Override
@@ -201,7 +203,11 @@ public class PaginatedList extends GuiElement {
     // MODIFIER
     public void addList(TextElement text, float marginX, float marginY) throws SlickException {
         this.tabs.add(new ElementWithTitle(text.getValue(), text, new ImageElement(new ColorRect(new Rectangle(this.getNextTabPosX(), this.getNextTabPosY(), 0, 0)), ResourceManager.get().getGuiAnimator(this.tabImage), true), true));
-        this.lists.put(text.getValue(), new ListElement(this.bodyList, marginX, marginY, true));
+        if (this.scrollable) {
+            this.lists.put(text.getValue(), new ScrollableList(this.bodyList, marginX, marginY, true));
+        } else {
+            this.lists.put(text.getValue(), new ListElement(this.bodyList, marginX, marginY, true));
+        }
         if (this.lists.size() == 1) {
             this.switchCurrent(text.getValue());
         }

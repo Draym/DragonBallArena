@@ -83,7 +83,7 @@ public class Modal extends GuiElement {
                 this.OnKill();
             }
         }
-        return false;
+        return this.content.event(input);
     }
 
     // GETTERS

@@ -20,6 +20,7 @@ public class ListElement extends ComplexElement {
     protected float marginY;
     protected boolean changed;
     protected List<ColorShape> positions;
+    protected int startPos;
 
     public ListElement(ColorShape body, float marginX, float marginY, boolean activated) {
         this(ELocation.UNKNOWN.getId(), body, marginX, marginY, activated);
@@ -31,6 +32,7 @@ public class ListElement extends ComplexElement {
         this.marginX = marginX;
         this.marginY = marginY;
         this.positions = new ArrayList<>();
+        this.startPos = 0;
     }
 
     @Override
@@ -57,11 +59,13 @@ public class ListElement extends ComplexElement {
         if (this.activated) {
             this.body.cloneAndDecalFrom(decalX, decalY).draw(g);
 
+            int pos;
             for (int i = 0; i < this.positions.size(); ++i) {
-                if (i >= this.items.size()) {
+                pos = this.startPos + i;
+                if (pos >= this.items.size()) {
                     break;
                 }
-                this.items.get(i).draw(g, this.positions.get(i).cloneAndDecalFrom(this.body.getMinX() + decalX, this.body.getMinY() + decalY));
+                this.items.get(pos).draw(g, this.positions.get(i).cloneAndDecalFrom(this.body.getMinX() + decalX, this.body.getMinY() + decalY));
             }
         }
     }
@@ -72,11 +76,13 @@ public class ListElement extends ComplexElement {
             ColorShape container = body.cloneAndDecalFrom(this.body.getMinX(), this.body.getMinY());
             container.draw(g);
 
+            int pos;
             for (int i = 0; i < this.positions.size(); ++i) {
-                if (i >= this.items.size()) {
+                pos = this.startPos + i;
+                if (pos >= this.items.size()) {
                     break;
                 }
-                this.items.get(i).draw(g, container.cloneAndDecalFrom(this.positions.get(i)));
+                this.items.get(pos).draw(g, container.cloneAndDecalFrom(this.positions.get(i)));
             }
         }
     }
@@ -111,12 +117,14 @@ public class ListElement extends ComplexElement {
             float currentX = this.marginX;
             float currentY = 0;
 
-            for (GuiElement element : this.items) {
-                ColorShape container = new ColorRect(new Rectangle(currentX, currentY, this.body.getSizeX() - (2 * this.marginX), element.getAbsoluteHeight()));
-                this.positions.add(container);
-                currentY += element.getAbsoluteHeight() + this.marginY;
+            this.positions.clear();
 
-                element.setSizes(container.getSizeX(), container.getSizeY());
+            for (int i = this.startPos; i < this.items.size(); ++i) {
+                ColorShape container = new ColorRect(new Rectangle(currentX, currentY, this.body.getSizeX() - (2 * this.marginX), this.items.get(i).getAbsoluteHeight()));
+                this.positions.add(container);
+                currentY += this.items.get(i).getAbsoluteHeight() + this.marginY;
+
+                this.items.get(i).setSizes(container.getSizeX(), container.getSizeY());
                 if (currentY >= this.body.getSizeY()) {
                     break;
                 }
@@ -130,11 +138,13 @@ public class ListElement extends ComplexElement {
     public boolean isOnFocus(float x, float y) {
         this.focused = false;
         if (this.activated) {
+            int pos;
             for (int i = 0; i < this.positions.size(); ++i) {
-                if (i >= this.items.size()) {
+                pos = this.startPos + i;
+                if (pos >= this.items.size()) {
                     break;
                 }
-                this.items.get(i).isOnFocus(x - this.getBody().getMinX() - this.positions.get(i).getMinX(), y - this.getBody().getMinY() - this.positions.get(i).getMinY());
+                this.items.get(pos).isOnFocus(x - this.getBody().getMinX() - this.positions.get(i).getMinX(), y - this.getBody().getMinY() - this.positions.get(i).getMinY());
             }
         }
         return this.focused;
@@ -145,11 +155,13 @@ public class ListElement extends ComplexElement {
         boolean result = false;
 
         if (this.activated) {
+            int pos;
             for (int i = 0; i < this.positions.size(); ++i) {
-                if (i >= this.items.size()) {
+                pos = this.startPos + i;
+                if (pos >= this.items.size()) {
                     break;
                 }
-                if (this.items.get(i).isOnClick(x - this.getBody().getMinX() - this.positions.get(i).getMinX(), y - this.getBody().getMinY() - this.positions.get(i).getMinY()))
+                if (this.items.get(pos).isOnClick(x - this.getBody().getMinX() - this.positions.get(i).getMinX(), y - this.getBody().getMinY() - this.positions.get(i).getMinY()))
                     result = true;
             }
         }

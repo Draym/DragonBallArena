@@ -10,6 +10,7 @@ import org.newdawn.slick.SlickException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
+import java.util.stream.Collectors;
 
 /**
  * Created by andres_k on 01/02/2016.
@@ -65,21 +66,23 @@ public abstract class UserInterface implements Observer {
 
     // GETTERS
     public boolean isOnFocus(int x, int y) {
-        for (GuiElement guiElement : this.elements) {
+        boolean result = false;
+        for (GuiElement guiElement : this.elements.stream().filter(GuiElement::isActivated).collect(Collectors.toList())) {
             if (guiElement.isOnFocus(x, y)) {
-                return true;
+                result = true;
             }
         }
-        return false;
+        return result;
     }
 
     public boolean isOnClick(int x, int y) {
-        for (GuiElement guiElement : this.elements) {
+        boolean result = false;
+        for (GuiElement guiElement : this.elements.stream().filter(GuiElement::isActivated).collect(Collectors.toList())) {
             if (guiElement.isOnClick(x, y)) {
-                return true;
+                result = true;
             }
         }
-        return false;
+        return result;
     }
 
     public GuiElement getElementById(String id) {

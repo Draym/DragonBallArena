@@ -127,10 +127,11 @@ public abstract class GuiElement implements Observer {
     public boolean isOnClick(float x, float y) {
         if (this.activated && this.focused) {
             this.OnClick();
+            this.clicked = true;
         } else {
             this.OffClick();
+            this.clicked = false;
         }
-        this.clicked = this.focused;
         return this.clicked;
     }
 
@@ -302,5 +303,10 @@ public abstract class GuiElement implements Observer {
         if (this.isActivated()) {
             this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_KILL).forEach(task -> this.doTask(task.getV2()));
         }
+    }
+
+    @Override
+    public String toString() {
+        return "[" + this.id + ", " + this.type + "]";
     }
 }
