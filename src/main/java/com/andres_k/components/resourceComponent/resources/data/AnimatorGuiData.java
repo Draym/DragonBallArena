@@ -37,6 +37,8 @@ public class AnimatorGuiData extends DataManager {
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initContainers")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initButtons")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initComponents")));
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initAvatars")));
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initCards")));
     }
 
     public void initContainers() throws NoSuchMethodException, SlickException, JSONException {
@@ -60,6 +62,27 @@ public class AnimatorGuiData extends DataManager {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.SLIDER), EGuiElement.SLIDER);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.SLIDER_VALUE), EGuiElement.SLIDER_VALUE);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.TAB_STATUS), EGuiElement.TAB_STATUS);
+    }
+    public void initAvatars() throws NoSuchMethodException, SlickException, JSONException {
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.AVATAR_GOKU), EGuiElement.AVATAR_GOKU);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.AVATAR_GOHAN), EGuiElement.AVATAR_GOHAN);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.AVATAR_VEGETA), EGuiElement.AVATAR_VEGETA);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.AVATAR_PICOLO), EGuiElement.AVATAR_PICOLO);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.AVATAR_KAME_SENNIN), EGuiElement.AVATAR_KAME_SENNIN);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.AVATAR_CELL), EGuiElement.AVATAR_CELL);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.AVATAR_BUU), EGuiElement.AVATAR_BUU);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.AVATAR_FRIEEZA), EGuiElement.AVATAR_FRIEEZA);
+    }
+
+    public void initCards() throws NoSuchMethodException, SlickException, JSONException {
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_GOKU), EGuiElement.CARDS_GOKU);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_GOHAN), EGuiElement.CARDS_GOHAN);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_VEGETA), EGuiElement.CARDS_VEGETA);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_PICOLO), EGuiElement.CARDS_PICOLO);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_KAME_SENNIN), EGuiElement.CARDS_KAME_SENNIN);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_CELL), EGuiElement.CARDS_CELL);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_BUU), EGuiElement.CARDS_BUU);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_FRIEEZA), EGuiElement.CARDS_FRIEEZA);
     }
 
     private void addAnimator(AnimatorController animatorController, EGuiElement type) {

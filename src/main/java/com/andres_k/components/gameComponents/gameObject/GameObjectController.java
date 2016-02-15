@@ -140,10 +140,10 @@ public class GameObjectController {
         for (String name : playerNames) {
             GameObject player = null;
             while (player == null || this.checkCollision(player, ETaskType.STATIC).hasCollision()) {
-                int randomX = RandomTools.getInt(WindowConfig.getWBigSizeX() - 600) + 300;
+                int randomX = RandomTools.getInt(WindowConfig.getWGameSizeX() - 600) + 300;
                 EGameObject type = EGameObject.getEnumByValue(name);
                 player = GameObjectFactory.create(type, ResourceManager.get().getGameAnimator(type),
-                        "player" + count + ":" + name, randomX, WindowConfig.wBig_sY - 200);
+                        "player" + count + ":" + name, randomX, WindowConfig.wGame_sY - 200);
             }
             ++count;
             this.players.add(player);

@@ -27,7 +27,7 @@ public class WindowSelectSolo extends WindowBasedGame {
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.initBeforeEnter();
 
-        GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getWBigSizeX(), WindowConfig.getWBigSizeY(), false);
+        GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getWGameSizeX(), WindowConfig.getWGameSizeY(), false);
         MusicController.get().loop(ESound.BACKGROUND_SELECT);
     }
 

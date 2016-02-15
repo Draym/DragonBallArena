@@ -15,6 +15,8 @@ public enum ESprites {
     BUTTON(6),
     COMPONENT(7),
     CONTAINER(8),
+    CARDS(9),
+    AVATAR(10),
 
     // GUI_COMPONENT
     TAB_STATUS(COMPONENT.getIndex()),
@@ -38,6 +40,26 @@ public enum ESprites {
     BUTTON_SLIDER(BUTTON.getIndex()),
     BUTTON_CLOSE(BUTTON.getIndex()),
 
+    // GUI_CARDS
+    CARDS_GOKU(CARDS.getIndex()),
+    CARDS_GOHAN(CARDS.getIndex()),
+    CARDS_VEGETA(CARDS.getIndex()),
+    CARDS_PICOLO(CARDS.getIndex()),
+    CARDS_KAME_SENNIN(CARDS.getIndex()),
+    CARDS_CELL(CARDS.getIndex()),
+    CARDS_BUU(CARDS.getIndex()),
+    CARDS_FRIEEZA(CARDS.getIndex()),
+
+    // GUI_CARDS_AVATAR
+    AVATAR_GOKU(AVATAR.getIndex()),
+    AVATAR_GOHAN(AVATAR.getIndex()),
+    AVATAR_VEGETA(AVATAR.getIndex()),
+    AVATAR_PICOLO(AVATAR.getIndex()),
+    AVATAR_KAME_SENNIN(AVATAR.getIndex()),
+    AVATAR_CELL(AVATAR.getIndex()),
+    AVATAR_BUU(AVATAR.getIndex()),
+    AVATAR_FRIEEZA(AVATAR.getIndex()),
+
     //gamePlayer
     GOKU(PLAYER.getIndex()),
 
@@ -48,6 +70,8 @@ public enum ESprites {
     //background
     LOAD_SCREEN(SCREEN_BACKGROUND.getIndex()),
     HOME_SCREEN(SCREEN_BACKGROUND.getIndex()),
+    SELECT_SCREEN(SCREEN_BACKGROUND.getIndex()),
+    BATTLE_SCREEN(SCREEN_BACKGROUND.getIndex()),
     LOGO(SCREEN_BACKGROUND.getIndex()),
 
     //map

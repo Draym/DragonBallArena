@@ -69,7 +69,7 @@ public class WindowLoad extends WindowBasedGame {
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.initBeforeEnter();
 
-        GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getWMediumSizeX(), WindowConfig.getWMediumSizeY(), false);
+        GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getWLoadSizeX(), WindowConfig.getWLoadSizeY(), false);
     }
 
 

@@ -46,6 +46,14 @@ public class AnimatorBackgroundData extends DataManager {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.HOME_SCREEN), EBackground.HOME_SCREEN);
     }
 
+    public void initSelectScreen() throws NoSuchMethodException, SlickException, JSONException {
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.SELECT_SCREEN), EBackground.SELECT_SCREEN);
+    }
+
+    public void initBattleScreen() throws NoSuchMethodException, SlickException, JSONException {
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.BATTLE_SCREEN), EBackground.BEFORE_BATTLE_SCREEN);
+    }
+
     public void initMaps() throws NoSuchMethodException, SlickException, JSONException {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.VALLEY_MAP), EBackground.VALLEY_MAP);
     }

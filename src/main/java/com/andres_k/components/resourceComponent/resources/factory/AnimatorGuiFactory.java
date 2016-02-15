@@ -85,4 +85,50 @@ public class AnimatorGuiFactory extends AnimatorFactory {
         }
         return animatorController;
     }
+
+    public AnimatorController getGuiAvatarAnimator(ESprites index) throws SlickException {
+        AnimatorController animatorController = new AnimatorController();
+
+        if (index == ESprites.AVATAR_GOKU) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_avatar + "gokuAvatar.png"));
+        } else if (index == ESprites.AVATAR_GOHAN) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_avatar + "gohanAvatar.png"));
+        } else if (index == ESprites.AVATAR_VEGETA) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_avatar + "vegetaAvatar.png"));
+        } else if (index == ESprites.AVATAR_PICOLO) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_avatar + "picoloAvatar.png"));
+        } else if (index == ESprites.AVATAR_KAME_SENNIN) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_avatar + "kameSenninAvatar.png"));
+        } else if (index == ESprites.AVATAR_CELL) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_avatar + "cellAvatar.png"));
+        } else if (index == ESprites.AVATAR_BUU) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_avatar + "buuAvatar.png"));
+        } else if (index == ESprites.AVATAR_FRIEEZA) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_avatar + "frieezaAvatar.png"));
+        }
+        return animatorController;
+    }
+
+    public AnimatorController getGuiCardsAnimator(ESprites index) throws SlickException {
+        AnimatorController animatorController = new AnimatorController();
+
+        if (index == ESprites.CARDS_GOKU) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "gokuCard.png"));
+        } else if (index == ESprites.CARDS_GOHAN) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "gohanCard.png"));
+        } else if (index == ESprites.CARDS_VEGETA) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "vegetaCard.png"));
+        } else if (index == ESprites.CARDS_PICOLO) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "picoloCard.png"));
+        } else if (index == ESprites.CARDS_KAME_SENNIN) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "kameSenninCard.png"));
+        } else if (index == ESprites.CARDS_CELL) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "cellCard.png"));
+        } else if (index == ESprites.CARDS_BUU) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "buuCard.png"));
+        } else if (index == ESprites.CARDS_FRIEEZA) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "frieezaCard.png"));
+        }
+        return animatorController;
+    }
 }

@@ -28,7 +28,7 @@ public class WindowHome extends WindowBasedGame {
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.initBeforeEnter();
 
-        GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getWLowSizeX(), WindowConfig.getWLowSizeY(), false);
+        GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getWHomeSizeX(), WindowConfig.getWHomeSizeY(), false);
         MusicController.get().loop(ESound.BACKGROUND_HOME);
     }
 

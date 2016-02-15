@@ -66,23 +66,21 @@ public abstract class UserInterface implements Observer {
 
     // GETTERS
     public boolean isOnFocus(int x, int y) {
-        boolean result = false;
         for (GuiElement guiElement : this.elements.stream().filter(GuiElement::isActivated).collect(Collectors.toList())) {
             if (guiElement.isOnFocus(x, y)) {
-                result = true;
+                return true;
             }
         }
-        return result;
+        return false;
     }
 
     public boolean isOnClick(int x, int y) {
-        boolean result = false;
         for (GuiElement guiElement : this.elements.stream().filter(GuiElement::isActivated).collect(Collectors.toList())) {
             if (guiElement.isOnClick(x, y)) {
-                result = true;
+                return true;
             }
         }
-        return result;
+        return false;
     }
 
     public GuiElement getElementById(String id) {

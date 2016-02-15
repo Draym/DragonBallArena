@@ -49,7 +49,7 @@ public class MasterGame {
     private void startGame() throws SlickException, JSONException {
 
         AppGameContainer appGame = new AppGameContainer(this.windows);
-        appGame.setDisplayMode(WindowConfig.getWMediumSizeX(), WindowConfig.getWMediumSizeY(), false);
+        appGame.setDisplayMode(WindowConfig.getWLoadSizeX(), WindowConfig.getWLoadSizeY(), false);
         GlobalVariable.appGameContainer = appGame;
         appGame.start();
     }

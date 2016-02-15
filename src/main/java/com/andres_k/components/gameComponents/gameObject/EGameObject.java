@@ -28,20 +28,36 @@ public enum EGameObject {
     //items
     GROUND("Ground", "PLATFORM"),
     WALL("Wall", "BORDER"),
-    GOKU("Goku", "PLAYER");
+    GOKU("Goku", "PLAYER"),
+    GOHAN("Gohan", "PLAYER", false),
+    VEGETA("Vegeta", "PLAYER", false),
+    PICOLO("Picolo", "PLAYER", false),
+    KAME_SENNIN("KameSennin", "PLAYER", false),
+    CELL("Cell", "PLAYER", false),
+    BUU("Buu", "PLAYER", false),
+    FRIEEZA("Frieeza", "PLAYER", false);
 
 
     private final String value;
     private final String type;
+    private final boolean available;
 
     EGameObject(String value) {
         this.value = value;
         this.type = value;
+        this.available = true;
     }
 
     EGameObject(String value, String type) {
         this.value = value;
         this.type = type;
+        this.available = true;
+    }
+
+    EGameObject(String value, String type, boolean available) {
+        this.value = value;
+        this.type = type;
+        this.available = available;
     }
 
     public String getValue() {
@@ -82,5 +98,14 @@ public enum EGameObject {
             }
         }
         return (current == dir);
+    }
+
+    public boolean isAvailable() {
+        return this.available;
+    }
+
+    @Override
+    public String toString() {
+        return this.value;
     }
 }
