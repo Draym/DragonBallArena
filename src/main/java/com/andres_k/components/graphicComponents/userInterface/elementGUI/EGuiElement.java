@@ -28,6 +28,9 @@ public enum EGuiElement {
     BUTTON_CONTROLS("BUTTON_CONTROLS", BUTTON.getValue()),
     BUTTON_SLIDER("BUTTON_SLIDER", BUTTON.getValue()),
     BUTTON_CLOSE("BUTTON_CLOSE", BUTTON.getValue()),
+    BUTTON_EXIT("BUTTON_EXIT", BUTTON.getValue()),
+    BUTTON_RESUME("BUTTON_RESUME", BUTTON.getValue()),
+    BUTTON_COMBO("BUTTON_COMBO", BUTTON.getValue()),
 
     // component
     TAB_STATUS("TAB_STATUS", COMPONENT.getValue()),

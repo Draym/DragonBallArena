@@ -39,6 +39,9 @@ public enum ESprites {
     BUTTON_CONTROLS(BUTTON.getIndex()),
     BUTTON_SLIDER(BUTTON.getIndex()),
     BUTTON_CLOSE(BUTTON.getIndex()),
+    BUTTON_EXIT(BUTTON.getIndex()),
+    BUTTON_RESUME(BUTTON.getIndex()),
+    BUTTON_COMBO(BUTTON.getIndex()),
 
     // GUI_CARDS
     CARDS_GOKU(CARDS.getIndex()),

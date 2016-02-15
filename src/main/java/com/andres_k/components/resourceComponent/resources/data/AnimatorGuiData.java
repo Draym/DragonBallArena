@@ -36,6 +36,7 @@ public class AnimatorGuiData extends DataManager {
         this.methods.clear();
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initContainers")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initButtons")));
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initButtons2")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initComponents")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initAvatars")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initCards")));
@@ -53,8 +54,14 @@ public class AnimatorGuiData extends DataManager {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_PLAY_MULTI), EGuiElement.BUTTON_PLAY_MULTI);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_SETTING), EGuiElement.BUTTON_SETTING);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_CONTROLS), EGuiElement.BUTTON_CONTROLS);
+    }
+
+    public void initButtons2() throws NoSuchMethodException, SlickException, JSONException {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_SLIDER), EGuiElement.BUTTON_SLIDER);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_CLOSE), EGuiElement.BUTTON_CLOSE);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_EXIT), EGuiElement.BUTTON_EXIT);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_RESUME), EGuiElement.BUTTON_RESUME);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_COMBO), EGuiElement.BUTTON_COMBO);
     }
 
     public void initComponents() throws NoSuchMethodException, SlickException, JSONException {
