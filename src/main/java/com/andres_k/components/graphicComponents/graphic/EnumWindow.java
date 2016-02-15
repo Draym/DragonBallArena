@@ -6,15 +6,27 @@ package com.andres_k.components.graphicComponents.graphic;
 public enum EnumWindow {
     EXIT(-1),
     LOAD(0), HOME(1), GAME(2),
-    SELECT_SOLO(3), SELECT_VERSUS(4), SELECT_MULTI(5);
+    SELECT_SOLO(3), SELECT_VERSUS(4), SELECT_MULTI(5),
+    BEFORE_BATTLE(6);
 
-    private int value;
+    private int id;
 
-    EnumWindow(int value) {
-        this.value = value;
+    EnumWindow(int id) {
+        this.id = id;
     }
 
-    public int getValue() {
-        return this.value;
+    public int getId() {
+        return this.id;
+    }
+
+    public static EnumWindow getById(int id) {
+        EnumWindow[] windows = EnumWindow.values();
+
+        for (EnumWindow window : windows) {
+            if (window.getId() == id) {
+                return window;
+            }
+        }
+        return EXIT;
     }
 }

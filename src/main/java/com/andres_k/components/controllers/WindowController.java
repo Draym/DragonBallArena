@@ -25,6 +25,7 @@ public abstract class WindowController implements Observer {
     protected WindowController(ELocation location) {
         this.location = location;
         this.taskManager = new LocalTaskManager(this.location);
+        this.taskManager.register(this.location.getId(), this);
         this.backgroundManager = new BackgroundManager();
     }
 

@@ -54,14 +54,14 @@ public class HomeController extends WindowController {
 
     @Override
     public void update(Observable o, Object arg) {
+        Console.write("Home Received: " + arg);
         if (arg instanceof TaskComponent) {
             TaskComponent received = (TaskComponent) arg;
 
-            Console.write("Home Received: " + received);
             if (received.getTarget().equals(ELocation.HOME_CONTROLLER)) {
                 if (received.getTask() instanceof EnumWindow) {
                     if (this.stateWindow != null) {
-                        this.stateWindow.enterState(((EnumWindow) received.getTask()).getValue());
+                        this.stateWindow.enterState(((EnumWindow) received.getTask()).getId());
                     }
                 } else if (received.getTask() instanceof ETaskType) {
                     if (received.getTask() == ETaskType.EXIT) {

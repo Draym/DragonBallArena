@@ -57,7 +57,7 @@ public class HomeGUI extends UserInterface {
         buttonList.addItem(ElementFactory.createButton("Battle  ", ColorTools.get(ColorTools.Colors.GUI_ORANGE), EFont.MODERN, 25, EGuiElement.BUTTON_PLAY_MULTI, ElementFactory.createBasicButtonTasks(ELocation.HOME_GUI, ELocation.HOME_CONTROLLER, EnumWindow.SELECT_MULTI)));
         buttonList.addItem(ElementFactory.createButton("Settings", ColorTools.get(ColorTools.Colors.GUI_GREY), EFont.MODERN, 25, EGuiElement.BUTTON_SETTING,  ElementFactory.createBasicButtonTasks(ELocation.HOME_GUI_Menu, ELocation.HOME_GUI_Settings, ETaskType.ON_CREATE)));
         menu.addItem(buttonList);
-        this.taskManager.register(ELocation.HOME_GUI_Menu.getId(), menu);
+        this.taskManager.register(menu.getId(), menu);
         this.elements.add(menu);
 
         // settings
@@ -67,9 +67,9 @@ public class HomeGUI extends UserInterface {
         settings.addItem(new ComplexElement(ELocation.HOME_GUI_Volumes.getId(), new ColorRect(new Rectangle(30, 70, 520, 300)), true));
         settings.addItem(ElementFactory.createButton("Controls", ColorTools.get(ColorTools.Colors.GUI_GREY), 25, EFont.MODERN, EGuiElement.BUTTON_CONTROLS, 270, 390, ElementFactory.createBasicButtonTasks(ELocation.HOME_GUI_Settings, ELocation.HOME_GUI_Controls, ETaskType.ON_CREATE)));
 
-        Modal settingModal = new Modal(ELocation.HOME_GUI_Settings.getId(), new ColorRect(new Rectangle(0, 0, WindowConfig.getWHomeSizeX(), WindowConfig.getWHomeSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), settings);
+        Modal settingModal = new Modal(ELocation.HOME_GUI_Settings.getId(), new ColorRect(new Rectangle(0, 0, WindowConfig.get().getWindowSizes(EnumWindow.HOME).getV1(), WindowConfig.get().getWindowSizes(EnumWindow.HOME).getV2()), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), settings);
         settingModal.addTasks(ElementFactory.createBasicModalTasks(ELocation.HOME_GUI_Settings, ELocation.HOME_GUI_Menu));
-        this.taskManager.register(ELocation.HOME_GUI_Settings.getId(), settingModal);
+        this.taskManager.register(settingModal.getId(), settingModal);
         this.elements.add(settingModal);
 
         // controls
@@ -82,9 +82,9 @@ public class HomeGUI extends UserInterface {
         playerControls.addList(ElementFactory.createText("Player 2", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 0, 0), 0, 20);
         controls.addItem(playerControls);
 
-        Modal controlModal = new Modal(ELocation.HOME_GUI_Controls.getId(), new ColorRect(new Rectangle(0, 0, WindowConfig.getWHomeSizeX(), WindowConfig.getWHomeSizeY()), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), controls);
+        Modal controlModal = new Modal(ELocation.HOME_GUI_Controls.getId(), new ColorRect(new Rectangle(0, 0, WindowConfig.get().getWindowSizes(EnumWindow.HOME).getV1(), WindowConfig.get().getWindowSizes(EnumWindow.HOME).getV1()), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), controls);
         controlModal.addTasks(ElementFactory.createBasicModalTasks(ELocation.HOME_GUI_Controls, ELocation.HOME_GUI_Settings));
-        this.taskManager.register(ELocation.HOME_GUI_Controls.getId(), controlModal);
+        this.taskManager.register(controlModal.getId(), controlModal);
         this.elements.add(controlModal);
         this.initElements();
     }

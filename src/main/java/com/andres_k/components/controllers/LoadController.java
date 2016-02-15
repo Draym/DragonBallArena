@@ -84,7 +84,7 @@ public class LoadController extends WindowController {
     @Override
     public void keyReleased(int key, char c) {
         if (this.loadCompleted && key == Keyboard.KEY_RETURN) {
-            this.stateWindow.enterState(EnumWindow.HOME.getValue());
+            this.stateWindow.enterState(EnumWindow.HOME.getId());
         }
     }
 

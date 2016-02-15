@@ -142,14 +142,14 @@ public class GameController extends WindowController {
 
             if (received.getTarget().equals(ELocation.GAME_CONTROLLER)) {
                 if (received.getTask() instanceof EnumWindow) {
-                    this.stateWindow.enterState(((EnumWindow) received.getTask()).getValue());
+                    this.stateWindow.enterState(((EnumWindow) received.getTask()).getId());
                 } else if (received.getTask() instanceof ETaskType) {
                     if (received.getTask() == ETaskType.EXIT) {
                         this.window.quit();
                     } else if (received.getTask() == ETaskType.START) {
                         this.playerNames.clear();
                         this.playerNames.addAll(GameConfig.typePlayer.stream().map(EGameObject::getValue).collect(Collectors.toList()));
-                        this.stateWindow.enterState(EnumWindow.GAME.getValue());
+                        this.stateWindow.enterState(EnumWindow.GAME.getId());
                     }
                 } else if (received.getTask() instanceof MessageOverlayMenu) {
                     this.running = !((MessageOverlayMenu) received.getTask()).isActivated();

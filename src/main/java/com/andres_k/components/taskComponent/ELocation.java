@@ -43,7 +43,18 @@ public enum ELocation {
     HOME_GUI_Settings("Settings", HOME_GUI.getId()),
     HOME_GUI_Controls("Controls", HOME_GUI.getId()),
     HOME_GUI_Controls_player("Controls_Player", HOME_GUI.getId()),
-    HOME_GUI_Volumes("ControlVolume", HOME_GUI.getId());
+    HOME_GUI_Volumes("ControlVolume", HOME_GUI.getId()),
+
+    //SELECT_SOLO
+    SELECT_SOLO_GUI_Options("Options", SELECT_SOLO_GUI.getId()),
+    SELECT_SOLO_GUI_Settings("Settings", SELECT_SOLO_GUI.getId()),
+    SELECT_SOLO_GUI_Combos("Combos", SELECT_SOLO_GUI.getId()),
+
+    //SELECT_VERSUS
+    SELECT_VERSUS_GUI_Options("Options", SELECT_VERSUS_GUI.getId()),
+
+    //SELECT_MULTI
+    SELECT_MULTI_GUI_Options("Options", SELECT_MULTI_GUI.getId());
 
     private String name;
     private String parent;

@@ -2,6 +2,7 @@ package com.andres_k.components.taskComponent;
 
 import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.components.taskComponent.utils.TaskObservable;
+import com.andres_k.utils.tools.Console;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +38,7 @@ public class CentralTaskManager {
     }
 
     public void sendRequest(TaskComponent task) {
+        Console.debug("CentralSend: " + task);
         if (this.targets.containsKey(task.getTarget().getId())) {
             this.targets.get(task.getTarget().getId()).notify(TaskFactory.changeSender(this.location, task));
         } else {

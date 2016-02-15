@@ -1,12 +1,12 @@
 package com.andres_k.components.graphicComponents.graphic.windows;
 
 import com.andres_k.components.controllers.SelectSoloController;
+import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.SelectSoloGui;
 import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.resourceComponent.sounds.MusicController;
 import com.andres_k.components.taskComponent.LocalTaskManager;
-import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
@@ -27,7 +27,7 @@ public class WindowSelectVersus extends WindowBasedGame {
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.initBeforeEnter();
 
-        GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getWGameSizeX(), WindowConfig.getWGameSizeY(), false);
+        WindowConfig.get().switchWindow(EnumWindow.getById(this.idWindow));
         MusicController.get().loop(ESound.BACKGROUND_SELECT);
     }
 

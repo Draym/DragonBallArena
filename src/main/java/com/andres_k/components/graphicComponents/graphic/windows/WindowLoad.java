@@ -1,13 +1,13 @@
 package com.andres_k.components.graphicComponents.graphic.windows;
 
 import com.andres_k.components.controllers.LoadController;
+import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.LoadGUI;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.resourceComponent.sounds.MusicController;
 import com.andres_k.components.taskComponent.LocalTaskManager;
-import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.tools.Console;
 import org.codehaus.jettison.json.JSONException;
@@ -69,7 +69,7 @@ public class WindowLoad extends WindowBasedGame {
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         this.initBeforeEnter();
 
-        GlobalVariable.appGameContainer.setDisplayMode(WindowConfig.getWLoadSizeX(), WindowConfig.getWLoadSizeY(), false);
+        WindowConfig.get().switchWindow(EnumWindow.getById(this.idWindow));
     }
 
 

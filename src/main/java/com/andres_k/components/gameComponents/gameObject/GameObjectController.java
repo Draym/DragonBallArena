@@ -4,6 +4,7 @@ import com.andres_k.components.controllers.ScoreData;
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.gameComponents.collisions.CollisionResult;
 import com.andres_k.components.gameComponents.gameObject.objects.Player;
+import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.utils.configs.WindowConfig;
@@ -140,10 +141,10 @@ public class GameObjectController {
         for (String name : playerNames) {
             GameObject player = null;
             while (player == null || this.checkCollision(player, ETaskType.STATIC).hasCollision()) {
-                int randomX = RandomTools.getInt(WindowConfig.getWGameSizeX() - 600) + 300;
+                int randomX = RandomTools.getInt(WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1() - 600) + 300;
                 EGameObject type = EGameObject.getEnumByValue(name);
                 player = GameObjectFactory.create(type, ResourceManager.get().getGameAnimator(type),
-                        "player" + count + ":" + name, randomX, WindowConfig.wGame_sY - 200);
+                        "player" + count + ":" + name, randomX, WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2() - 200);
             }
             ++count;
             this.players.add(player);

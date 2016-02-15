@@ -1,6 +1,7 @@
 package com.andres_k.components.graphicComponents.background.wallpaper;
 
 import com.andres_k.components.gameComponents.animations.AnimatorController;
+import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
@@ -45,7 +46,7 @@ public class WallpaperSliding extends Wallpaper {
                 pos.setV2((int) Math.ceil(((float) pos.getV2() + (this.speed * (GameConfig.currentTimeLoop / 1000)))));
             }
             for (int i = 0; i < this.positions.size(); ++i) {
-                if (this.positions.get(i).getV2() > WindowConfig.wGame_sY) {
+                if (this.positions.get(i).getV2() > WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2()) {
                     int posPrev = i - 1;
                     posPrev = (posPrev < 0 ? this.positions.size() - 1 : posPrev);
 
@@ -62,10 +63,10 @@ public class WallpaperSliding extends Wallpaper {
         this.images.clear();
         this.positions.clear();
         this.backgroundSizeY = background.getHeight();
-        int number = (int) (WindowConfig.wGame_sY / this.backgroundSizeY) + 2;
+        int number = (int) (WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2() / this.backgroundSizeY) + 2;
 
         int x = 0;
-        int y = (int)(WindowConfig.wGame_sY - this.backgroundSizeY);
+        int y = (int)(WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2() - this.backgroundSizeY);
 
         y = (y < 0 ? 0 : y);
         for (int i = 0; i < number; ++i) {

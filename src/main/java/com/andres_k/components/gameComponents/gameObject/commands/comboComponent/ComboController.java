@@ -46,7 +46,7 @@ public class ComboController {
 /*
         Console.write("/---");
         for (EnumInput val : this.history)
-            Console.write(val.getValue());
+            Console.write(val.getId());
         Console.write("---\\");
 */
         if (this.combos.hasCombo(this.history)) {

@@ -3,6 +3,7 @@ package com.andres_k.master;
 
 import com.andres_k.components.controllers.ScoreData;
 import com.andres_k.components.eventComponent.input.InputData;
+import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.graphic.Windows;
 import com.andres_k.components.networkComponents.networkGame.NetworkController;
 import com.andres_k.components.resourceComponent.sounds.MusicController;
@@ -27,7 +28,7 @@ public class MasterGame {
 
     public MasterGame() throws SlickException, JSONException {
         ColorTools.init();
-        
+
         InputData.init(ConfigPath.config_input);
         ScoreData.init(ConfigPath.config_score);
         CurrentUser.init("player", "player", "ally");
@@ -47,10 +48,8 @@ public class MasterGame {
     }
 
     private void startGame() throws SlickException, JSONException {
-
-        AppGameContainer appGame = new AppGameContainer(this.windows);
-        appGame.setDisplayMode(WindowConfig.getWLoadSizeX(), WindowConfig.getWLoadSizeY(), false);
-        GlobalVariable.appGameContainer = appGame;
-        appGame.start();
+        GlobalVariable.appGameContainer = new AppGameContainer(this.windows, WindowConfig.get().getWindowSizes(EnumWindow.LOAD).getV1(), WindowConfig.get().getWindowSizes(EnumWindow.LOAD).getV2(), false);
+        WindowConfig.get().setCurrent(EnumWindow.LOAD);
+        GlobalVariable.appGameContainer.start();
     }
 }

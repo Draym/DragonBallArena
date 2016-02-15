@@ -1,5 +1,8 @@
 package com.andres_k.components.controllers;
 
+import com.andres_k.components.graphicComponents.background.EBackground;
+import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
+import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.ELocation;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
@@ -26,7 +29,7 @@ public class SelectSoloController extends WindowController {
 
     @Override
     public void init() throws SlickException, JSONException, NoSuchMethodException {
-
+        this.backgroundManager.addComponent(EBackground.SELECT_SCREEN, new Wallpaper(ResourceManager.get().getBackgroundAnimator(EBackground.SELECT_SCREEN), 0, 0));
     }
 
     @Override

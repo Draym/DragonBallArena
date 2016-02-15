@@ -29,18 +29,18 @@ public class Windows extends StateBasedGame {
         this.windowsTask = new LocalTaskManager(ELocation.WINDOWS);
         CentralTaskManager.get().register(ELocation.WINDOWS.getId(), this.windowsTask);
 
-        this.windows.add(new WindowLoad(EnumWindow.LOAD.getValue(), this.windowsTask));
-        this.windows.add(new WindowHome(EnumWindow.HOME.getValue(), this.windowsTask));
-        this.windows.add(new WindowGame(EnumWindow.GAME.getValue(), this.windowsTask));
-        this.windows.add(new WindowSelectSolo(EnumWindow.SELECT_SOLO.getValue(), this.windowsTask));
-        this.windows.add(new WindowSelectVersus(EnumWindow.SELECT_VERSUS.getValue(), this.windowsTask));
-        this.windows.add(new WindowSelectMulti(EnumWindow.SELECT_MULTI.getValue(), this.windowsTask));
+        this.windows.add(new WindowLoad(EnumWindow.LOAD.getId(), this.windowsTask));
+        this.windows.add(new WindowHome(EnumWindow.HOME.getId(), this.windowsTask));
+        this.windows.add(new WindowGame(EnumWindow.GAME.getId(), this.windowsTask));
+        this.windows.add(new WindowSelectSolo(EnumWindow.SELECT_SOLO.getId(), this.windowsTask));
+        this.windows.add(new WindowSelectVersus(EnumWindow.SELECT_VERSUS.getId(), this.windowsTask));
+        this.windows.add(new WindowSelectMulti(EnumWindow.SELECT_MULTI.getId(), this.windowsTask));
     }
 
 
     @Override
     public void initStatesList(GameContainer gameContainer) throws SlickException {
         this.windows.forEach(this::addState);
-        this.enterState(EnumWindow.LOAD.getValue());
+        this.enterState(EnumWindow.LOAD.getId());
     }
 }

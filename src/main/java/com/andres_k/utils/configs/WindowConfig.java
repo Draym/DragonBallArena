@@ -1,59 +1,70 @@
 package com.andres_k.utils.configs;
 
 
+import com.andres_k.components.graphicComponents.graphic.EnumWindow;
+import com.andres_k.utils.stockage.Pair;
+import org.lwjgl.opengl.Display;
+import org.newdawn.slick.SlickException;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by andres_k on 11/03/2015.
  */
 public class WindowConfig {
-    public static float wHome_sX = 1280;
-    public static float wHome_sY = 697;
-    public static float wLoad_sX = 1300;
-    public static float wLoad_sY = 732;
-    public static float wSelect_sX = 1600;
-    public static float wSelect_sY = 900;
-    public static float wBattle_sX = 1440;
-    public static float wBattle_sY = 900;
-    public static float wGame_sX = 1900;
-    public static float wGame_sY = 950;
+    private EnumWindow current;
+    private Map<EnumWindow, Pair<Integer, Integer>> windows;
 
-
-    public static int getWLoadSizeX() {
-        return (int) wLoad_sX;
+    private WindowConfig() {
+        this.current = EnumWindow.EXIT;
+        this.windows = new HashMap<>();
+        this.windows.put(EnumWindow.LOAD, new Pair<>(1300, 732));
+        this.windows.put(EnumWindow.HOME, new Pair<>(1280, 697));
+        this.windows.put(EnumWindow.SELECT_SOLO, new Pair<>(1600, 900));
+        this.windows.put(EnumWindow.SELECT_VERSUS, new Pair<>(1600, 900));
+        this.windows.put(EnumWindow.SELECT_MULTI, new Pair<>(1600, 900));
+        this.windows.put(EnumWindow.BEFORE_BATTLE, new Pair<>(1440, 900));
+        this.windows.put(EnumWindow.GAME, new Pair<>(1900, 900));
     }
 
-    public static int getWLoadSizeY() {
-        return (int) wLoad_sY;
+    private static class SingletonHolder {
+        private final static WindowConfig instance = new WindowConfig();
     }
 
-    public static int getWHomeSizeX() {
-        return (int) wHome_sX;
+    public static WindowConfig get() {
+        return SingletonHolder.instance;
     }
 
-    public static int getWHomeSizeY() {
-        return (int) wHome_sY;
+    public Pair<Integer, Integer> getWindowSizes(EnumWindow window) {
+        if (this.windows.containsKey(window)) {
+            return this.windows.get(window);
+        }
+        return new Pair<>(100, 100);
     }
 
-    public static int getWSelectSizeX() {
-        return (int) wSelect_sX;
+    public void switchWindow(EnumWindow window) throws SlickException {
+        if (this.windows.containsKey(window)) {
+            int x = Display.getX();
+            int y = Display.getY();
+
+            if (this.current != EnumWindow.EXIT) {
+                x += ((this.windows.get(this.current).getV1() - this.windows.get(window).getV1()) / 2);
+                y += ((this.windows.get(this.current).getV2() - this.windows.get(window).getV2()) / 2);
+            }
+            GlobalVariable.appGameContainer.setDisplayMode(this.windows.get(window).getV1(), this.windows.get(window).getV2(), false);
+            Display.setLocation(x, y);
+            this.current = window;
+        }
     }
 
-    public static int getWSelectSizeY() {
-        return (int) wSelect_sY;
+    public EnumWindow getCurrent() {
+        return this.current;
     }
 
-    public static int getWBattleSizeX() {
-        return (int) wBattle_sX;
-    }
-
-    public static int getWBattleSizeY() {
-        return (int) wBattle_sY;
-    }
-
-    public static int getWGameSizeX() {
-        return (int) wGame_sX;
-    }
-
-    public static int getWGameSizeY() {
-        return (int) wGame_sY;
+    public void setCurrent(EnumWindow window) {
+        if (window != EnumWindow.EXIT) {
+            this.current = window;
+        }
     }
 }

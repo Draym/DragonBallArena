@@ -34,6 +34,8 @@ public class AnimatorBackgroundData extends DataManager {
     protected void initialiseMethods() throws NoSuchMethodException {
         this.methods.clear();
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initHomeScreen")));
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initSelectScreen")));
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initBattleScreen")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initMaps")));
     }
 
