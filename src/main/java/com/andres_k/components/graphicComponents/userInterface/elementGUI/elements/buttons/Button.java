@@ -100,6 +100,7 @@ public class Button extends Element {
 
             if (object.getV1() == ETaskType.PLAY_SOUND && object.getV2() instanceof ESound) {
                 SoundController.get().play((ESound) object.getV2());
+                return true;
             }
         } else {
             return this.content.doTask(task);
@@ -109,7 +110,7 @@ public class Button extends Element {
 
     @Override
     public String toString() {
-        return this.content.toString();
+        return "(" + super.toString() + " " + this.content.toString() + ")";
     }
 
     // GETTERS
@@ -145,12 +146,12 @@ public class Button extends Element {
 
     @Override
     public boolean isOnFocus(float x, float y) {
-        boolean result = this.content.isOnFocus(x, y);
+        boolean save = this.focused;
+        this.focused = this.content.isOnFocus(x, y);
 
-        if (result) {
-            this.OnFocus();
+        if (this.focused) {
+            this.OnFocus(save);
         }
-        this.focused = result;
         return focused;
     }
 

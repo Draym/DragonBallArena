@@ -56,10 +56,12 @@ public abstract class GuiElement implements Observer {
     }
 
     public void activate() {
+        Console.write("" + this + " -> ACTIVATE");
         this.activated = true;
     }
 
     public void deactivate() {
+        Console.write("" + this + " -> DEACTIVATE");
         this.activated = false;
         this.clicked = false;
         this.focused = false;
@@ -85,7 +87,7 @@ public abstract class GuiElement implements Observer {
     }
 
     public Object doTask(Object task) {
-        Console.debug("ID: " + this.id + "  , Task: " + task + " , activity:" + this.isActivated());
+        Console.write("ID: " + this.id + "  , Task: " + task + " , activity:" + this.isActivated());
         boolean result = true;
 
         if (task instanceof ETaskType) {
@@ -96,17 +98,17 @@ public abstract class GuiElement implements Observer {
             } else if (action == ETaskType.STOP_ACTIVITY) {
                 this.deactivate();
             } else if (action == ETaskType.ON_CREATE) {
-                this.OnCreate();
+                this.OnCreate(this.activated);
             } else if (action == ETaskType.ON_KILL) {
-                this.OnKill();
+                this.OnKill(this.activated);
             } else if (action == ETaskType.ON_FOCUS) {
-                this.OnFocus();
+                this.OnFocus(this.focused);
             } else if (action == ETaskType.OFF_FOCUS) {
-                this.OffFocus();
+                this.OffFocus(this.focused);
             } else if (action == ETaskType.ON_CLICK) {
-                this.OnClick();
+                this.OnClick(this.clicked);
             } else if (action == ETaskType.OFF_CLICK) {
-                this.OffClick();
+                this.OffClick(this.clicked);
             } else if (action == ETaskType.GETTER) {
                 return this;
             } else {
@@ -126,28 +128,30 @@ public abstract class GuiElement implements Observer {
     // GETTERS
 
     public boolean isOnFocus(float x, float y) {
-        boolean result = false;
+        boolean save = this.focused;
+        this.focused = false;
         if (this.activated && this.body != null) {
-            result = this.body.isOnFocus(x, y);
-            if (result) {
-                this.OnFocus();
+            this.focused = this.body.isOnFocus(x, y);
+            if (this.focused) {
+                this.OnFocus(save);
             }
         }
-        if (!result) {
-            this.OffFocus();
+        if (!this.focused) {
+            this.OffFocus(save);
         }
-        this.focused = result;
         return this.focused;
     }
 
 
     public boolean isOnClick(float x, float y) {
+        boolean save = this.clicked;
         if (this.activated && this.focused) {
-            this.OnClick();
             this.clicked = true;
+            this.OnClick(save);
+            Console.write("" + this + " Clicked = true");
         } else {
-            this.OffClick();
             this.clicked = false;
+            this.OffClick(save);
         }
         return this.clicked;
     }
@@ -163,6 +167,7 @@ public abstract class GuiElement implements Observer {
     public final String getId() {
         return this.id;
     }
+
 
     public final EGuiType getType() {
         return this.type;
@@ -277,40 +282,40 @@ public abstract class GuiElement implements Observer {
         this.tasks.addAll(tasks);
     }
 
-    protected final void OnClick() {
-        Console.write("OnClick: " + this.id + " type: " + this.type);
-        if (!this.clicked) {
+    protected final void OnClick(boolean save) {
+        Console.write("OnClick: " + this);
+        if (!save) {
             Console.write("do task: " + this.tasks.stream().filter(task-> task.getV1() == EStatus.ON_CLICK).count());
             this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_CLICK).forEach(task -> this.doTask(task.getV2()));
         }
     }
 
-    protected final void OffClick() {
-        if (this.clicked) {
+    protected final void OffClick(boolean save) {
+        if (save) {
             this.tasks.stream().filter(task -> task.getV1() == EStatus.OFF_CLICK).forEach(task -> this.doTask(task.getV2()));
         }
     }
 
-    protected final void OnFocus() {
-        if (!this.focused) {
+    protected final void OnFocus(boolean save) {
+        if (!save) {
             this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_FOCUS).forEach(task -> this.doTask(task.getV2()));
         }
     }
 
-    protected final void OffFocus() {
-        if (this.focused) {
+    protected final void OffFocus(boolean save) {
+        if (save) {
             this.tasks.stream().filter(task -> task.getV1() == EStatus.OFF_FOCUS).forEach(task -> this.doTask(task.getV2()));
         }
     }
 
-    protected final void OnCreate() {
-        if (!this.isActivated()) {
+    protected final void OnCreate(boolean save) {
+        if (!save) {
             this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_CREATE).forEach(task -> this.doTask(task.getV2()));
         }
     }
 
-    protected final void OnKill() {
-        if (this.isActivated()) {
+    protected final void OnKill(boolean save) {
+        if (save) {
             this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_KILL).forEach(task -> this.doTask(task.getV2()));
         }
     }

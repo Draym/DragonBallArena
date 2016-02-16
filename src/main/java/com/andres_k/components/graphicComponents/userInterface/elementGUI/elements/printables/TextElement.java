@@ -223,7 +223,7 @@ public class TextElement extends Element {
     @Override
     public String toString() {
         if (this.textTimer != null) {
-            return this.textTimer.getValue();
+            return "(" + super.toString() + " " + this.textTimer.getValue() + ")";
         } else {
             return null;
         }

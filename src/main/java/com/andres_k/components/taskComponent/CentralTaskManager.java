@@ -38,7 +38,7 @@ public class CentralTaskManager {
     }
 
     public void sendRequest(TaskComponent task) {
-        Console.debug("CentralSend: " + task);
+        Console.write("CentralSend: " + task);
         if (this.targets.containsKey(task.getTarget().getId())) {
             this.targets.get(task.getTarget().getId()).notify(TaskFactory.changeSender(this.location, task));
         } else {

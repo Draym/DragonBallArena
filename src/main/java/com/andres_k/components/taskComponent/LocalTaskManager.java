@@ -50,12 +50,14 @@ public class LocalTaskManager implements Observer {
     }
 
     protected void relayRequest(TaskComponent task) {
-        Console.debug("LocalRelay: " + task);
+        Console.write("LocalRelay: " + task);
         if (this.targets.containsKey(task.getTarget().getId())) {
+            Console.write("-> " + task.getTarget().getId());
             this.targets.get(task.getTarget().getId()).notify(TaskFactory.changeSender(this.location, task));
         } else {
             this.targets.entrySet().forEach(entry -> {
                 if (task.getTarget().getId().indexOf(entry.getKey()) == 0) {
+                    Console.write("-> " + entry.getKey());
                     entry.getValue().notify(TaskFactory.changeSender(this.location, task));
                 }
             });

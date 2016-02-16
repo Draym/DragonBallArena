@@ -19,8 +19,6 @@ public class ElementWithTitle extends GuiElement {
         this(ELocation.UNKNOWN.getId(), container, title, content, activated);
     }
 
-
-
     public ElementWithTitle(Element title, GuiElement content, boolean activated) {
         this(ELocation.UNKNOWN.getId(), title, content, activated);
     }

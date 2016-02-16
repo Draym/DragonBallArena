@@ -91,9 +91,9 @@ public class Modal extends GuiElement {
     public boolean event(InputEvent input) {
         if (input.key == Input.KEY_ESCAPE && input.type == EInput.KEY_RELEASED) {
             if (this.activated) {
-                this.OnKill();
+                this.OnKill(true);
             } else if (this.canBeActivatedOnEvent) {
-                this.OnCreate();
+                this.OnCreate(false);
             }
         }
         return this.content.event(input);
@@ -125,14 +125,14 @@ public class Modal extends GuiElement {
             return false;
         }
 
-        boolean result = this.content.isOnFocus(x, y);
-        if (!result && this.activated && this.body != null) {
-            result = this.body.isOnFocus(x, y);
-            if (result) {
-                this.OnFocus();
+        boolean save = this.focused;
+        this.focused = this.content.isOnFocus(x, y);
+        if (!this.focused && this.activated && this.body != null) {
+            this.focused = this.body.isOnFocus(x, y);
+            if (this.focused) {
+                this.OnFocus(save);
             }
         }
-        this.focused = result;
         return this.focused;
     }
 
@@ -140,14 +140,14 @@ public class Modal extends GuiElement {
     public boolean isOnClick(float x, float y) {
         if (!this.activated) {
             this.focused = false;
+            this.clicked = false;
             return false;
         }
-
-        boolean result = this.content.isOnClick(x, y);
-        if (!result && this.activated && this.focused) {
-            this.OnClick();
+        boolean save = this.clicked;
+        this.clicked = this.content.isOnClick(x, y);
+        if (!this.clicked && this.activated && this.focused) {
+            this.OnClick(save);
         }
-        this.clicked = this.focused;
         return this.clicked;
     }
 
