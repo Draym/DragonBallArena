@@ -141,7 +141,7 @@ public class GameController extends WindowController {
             TaskComponent received = (TaskComponent) arg;
 
             if (received.getTarget().equals(ELocation.GAME_CONTROLLER)) {
-                if (received.getTask() instanceof EnumWindow) {
+                if (received.getTask() instanceof EnumWindow && !received.getTask().equals(EnumWindow.EXIT)) {
                     this.stateWindow.enterState(((EnumWindow) received.getTask()).getId());
                 } else if (received.getTask() instanceof ETaskType) {
                     if (received.getTask() == ETaskType.EXIT) {

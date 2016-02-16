@@ -74,10 +74,12 @@ public class TextElement extends Element {
 
     @Override
     public void init() {
+        this.reset();
     }
 
     @Override
     public void enter() {
+        this.reset();
     }
 
     @Override

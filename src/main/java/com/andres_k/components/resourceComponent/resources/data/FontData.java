@@ -34,6 +34,11 @@ public class FontData extends DataManager {
         this.methods.add(new Pair<>(false, this.getClass().getMethod("init")));
     }
 
+    @Override
+    public String success() {
+        return "> Font complete";
+    }
+
     public void init() throws Exception {
         this.addFont(EFont.BASIC, new Font("Times New Roman", Font.BOLD, 16));
     }

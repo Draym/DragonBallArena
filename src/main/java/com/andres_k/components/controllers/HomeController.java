@@ -59,7 +59,7 @@ public class HomeController extends WindowController {
             TaskComponent received = (TaskComponent) arg;
 
             if (received.getTarget().equals(ELocation.HOME_CONTROLLER)) {
-                if (received.getTask() instanceof EnumWindow) {
+                if (received.getTask() instanceof EnumWindow && !received.getTask().equals(EnumWindow.EXIT)) {
                     if (this.stateWindow != null) {
                         this.stateWindow.enterState(((EnumWindow) received.getTask()).getId());
                     }

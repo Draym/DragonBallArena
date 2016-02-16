@@ -31,11 +31,13 @@ public class ComplexElement extends GuiElement {
 
     @Override
     public void init() {
+        this.reset();
         this.items.forEach(GuiElement::init);
     }
 
     @Override
     public void enter() {
+        this.reset();
         this.items.forEach(GuiElement::enter);
     }
 

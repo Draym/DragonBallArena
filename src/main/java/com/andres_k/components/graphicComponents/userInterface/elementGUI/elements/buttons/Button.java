@@ -28,12 +28,14 @@ public class Button extends Element {
 
     @Override
     public void init() {
+        this.reset();
         this.content.init();
     }
 
     @Override
     public void enter() {
-        this.content.leave();
+        this.reset();
+        this.content.enter();
     }
 
     @Override

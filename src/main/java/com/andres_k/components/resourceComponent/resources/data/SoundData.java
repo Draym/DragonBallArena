@@ -20,6 +20,11 @@ public class SoundData extends DataManager{
         this.methods.add(new Pair<>(false, this.getClass().getMethod("init")));
     }
 
+    @Override
+    public String success() {
+        return "> Sound complete";
+    }
+
     public void init() throws NoSuchMethodException, SlickException, JSONException {
     }
 }

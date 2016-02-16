@@ -26,15 +26,23 @@ public class MusicData extends DataManager {
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initBackgroundCredits")));
     }
 
+    @Override
+    public String success() {
+        return "> Music complete";
+    }
+
     public void initBackgroundHome() throws NoSuchMethodException, SlickException, JSONException {
         MusicController.get().addMusic(ESound.BACKGROUND_HOME);
     }
+
     public void initBackgroundSelect() throws NoSuchMethodException, SlickException, JSONException {
         MusicController.get().addMusic(ESound.BACKGROUND_SELECT);
     }
+
     public void initBackgroundMulti() throws NoSuchMethodException, SlickException, JSONException {
         MusicController.get().addMusic(ESound.BACKGROUND_MULTI);
     }
+
     public void initBackgroundCredits() throws NoSuchMethodException, SlickException, JSONException {
         MusicController.get().addMusic(ESound.BACKGROUND_CREDITS);
     }

@@ -42,6 +42,11 @@ public class AnimatorGuiData extends DataManager {
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initCards")));
     }
 
+    @Override
+    public String success() {
+        return "> GUI complete";
+    }
+
     public void initContainers() throws NoSuchMethodException, SlickException, JSONException {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.PANEL2), EGuiElement.PANEL2);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.PANEL3), EGuiElement.PANEL3);

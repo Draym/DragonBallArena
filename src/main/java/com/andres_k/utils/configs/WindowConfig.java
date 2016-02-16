@@ -67,4 +67,18 @@ public class WindowConfig {
             this.current = window;
         }
     }
+
+    public int centerPosX(EnumWindow window, int sizeX) {
+        if (this.windows.containsKey(window)) {
+            return (this.windows.get(window).getV1() / 2) - (sizeX / 2);
+        }
+        return 0;
+    }
+
+    public int centerPosY(EnumWindow window, int sizeY) {
+        if (this.windows.containsKey(window)) {
+            return (this.windows.get(window).getV2() / 2) - (sizeY / 2);
+        }
+        return 0;
+    }
 }

@@ -1,6 +1,8 @@
-package com.andres_k.components.graphicComponents.userInterface.elementGUI;
+package com.andres_k.components.graphicComponents.userInterface.elementGUI.elements;
 
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.EStatus;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.buttons.Button;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.ImageElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.TextElement;

@@ -64,14 +64,24 @@ public class ImageElement extends Element {
 
     @Override
     public void init() {
+        this.reset();
     }
 
     @Override
     public void enter() {
+        this.reset();
     }
 
     @Override
     public void leave() {
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+        if (this.animatorController != null) {
+            this.animatorController.changeAnimation(this.saveAnimation.getV1(), this.saveAnimation.getV2());
+        }
     }
 
     @Override

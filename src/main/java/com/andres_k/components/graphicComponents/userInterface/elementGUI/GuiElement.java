@@ -21,6 +21,7 @@ import java.util.Observer;
 public abstract class GuiElement implements Observer {
     protected String id;
     protected boolean focused;
+    private boolean saveActivated;
     protected boolean activated;
     protected boolean clicked;
     protected EGuiType type;
@@ -33,6 +34,7 @@ public abstract class GuiElement implements Observer {
         this.id = id;
         this.body = body;
         this.activated = activated;
+        this.saveActivated = activated;
         this.focused = false;
         this.clicked = false;
         this.tasks = new ArrayList<>();
@@ -46,6 +48,12 @@ public abstract class GuiElement implements Observer {
     public abstract void enter();
 
     public abstract void leave();
+
+    public void reset() {
+        this.activated = this.saveActivated;
+        this.clicked = false;
+        this.focused = false;
+    }
 
     public void activate() {
         this.activated = true;
@@ -73,11 +81,13 @@ public abstract class GuiElement implements Observer {
     }
 
     public boolean event(InputEvent input) {
-        return this.OnEvent(input);
+        return false;
     }
 
     public Object doTask(Object task) {
         Console.debug("ID: " + this.id + "  , Task: " + task + " , activity:" + this.isActivated());
+        boolean result = true;
+
         if (task instanceof ETaskType) {
             ETaskType action = (ETaskType) task;
 
@@ -99,9 +109,16 @@ public abstract class GuiElement implements Observer {
                 this.OffClick();
             } else if (action == ETaskType.GETTER) {
                 return this;
+            } else {
+                result = false;
             }
         } else if (task instanceof TaskComponent) {
             CentralTaskManager.get().sendRequest((TaskComponent) task);
+        } else {
+            result = false;
+        }
+        if (result) {
+            return true;
         }
         return null;
     }
@@ -284,13 +301,6 @@ public abstract class GuiElement implements Observer {
         if (this.focused) {
             this.tasks.stream().filter(task -> task.getV1() == EStatus.OFF_FOCUS).forEach(task -> this.doTask(task.getV2()));
         }
-    }
-
-    protected final boolean OnEvent(InputEvent input) {
-        if (this.isActivated()) {
-            this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_EVENT).forEach(task -> this.doTask(task.getV2()));
-        }
-        return false;
     }
 
     protected final void OnCreate() {

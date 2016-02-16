@@ -4,7 +4,7 @@ import com.andres_k.components.eventComponent.input.InputData;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EStatus;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.ElementFactory;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.ElementFactory;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.buttons.Button;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.ImageElement;

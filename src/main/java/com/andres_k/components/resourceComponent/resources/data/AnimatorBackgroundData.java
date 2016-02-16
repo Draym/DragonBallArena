@@ -39,6 +39,11 @@ public class AnimatorBackgroundData extends DataManager {
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initMaps")));
     }
 
+    @Override
+    public String success() {
+        return "> Background complete";
+    }
+
     public void initLoadScreen() throws NoSuchMethodException, SlickException, JSONException {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.LOAD_SCREEN), EBackground.LOAD_SCREEN);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.LOGO), EBackground.LOGO);

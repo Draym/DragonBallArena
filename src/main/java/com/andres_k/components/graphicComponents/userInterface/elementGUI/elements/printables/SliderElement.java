@@ -53,6 +53,7 @@ public class SliderElement extends Element {
 
     @Override
     public void init() {
+        this.reset();
         this.sliderValue.init();
         this.container.init();
         if (this.sliderButton != null) {
@@ -62,6 +63,7 @@ public class SliderElement extends Element {
 
     @Override
     public void enter() {
+        this.reset();
         this.sliderValue.enter();
         this.container.enter();
         if (this.sliderButton != null) {

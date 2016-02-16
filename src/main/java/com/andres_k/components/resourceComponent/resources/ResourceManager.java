@@ -11,25 +11,29 @@ import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
 
 import java.awt.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by andres_k on 20/01/2016.
  */
 public final class ResourceManager {
-    private AnimatorGameData gameData;
-    private AnimatorGuiData guiData;
-    private AnimatorBackgroundData backgroundData;
-    private SoundData soundData;
-    private MusicData musicData;
-    private FontData fontData;
+
+    private enum Category {
+        GAME, GUI, BACKGROUND, SOUND, MUSIC, FONT, INTERFACE
+    }
+
+    private Map<Category, DataManager> managers;
 
     private ResourceManager() {
-        this.gameData = new AnimatorGameData();
-        this.guiData = new AnimatorGuiData();
-        this.backgroundData = new AnimatorBackgroundData();
-        this.soundData = new SoundData();
-        this.musicData = new MusicData();
-        this.fontData = new FontData();
+        this.managers = new LinkedHashMap<>();
+        this.managers.put(Category.GAME, new AnimatorGameData());
+        this.managers.put(Category.GUI, new AnimatorGuiData());
+        this.managers.put(Category.BACKGROUND, new AnimatorBackgroundData());
+        this.managers.put(Category.SOUND, new SoundData());
+        this.managers.put(Category.MUSIC, new MusicData());
+        this.managers.put(Category.FONT, new FontData());
+        this.managers.put(Category.INTERFACE, new InterfaceElementData());
     }
 
     private static class SingletonHolder {
@@ -41,15 +45,16 @@ public final class ResourceManager {
     }
 
     public void prerequisiteContents() throws Exception {
-        this.gameData.prerequisite();
-        this.guiData.prerequisite();
-        this.backgroundData.prerequisite();
-        this.fontData.prerequisite();
+        for (Map.Entry<Category, DataManager> entry : this.managers.entrySet()) {
+            if (entry.getKey() != Category.SOUND && entry.getKey() != Category.MUSIC) {
+                entry.getValue().prerequisite();
+            }
+        }
     }
 
     public void prerequisiteMusic() throws Exception {
         try {
-            this.musicData.prerequisite();
+            this.managers.get(Category.MUSIC).prerequisite();
         } catch (NoSuchMethodException | JSONException e) {
             throw new SlickException(e.getMessage());
         }
@@ -57,7 +62,7 @@ public final class ResourceManager {
 
     public void prerequisiteSound() throws Exception {
         try {
-            this.soundData.prerequisite();
+            this.managers.get(Category.SOUND).prerequisite();
         } catch (NoSuchMethodException | JSONException e) {
             throw new SlickException(e.getMessage());
         }
@@ -70,55 +75,28 @@ public final class ResourceManager {
     public int getTotalToInitialise() {
         int result = 0;
 
-        result += this.gameData.getTotalMethods();
-        result += this.guiData.getTotalMethods();
-        result += this.backgroundData.getTotalMethods();
-        result += this.musicData.getTotalMethods();
-        result += this.soundData.getTotalMethods();
+        for (Map.Entry<Category, DataManager> entry : this.managers.entrySet()) {
+            result += entry.getValue().getTotalMethods();
+        }
         return result;
     }
 
     public int getTotalNotInitialised() {
         int result = 0;
 
-        result += this.gameData.getNotInitialised();
-        result += this.guiData.getNotInitialised();
-        result += this.backgroundData.getNotInitialised();
-        result += this.musicData.getNotInitialised();
-        result += this.soundData.getNotInitialised();
+        for (Map.Entry<Category, DataManager> entry : this.managers.entrySet()) {
+            result += entry.getValue().getNotInitialised();
+        }
         return result;
     }
 
     public boolean initialise(int index) throws Exception {
-        if ((index = this.gameData.initialise(index)) <= 0) {
-            if (this.gameData.getNotInitialised() == 0)
-                Console.write("GameData > complete");
-            return false;
-        }
-        if ((index = this.guiData.initialise(index)) <= 0) {
-            if (this.guiData.getNotInitialised() == 0)
-                Console.write("GuiData > complete");
-            return false;
-        }
-        if ((index = this.backgroundData.initialise(index)) <= 0) {
-            if (this.backgroundData.getNotInitialised() == 0)
-                Console.write("BackgroundData > complete");
-            return false;
-        }
-        if ((index = this.musicData.initialise(index)) <= 0) {
-            if (this.musicData.getNotInitialised() == 0)
-                Console.write("MusicData > complete");
-            return false;
-        }
-        if ((index = this.soundData.initialise(index)) <= 0) {
-            if (this.soundData.getNotInitialised() == 0)
-                Console.write("SoundData > complete");
-            return false;
-        }
-        if ((index = this.fontData.initialise(index)) <= 0) {
-            if (this.fontData.getNotInitialised() == 0)
-                Console.write("FontData > complete");
-            return false;
+        for (Map.Entry<Category, DataManager> entry : this.managers.entrySet()) {
+            if ((index = entry.getValue().initialise(index)) <= 0) {
+                if (entry.getValue().getNotInitialised() == 0)
+                    Console.write(entry.getValue().success());
+                return false;
+            }
         }
         return true;
     }
@@ -126,18 +104,18 @@ public final class ResourceManager {
     // GETTERS
 
     public AnimatorController getGameAnimator(EGameObject item) throws SlickException {
-        return this.gameData.getAnimator(item);
+        return ((AnimatorGameData)this.managers.get(Category.GAME)).getAnimator(item);
     }
 
     public AnimatorController getGuiAnimator(EGuiElement item) throws SlickException {
-        return this.guiData.getAnimator(item);
+        return ((AnimatorGuiData)this.managers.get(Category.GUI)).getAnimator(item);
     }
 
     public AnimatorController getBackgroundAnimator(EBackground item) throws SlickException {
-        return this.backgroundData.getAnimator(item);
+        return ((AnimatorBackgroundData)this.managers.get(Category.BACKGROUND)).getAnimator(item);
     }
 
     public Font getFont(EFont item) {
-        return this.fontData.getFont(item);
+        return ((FontData)this.managers.get(Category.FONT)).getFont(item);
     }
 }

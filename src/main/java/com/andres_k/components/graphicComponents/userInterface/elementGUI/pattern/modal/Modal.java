@@ -5,6 +5,9 @@ import com.andres_k.components.eventComponent.input.InputEvent;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
+import com.andres_k.components.taskComponent.ETaskType;
+import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.stockage.Tuple;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -14,19 +17,27 @@ import org.newdawn.slick.Input;
  */
 public class Modal extends GuiElement {
     protected GuiElement content;
+    protected boolean canBeActivatedOnEvent;
 
     public Modal(String id, ColorShape body, GuiElement content) {
+        this(id, body, content, false);
+    }
+
+    public Modal(String id, ColorShape body, GuiElement content, boolean canBeActivatedOnEvent) {
         super(EGuiType.MODAL, id, body, false);
         this.content = content;
+        this.canBeActivatedOnEvent = canBeActivatedOnEvent;
     }
 
     @Override
     public void init() {
+        this.reset();
         this.content.init();
     }
 
     @Override
     public void enter() {
+        this.reset();
         this.content.enter();
     }
 
@@ -81,9 +92,29 @@ public class Modal extends GuiElement {
         if (input.key == Input.KEY_ESCAPE && input.type == EInput.KEY_RELEASED) {
             if (this.activated) {
                 this.OnKill();
+            } else if (this.canBeActivatedOnEvent) {
+                this.OnCreate();
             }
         }
         return this.content.event(input);
+    }
+
+    @Override
+    public Object doTask(Object task) {
+        Object result;
+
+        if ((result = super.doTask(task)) != null) {
+            return result;
+        }
+        if (task instanceof Tuple && ((Tuple) task).getV1() instanceof ETaskType) {
+            if (((Tuple) task).getV1().equals(ETaskType.SETTER)) {
+                if (((Tuple) task).getV2().equals("bodySize") && ((Tuple) task).getV3() instanceof Pair) {
+                    this.body.setSizes((float)((Pair) ((Tuple) task).getV3()).getV1(), (float)((Pair) ((Tuple) task).getV3()).getV2());
+                    return true;
+                }
+            }
+        }
+        return null;
     }
 
     // GETTERS

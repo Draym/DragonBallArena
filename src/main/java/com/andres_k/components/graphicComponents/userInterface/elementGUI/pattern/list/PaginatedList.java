@@ -56,11 +56,13 @@ public class PaginatedList extends GuiElement {
 
     @Override
     public void init() {
+        this.reset();
         this.lists.entrySet().forEach(entry -> entry.getValue().init());
     }
 
     @Override
     public void enter() {
+        this.reset();
         this.lists.entrySet().forEach(entry -> entry.getValue().enter());
     }
 

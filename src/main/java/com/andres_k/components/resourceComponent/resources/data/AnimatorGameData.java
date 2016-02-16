@@ -37,6 +37,11 @@ public class AnimatorGameData extends DataManager {
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initItems")));
     }
 
+    @Override
+    public String success() {
+        return "> Game complete";
+    }
+
     public void initPlayers() throws NoSuchMethodException, SlickException, JSONException {
         this.addPlayerAnimator(this.animatorFactory.getAnimator(ESprites.GOKU), EGameObject.GOKU);
     }

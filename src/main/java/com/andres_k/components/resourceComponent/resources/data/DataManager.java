@@ -45,4 +45,6 @@ public abstract class DataManager {
     }
 
     protected abstract void initialiseMethods() throws NoSuchMethodException;
+
+    public abstract String success();
 }

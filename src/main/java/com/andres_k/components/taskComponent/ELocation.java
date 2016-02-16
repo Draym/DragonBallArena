@@ -34,6 +34,11 @@ public enum ELocation {
     SELECT_VERSUS_GUI("SELECT_VERSUS_GUI", WINDOWS.getId()),
     SELECT_MULTI_GUI("SELECT_MULTI_GUI", WINDOWS.getId()),
 
+    //GUI_GLOBAL_ELEMENT
+    GUI_ELEMENT_Controls("Controls", MASTER.getId()),
+    GUI_ELEMENT_Combos("Controls", MASTER.getId()),
+    GUI_ELEMENT_Settings("Controls", MASTER.getId()),
+
     //LOAD_GUI
     LOAD_GUI_LoadingBar_value("LoadingBar_value", LOAD_GUI.getId()),
     LOAD_GUI_LoadingBar_title("LoadingBar_title", LOAD_GUI.getId()),
@@ -47,8 +52,6 @@ public enum ELocation {
 
     //SELECT_SOLO
     SELECT_SOLO_GUI_Options("Options", SELECT_SOLO_GUI.getId()),
-    SELECT_SOLO_GUI_Settings("Settings", SELECT_SOLO_GUI.getId()),
-    SELECT_SOLO_GUI_Combos("Combos", SELECT_SOLO_GUI.getId()),
 
     //SELECT_VERSUS
     SELECT_VERSUS_GUI_Options("Options", SELECT_VERSUS_GUI.getId()),

@@ -41,12 +41,14 @@ public class ElementWithTitle extends GuiElement {
 
     @Override
     public void init() {
+        this.reset();
         this.title.init();
         this.content.init();
     }
 
     @Override
     public void enter() {
+        this.reset();
         this.title.enter();
         this.content.enter();
     }
