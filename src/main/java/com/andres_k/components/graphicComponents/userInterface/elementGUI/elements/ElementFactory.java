@@ -31,15 +31,15 @@ public class ElementFactory {
         return new TextElement(new StringTimer(text), color, font, size, decalX, decalY, Element.PositionInBody.MIDDLE_MID, true);
     }
 
-    public static ElementWithTitle createButton(String text, Color color, EFont font, int size, EGuiElement animator, List<Pair<EStatus, Object>> tasks) throws SlickException {
-        return createButton(text, color, size, font, animator, 0, 0, tasks);
+    public static ElementWithTitle createButtonTitleText(String text, Color color, EFont font, int size, EGuiElement animator, List<Pair<EStatus, Object>> tasks) throws SlickException {
+        return createButtonTitleText(text, color, size, font, animator, 0, 0, tasks);
     }
 
-    public static ElementWithTitle createButton(String text, Color color, int size, EFont font, EGuiElement animator, float decalX, float decalY, List<Pair<EStatus, Object>> tasks) throws SlickException {
-        return createTitleElement(text, color, font, size, 30, 0, new Button(new ImageElement(new ColorRect(new Rectangle(decalX, decalY, 0, 0)), ResourceManager.get().getGuiAnimator(animator), true), tasks));
+    public static ElementWithTitle createButtonTitleText(String text, Color color, int size, EFont font, EGuiElement animator, float decalX, float decalY, List<Pair<EStatus, Object>> tasks) throws SlickException {
+        return createTitleTextElement(text, color, font, size, 30, 0, new Button(new ImageElement(new ColorRect(new Rectangle(decalX, decalY, 0, 0)), ResourceManager.get().getGuiAnimator(animator), true), tasks));
     }
 
-    public static ElementWithTitle createTitleElement(String text, Color color, EFont font, int size, float decalX, float decalY, GuiElement element) throws SlickException {
+    public static ElementWithTitle createTitleTextElement(String text, Color color, EFont font, int size, float decalX, float decalY, GuiElement element) throws SlickException {
         return new ElementWithTitle(createText(text, color, font, size, decalX, decalY), element, true);
     }
 

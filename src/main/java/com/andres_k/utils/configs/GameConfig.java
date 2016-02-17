@@ -9,12 +9,10 @@ import java.util.ArrayList;
  */
 public class GameConfig {
 
-    public static int maxFps = 60;
+    public static final int maxFps = 60;
     public static long timeLoop = 30;
     public static long currentTimeLoop = 30;
 
-    public static int maxPlayer = 2;
-    public static int currentPlayer = 1;
     public static ArrayList<EGameObject> typePlayer;
 
     public static float speedTravel = 1f;

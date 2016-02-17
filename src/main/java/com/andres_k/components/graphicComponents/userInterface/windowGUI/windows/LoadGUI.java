@@ -4,7 +4,7 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiEl
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.ImageElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.TextElement;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.ComplexElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.complex.ComplexElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.ElementWithTitle;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.StringTimer;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;

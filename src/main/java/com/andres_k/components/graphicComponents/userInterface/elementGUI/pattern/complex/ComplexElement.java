@@ -1,4 +1,4 @@
-package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern;
+package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.complex;
 
 import com.andres_k.components.eventComponent.input.InputEvent;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
@@ -222,4 +222,44 @@ public class ComplexElement extends GuiElement {
         }
         return -1;
     }
+
+    @Override
+    public float getAbsoluteWidth() {
+        float minX = 0;
+        float maxX = 0;
+        boolean firstMin = true;
+        boolean firstMax = true;
+
+        for (GuiElement item : this.items) {
+            if (item.getLocationMinX() < minX || firstMin) {
+                minX = item.getLocationMinX();
+                firstMin = false;
+            }
+            if (item.getLocationMaxX() > maxX || firstMax) {
+                maxX = item.getLocationMaxX();
+                firstMax = false;
+            }
+        }
+        return maxX - minX;
+    }
+
+    @Override
+    public float getAbsoluteHeight() {
+        float minY = 0;
+        float maxY = 0;
+        boolean firstMin = true;
+        boolean firstMax = true;
+
+        for (GuiElement item : this.items) {
+            if (item.getLocationMinY() < minY || firstMin) {
+                minY = item.getLocationMinY();
+                firstMin = false;
+            }
+            if (item.getLocationMaxY() > maxY || firstMax) {
+                maxY = item.getLocationMaxY();
+                firstMax = false;
+            }
+        }
+        return maxY - minY;
+   }
 }

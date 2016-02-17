@@ -1,10 +1,10 @@
 package com.andres_k.components.resourceComponent.resources.data;
 
 import com.andres_k.components.gameComponents.animations.AnimatorController;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
 import com.andres_k.components.resourceComponent.resources.ESprites;
 import com.andres_k.components.resourceComponent.resources.factory.AnimatorFactory;
 import com.andres_k.components.resourceComponent.resources.factory.AnimatorGuiFactory;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
 import com.andres_k.utils.stockage.Pair;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
@@ -84,6 +84,7 @@ public class AnimatorGuiData extends DataManager {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.AVATAR_CELL), EGuiElement.AVATAR_CELL);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.AVATAR_BUU), EGuiElement.AVATAR_BUU);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.AVATAR_FRIEEZA), EGuiElement.AVATAR_FRIEEZA);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.AVATAR_BORDER), EGuiElement.AVATAR_BORDER);
     }
 
     public void initCards() throws NoSuchMethodException, SlickException, JSONException {

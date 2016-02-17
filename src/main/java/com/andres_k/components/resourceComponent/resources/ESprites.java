@@ -62,6 +62,7 @@ public enum ESprites {
     AVATAR_CELL(AVATAR.getIndex()),
     AVATAR_BUU(AVATAR.getIndex()),
     AVATAR_FRIEEZA(AVATAR.getIndex()),
+    AVATAR_BORDER(AVATAR.getIndex()),
 
     //gamePlayer
     GOKU(PLAYER.getIndex()),

@@ -38,6 +38,7 @@ public enum ELocation {
     GUI_ELEMENT_PlayerControls("Controls", MASTER.getId()),
     GUI_ELEMENT_Combos("Combos", MASTER.getId()),
     GUI_ELEMENT_Volumes("Volumes", MASTER.getId()),
+    GUI_ELEMENT_SelectPlayer("SelectPlayer", MASTER.getId()),
 
     //LOAD_GUI
     LOAD_GUI_LoadingBar_value("LoadingBar_value", LOAD_GUI.getId()),

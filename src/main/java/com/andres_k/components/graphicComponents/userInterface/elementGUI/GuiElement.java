@@ -208,6 +208,38 @@ public abstract class GuiElement implements Observer {
         }
     }
 
+    public float getLocationMinX() {
+        if (this.body == null)
+            return 0;
+        return this.body.getMinX();
+    }
+
+    public float getLocationMaxX() {
+        return this.getLocationMinX() + this.getAbsoluteWidth();
+    }
+
+    public float getLocationMinY() {
+        if (this.body == null)
+            return 0;
+        return this.body.getMinY();
+    }
+
+    public float getLocationMaxY() {
+        return this.getLocationMinY() + this.getAbsoluteHeight();
+    }
+
+    public float getBodyWidth() {
+        if (this.body == null)
+            return 0;
+        return this.body.getMaxX() - this.body.getMinX();
+    }
+
+    public float getBodyHeight() {
+        if (this.body == null)
+            return 0;
+        return this.body.getMaxY() - this.body.getMinY();
+    }
+
     public float getAbsoluteWidth() {
         if (this.body == null)
             return 0;
@@ -235,15 +267,21 @@ public abstract class GuiElement implements Observer {
         }
     }
 
-    public void setPosX(float value) {
+    public void setPosX(float posX) {
         if (this.body != null) {
-            this.body.setPosX(value);
+            this.body.setPosX(posX);
         }
     }
 
-    public void setPosY(float value) {
+    public void setPosY(float posY) {
         if (this.body != null) {
-            this.body.setPosY(value);
+            this.body.setPosY(posY);
+        }
+    }
+
+    public final void setLocation(float x, float y) {
+        if (this.body != null) {
+            this.body.setPosition(x, y);
         }
     }
 
@@ -282,40 +320,40 @@ public abstract class GuiElement implements Observer {
         this.tasks.addAll(tasks);
     }
 
-    protected final void OnClick(boolean save) {
+    protected final void OnClick(boolean clicked) {
         Console.write("OnClick: " + this);
-        if (!save) {
+        if (!clicked) {
             Console.write("do task: " + this.tasks.stream().filter(task-> task.getV1() == EStatus.ON_CLICK).count());
             this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_CLICK).forEach(task -> this.doTask(task.getV2()));
         }
     }
 
-    protected final void OffClick(boolean save) {
-        if (save) {
+    protected final void OffClick(boolean clicked) {
+        if (clicked) {
             this.tasks.stream().filter(task -> task.getV1() == EStatus.OFF_CLICK).forEach(task -> this.doTask(task.getV2()));
         }
     }
 
-    protected final void OnFocus(boolean save) {
-        if (!save) {
+    protected final void OnFocus(boolean focused) {
+        if (!focused) {
             this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_FOCUS).forEach(task -> this.doTask(task.getV2()));
         }
     }
 
-    protected final void OffFocus(boolean save) {
-        if (save) {
+    protected final void OffFocus(boolean focused) {
+        if (focused) {
             this.tasks.stream().filter(task -> task.getV1() == EStatus.OFF_FOCUS).forEach(task -> this.doTask(task.getV2()));
         }
     }
 
-    protected final void OnCreate(boolean save) {
-        if (!save) {
+    protected final void OnCreate(boolean activated) {
+        if (!activated) {
             this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_CREATE).forEach(task -> this.doTask(task.getV2()));
         }
     }
 
-    protected final void OnKill(boolean save) {
-        if (save) {
+    protected final void OnKill(boolean activated) {
+        if (activated) {
             this.tasks.stream().filter(task -> task.getV1() == EStatus.ON_KILL).forEach(task -> this.doTask(task.getV2()));
         }
     }

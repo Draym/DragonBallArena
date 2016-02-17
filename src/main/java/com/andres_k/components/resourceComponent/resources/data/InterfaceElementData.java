@@ -1,21 +1,25 @@
 package com.andres_k.components.resourceComponent.resources.data;
 
 import com.andres_k.components.eventComponent.input.InputData;
+import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EStatus;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElementsManager;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.ElementFactory;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.buttons.Button;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.ImageElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.SliderElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.TextElement;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.ComplexElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.ElementWithTitle;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.complex.ComplexElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.complex.ComplexRelayElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.list.PaginatedList;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.StringTimer;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
 import com.andres_k.components.resourceComponent.fonts.EFont;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
+import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.resourceComponent.sounds.MusicController;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
@@ -25,8 +29,9 @@ import com.andres_k.utils.tools.ColorTools;
 import com.andres_k.utils.tools.StringTools;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 
-import java.awt.*;
+import java.awt.FontFormatException;
 import java.io.IOException;
 
 /**
@@ -45,6 +50,7 @@ public class InterfaceElementData extends DataManager {
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initVolumesContent")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initControlsContent")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initCombosContent")));
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initSelectPlayerContent")));
     }
 
     @Override
@@ -53,7 +59,7 @@ public class InterfaceElementData extends DataManager {
     }
 
     public void initVolumesContent() throws NoSuchMethodException, SlickException, JSONException {
-        ComplexElement volumes = new ComplexElement(ELocation.GUI_ELEMENT_Volumes.getId(), new ColorRect(new org.newdawn.slick.geom.Rectangle(30, 70, 520, 300)), true);
+        ComplexElement volumes = new ComplexElement(ELocation.GUI_ELEMENT_Volumes.getId(), new ColorRect(new Rectangle(30, 70, 520, 300)), true);
         volumes.addItem(new TextElement(new StringTimer("Volumes"), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 25, 30, 20, Element.PositionInBody.LEFT_UP, true));
         volumes.addItem(new TextElement(new StringTimer("Music :"), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 20, 0, 75, Element.PositionInBody.LEFT_UP, true));
         volumes.addItem(new SliderElement(new ColorRect(new org.newdawn.slick.geom.Rectangle(180, 70, 310, 37)), new ImageElement(ResourceManager.get().getGuiAnimator(EGuiElement.SLIDER), true), new ImageElement(ResourceManager.get().getGuiAnimator(EGuiElement.SLIDER_VALUE), true), new ImageElement(ResourceManager.get().getGuiAnimator(EGuiElement.BUTTON_SLIDER), true), new Pair<>(ELocation.MUSIC_CONTROLLER, ETaskType.CHANGE_VOLUME), MusicController.get().getVolume(), true));
@@ -63,7 +69,7 @@ public class InterfaceElementData extends DataManager {
     }
 
     public void initControlsContent() throws NoSuchMethodException, SlickException, JSONException {
-        PaginatedList playerControls = new PaginatedList(ELocation.GUI_ELEMENT_PlayerControls.getId(), new ColorRect(new org.newdawn.slick.geom.Rectangle(5, 50, 570, 390)), new ColorRect(new org.newdawn.slick.geom.Rectangle(20, 60, 540, 310)), EGuiElement.TAB_STATUS, 10, 0, 20, 0, true, true);
+        PaginatedList playerControls = new PaginatedList(ELocation.GUI_ELEMENT_PlayerControls.getId(), new ColorRect(new Rectangle(5, 50, 570, 390)), new ColorRect(new org.newdawn.slick.geom.Rectangle(20, 60, 540, 310)), EGuiElement.TAB_STATUS, 10, 0, 20, 0, true, true);
         playerControls.addList(ElementFactory.createText("Player 1", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 0, 0), 0, 20);
         playerControls.addList(ElementFactory.createText("Player 2", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 0, 0), 0, 20);
         InputData.getAvailableInput().entrySet().forEach(entry -> {
@@ -78,5 +84,27 @@ public class InterfaceElementData extends DataManager {
     }
 
     public void initCombosContent() throws NoSuchMethodException, SlickException, JSONException {
+    }
+
+    public void initSelectPlayerContent() throws NoSuchMethodException, SlickException, JSONException {
+        ComplexRelayElement selectPlayer = new ComplexRelayElement(ELocation.GUI_ELEMENT_SelectPlayer.getId(), new ColorRect(new Rectangle(0, 0, 500, 500)), false, true);
+
+        int decalX = 0;
+        int decalY = 0;
+        EGuiElement elements[] = new EGuiElement[] {EGuiElement.AVATAR_GOKU, EGuiElement.AVATAR_PICOLO, EGuiElement.AVATAR_VEGETA, EGuiElement.AVATAR_KAME_SENNIN, EGuiElement.AVATAR_FRIEEZA, EGuiElement.AVATAR_BUU, EGuiElement.AVATAR_CELL, EGuiElement.AVATAR_GOHAN};
+        EGameObject types[] = new EGameObject[] {EGameObject.GOKU, EGameObject.PICOLO, EGameObject.VEGETA, EGameObject.KAME_SENNIN, EGameObject.FRIEEZA, EGameObject.BUU, EGameObject.CELL, EGameObject.GOHAN};
+
+        for (int i = 0; i < elements.length; ++i) {
+            if (i < types.length) {
+                selectPlayer.addItem(new ElementWithTitle(new ImageElement(new ColorRect(new Rectangle(8, 8, 0, 0)), ResourceManager.get().getGuiAnimator(elements[i]), true), new Button(new ImageElement(new ColorRect(new Rectangle(decalX, decalY, 0, 0)), ResourceManager.get().getGuiAnimator(EGuiElement.AVATAR_BORDER), true), ElementFactory.createBasicButtonTasks(ELocation.getEnumByLocation(selectPlayer.getId()), ELocation.getEnumByLocation(selectPlayer.getId()), new Pair<>(ETaskType.RELAY, types[i]), ESound.BUTTON_FOCUS, ESound.VALIDATE)), true));
+            }
+            if (i == 3) {
+                decalX = 0;
+                decalY += 140;
+            } else {
+                decalX += 140;
+            }
+        }
+        GuiElementsManager.get().add(selectPlayer.getId(), selectPlayer);
     }
 }

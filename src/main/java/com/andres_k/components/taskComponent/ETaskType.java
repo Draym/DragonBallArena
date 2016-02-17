@@ -8,6 +8,7 @@ public enum ETaskType {
     GETTER,
     SETTER,
 
+    RELAY,
     SEND_TO,
     EVENT,
     CUT,

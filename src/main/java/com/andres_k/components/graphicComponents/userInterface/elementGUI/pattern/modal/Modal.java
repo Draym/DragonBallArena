@@ -211,13 +211,13 @@ public class Modal extends GuiElement {
     }
 
     @Override
-    public void setPosX(float value) {
-        this.content.setPosX(value);
+    public void setPosX(float posX) {
+        this.content.setPosX(posX);
     }
 
     @Override
-    public void setPosY(float value) {
-        this.content.setPosY(value);
+    public void setPosY(float posY) {
+        this.content.setPosY(posY);
     }
 
     @Override

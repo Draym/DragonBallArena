@@ -56,7 +56,8 @@ public enum EGuiElement {
     AVATAR_KAME_SENNIN(EGameObject.KAME_SENNIN.getValue(), AVATAR.getValue()),
     AVATAR_CELL(EGameObject.CELL.getValue(), AVATAR.getValue()),
     AVATAR_BUU(EGameObject.BUU.getValue(), AVATAR.getValue()),
-    AVATAR_FRIEEZA(EGameObject.FRIEEZA.getValue(), AVATAR.getValue());
+    AVATAR_FRIEEZA(EGameObject.FRIEEZA.getValue(), AVATAR.getValue()),
+    AVATAR_BORDER(EGameObject.FRIEEZA.getValue(), AVATAR.getValue());
 
     private final String value;
     private final String type;
