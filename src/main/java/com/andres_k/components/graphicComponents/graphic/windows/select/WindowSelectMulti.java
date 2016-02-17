@@ -1,9 +1,9 @@
-package com.andres_k.components.graphicComponents.graphic.windows;
+package com.andres_k.components.graphicComponents.graphic.windows.select;
 
-import com.andres_k.components.controllers.HomeController;
+import com.andres_k.components.controllers.select.SelectMultiController;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
-import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.HomeGUI;
+import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.select.SelectMultiGui;
 import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.resourceComponent.sounds.MusicController;
 import com.andres_k.components.taskComponent.LocalTaskManager;
@@ -14,12 +14,11 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
- * Created by andres_k on 08/07/2015.
+ * Created by andres_k on 09/02/2016.
  */
-public class WindowHome extends WindowBasedGame {
-
-    public WindowHome(int idWindow, LocalTaskManager windowsTask) throws JSONException, SlickException {
-        super(idWindow, new HomeController(), new HomeGUI());
+public class WindowSelectMulti extends WindowBasedGame {
+    public WindowSelectMulti(int idWindow, LocalTaskManager windowsTask) throws JSONException, SlickException {
+        super(idWindow, new SelectMultiController(), new SelectMultiGui());
         this.gui.register(windowsTask);
         this.controller.register(windowsTask);
     }
@@ -29,19 +28,12 @@ public class WindowHome extends WindowBasedGame {
         this.initBeforeEnter();
 
         WindowConfig.get().switchWindow(EnumWindow.getById(this.idWindow));
-        MusicController.get().loop(ESound.BACKGROUND_HOME);
+        MusicController.get().loop(ESound.BACKGROUND_SELECT);
     }
-
 
     @Override
     public void leave(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        MusicController.get().stop(ESound.BACKGROUND_HOME);
+        MusicController.get().stop(ESound.BACKGROUND_SELECT);
         this.clean();
-    }
-
-    @Override
-    public void quit() {
-        this.clean();
-        this.container.exit();
     }
 }

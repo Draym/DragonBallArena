@@ -1,5 +1,6 @@
-package com.andres_k.components.controllers;
+package com.andres_k.components.controllers.game;
 
+import com.andres_k.components.controllers.WindowController;
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.eventComponent.input.InputGame;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;

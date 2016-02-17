@@ -328,6 +328,7 @@ public abstract class GuiElement implements Observer {
     }
 
     protected final void OffClick(boolean clicked) {
+        Console.write("OffClick: " + this);
         if (clicked) {
             this.tasks.stream().filter(task -> task.getV1() == EStatus.OFF_CLICK).forEach(task -> this.doTask(task.getV2()));
         }

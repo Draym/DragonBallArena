@@ -26,9 +26,17 @@ import org.newdawn.slick.geom.Rectangle;
  */
 public class ChoicePlayerElement extends ComplexElement {
     private int currentChoice;
+    private ELocation target;
 
-    public ChoicePlayerElement(String id, ColorShape container, boolean activated) {
+    public ChoicePlayerElement(String id, ColorShape container, ELocation target, boolean activated) {
         super(EGuiType.SPECIFIC_CHOICE_PLAYER, id, container, activated);
+        this.currentChoice = 0;
+        this.target = target;
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
         this.currentChoice = 0;
     }
 
@@ -67,7 +75,7 @@ public class ChoicePlayerElement extends ComplexElement {
             if (task.equals(ETaskType.START)) {
                 if (this.currentChoice < GameConfig.playerChoiceType.length) {
                     GameConfig.typePlayer.add(GameConfig.playerChoiceType[this.currentChoice]);
-                    CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.getId(), ELocation.GUI_ELEMENT_SelectPlayer.getId(), ETaskType.NEXT));
+                    CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.getId(), target.getId(), ETaskType.NEXT));
                     return true;
                 }
             }

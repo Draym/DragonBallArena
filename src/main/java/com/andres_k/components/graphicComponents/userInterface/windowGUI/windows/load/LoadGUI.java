@@ -1,4 +1,4 @@
-package com.andres_k.components.graphicComponents.userInterface.windowGUI.windows;
+package com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.load;
 
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;

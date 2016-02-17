@@ -6,6 +6,7 @@ import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.Console;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,14 @@ public class ComplexRelayElement extends ComplexElement {
     }
 
     @Override
+    public void reset() {
+        super.reset();
+        this.current = 0;
+    }
+
+    @Override
     public Object doTask(Object task) {
+        Console.write("RelayComplex: " + task);
         if (task instanceof ETaskType) {
             if (task.equals(ETaskType.NEXT)) {
                 this.current += 1;

@@ -1,7 +1,12 @@
 package com.andres_k.components.graphicComponents.graphic;
 
 
-import com.andres_k.components.graphicComponents.graphic.windows.*;
+import com.andres_k.components.graphicComponents.graphic.windows.game.WindowGame;
+import com.andres_k.components.graphicComponents.graphic.windows.home.WindowHome;
+import com.andres_k.components.graphicComponents.graphic.windows.load.WindowLoad;
+import com.andres_k.components.graphicComponents.graphic.windows.select.WindowSelectMulti;
+import com.andres_k.components.graphicComponents.graphic.windows.select.WindowSelectSolo;
+import com.andres_k.components.graphicComponents.graphic.windows.select.WindowSelectVersus;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.LocalTaskManager;

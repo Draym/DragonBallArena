@@ -1,5 +1,6 @@
-package com.andres_k.components.controllers;
+package com.andres_k.components.controllers.home;
 
+import com.andres_k.components.controllers.WindowController;
 import com.andres_k.components.graphicComponents.background.EBackground;
 import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;

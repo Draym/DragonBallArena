@@ -1,6 +1,7 @@
 package com.andres_k.components.graphicComponents.userInterface.elementGUI.elements;
 
 import com.andres_k.components.gameComponents.animations.EAnimation;
+import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EStatus;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
@@ -9,6 +10,7 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.elemen
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.ImageElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.TextElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.ElementWithTitle;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.complex.ComplexRelayElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.StringTimer;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
 import com.andres_k.components.resourceComponent.fonts.EFont;
@@ -17,6 +19,7 @@ import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
+import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
 import org.newdawn.slick.Color;
@@ -85,5 +88,30 @@ public class ElementFactory {
         component.add(new Pair<>(EStatus.ON_CREATE, new TaskComponent(local, target, ETaskType.STOP_ACTIVITY)));
         component.add(new Pair<>(EStatus.ON_KILL, new TaskComponent(local, target, ETaskType.START_ACTIVITY)));
         return component;
+    }
+
+    public static ComplexRelayElement createPackSelectPlayer(ELocation packSelectId) throws SlickException {
+        ComplexRelayElement selectPlayer = new ComplexRelayElement(packSelectId.getId(), new ColorRect(new Rectangle(0, 0, 500, 500)), false, true);
+
+        int decalX = 0;
+        int decalY = 0;
+
+        EGuiElement elements[] = GameConfig.playerChoiceGui;
+        EGameObject types[] = GameConfig.playerChoiceType;
+        for (Integer i = 0; i < elements.length; ++i) {
+            if (i < types.length) {
+                ImageElement img = new ImageElement(new ColorRect(new Rectangle(decalX, decalY, 0, 0)), ResourceManager.get().getGuiAnimator(EGuiElement.AVATAR_BORDER), true);
+                img.addTasks(ElementFactory.createImageFocusTasks());
+                Button button = new Button(img, ElementFactory.createBasicButtonTasks(ELocation.getEnumByLocation(selectPlayer.getId()), ELocation.getEnumByLocation(selectPlayer.getId()), new Pair<>(ETaskType.RELAY, i), ESound.BUTTON_FOCUS, ESound.VALIDATE));
+                selectPlayer.addItem(new ElementWithTitle(new ImageElement(new ColorRect(new Rectangle(8, 8, 0, 0)), ResourceManager.get().getGuiAnimator(elements[i]), true), button, true));
+            }
+            if (i == 3) {
+                decalX = 0;
+                decalY += 140;
+            } else {
+                decalX += 140;
+            }
+        }
+        return selectPlayer;
     }
 }

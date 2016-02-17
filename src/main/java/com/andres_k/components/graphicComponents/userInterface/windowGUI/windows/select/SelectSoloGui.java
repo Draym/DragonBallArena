@@ -1,4 +1,4 @@
-package com.andres_k.components.graphicComponents.userInterface.windowGUI.windows;
+package com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.select;
 
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
@@ -17,7 +17,6 @@ import com.andres_k.components.graphicComponents.userInterface.windowGUI.UserInt
 import com.andres_k.components.resourceComponent.fonts.EFont;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.resourceComponent.sounds.ESound;
-import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.utils.configs.WindowConfig;
@@ -38,21 +37,17 @@ public class SelectSoloGui extends UserInterface {
 
     @Override
     public void init() throws SlickException {
-        // packSelect
-        ComplexRelayElement packSelect = (ComplexRelayElement) GuiElementsManager.get().getElement(ELocation.GUI_ELEMENT_SelectPlayer.getId());
-        packSelect.addTarget(ELocation.GUI_ELEMENT_ChoicePlayer1);
-        packSelect.addTarget(ELocation.GUI_ELEMENT_ChoicePlayer2);
+        //packSelect
+        ComplexRelayElement packSelect = ElementFactory.createPackSelectPlayer(ELocation.SELECT_SOLO_GUI_SelectPackPlayer);
+        packSelect.addTarget(ELocation.SELECT_SOLO_GUI_ChoicePlayer1);
         packSelect.setLocation(WindowConfig.get().centerPosX(EnumWindow.SELECT_SOLO, (int) packSelect.getAbsoluteWidth()), WindowConfig.get().centerPosY(EnumWindow.SELECT_SOLO, (int) packSelect.getAbsoluteHeight()) + 200);
+        this.taskManager.register(packSelect.getId(), packSelect);
         this.elements.add(packSelect);
 
         // playerChoice
-        ChoicePlayerElement choicePlayer1 = new ChoicePlayerElement(ELocation.GUI_ELEMENT_ChoicePlayer1.getId(), new ColorRect(new Rectangle(10, 102, 370, 700)), false);
-        CentralTaskManager.get().register(choicePlayer1.getId(), choicePlayer1);
+        ChoicePlayerElement choicePlayer1 = new ChoicePlayerElement(ELocation.SELECT_SOLO_GUI_ChoicePlayer1.getId(), new ColorRect(new Rectangle(10, 102, 370, 700)), ELocation.SELECT_SOLO_GUI_SelectPackPlayer, false);
+        this.taskManager.register(choicePlayer1.getId(), choicePlayer1);
         this.elements.add(choicePlayer1);
-
-        ChoicePlayerElement choicePlayer2 = new ChoicePlayerElement(ELocation.GUI_ELEMENT_ChoicePlayer2.getId(), new ColorRect(new Rectangle(1210, 102, 370, 700)), false);
-        CentralTaskManager.get().register(choicePlayer2.getId(), choicePlayer2);
-        this.elements.add(choicePlayer2);
 
         // options
         ComplexElement options = new ComplexElement(ELocation.SELECT_SOLO_GUI_Options.getId(), new ColorRect(new Rectangle(WindowConfig.get().centerPosX(EnumWindow.SELECT_SOLO, 320), WindowConfig.get().centerPosY(EnumWindow.SELECT_SOLO, 382), 320, 382)), true);
@@ -97,11 +92,9 @@ public class SelectSoloGui extends UserInterface {
 
     @Override
     public void initOnEnter() {
-
     }
 
     @Override
     public void update(Observable o, Object arg) {
-
     }
 }

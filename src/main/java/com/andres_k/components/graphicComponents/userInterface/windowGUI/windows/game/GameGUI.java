@@ -1,4 +1,4 @@
-package com.andres_k.components.graphicComponents.userInterface.windowGUI.windows;
+package com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.game;
 
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.UserInterface;
 import com.andres_k.components.taskComponent.ELocation;
@@ -7,11 +7,12 @@ import org.newdawn.slick.SlickException;
 import java.util.Observable;
 
 /**
- * Created by andres_k on 09/02/2016.
+ * Created by andres_k on 01/02/2016.
  */
-public class SelectVersusGui extends UserInterface {
-    protected SelectVersusGui() {
-        super(ELocation.SELECT_VERSUS_GUI);
+public class GameGUI extends UserInterface {
+
+    public GameGUI() {
+        super(ELocation.GAME_GUI);
     }
 
     @Override

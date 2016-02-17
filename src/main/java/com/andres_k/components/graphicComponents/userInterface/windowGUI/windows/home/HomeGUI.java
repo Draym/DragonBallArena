@@ -1,4 +1,4 @@
-package com.andres_k.components.graphicComponents.userInterface.windowGUI.windows;
+package com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.home;
 
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;

@@ -38,9 +38,6 @@ public enum ELocation {
     GUI_ELEMENT_PlayerControls("Controls", MASTER.getId()),
     GUI_ELEMENT_Combos("Combos", MASTER.getId()),
     GUI_ELEMENT_Volumes("Volumes", MASTER.getId()),
-    GUI_ELEMENT_SelectPlayer("SelectPlayer", MASTER.getId()),
-    GUI_ELEMENT_ChoicePlayer1("ChoicePlayer1", MASTER.getId()),
-    GUI_ELEMENT_ChoicePlayer2("ChoicePlayer2", MASTER.getId()),
 
     //LOAD_GUI
     LOAD_GUI_LoadingBar_value("LoadingBar_value", LOAD_GUI.getId()),
@@ -58,12 +55,26 @@ public enum ELocation {
     SELECT_SOLO_GUI_Settings("Settings", SELECT_SOLO_GUI.getId()),
     SELECT_SOLO_GUI_Controls("Controls", SELECT_SOLO_GUI.getId()),
     SELECT_SOLO_GUI_Combos("Combos", SELECT_SOLO_GUI.getId()),
+    SELECT_SOLO_GUI_SelectPackPlayer("SelectPackPlayer", SELECT_SOLO_GUI.getId()),
+    SELECT_SOLO_GUI_ChoicePlayer1("ChoicePlayer1", SELECT_SOLO_GUI.getId()),
+    SELECT_SOLO_GUI_ChoicePlayer2("ChoicePlayer2", SELECT_SOLO_GUI.getId()),
 
     //SELECT_VERSUS
     SELECT_VERSUS_GUI_Options("Options", SELECT_VERSUS_GUI.getId()),
+    SELECT_VERSUS_GUI_Settings("Settings", SELECT_VERSUS_GUI.getId()),
+    SELECT_VERSUS_GUI_Controls("Controls", SELECT_VERSUS_GUI.getId()),
+    SELECT_VERSUS_GUI_Combos("Combos", SELECT_VERSUS_GUI.getId()),
+    SELECT_VERSUS_GUI_SelectPackPlayer("SelectPackPlayer", SELECT_VERSUS_GUI.getId()),
+    SELECT_VERSUS_GUI_ChoicePlayer1("ChoicePlayer1", SELECT_VERSUS_GUI.getId()),
+    SELECT_VERSUS_GUI_ChoicePlayer2("ChoicePlayer2", SELECT_VERSUS_GUI.getId()),
 
     //SELECT_MULTI
-    SELECT_MULTI_GUI_Options("Options", SELECT_MULTI_GUI.getId());
+    SELECT_MULTI_GUI_Options("Options", SELECT_MULTI_GUI.getId()),
+    SELECT_MULTI_GUI_Settings("Settings", SELECT_MULTI_GUI.getId()),
+    SELECT_MULTI_GUI_Controls("Controls", SELECT_MULTI_GUI.getId()),
+    SELECT_MULTI_GUI_Combos("Combos", SELECT_MULTI_GUI.getId()),
+    SELECT_MULTI_GUI_SelectPackPlayer("SelectPackPlayer", SELECT_MULTI_GUI.getId()),
+    SELECT_MULTI_GUI_ChoicePlayer1("ChoicePlayer1", SELECT_MULTI_GUI.getId());
 
     private String name;
     private String parent;

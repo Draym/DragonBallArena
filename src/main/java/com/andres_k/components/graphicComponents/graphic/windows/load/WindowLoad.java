@@ -1,9 +1,9 @@
-package com.andres_k.components.graphicComponents.graphic.windows;
+package com.andres_k.components.graphicComponents.graphic.windows.load;
 
-import com.andres_k.components.controllers.LoadController;
+import com.andres_k.components.controllers.load.LoadController;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
-import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.LoadGUI;
+import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.load.LoadGUI;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.resourceComponent.sounds.MusicController;

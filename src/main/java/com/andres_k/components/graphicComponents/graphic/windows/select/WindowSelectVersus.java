@@ -1,9 +1,9 @@
-package com.andres_k.components.graphicComponents.graphic.windows;
+package com.andres_k.components.graphicComponents.graphic.windows.select;
 
-import com.andres_k.components.controllers.SelectSoloController;
+import com.andres_k.components.controllers.select.SelectVersusController;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
-import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.SelectSoloGui;
+import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.select.SelectVersusGui;
 import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.resourceComponent.sounds.MusicController;
 import com.andres_k.components.taskComponent.LocalTaskManager;
@@ -16,9 +16,9 @@ import org.newdawn.slick.state.StateBasedGame;
 /**
  * Created by andres_k on 09/02/2016.
  */
-public class WindowSelectMulti extends WindowBasedGame {
-    public WindowSelectMulti(int idWindow, LocalTaskManager windowsTask) throws JSONException, SlickException {
-        super(idWindow, new SelectSoloController(), new SelectSoloGui());
+public class WindowSelectVersus extends WindowBasedGame {
+    public WindowSelectVersus(int idWindow, LocalTaskManager windowsTask) throws JSONException, SlickException {
+        super(idWindow, new SelectVersusController(), new SelectVersusGui());
         this.gui.register(windowsTask);
         this.controller.register(windowsTask);
     }

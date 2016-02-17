@@ -16,11 +16,13 @@ public class ButtonLock extends Button {
 
     @Override
     public boolean isOnClick(float x, float y) {
+        boolean result = false;
         if (this.activated && !this.clicked && this.content.isOnClick(x, y)) {
             this.clicked = true;
+            result = true;
             this.OnClick(false);
         }
-        return this.clicked;
+        return result;
     }
 
 }
