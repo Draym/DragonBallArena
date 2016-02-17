@@ -19,4 +19,8 @@ public class TaskFactory {
     public static TaskComponent createTask(ELocation sender, ELocation target, Object task){
         return new TaskComponent(sender, target, task);
     }
+
+    public static TaskComponent createTask(String sender, String target, Object task){
+        return new TaskComponent(ELocation.getEnumByLocation(sender), ELocation.getEnumByLocation(target), task);
+    }
 }

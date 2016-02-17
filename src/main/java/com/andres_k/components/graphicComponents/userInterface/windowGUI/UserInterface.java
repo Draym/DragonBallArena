@@ -30,8 +30,10 @@ public abstract class UserInterface implements Observer {
 
     public abstract void initOnEnter() throws SlickException;
 
-    protected void initElements() {
-        this.elements.forEach(GuiElement::init);
+    protected void initElements() throws SlickException {
+        for (GuiElement element : this.elements) {
+            element.init();
+        }
     }
 
     public void enter() throws SlickException {

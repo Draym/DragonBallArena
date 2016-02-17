@@ -1,4 +1,4 @@
-package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.list;
+package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.list;
 
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.eventComponent.input.InputEvent;

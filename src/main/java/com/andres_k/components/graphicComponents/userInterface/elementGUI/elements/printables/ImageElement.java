@@ -58,8 +58,8 @@ public class ImageElement extends Element {
         if (this.body != null) {
             this.sizeXMAX = this.body.getSizeX();
         }
-        this.tasks.add(new Pair<>(EStatus.ON_FOCUS, new Tuple<>(ETaskType.SETTER, "animation", EAnimation.ON_FOCUS)));
-        this.tasks.add(new Pair<>(EStatus.OFF_FOCUS, new Tuple<>(ETaskType.SETTER, "animation", EAnimation.IDLE)));
+        this.tasks.add(new Pair<>(EStatus.ON_CLICK, new Tuple<>(ETaskType.SETTER, "animation", EAnimation.ON_CLICK)));
+        this.tasks.add(new Pair<>(EStatus.OFF_CLICK, new Tuple<>(ETaskType.SETTER, "animation", EAnimation.IDLE)));
     }
 
     @Override
@@ -156,12 +156,7 @@ public class ImageElement extends Element {
 
     @Override
     public Object doTask(Object task) {
-        Object result;
-
-        if ((result = super.doTask(task)) != null) {
-            return result;
-        }
-       if (task instanceof Pair && ((Pair) task).getV1() instanceof ETaskType) {
+        if (task instanceof Pair && ((Pair) task).getV1() instanceof ETaskType) {
             if (((Pair) task).getV1() == ETaskType.START_TIMER) {
                 this.animatorController.updateAnimator(false, false);
                 this.animatorController.startTimer((Long) ((Pair) task).getV2());
@@ -175,9 +170,9 @@ public class ImageElement extends Element {
             if (order == ETaskType.SETTER) {
                 if (target.equals("index") && value instanceof Integer && this.animatorController != null) {
                     this.animatorController.setCurrentAnimationIndex((Integer) value);
-                }
-                else if (target.equals("animation") && value instanceof EAnimation && this.animatorController != null) {
+                } else if (target.equals("animation") && value instanceof EAnimation && this.animatorController != null) {
                     this.animatorController.changeAnimation((EAnimation) value);
+                    return true;
                 }
             } else if (order == ETaskType.CUT) {
                 if (target.equals("body") && value instanceof Float) {
@@ -201,12 +196,12 @@ public class ImageElement extends Element {
                 }
             }
         }
-        return null;
+        return super.doTask(task);
     }
 
     @Override
     public String toString() {
-        return "(" + super.toString() +  " imageType: " + (this.animatorController != null ? this.animatorController.currentAnimationType() : ")");
+        return "(" + super.toString() + " imageType: " + (this.animatorController != null ? this.animatorController.currentAnimationType() : ")");
     }
 
     private void start() {

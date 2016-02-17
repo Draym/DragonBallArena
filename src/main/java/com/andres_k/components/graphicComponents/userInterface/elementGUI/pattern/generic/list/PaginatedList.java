@@ -1,4 +1,4 @@
-package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.list;
+package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.list;
 
 import com.andres_k.components.eventComponent.input.InputEvent;
 import com.andres_k.components.gameComponents.animations.EAnimation;
@@ -7,7 +7,7 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiTy
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.ImageElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.TextElement;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.ElementWithTitle;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.ElementWithTitle;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
@@ -55,9 +55,11 @@ public class PaginatedList extends GuiElement {
     }
 
     @Override
-    public void init() {
+    public void init() throws SlickException {
         this.reset();
-        this.lists.entrySet().forEach(entry -> entry.getValue().init());
+        for (Map.Entry<String, ListElement> entry : this.lists.entrySet()) {
+            entry.getValue().init();
+        }
     }
 
     @Override

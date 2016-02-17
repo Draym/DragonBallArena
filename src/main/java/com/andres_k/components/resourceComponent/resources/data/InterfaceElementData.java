@@ -11,18 +11,20 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.elemen
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.ImageElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.SliderElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.TextElement;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.ElementWithTitle;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.complex.ComplexElement;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.complex.ComplexRelayElement;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.list.PaginatedList;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.ElementWithTitle;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.complex.ComplexElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.complex.ComplexRelayElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.list.PaginatedList;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.StringTimer;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
 import com.andres_k.components.resourceComponent.fonts.EFont;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.resourceComponent.sounds.MusicController;
+import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
+import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.ColorTools;
@@ -91,12 +93,15 @@ public class InterfaceElementData extends DataManager {
 
         int decalX = 0;
         int decalY = 0;
-        EGuiElement elements[] = new EGuiElement[] {EGuiElement.AVATAR_GOKU, EGuiElement.AVATAR_PICOLO, EGuiElement.AVATAR_VEGETA, EGuiElement.AVATAR_KAME_SENNIN, EGuiElement.AVATAR_FRIEEZA, EGuiElement.AVATAR_BUU, EGuiElement.AVATAR_CELL, EGuiElement.AVATAR_GOHAN};
-        EGameObject types[] = new EGameObject[] {EGameObject.GOKU, EGameObject.PICOLO, EGameObject.VEGETA, EGameObject.KAME_SENNIN, EGameObject.FRIEEZA, EGameObject.BUU, EGameObject.CELL, EGameObject.GOHAN};
 
-        for (int i = 0; i < elements.length; ++i) {
+        EGuiElement elements[] = GameConfig.playerChoiceGui;
+        EGameObject types[] = GameConfig.playerChoiceType;
+        for (Integer i = 0; i < elements.length; ++i) {
             if (i < types.length) {
-                selectPlayer.addItem(new ElementWithTitle(new ImageElement(new ColorRect(new Rectangle(8, 8, 0, 0)), ResourceManager.get().getGuiAnimator(elements[i]), true), new Button(new ImageElement(new ColorRect(new Rectangle(decalX, decalY, 0, 0)), ResourceManager.get().getGuiAnimator(EGuiElement.AVATAR_BORDER), true), ElementFactory.createBasicButtonTasks(ELocation.getEnumByLocation(selectPlayer.getId()), ELocation.getEnumByLocation(selectPlayer.getId()), new Pair<>(ETaskType.RELAY, types[i]), ESound.BUTTON_FOCUS, ESound.VALIDATE)), true));
+                ImageElement img = new ImageElement(new ColorRect(new Rectangle(decalX, decalY, 0, 0)), ResourceManager.get().getGuiAnimator(EGuiElement.AVATAR_BORDER), true);
+                img.addTasks(ElementFactory.createImageFocusTasks());
+                Button button = new Button(img, ElementFactory.createBasicButtonTasks(ELocation.getEnumByLocation(selectPlayer.getId()), ELocation.getEnumByLocation(selectPlayer.getId()), new Pair<>(ETaskType.RELAY, i), ESound.BUTTON_FOCUS, ESound.VALIDATE));
+                selectPlayer.addItem(new ElementWithTitle(new ImageElement(new ColorRect(new Rectangle(8, 8, 0, 0)), ResourceManager.get().getGuiAnimator(elements[i]), true), button, true));
             }
             if (i == 3) {
                 decalX = 0;
@@ -106,5 +111,6 @@ public class InterfaceElementData extends DataManager {
             }
         }
         GuiElementsManager.get().add(selectPlayer.getId(), selectPlayer);
+        CentralTaskManager.get().register(selectPlayer.getId(), selectPlayer);
     }
 }

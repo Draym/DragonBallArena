@@ -18,7 +18,7 @@ import java.util.List;
  * Created by andres_k on 01/02/2016.
  */
 public class Button extends Element {
-    private Element content;
+    protected Element content;
 
     public Button(Element element, List<Pair<EStatus, Object>> tasks) {
         super(EGuiType.BUTTON, element.getId(), element.isActivated());
@@ -27,7 +27,7 @@ public class Button extends Element {
     }
 
     @Override
-    public void init() {
+    public void init() throws SlickException {
         this.reset();
         this.content.init();
     }
@@ -153,6 +153,19 @@ public class Button extends Element {
             this.OnFocus(save);
         }
         return focused;
+    }
+
+    @Override
+    public boolean isOnClick(float x, float y) {
+        boolean save = this.clicked;
+        if (this.activated && this.content.isOnClick(x, y)) {
+            this.clicked = true;
+            this.OnClick(save);
+        } else {
+            this.clicked = false;
+            this.OffClick(save);
+        }
+        return this.clicked;
     }
 
     // SETTERS

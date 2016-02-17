@@ -67,6 +67,7 @@ public class AnimatorGuiData extends DataManager {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_EXIT), EGuiElement.BUTTON_EXIT);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_RESUME), EGuiElement.BUTTON_RESUME);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_COMBO), EGuiElement.BUTTON_COMBO);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.BUTTON_LOCK), EGuiElement.BUTTON_LOCK);
     }
 
     public void initComponents() throws NoSuchMethodException, SlickException, JSONException {
@@ -74,6 +75,7 @@ public class AnimatorGuiData extends DataManager {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.SLIDER), EGuiElement.SLIDER);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.SLIDER_VALUE), EGuiElement.SLIDER_VALUE);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.TAB_STATUS), EGuiElement.TAB_STATUS);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.DISABLED), EGuiElement.DISABLED);
     }
     public void initAvatars() throws NoSuchMethodException, SlickException, JSONException {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.AVATAR_GOKU), EGuiElement.AVATAR_GOKU);
@@ -88,6 +90,7 @@ public class AnimatorGuiData extends DataManager {
     }
 
     public void initCards() throws NoSuchMethodException, SlickException, JSONException {
+/*
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_GOKU), EGuiElement.CARDS_GOKU);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_GOHAN), EGuiElement.CARDS_GOHAN);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_VEGETA), EGuiElement.CARDS_VEGETA);
@@ -96,6 +99,8 @@ public class AnimatorGuiData extends DataManager {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_CELL), EGuiElement.CARDS_CELL);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_BUU), EGuiElement.CARDS_BUU);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_FRIEEZA), EGuiElement.CARDS_FRIEEZA);
+*/
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_ALL), EGuiElement.CARDS_ALL);
     }
 
     private void addAnimator(AnimatorController animatorController, EGuiElement type) {

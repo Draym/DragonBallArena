@@ -6,6 +6,7 @@ import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
+import com.andres_k.utils.configs.GameConfig;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
 
@@ -26,7 +27,7 @@ public class SelectSoloController extends WindowController {
 
     @Override
     public void leave() {
-
+        GameConfig.typePlayer.clear();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.complex;
+package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.complex;
 
 import com.andres_k.components.eventComponent.input.InputEvent;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
@@ -7,6 +7,7 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +32,11 @@ public class ComplexElement extends GuiElement {
     }
 
     @Override
-    public void init() {
+    public void init() throws SlickException {
         this.reset();
-        this.items.forEach(GuiElement::init);
+        for (GuiElement item : this.items) {
+            item.init();
+        }
     }
 
     @Override
@@ -125,14 +128,15 @@ public class ComplexElement extends GuiElement {
 
     @Override
     public boolean isOnClick(float x, float y) {
+        boolean result = false;
         if (this.activated) {
             for (int i = this.items.size() - 1; i >= 0; --i) {
                 if (this.items.get(i).isOnClick(x - this.getBody().getMinX(), y - this.getBody().getMinY())) {
-                    return true;
+                    result = true;
                 }
             }
         }
-        return false;
+        return result;
     }
 
     @Override

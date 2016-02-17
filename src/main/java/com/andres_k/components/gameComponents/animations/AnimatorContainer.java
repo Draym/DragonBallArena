@@ -100,8 +100,11 @@ public class AnimatorContainer {
 
     // SETTERS
 
-    public void setIndex(int value) {
-        if (this.animators.containsKey(value))
+    public boolean setIndex(int value) {
+        if (this.animators.containsKey(value)) {
             this.index = value;
+            return true;
+        }
+        return false;
     }
 }

@@ -9,6 +9,7 @@ import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,7 @@ public abstract class GuiElement implements Observer {
     }
 
     // FUNCTIONS
-    public abstract void init();
+    public abstract void init() throws SlickException;
 
     public abstract void enter();
 
@@ -142,13 +143,11 @@ public abstract class GuiElement implements Observer {
         return this.focused;
     }
 
-
     public boolean isOnClick(float x, float y) {
         boolean save = this.clicked;
         if (this.activated && this.focused) {
             this.clicked = true;
             this.OnClick(save);
-            Console.write("" + this + " Clicked = true");
         } else {
             this.clicked = false;
             this.OffClick(save);

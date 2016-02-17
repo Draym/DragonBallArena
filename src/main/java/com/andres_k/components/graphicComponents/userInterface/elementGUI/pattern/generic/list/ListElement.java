@@ -1,8 +1,8 @@
-package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.list;
+package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.list;
 
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.complex.ComplexElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.complex.ComplexElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.taskComponent.ELocation;

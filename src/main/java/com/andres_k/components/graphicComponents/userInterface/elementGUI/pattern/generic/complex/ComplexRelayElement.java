@@ -1,4 +1,4 @@
-package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.complex;
+package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.complex;
 
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.taskComponent.CentralTaskManager;
@@ -35,23 +35,23 @@ public class ComplexRelayElement extends ComplexElement {
 
     @Override
     public Object doTask(Object task) {
-        Object result;
-
-        if ((result = super.doTask(task)) != null) {
-            return result;
-        } else if (task instanceof Pair && ((Pair) task).getV1() instanceof ETaskType) {
+        if (task instanceof ETaskType) {
+            if (task.equals(ETaskType.NEXT)) {
+                this.current += 1;
+                if (this.current == this.targets.size()) {
+                    this.current = (this.loop ? 0 : -1);
+                }
+                return true;
+            }
+        }
+        else if (task instanceof Pair && ((Pair) task).getV1() instanceof ETaskType) {
             if (((Pair) task).getV1().equals(ETaskType.RELAY)) {
-                if (this.current != -1) {
-                    if (this.current == this.targets.size() && this.loop) {
-                        this.current = -1;
-                    }
-                    if (this.current < this.targets.size()) {
-                        CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.getEnumByLocation(this.getId()), this.targets.get(this.current), ((Pair) task).getV2()));
-                        this.current += 1;
-                    }
+                if (this.current >= 0 && this.current < this.targets.size()) {
+                    CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.getEnumByLocation(this.getId()), this.targets.get(this.current), ((Pair) task).getV2()));
+                    return true;
                 }
             }
         }
-        return null;
+        return super.doTask(task);
     }
 }

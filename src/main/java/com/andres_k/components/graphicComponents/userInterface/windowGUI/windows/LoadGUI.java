@@ -4,8 +4,8 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiEl
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.ImageElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.TextElement;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.complex.ComplexElement;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.ElementWithTitle;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.complex.ComplexElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.ElementWithTitle;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.StringTimer;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.UserInterface;
@@ -36,10 +36,10 @@ public class LoadGUI extends UserInterface {
         ComplexElement loadingBar = new ComplexElement(new ColorRect(new Rectangle(446, 630, 400, 95)), true);
         ImageElement container = new ImageElement(ResourceManager.get().getGuiAnimator(EGuiElement.PANEL1), true);
 
-        TextElement title = new TextElement(new StringTimer("Loading"), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 20, 152, 2, Element.PositionInBody.LEFT_UP, true);
-        this.taskManager.register(ELocation.LOAD_GUI_LoadingBar_title.getId(), title);
+        TextElement title = new TextElement(ELocation.LOAD_GUI_LoadingBar_title.getId(), new StringTimer("Loading"), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 20, new ColorRect(new Rectangle(66, 2, 257, 28)), Element.PositionInBody.MIDDLE_UP, true);
+        this.taskManager.register(title.getId(), title);
         ImageElement value = new ImageElement(ELocation.LOAD_GUI_LoadingBar_value.getId(), ResourceManager.get().getGuiAnimator(EGuiElement.LOAD_BAR), true);
-        this.taskManager.register(ELocation.LOAD_GUI_LoadingBar_value.getId(), value);
+        this.taskManager.register(value.getId(), value);
         value.doTask(new Tuple<>(ETaskType.CUT, "body", 0.0f));
         loadingBar.addItem(new ElementWithTitle(title, container, true));
         loadingBar.addItem(value);

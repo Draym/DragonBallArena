@@ -31,6 +31,7 @@ public enum EGuiElement {
     BUTTON_EXIT("BUTTON_EXIT", BUTTON.getValue()),
     BUTTON_RESUME("BUTTON_RESUME", BUTTON.getValue()),
     BUTTON_COMBO("BUTTON_COMBO", BUTTON.getValue()),
+    BUTTON_LOCK("BUTTON_LOCK", BUTTON.getValue()),
 
     // component
     TAB_STATUS("TAB_STATUS", COMPONENT.getValue()),
@@ -38,7 +39,11 @@ public enum EGuiElement {
     SLIDER_VALUE("SLIDER_VALUE", COMPONENT.getValue()),
     LOAD_BAR("LOAD_BAR", COMPONENT.getValue()),
     LOADING_ANIM("LOADING_ANIM", COMPONENT.getValue()),
+    DISABLED("DISABLED", COMPONENT.getValue()),
 
+    // GUI_CARDS
+    CARDS_ALL("CARDS_ALL", CARDS.getValue()),
+    /*
     CARDS_GOKU("CARDS_GOKU", CARDS.getValue()),
     CARDS_GOHAN("CARDS_GOHAN", CARDS.getValue()),
     CARDS_VEGETA("CARDS_VEGETA", CARDS.getValue()),
@@ -47,8 +52,8 @@ public enum EGuiElement {
     CARDS_CELL("CARDS_CELL", CARDS.getValue()),
     CARDS_BUU("CARDS_BUU", CARDS.getValue()),
     CARDS_FRIEEZA("CARDS_FRIEEZA", CARDS.getValue()),
-
-    // GUI_CARDS_AVATAR
+*/
+    // GUI_AVATAR
     AVATAR_GOKU(EGameObject.GOKU.getValue(), AVATAR.getValue()),
     AVATAR_GOHAN(EGameObject.GOHAN.getValue(), AVATAR.getValue()),
     AVATAR_VEGETA(EGameObject.VEGETA.getValue(), AVATAR.getValue()),

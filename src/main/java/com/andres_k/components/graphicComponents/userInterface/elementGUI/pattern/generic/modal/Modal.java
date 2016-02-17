@@ -1,4 +1,4 @@
-package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.modal;
+package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.modal;
 
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.eventComponent.input.InputEvent;
@@ -11,6 +11,7 @@ import com.andres_k.utils.stockage.Tuple;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 
 /**
  * Created by andres_k on 09/02/2016.
@@ -30,7 +31,7 @@ public class Modal extends GuiElement {
     }
 
     @Override
-    public void init() {
+    public void init() throws SlickException {
         this.reset();
         this.content.init();
     }

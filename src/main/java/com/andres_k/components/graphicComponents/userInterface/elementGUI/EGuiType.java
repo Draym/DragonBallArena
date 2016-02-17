@@ -17,7 +17,10 @@ public enum EGuiType {
     BUTTON("BUTTON"),
     TEXT("TEXT"),
     IMAGE("IMAGE"),
-    BORDER("BORDER");
+    BORDER("BORDER"),
+
+    // specific
+    SPECIFIC_CHOICE_PLAYER("SPECIFIC_ChoicePlayer");
 
     private String value;
 

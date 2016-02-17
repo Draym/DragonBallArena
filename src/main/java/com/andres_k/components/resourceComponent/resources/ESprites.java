@@ -24,6 +24,7 @@ public enum ESprites {
     SLIDER(COMPONENT.getIndex()),
     SLIDER_VALUE(COMPONENT.getIndex()),
     LOADING_ANIM(COMPONENT.getIndex()),
+    DISABLED(COMPONENT.getIndex()),
 
     // GUI_CONTAINER
     PANEL1(CONTAINER.getIndex()),
@@ -42,8 +43,11 @@ public enum ESprites {
     BUTTON_EXIT(BUTTON.getIndex()),
     BUTTON_RESUME(BUTTON.getIndex()),
     BUTTON_COMBO(BUTTON.getIndex()),
+    BUTTON_LOCK(BUTTON.getIndex()),
 
     // GUI_CARDS
+    CARDS_ALL(CARDS.getIndex()),
+    /*
     CARDS_GOKU(CARDS.getIndex()),
     CARDS_GOHAN(CARDS.getIndex()),
     CARDS_VEGETA(CARDS.getIndex()),
@@ -52,7 +56,7 @@ public enum ESprites {
     CARDS_CELL(CARDS.getIndex()),
     CARDS_BUU(CARDS.getIndex()),
     CARDS_FRIEEZA(CARDS.getIndex()),
-
+*/
     // GUI_CARDS_AVATAR
     AVATAR_GOKU(AVATAR.getIndex()),
     AVATAR_GOHAN(AVATAR.getIndex()),

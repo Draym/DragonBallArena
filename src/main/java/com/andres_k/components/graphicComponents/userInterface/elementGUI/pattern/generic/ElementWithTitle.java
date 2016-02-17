@@ -1,4 +1,4 @@
-package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern;
+package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic;
 
 import com.andres_k.components.eventComponent.input.InputEvent;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
@@ -7,6 +7,7 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.elemen
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.taskComponent.ELocation;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 /**
  * Created by andres_k on 04/02/2016.
@@ -38,7 +39,7 @@ public class ElementWithTitle extends GuiElement {
     }
 
     @Override
-    public void init() {
+    public void init() throws SlickException {
         this.reset();
         this.title.init();
         this.content.init();

@@ -64,6 +64,7 @@ public class GameController extends WindowController {
     public void leave() {
         this.running = false;
         this.gameObjectController.leave();
+        GameConfig.typePlayer.clear();
     }
 
     @Override

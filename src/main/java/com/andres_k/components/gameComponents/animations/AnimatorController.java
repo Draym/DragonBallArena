@@ -327,19 +327,22 @@ public class AnimatorController implements Observer {
         this.printable = printable;
     }
 
-    public void setCurrentAnimationIndex(int value) {
+    public boolean setCurrentAnimationIndex(int value) {
         // Console.write("index -> " + value);
-        this.animators.get(this.current).setIndex(value);
+        return this.animators.get(this.current).setIndex(value);
     }
 
-    public void setCurrentAnimationType(EAnimation current) {
+    public boolean setCurrentAnimationType(EAnimation current) {
         if (this.animators.containsKey(current)) {
             // Console.write("anim -> " + current);
             this.current = current;
             this.getCurrentContainer().restart();
+            return true;
         } else if (current == EAnimation.EXPLODE) {
             this.setDeleted(true);
+            return true;
         }
+        return false;
     }
 
     private void setNextRequiredAnimation(EAnimation type, int index) {
@@ -347,12 +350,10 @@ public class AnimatorController implements Observer {
         this.nextRequiredAnimation.setV2(index);
     }
 
-    private void setCurrentAnimation(EAnimation type, int index) {
-        this.setCurrentAnimationType(type);
-        this.setCurrentAnimationIndex(index);
+    private boolean setCurrentAnimation(EAnimation type, int index) {
+        return this.setCurrentAnimationType(type) && this.setCurrentAnimationIndex(index);
     }
 
-    //todo care j'ai changé this.getIndex() by 0
     public void changeAnimation(EAnimation type) {
         if (this.canSwitchCurrent()) {
             this.setCurrentAnimation(type, 0);
