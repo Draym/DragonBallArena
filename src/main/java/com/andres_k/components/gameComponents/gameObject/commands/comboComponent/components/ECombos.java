@@ -4,14 +4,13 @@ package com.andres_k.components.gameComponents.gameObject.commands.comboComponen
  * Created by andres_k on 30/11/2015.
  */
 public enum ECombos {
-    // GOKU
     HANDATTACK("HANDATTACK"),
-    MOVERIGHT_HANDATTACK("MOVERIGHT_HANDATTACK"),
-    MOVELEFT_HANDATTACK("MOVELEFT_HANDATTACK"),
+    MOVE_HANDATTACK_RIGHT("MOVE_HANDATTACK_RIGHT"),
+    MOVE_HANDATTACK_LEFT("MOVE_HANDATTACK_LEFT"),
     HAND_FLY_PROPELS("HAND_FLY_PROPELS"),
+    RUSH_RIGHT("RUSH_RIGHT"),
+    RUSH_LEFT("RUSH_LEFT");
 
-    // VEGETA
-    VEGETA_HANDATTACK("VEGETA_HANDATTACK");
 
     private String value;
 

@@ -29,6 +29,7 @@ public class Player extends PhysicalObject {
         this.event.addEvent(EInput.MOVE_RIGHT);
         this.event.addEvent(EInput.ATTACK_A);
         this.event.addEvent(EInput.ATTACK_B);
+        this.event.addEvent(EInput.ATTACK_SPE);
 
 
         try {
@@ -50,10 +51,12 @@ public class Player extends PhysicalObject {
         this.animatorController.doCurrentAction(this);
         this.animatorController.update();
         this.movement.update();
-        if (this.event.allInactive()) {
-            this.moveFall();
-        } else {
-            this.executeEvent();
+        if (this.animatorController.canSwitchCurrent()) {
+            if (this.event.allInactive()) {
+                this.moveFall();
+            } else {
+                this.executeEvent();
+            }
         }
     }
 
@@ -159,6 +162,9 @@ public class Player extends PhysicalObject {
     private boolean executeLastActionEvent() {
         EInput last = this.event.consumeStackEvent();
 
+        if (last == EInput.NOTHING) {
+            last = this.event.getTheLastEvent();
+        }
         if (last != EInput.NOTHING && this.comboController != null) {
             return this.comboController.nextComboStep(this.animatorController, last);
         }

@@ -116,10 +116,16 @@ public abstract class GameObject {
     }
 
     public float graphicalX() {
+        if (this.getBody() == null) {
+            return this.getPosX();
+        }
         return this.getBody().getFlippedSprite(this.animatorController.getEyesDirection().isHorizontalFlip(), this.getPosX(), this.getPosY()).getMinX();
     }
 
     public float graphicalY() {
+        if (this.getBody() == null) {
+            return this.getPosY();
+        }
         return this.getBody().getFlippedSprite(this.animatorController.getEyesDirection().isHorizontalFlip(), this.getPosX(), this.getPosY()).getMinY();
     }
 

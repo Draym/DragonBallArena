@@ -12,10 +12,13 @@ public class GokuCombos extends ComboManager {
     public GokuCombos() {
         super();
         this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.HANDATTACK));
-        this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.MOVERIGHT_HANDATTACK));
-        this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.MOVELEFT_HANDATTACK));
+        this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.MOVE_HANDATTACK_RIGHT));
+        this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.MOVE_HANDATTACK_LEFT));
 
         this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.HAND_FLY_PROPELS));
+
+        this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.RUSH_RIGHT));
+        this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.RUSH_LEFT));
     }
 
 

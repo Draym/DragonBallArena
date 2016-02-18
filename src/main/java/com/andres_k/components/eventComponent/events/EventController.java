@@ -26,6 +26,7 @@ public class EventController {
         this.validToHistory.add(EInput.MOVE_DOWN);
         this.validToHistory.add(EInput.MOVE_RIGHT);
         this.validToHistory.add(EInput.MOVE_LEFT);
+        this.validToHistory.add(EInput.ATTACK_SPE);
     }
 
     public void reset() {
@@ -109,8 +110,7 @@ public class EventController {
         }
     }
 
-    public void addStackEvent(EInput input)
-    {
+    public void addStackEvent(EInput input) {
         Console.write("input: " + input);
         this.eventStack.add(input);
     }

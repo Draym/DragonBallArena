@@ -37,7 +37,7 @@ public class BasicActions {
         }
 
         if (object.getMovement().getMoveDirection() != EDirection.NONE) {
-            object.getMovement().setPushX(GameConfig.speedTravel * 3);
+            object.getMovement().setPushX(GameConfig.speedTravel * 3.0f + object.getPosX() * 0.003f);
         }
         object.getMovement().setPushY(0);
     }

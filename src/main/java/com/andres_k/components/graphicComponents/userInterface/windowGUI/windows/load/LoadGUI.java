@@ -33,7 +33,7 @@ public class LoadGUI extends UserInterface {
     public void init() throws SlickException {
         // loading
 
-        ComplexElement loadingBar = new ComplexElement(new ColorRect(new Rectangle(446, 630, 400, 95)), true);
+        ComplexElement loadingBar = new ComplexElement(new ColorRect(new Rectangle(446, 600, 400, 95)), true);
         ImageElement container = new ImageElement(ResourceManager.get().getGuiAnimator(EGuiElement.PANEL1), true);
 
         TextElement title = new TextElement(ELocation.LOAD_GUI_LoadingBar_title.getId(), new StringTimer("Loading"), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 20, new ColorRect(new Rectangle(66, 2, 257, 28)), Element.PositionInBody.MIDDLE_UP, true);

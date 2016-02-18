@@ -18,11 +18,12 @@ public class GokuActions extends BasicActions {
             object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
             object.getMovement().setPushX(GameConfig.speedTravel / 2);
         } else {
-            object.setOnEarth(true);
             object.getMovement().setPushX(0);
         }
     }
 
+    public static void handFlyPropels(GameObject object) {
 
+    }
 
 }

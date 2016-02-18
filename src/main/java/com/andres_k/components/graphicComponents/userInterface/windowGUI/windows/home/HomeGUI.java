@@ -37,7 +37,7 @@ public class HomeGUI extends UserInterface {
     @Override
     public void init() throws SlickException {
         // menu
-        ComplexElement menu = new ComplexElement(ELocation.HOME_GUI_Menu.getId(), new ColorRect(new Rectangle(470, 105, 320, 382)), true);
+        ComplexElement menu = new ComplexElement(ELocation.HOME_GUI_Menu.getId(), new ColorRect(new Rectangle(WindowConfig.get().centerPosX(EnumWindow.HOME, 320) - 15, WindowConfig.get().centerPosY(EnumWindow.HOME, 382) - 80, 320, 382)), true);
         menu.addItem(new ImageElement(ResourceManager.get().getGuiAnimator(EGuiElement.PANEL4), true));
 
         ListElement buttonList = new ListElement(new ColorRect(new Rectangle(32, 74, 259, 279)), 0, 9, true);

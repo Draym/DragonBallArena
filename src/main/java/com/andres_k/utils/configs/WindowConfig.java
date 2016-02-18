@@ -19,7 +19,7 @@ public class WindowConfig {
     private WindowConfig() {
         this.current = EnumWindow.EXIT;
         this.windows = new HashMap<>();
-        this.windows.put(EnumWindow.LOAD, new Pair<>(1300, 732));
+        this.windows.put(EnumWindow.LOAD, new Pair<>(1280, 697));
         this.windows.put(EnumWindow.HOME, new Pair<>(1280, 697));
         this.windows.put(EnumWindow.SELECT_SOLO, new Pair<>(1600, 900));
         this.windows.put(EnumWindow.SELECT_VERSUS, new Pair<>(1600, 900));

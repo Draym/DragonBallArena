@@ -84,7 +84,9 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animatorController.addConfig(EAnimation.HAND_ATTACK, 2, new AnimatorConfig(GokuActions.class.getMethod("handAttack", GameObject.class)));
 
             // HAND FLY PROPELS
-//            animatorController.addAnimation(EnumAnimation.HAND_FLY_PROPELS, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuHandFlyPropels.png", 65, 70), EnumAnimation.HAND_FLY_PROPELS.isLoop(), 0, 5, 0, 1, new int[]{150, 150, 150, 150, 150}));
+            animatorController.addAnimation(EAnimation.HAND_FLY_PROPELS, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuHandFlyPropels.png", 247, 247), EAnimation.HAND_FLY_PROPELS.isLoop(), 0, 5, 0, 1, new int[]{150, 150, 150, 150, 150}));
+            animatorController.addCollision(EAnimation.HAND_FLY_PROPELS, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuHandFlyPropels.json")));
+            animatorController.addConfig(EAnimation.HAND_FLY_PROPELS, 0, new AnimatorConfig(GokuActions.class.getMethod("handFlyPropels", GameObject.class), 1, EAnimation.FALL, 0));
 
         }
         return animatorController;
