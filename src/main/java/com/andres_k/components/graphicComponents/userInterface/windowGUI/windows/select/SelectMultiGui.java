@@ -2,6 +2,7 @@ package com.andres_k.components.graphicComponents.userInterface.windowGUI.window
 
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.EStatus;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElementsManager;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.ElementFactory;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.buttons.Button;
@@ -19,7 +20,9 @@ import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
+import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.configs.WindowConfig;
+import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Circle;
@@ -40,6 +43,7 @@ public class SelectMultiGui extends UserInterface {
         //packSelect
         ComplexRelayElement packSelect = ElementFactory.createPackSelectPlayer(ELocation.SELECT_MULTI_GUI_SelectPackPlayer);
         packSelect.addTarget(ELocation.SELECT_MULTI_GUI_ChoicePlayer1);
+        packSelect.addTask(new Pair<>(EStatus.ON_FINISH, new TaskComponent(this.getLocation(), ELocation.GAME_CONTROLLER, ETaskType.START)));
         packSelect.setLocation(WindowConfig.get().centerPosX(EnumWindow.SELECT_MULTI, (int) packSelect.getAbsoluteWidth()), WindowConfig.get().centerPosY(EnumWindow.SELECT_MULTI, (int) packSelect.getAbsoluteHeight()) + 200);
         this.taskManager.register(packSelect.getId(), packSelect);
         this.elements.add(packSelect);

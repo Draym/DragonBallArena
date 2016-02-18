@@ -24,7 +24,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by andres_k on 08/07/2015.
@@ -32,7 +31,7 @@ import java.util.stream.Collectors;
 public class GameController extends WindowController {
     private GameObjectController gameObjectController;
     private InputGame inputGame;
-    private List<String> playerNames;
+    private List<EGameObject> playerTypes;
 
     private boolean running;
 
@@ -41,7 +40,7 @@ public class GameController extends WindowController {
         this.inputGame = new InputGame();
         this.gameObjectController = new GameObjectController();
 
-        this.playerNames = new ArrayList<>();
+        this.playerTypes = new ArrayList<>();
     }
 
     @Override
@@ -149,8 +148,8 @@ public class GameController extends WindowController {
                     if (received.getTask() == ETaskType.EXIT) {
                         this.window.quit();
                     } else if (received.getTask() == ETaskType.START) {
-                        this.playerNames.clear();
-                        this.playerNames.addAll(GameConfig.typePlayer.stream().map(EGameObject::getValue).collect(Collectors.toList()));
+                        this.playerTypes.clear();
+                        this.playerTypes.addAll(GameConfig.typePlayer);
                         this.stateWindow.enterState(EnumWindow.GAME.getId());
                     }
                 } else if (received.getTask() instanceof MessageOverlayMenu) {
@@ -164,6 +163,6 @@ public class GameController extends WindowController {
     }
 
     public void createPlayerForGame() throws SlickException {
-        this.gameObjectController.createPlayers(this.playerNames);
+        this.gameObjectController.createPlayers(this.playerTypes);
     }
 }

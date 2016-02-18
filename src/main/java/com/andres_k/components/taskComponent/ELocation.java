@@ -47,19 +47,16 @@ public enum ELocation {
     HOME_GUI_Menu("Menu", HOME_GUI.getId()),
     HOME_GUI_Settings("Settings", HOME_GUI.getId()),
     HOME_GUI_Controls("Controls", HOME_GUI.getId()),
-    HOME_GUI_Controls_player("Controls_Player", HOME_GUI.getId()),
-    HOME_GUI_Volumes("ControlVolume", HOME_GUI.getId()),
 
-    //SELECT_SOLO
+    //SELECT_SOLO_GUI
     SELECT_SOLO_GUI_Options("Options", SELECT_SOLO_GUI.getId()),
     SELECT_SOLO_GUI_Settings("Settings", SELECT_SOLO_GUI.getId()),
     SELECT_SOLO_GUI_Controls("Controls", SELECT_SOLO_GUI.getId()),
     SELECT_SOLO_GUI_Combos("Combos", SELECT_SOLO_GUI.getId()),
     SELECT_SOLO_GUI_SelectPackPlayer("SelectPackPlayer", SELECT_SOLO_GUI.getId()),
     SELECT_SOLO_GUI_ChoicePlayer1("ChoicePlayer1", SELECT_SOLO_GUI.getId()),
-    SELECT_SOLO_GUI_ChoicePlayer2("ChoicePlayer2", SELECT_SOLO_GUI.getId()),
 
-    //SELECT_VERSUS
+    //SELECT_VERSUS_GUI
     SELECT_VERSUS_GUI_Options("Options", SELECT_VERSUS_GUI.getId()),
     SELECT_VERSUS_GUI_Settings("Settings", SELECT_VERSUS_GUI.getId()),
     SELECT_VERSUS_GUI_Controls("Controls", SELECT_VERSUS_GUI.getId()),
@@ -68,13 +65,19 @@ public enum ELocation {
     SELECT_VERSUS_GUI_ChoicePlayer1("ChoicePlayer1", SELECT_VERSUS_GUI.getId()),
     SELECT_VERSUS_GUI_ChoicePlayer2("ChoicePlayer2", SELECT_VERSUS_GUI.getId()),
 
-    //SELECT_MULTI
+    //SELECT_MULTI_GUI
     SELECT_MULTI_GUI_Options("Options", SELECT_MULTI_GUI.getId()),
     SELECT_MULTI_GUI_Settings("Settings", SELECT_MULTI_GUI.getId()),
     SELECT_MULTI_GUI_Controls("Controls", SELECT_MULTI_GUI.getId()),
     SELECT_MULTI_GUI_Combos("Combos", SELECT_MULTI_GUI.getId()),
     SELECT_MULTI_GUI_SelectPackPlayer("SelectPackPlayer", SELECT_MULTI_GUI.getId()),
-    SELECT_MULTI_GUI_ChoicePlayer1("ChoicePlayer1", SELECT_MULTI_GUI.getId());
+    SELECT_MULTI_GUI_ChoicePlayer1("ChoicePlayer1", SELECT_MULTI_GUI.getId()),
+
+    //GAME_GUI
+    GAME_GUI_Options("Options", GAME_GUI.getId()),
+    GAME_GUI_Settings("Settings", GAME_GUI.getId()),
+    GAME_GUI_Controls("Controls", GAME_GUI.getId()),
+    GAME_GUI_Combos("Combos", GAME_GUI.getId());
 
     private String name;
     private String parent;

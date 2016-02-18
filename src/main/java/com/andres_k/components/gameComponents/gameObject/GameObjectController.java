@@ -135,16 +135,16 @@ public class GameObjectController {
 
     // ADD
 
-    public void createPlayers(List<String> playerNames) throws SlickException {
+    public void createPlayers(List<EGameObject> playerNames) throws SlickException {
         Integer count = 0;
 
-        for (String name : playerNames) {
+        for (EGameObject type : playerNames) {
             GameObject player = null;
             while (player == null || this.checkCollision(player, ETaskType.STATIC).hasCollision()) {
                 int randomX = RandomTools.getInt(WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1() - 600) + 300;
-                EGameObject type = EGameObject.getEnumByValue(name);
+                Console.write("Create player: " + type);
                 player = GameObjectFactory.create(type, ResourceManager.get().getGameAnimator(type),
-                        "player" + count + ":" + name, randomX, WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2() - 200);
+                        "player" + count + ":" + type.getValue(), randomX, WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2() - 200);
             }
             ++count;
             this.players.add(player);

@@ -1,15 +1,16 @@
 package com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.complex;
 
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.EStatus;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.tools.Console;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by andres_k on 16/02/2016.
@@ -42,12 +43,14 @@ public class ComplexRelayElement extends ComplexElement {
 
     @Override
     public Object doTask(Object task) {
-        Console.write("RelayComplex: " + task);
         if (task instanceof ETaskType) {
             if (task.equals(ETaskType.NEXT)) {
                 this.current += 1;
                 if (this.current == this.targets.size()) {
                     this.current = (this.loop ? 0 : -1);
+                    if (!this.loop) {
+                        this.tasks.stream().filter(it -> it.getV1() == EStatus.ON_FINISH).collect(Collectors.toList()).stream().filter(pair -> pair.getV2() instanceof TaskComponent).forEach(toDo -> CentralTaskManager.get().sendRequest((TaskComponent) toDo.getV2()));
+                    }
                 }
                 return true;
             }

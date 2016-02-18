@@ -10,5 +10,6 @@ public enum EStatus {
     OFF_FOCUS,
     ON_EVENT,
     ON_CREATE,
-    ON_KILL
+    ON_KILL,
+    ON_FINISH
 }

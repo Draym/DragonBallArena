@@ -82,7 +82,9 @@ public class AnimatorController implements Observer {
     }
 
     public void draw(Graphics g, float x, float y) {
-        this.drawImage(g, this.currentAnimation().getCurrentFrame().getFlippedCopy(this.getEyesDirection().isHorizontalFlip(), false), x, y);
+        if (this.currentAnimation() != null) {
+            this.drawImage(g, this.currentAnimation().getCurrentFrame().getFlippedCopy(this.getEyesDirection().isHorizontalFlip(), false), x, y);
+        }
     }
 
     public void drawImage(Graphics g, Image image, float x, float y) {
