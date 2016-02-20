@@ -44,7 +44,7 @@ public class ComboFactory {
         Combo combo = new Combo();
 
         if (type == ECombos.HANDATTACK) {
-            addElement(combo, EInput.ATTACK_A, EAnimation.HAND_ATTACK, 0, EAnimation.TOUCHED_SIMPLE, 0, true, 600, 1);
+            addElement(combo, EInput.ATTACK_A, EAnimation.HAND_ATTACK, 0, EAnimation.TOUCHED_SIMPLE, 0, true, 250, 1);
             addElement(combo, EInput.ATTACK_A, EAnimation.HAND_ATTACK, 1, true, 250, 3);
         } else if (type == ECombos.MOVE_HANDATTACK_RIGHT) {
             addElement(combo, EInput.MOVE_RIGHT, EAnimation.NULL, 0, false, -1, 1);
@@ -60,6 +60,9 @@ public class ComboFactory {
         } else if (type == ECombos.RUSH_LEFT) {
             addElement(combo, EInput.MOVE_LEFT, EAnimation.NULL, 0, false, -1, 1);
             addInfiniteElement(combo, EInput.ATTACK_SPE, EAnimation.RUSH, 0, true, 250);
+        } else if (type == ECombos.SPE_ATTACK_1) {
+            addElement(combo, EInput.ATTACK_D, EAnimation.NULL, 0, false, -1, 1);
+            addElement(combo, EInput.ATTACK_SPE, EAnimation.SPE_ATTACK_1, 0, true, 250, 1);
         }
         return combo;
     }

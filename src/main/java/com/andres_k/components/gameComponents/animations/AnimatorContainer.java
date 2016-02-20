@@ -2,6 +2,7 @@ package com.andres_k.components.gameComponents.animations;
 
 import com.andres_k.components.gameComponents.bodies.BodyAnimation;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
+import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -58,6 +59,12 @@ public class AnimatorContainer {
         if (!this.animators.containsKey(index))
             this.animators.put(index, new Animator());
         this.animators.get(index).addConfig(config);
+    }
+
+    public void addSoundEffect(ESound sound, int index, int frame) {
+        if (!this.animators.containsKey(index))
+            this.animators.put(index, new Animator());
+        this.animators.get(index).addSoundEffect(sound, frame);
     }
 
     // GETTERS

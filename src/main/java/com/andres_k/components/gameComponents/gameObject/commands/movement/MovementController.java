@@ -69,7 +69,10 @@ public class MovementController {
     }
 
     public void addPushX(float value) {
-        this.positions.setV1(this.positions.getV1() + value);
+        if (this.moveDirection == EDirection.RIGHT)
+            this.positions.setV1(this.positions.getV1() + value);
+        else if (this.moveDirection == EDirection.LEFT)
+            this.positions.setV1(this.positions.getV1() - value);
     }
 
     public void addPushY(float value) {

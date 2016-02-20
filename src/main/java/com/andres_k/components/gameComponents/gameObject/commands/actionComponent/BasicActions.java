@@ -27,15 +27,11 @@ public class BasicActions {
 
     public static void receipt(GameObject object) {
         object.getMovement().setUseGravity(true);
-        object.getMovement().setPushX(0f);
+        object.getMovement().stopMovement();
     }
 
     public static void rush(GameObject object) {
         object.getMovement().setUseGravity(false);
-        if (object.isOnEarth()) {
-            object.getMovement().addPushY(10);
-        }
-
         if (object.getMovement().getMoveDirection() != EDirection.NONE) {
             object.getMovement().setPushX(GameConfig.speedTravel * 3.0f + object.getPosX() * 0.003f);
         }
@@ -43,6 +39,17 @@ public class BasicActions {
     }
 
     // MOVEMENT
+    public static void fallForced(GameObject object) {
+        if (!object.isOnEarth()) {
+            if (object.getMovement().getGravity() > 8) {
+                object.getAnimatorController().getCurrentContainer().getConfig().setNextIndex(1);
+            }
+        }
+        if (object.isOnEarth()) {
+            object.getAnimatorController().toNextAnimation();
+        }
+    }
+
     public static void fall(GameObject object) {
         object.getMovement().setPushY(0f);
 
@@ -60,9 +67,9 @@ public class BasicActions {
     }
 
     public static void run(GameObject object) {
-        object.getMovement().setUseGravity(true);
         object.getMovement().addPushY(-0.2f);
         object.getMovement().setPushY(0);
+        object.getMovement().setUseGravity(true);
         if (object.getMovement().getMoveDirection() != EDirection.NONE) {
             object.getMovement().setPushX(GameConfig.speedTravel);
         }

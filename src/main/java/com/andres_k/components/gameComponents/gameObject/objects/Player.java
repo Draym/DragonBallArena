@@ -2,14 +2,15 @@ package com.andres_k.components.gameComponents.gameObject.objects;
 
 import com.andres_k.components.eventComponent.events.EventController;
 import com.andres_k.components.eventComponent.input.EInput;
-import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
+import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.collisions.PhysicalObject;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.comboComponent.ComboController;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.Console;
 
 /**
  * Created by andres_k on 10/07/2015.
@@ -29,6 +30,8 @@ public class Player extends PhysicalObject {
         this.event.addEvent(EInput.MOVE_RIGHT);
         this.event.addEvent(EInput.ATTACK_A);
         this.event.addEvent(EInput.ATTACK_B);
+        this.event.addEvent(EInput.ATTACK_C);
+        this.event.addEvent(EInput.ATTACK_D);
         this.event.addEvent(EInput.ATTACK_SPE);
 
 
@@ -48,14 +51,15 @@ public class Player extends PhysicalObject {
     @Override
     public void update() {
         this.comboController.update();
-        this.animatorController.doCurrentAction(this);
         this.animatorController.update();
+        this.executeLastActionEvent();
+        this.animatorController.doCurrentAction(this);
         this.movement.update();
         if (this.animatorController.canSwitchCurrent()) {
             if (this.event.allInactive()) {
                 this.moveFall();
             } else {
-                this.executeEvent();
+                this.executeLastDirectionEvent();
             }
         }
     }
@@ -70,8 +74,11 @@ public class Player extends PhysicalObject {
 
     private boolean moveFall() {
         if (!this.isOnEarth()
+                && this.animatorController.currentAnimationType() != EAnimation.RECEIPT
                 && this.animatorController.currentAnimationType() != EAnimation.FALL
+                && this.animatorController.currentAnimationType() != EAnimation.FALL_FORCED
                 && this.animatorController.canSwitchCurrent()) {
+            Console.write("FALL");
             this.animatorController.changeAnimation(EAnimation.FALL);
             this.movement.resetGravity();
             return true;
@@ -134,10 +141,6 @@ public class Player extends PhysicalObject {
         } else {
             this.movement.setMoveDirection(EDirection.NONE);
         }
-    }
-
-    private boolean executeEvent() {
-        return this.executeLastActionEvent() || this.executeLastDirectionEvent();
     }
 
     private boolean executeLastDirectionEvent() {

@@ -19,6 +19,7 @@ public enum EAnimation {
     RUN(true),
     JUMP(false),
     FALL(true),
+    FALL_FORCED(true),
     RECEIPT(false),
 
     // DEFENSE
@@ -36,6 +37,7 @@ public enum EAnimation {
     // ATTACK
     HAND_ATTACK(false),
     HAND_FLY_PROPELS(false),
+    SPE_ATTACK_1(false),
 
     // SPE ATTACK
 

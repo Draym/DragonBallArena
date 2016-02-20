@@ -32,7 +32,6 @@ public class LoadGUI extends UserInterface {
     @Override
     public void init() throws SlickException {
         // loading
-
         ComplexElement loadingBar = new ComplexElement(new ColorRect(new Rectangle(446, 600, 400, 95)), true);
         ImageElement container = new ImageElement(ResourceManager.get().getGuiAnimator(EGuiElement.PANEL1), true);
 

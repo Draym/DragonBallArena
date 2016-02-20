@@ -8,6 +8,7 @@ import com.andres_k.components.graphicComponents.effects.EffectManager;
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ActivatedTimer;
+import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.Console;
@@ -104,9 +105,7 @@ public class AnimatorController implements Observer {
 
     private void toNextCurrentAnimation() {
         try {
-            Pair<EAnimation, Integer> next = this.getCurrentContainer()
-                    .getConfig()
-                    .getNext();
+            Pair<EAnimation, Integer> next = this.getCurrentContainer().getConfig().getNext();
             this.setCurrentAnimationType(next.getV1());
             this.setCurrentAnimationIndex(next.getV2());
         } catch (Exception e) {
@@ -179,6 +178,13 @@ public class AnimatorController implements Observer {
             this.animators.put(type, new AnimatorContainer());
         }
         this.animators.get(type).addConfig(config, index);
+    }
+
+    public void addSoundEffect(EAnimation type, int index, int frame, ESound sound) {
+        if (!this.animators.containsKey(type)) {
+            this.animators.put(type, new AnimatorContainer());
+        }
+        this.animators.get(type).addSoundEffect(sound, index, frame);
     }
 
     // METHODS

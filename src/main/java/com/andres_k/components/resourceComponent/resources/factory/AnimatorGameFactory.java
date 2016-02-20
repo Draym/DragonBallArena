@@ -42,6 +42,10 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animatorController.addAnimation(EAnimation.FALL, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuFall.png", 247, 247), EAnimation.FALL.isLoop(), 0, 1, 0, 1, new int[]{200}));
             animatorController.addCollision(EAnimation.FALL, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuFall.json")));
             animatorController.addConfig(EAnimation.FALL, 0, new AnimatorConfig(GokuActions.class.getMethod("fall", GameObject.class), EAnimation.RECEIPT));
+
+            animatorController.addAnimation(EAnimation.FALL_FORCED, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuFall.png", 247, 247), EAnimation.FALL.isLoop(), 0, 1, 0, 1, new int[]{200}));
+            animatorController.addCollision(EAnimation.FALL_FORCED, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuFall.json")));
+            animatorController.addConfig(EAnimation.FALL_FORCED, 0, new AnimatorConfig(GokuActions.class.getMethod("fallForced", GameObject.class), EAnimation.RECEIPT));
             // RUN
             animatorController.addAnimation(EAnimation.RUN, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuRun.png", 247, 247), EAnimation.RUN.isLoop(), 0, 4, 0, 1, new int[]{200, 200, 200, 200}));
             animatorController.addCollision(EAnimation.RUN, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuRun.json")));
@@ -53,10 +57,10 @@ public class AnimatorGameFactory extends AnimatorFactory {
             // RECEIPT
             animatorController.addAnimation(EAnimation.RECEIPT, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuReceipt.png", 247, 247), EAnimation.RECEIPT.isLoop(), 0, 1, 0, 1, new int[]{130}));
             animatorController.addCollision(EAnimation.RECEIPT, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuReceipt.json")));
-            animatorController.addConfig(EAnimation.RECEIPT, 0, new AnimatorConfig(GokuActions.class.getMethod("receipt", GameObject.class), EAnimation.IDLE));
+            animatorController.addConfig(EAnimation.RECEIPT, 0, new AnimatorConfig(GokuActions.class.getMethod("receipt", GameObject.class)));
             animatorController.addAnimation(EAnimation.RECEIPT, 1, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuReceipt.png", 247, 247), EAnimation.RECEIPT.isLoop(), 0, 3, 0, 1, new int[]{100, 100, 100}));
             animatorController.addCollision(EAnimation.RECEIPT, 1, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuReceipt.json")));
-            animatorController.addConfig(EAnimation.RECEIPT, 1, new AnimatorConfig(GokuActions.class.getMethod("receipt", GameObject.class), EAnimation.IDLE));
+            animatorController.addConfig(EAnimation.RECEIPT, 1, new AnimatorConfig(GokuActions.class.getMethod("receipt", GameObject.class)));
             // JUMP
             animatorController.addAnimation(EAnimation.JUMP, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuJump1.png", 247, 247), EAnimation.JUMP.isLoop(), 0, 3, 0, 1, new int[]{150, 150, 300}));
             animatorController.addCollision(EAnimation.JUMP, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuJump1.json")));
@@ -72,7 +76,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animatorController.addAnimation(EAnimation.BLOCK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuBlock.png", 247, 247), EAnimation.BLOCK.isLoop(), 0, 1, 0, 1, new int[]{200}));
             animatorController.addCollision(EAnimation.BLOCK, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuBlock.json")));
             animatorController.addConfig(EAnimation.BLOCK, 0, new AnimatorConfig(GokuActions.class.getMethod("block", GameObject.class)));
-            // HAND ATTACK
+            // HAND_ATTACK
             animatorController.addAnimation(EAnimation.HAND_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuHandAttack1.png", 247, 247), EAnimation.HAND_ATTACK.isLoop(), 0, 4, 0, 1, new int[]{150, 150, 100, 150}));
             animatorController.addCollision(EAnimation.HAND_ATTACK, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuHandAttack1.json")));
             animatorController.addConfig(EAnimation.HAND_ATTACK, 0, new AnimatorConfig(GokuActions.class.getMethod("handAttack", GameObject.class), EAnimation.HAND_ATTACK, 2));
@@ -82,12 +86,14 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animatorController.addAnimation(EAnimation.HAND_ATTACK, 2, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuHandAttack3.png", 247, 247), EAnimation.HAND_ATTACK.isLoop(), 0, 2, 0, 1, new int[]{100, 200}));
             animatorController.addCollision(EAnimation.HAND_ATTACK, 2, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuHandAttack3.json")));
             animatorController.addConfig(EAnimation.HAND_ATTACK, 2, new AnimatorConfig(GokuActions.class.getMethod("handAttack", GameObject.class)));
-
-            // HAND FLY PROPELS
-            animatorController.addAnimation(EAnimation.HAND_FLY_PROPELS, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuHandFlyPropels.png", 247, 247), EAnimation.HAND_FLY_PROPELS.isLoop(), 0, 5, 0, 1, new int[]{150, 150, 150, 150, 150}));
+            // HAND_FLY_PROPELS
+            animatorController.addAnimation(EAnimation.HAND_FLY_PROPELS, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuHandFlyPropels.png", 247, 247), EAnimation.HAND_FLY_PROPELS.isLoop(), 0, 5, 0, 1, new int[]{150, 120, 100, 120, 150}));
             animatorController.addCollision(EAnimation.HAND_FLY_PROPELS, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuHandFlyPropels.json")));
-            animatorController.addConfig(EAnimation.HAND_FLY_PROPELS, 0, new AnimatorConfig(GokuActions.class.getMethod("handFlyPropels", GameObject.class), 1, EAnimation.FALL, 0));
-
+            animatorController.addConfig(EAnimation.HAND_FLY_PROPELS, 0, new AnimatorConfig(GokuActions.class.getMethod("handFlyPropels", GameObject.class), EAnimation.FALL_FORCED));
+            // SPE_ATTACK_1
+            animatorController.addAnimation(EAnimation.SPE_ATTACK_1, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuKamehameha.png", 247, 247), EAnimation.HAND_FLY_PROPELS.isLoop(), 0, 10, 0, 1, new int[]{150, 150, 150, 150, 250, 100, 10000, 150, 150, 150}));
+            animatorController.addCollision(EAnimation.SPE_ATTACK_1, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuKamehameha.json")));
+            animatorController.addConfig(EAnimation.SPE_ATTACK_1, 0, new AnimatorConfig(GokuActions.class.getMethod("speAttack1", GameObject.class)));
         }
         return animatorController;
     }

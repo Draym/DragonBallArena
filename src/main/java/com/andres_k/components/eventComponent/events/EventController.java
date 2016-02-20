@@ -16,6 +16,7 @@ public class EventController {
     private List<EInput> eventHistory;
     private List<EInput> eventStack;
     private List<EInput> validToHistory;
+    private EInput eventSaved;
 
     public EventController() {
         this.activatedEvent = new HashMap<>();
@@ -27,6 +28,7 @@ public class EventController {
         this.validToHistory.add(EInput.MOVE_RIGHT);
         this.validToHistory.add(EInput.MOVE_LEFT);
         this.validToHistory.add(EInput.ATTACK_SPE);
+        this.eventSaved = EInput.NOTHING;
     }
 
     public void reset() {
@@ -35,6 +37,7 @@ public class EventController {
         }
         this.eventHistory.clear();
         this.eventStack.clear();
+        this.eventSaved = EInput.NOTHING;
     }
 
     // SETTERS
@@ -44,6 +47,9 @@ public class EventController {
 
     public void setActivated(EInput event, boolean value) {
         if (this.activatedEvent.containsKey(event)) {
+            if (value) {
+                this.eventSaved = event;
+            }
             this.activatedEvent.put(event, value);
             if (value) {
                 if (this.validToHistory.contains(event)) {
@@ -75,7 +81,7 @@ public class EventController {
                 return false;
             }
         }
-        return true;
+        return this.eventSaved == EInput.NOTHING;
     }
 
     public EInput getMoreRecentEventBetween(EInput v1, EInput v2) {
@@ -98,15 +104,22 @@ public class EventController {
         if (this.eventHistory.size() > 0) {
             return this.eventHistory.get(0);
         } else {
-            return EInput.NOTHING;
+            EInput result = this.eventSaved;
+            this.eventSaved = EInput.NOTHING;
+            return result;
         }
     }
 
     public EInput consumeStackEvent() {
         if (this.eventStack.size() > 0) {
+            if (this.eventSaved == this.eventStack.get(0)) {
+                this.eventSaved = EInput.NOTHING;
+            }
             return this.eventStack.remove(0);
         } else {
-            return EInput.NOTHING;
+            EInput result = this.eventSaved;
+            this.eventSaved = EInput.NOTHING;
+            return result;
         }
     }
 

@@ -9,7 +9,8 @@ public enum ECombos {
     MOVE_HANDATTACK_LEFT("MOVE_HANDATTACK_LEFT"),
     HAND_FLY_PROPELS("HAND_FLY_PROPELS"),
     RUSH_RIGHT("RUSH_RIGHT"),
-    RUSH_LEFT("RUSH_LEFT");
+    RUSH_LEFT("RUSH_LEFT"),
+    SPE_ATTACK_1("SPE_ATTACK_1");
 
 
     private String value;
