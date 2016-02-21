@@ -65,6 +65,7 @@ public class Animator {
     }
 
     public void update(long delta) {
+        this.effectManager.update();
         if (this.animation != null) {
             this.animation.update(delta);
             if (this.currentFrame != this.animation.getFrame()) {

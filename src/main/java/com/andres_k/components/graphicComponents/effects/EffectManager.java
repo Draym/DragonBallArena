@@ -101,20 +101,20 @@ public class EffectManager {
     public void playEffect(int priority, Effect effect) {
         if (effect != null && priority >= 0) {
             effect.play();
-            int index = 0;
+            int pos = 0;
 
             for (Effect tmp : this.availableEffects) {
                 if (priority < tmp.getPriority())
                     break;
-                ++index;
+                ++pos;
             }
             effect.setPriority(priority);
-            this.availableEffects.add(index, effect);
+            this.availableEffects.add(pos, effect);
         }
     }
 
     public boolean hasActivity() {
-        return !this.effects.isEmpty();
+        return !this.availableEffects.isEmpty();
     }
 
     public boolean effectIsRunning(String id) {
