@@ -27,7 +27,7 @@ public class BodySprite {
         JSONArray array = object.getJSONArray("rectangles");
 
         for (int i = 0; i < array.length(); ++i) {
-            this.bodies.add(new BodyRect(array.getJSONObject(i), this.sprite.getCenterX(), this.sprite.getCenterY()));
+            this.bodies.add(new BodyRect(array.getJSONObject(i), this.body.getMinX(), this.body .getMinY()));
         }
         this.id = UUID.randomUUID();
     }
@@ -56,17 +56,20 @@ public class BodySprite {
     public Rectangle getFlippedSprite(boolean haveToFlip, float posX, float posY) {
         float flipX = posX - this.sprite.getCenterX();
 
-        Rectangle body = this.getFlippedBody(haveToFlip, posX, posY);
-        if (haveToFlip)
-            flipX = (body.getX() + body.getWidth()) - this.sprite.getWidth();
+        if (haveToFlip) {
+            flipX = posX - this.sprite.getWidth();
+        }
         return new Rectangle(flipX, posY - this.sprite.getCenterY(), this.sprite.getWidth(), this.sprite.getHeight());
     }
 
     public Rectangle getFlippedBody(boolean haveToFlip, float posX, float posY) {
         float flipX = posX - this.sprite.getCenterX() + this.body.getMinX();
 
-        //if (haveToFlip && (flipX + this.body.getWidth() > (this.sprite.getMinX() + posX)))
-        //flipX = (this.sprite.getMinX() + posX) - (flipX - this.body.getWidth());
+        if (haveToFlip) {
+            Rectangle sprite = this.getFlippedSprite(true, posX, posY);
+
+            flipX = sprite.getCenterX() + ((sprite.getWidth() / 2) - this.body.getMaxX());
+        }
         return new Rectangle(flipX, posY - this.sprite.getCenterY() + this.body.getMinY(), this.body.getWidth(), this.body.getHeight());
     }
 
