@@ -8,7 +8,6 @@ import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.configs.GameConfig;
-import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
 
 import java.util.Observable;
@@ -32,7 +31,7 @@ public class SelectMultiController extends WindowController {
     }
 
     @Override
-    public void init() throws SlickException, JSONException, NoSuchMethodException {
+    public void init() throws SlickException {
         this.backgroundManager.addComponent(EBackground.SELECT_SCREEN, new Wallpaper(ResourceManager.get().getBackgroundAnimator(EBackground.SELECT_SCREEN), 0, 0));
     }
 

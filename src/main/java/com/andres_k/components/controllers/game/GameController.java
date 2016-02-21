@@ -68,7 +68,7 @@ public class GameController extends WindowController {
     }
 
     @Override
-    public void init() throws SlickException, JSONException, NoSuchMethodException {
+    public void init() throws SlickException {
         this.gameObjectController.init();
 
         this.backgroundManager.addComponent(EBackground.VALLEY_MAP, new Wallpaper(ResourceManager.get().getBackgroundAnimator(EBackground.VALLEY_MAP)));
@@ -85,7 +85,7 @@ public class GameController extends WindowController {
     }
 
     @Override
-    public void renderWindow(Graphics g) {
+    public void renderWindow(Graphics g) throws SlickException {
         this.backgroundManager.draw(g);
         this.gameObjectController.draw(g);
     }
@@ -154,7 +154,11 @@ public class GameController extends WindowController {
                     }
                 } else if (received.getTask() instanceof MessageOverlayMenu) {
                     this.running = !((MessageOverlayMenu) received.getTask()).isActivated();
-                    this.gameObjectController.changeGameState(this.running);
+                    try {
+                        this.gameObjectController.changeGameState(this.running);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         } else if (arg instanceof Pair) {

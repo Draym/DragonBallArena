@@ -14,6 +14,7 @@ public abstract class Effect {
     protected boolean running;
     protected int delta;
     private long duration;
+    private boolean activated;
 
     protected Effect(String id, EffectType type, long duration) {
         this.running = false;
@@ -21,6 +22,7 @@ public abstract class Effect {
         this.type = type;
         this.duration = duration;
         this.delta = 0;
+        this.activated = false;
     }
 
     public Effect(Effect effect) {
@@ -29,6 +31,7 @@ public abstract class Effect {
         this.type = effect.type;
         this.duration = effect.duration;
         this.delta = effect.delta;
+        this.activated = effect.activated;
     }
 
     public boolean update() {
@@ -52,6 +55,10 @@ public abstract class Effect {
 
     public EffectType getType() {
         return this.type;
+    }
+
+    public boolean isActivated() {
+        return this.activated;
     }
 
     public boolean isRunning() {

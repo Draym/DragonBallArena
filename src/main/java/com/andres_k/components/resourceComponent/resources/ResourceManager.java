@@ -11,6 +11,8 @@ import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
 
 import java.awt.*;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -44,26 +46,30 @@ public final class ResourceManager {
         return SingletonHolder.instance;
     }
 
-    public void prerequisiteContents() throws Exception {
+    public void prerequisiteContents() throws SlickException {
         for (Map.Entry<Category, DataManager> entry : this.managers.entrySet()) {
             if (entry.getKey() != Category.SOUND && entry.getKey() != Category.MUSIC) {
-                entry.getValue().prerequisite();
+                try {
+                    entry.getValue().prerequisite();
+                } catch (NoSuchMethodException | JSONException | FontFormatException | IOException e) {
+                    throw new SlickException(e.getMessage());
+                }
             }
         }
     }
 
-    public void prerequisiteMusic() throws Exception {
+    public void prerequisiteMusic() throws SlickException {
         try {
             this.managers.get(Category.MUSIC).prerequisite();
-        } catch (NoSuchMethodException | JSONException e) {
+        } catch (NoSuchMethodException | JSONException | FontFormatException | IOException e) {
             throw new SlickException(e.getMessage());
         }
     }
 
-    public void prerequisiteSound() throws Exception {
+    public void prerequisiteSound() throws SlickException {
         try {
             this.managers.get(Category.SOUND).prerequisite();
-        } catch (NoSuchMethodException | JSONException e) {
+        } catch (NoSuchMethodException | JSONException | FontFormatException | IOException e) {
             throw new SlickException(e.getMessage());
         }
     }
@@ -90,12 +96,16 @@ public final class ResourceManager {
         return result;
     }
 
-    public boolean initialise(int index) throws Exception {
+    public boolean initialise(int index) throws SlickException {
         for (Map.Entry<Category, DataManager> entry : this.managers.entrySet()) {
-            if ((index = entry.getValue().initialise(index)) <= 0) {
-                if (entry.getValue().getNotInitialised() == 0)
-                    Console.write(entry.getValue().success());
-                return false;
+            try {
+                if ((index = entry.getValue().initialise(index)) <= 0) {
+                    if (entry.getValue().getNotInitialised() == 0)
+                        Console.write(entry.getValue().success());
+                    return false;
+                }
+            } catch (NoSuchMethodException | JSONException | IllegalAccessException | InvocationTargetException e) {
+                throw new SlickException(e.getMessage());
             }
         }
         return true;

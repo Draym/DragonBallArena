@@ -80,7 +80,11 @@ public class ImageElement extends Element {
     public void reset() {
         super.reset();
         if (this.animatorController != null) {
-            this.animatorController.changeAnimation(this.saveAnimation.getV1(), this.saveAnimation.getV2());
+            try {
+                this.animatorController.changeAnimation(this.saveAnimation.getV1(), this.saveAnimation.getV2());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -88,7 +92,11 @@ public class ImageElement extends Element {
     public void deactivate() {
         super.deactivate();
         if (this.animatorController != null) {
-            this.animatorController.changeAnimation(this.saveAnimation.getV1(), this.saveAnimation.getV2());
+            try {
+                this.animatorController.changeAnimation(this.saveAnimation.getV1(), this.saveAnimation.getV2());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -140,9 +148,13 @@ public class ImageElement extends Element {
     }
 
     private void drawCurrentImage(Graphics g, float x, float y) {
-        int sizeX = (this.body.getSizeX() > this.animatorController.currentAnimation().getCurrentFrame().getWidth() ? this.animatorController.currentAnimation().getCurrentFrame().getWidth() : (int) this.body.getSizeX());
-        int sizeY = (this.body.getSizeY() > this.animatorController.currentAnimation().getCurrentFrame().getHeight() ? this.animatorController.currentAnimation().getCurrentFrame().getHeight() : (int) this.body.getSizeY());
-        this.animatorController.drawImage(g, this.animatorController.currentAnimation().getCurrentFrame().getSubImage(0, 0, sizeX, sizeY), x, y);
+        try {
+            int sizeX = (this.body.getSizeX() > this.animatorController.currentAnimation().getCurrentFrame().getWidth() ? this.animatorController.currentAnimation().getCurrentFrame().getWidth() : (int) this.body.getSizeX());
+            int sizeY = (this.body.getSizeY() > this.animatorController.currentAnimation().getCurrentFrame().getHeight() ? this.animatorController.currentAnimation().getCurrentFrame().getHeight() : (int) this.body.getSizeY());
+            g.drawImage(this.animatorController.currentAnimation().getCurrentFrame().getSubImage(0, 0, sizeX, sizeY), x, y);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -171,8 +183,12 @@ public class ImageElement extends Element {
                 if (target.equals("index") && value instanceof Integer && this.animatorController != null) {
                     this.animatorController.setCurrentAnimationIndex((Integer) value);
                 } else if (target.equals("animation") && value instanceof EAnimation && this.animatorController != null) {
-                    this.animatorController.changeAnimation((EAnimation) value);
-                    return true;
+                    try {
+                        this.animatorController.changeAnimation((EAnimation) value);
+                        return true;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             } else if (order == ETaskType.CUT) {
                 if (target.equals("body") && value instanceof Float) {
@@ -223,16 +239,24 @@ public class ImageElement extends Element {
 
     @Override
     public float getAbsoluteWidth() {
-        if (this.animatorController != null && this.animatorController.currentAnimation() != null) {
-            return this.animatorController.currentAnimation().getWidth();
+        try {
+            if (this.animatorController != null && this.animatorController.currentAnimation() != null) {
+                return this.animatorController.currentAnimation().getWidth();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return super.getAbsoluteWidth();
     }
 
     @Override
     public float getAbsoluteHeight() {
-        if (this.animatorController != null && this.animatorController.currentAnimation() != null) {
-            return this.animatorController.currentAnimation().getHeight();
+        try {
+            if (this.animatorController != null && this.animatorController.currentAnimation() != null) {
+                return this.animatorController.currentAnimation().getHeight();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return super.getAbsoluteHeight();
     }

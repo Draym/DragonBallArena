@@ -12,22 +12,30 @@ public class GokuActions extends BasicActions {
     // ATTACKS
 
     public static void handAttack(GameObject object) {
-        if (object.getAnimatorController().getIndex() == 1 && object.getAnimatorController().currentAnimation().getFrame() == 0) {
-            object.getMovement().setUseGravity(true);
-            object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
-            object.getMovement().addPushX(GameConfig.speedTravel * 2);
-        } else {
-            object.getMovement().setPushX(0);
+        try {
+            if (object.getAnimatorController().getIndex() == 1 && object.getAnimatorController().currentAnimation().getFrame() == 0) {
+                object.getMovement().setUseGravity(true);
+                object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
+                object.getMovement().addPushX(GameConfig.speedTravel * 2);
+            } else {
+                object.getMovement().setPushX(0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public static void handFlyPropels(GameObject object) {
-        object.getMovement().addPushY(-0.1f);
-        object.getMovement().setUseGravity(false);
-        if (object.getAnimatorController().currentAnimation().getFrame() >= 3) {
-            object.getMovement().setPushX(GameConfig.speedTravel / 2);
-        } else {
-            object.getMovement().setPushX(GameConfig.speedTravel * 2);
+        try {
+            object.getMovement().addPushY(-0.1f);
+            object.getMovement().setUseGravity(false);
+            if (object.getAnimatorController().currentAnimation().getFrame() >= 3) {
+                object.getMovement().setPushX(GameConfig.speedTravel / 2);
+            } else {
+                object.getMovement().setPushX(GameConfig.speedTravel * 2);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

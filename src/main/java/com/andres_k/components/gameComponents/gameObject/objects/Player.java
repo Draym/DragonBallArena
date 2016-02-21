@@ -11,6 +11,7 @@ import com.andres_k.components.gameComponents.gameObject.commands.movement.EDire
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.Console;
+import org.newdawn.slick.SlickException;
 
 /**
  * Created by andres_k on 10/07/2015.
@@ -49,7 +50,7 @@ public class Player extends PhysicalObject {
     }
 
     @Override
-    public void update() {
+    public void update() throws SlickException {
         this.comboController.update();
         this.animatorController.update();
         this.executeLastActionEvent();
@@ -72,7 +73,7 @@ public class Player extends PhysicalObject {
 
     // ACTIONS
 
-    private boolean moveFall() {
+    private boolean moveFall() throws SlickException {
         if (!this.isOnEarth()
                 && this.animatorController.currentAnimationType() != EAnimation.RECEIPT
                 && this.animatorController.currentAnimationType() != EAnimation.FALL
@@ -86,7 +87,7 @@ public class Player extends PhysicalObject {
         return false;
     }
 
-    private boolean moveRight() {
+    private boolean moveRight() throws SlickException {
         if (this.movement.getMoveDirection() != EDirection.RIGHT || this.animatorController.currentAnimationType() != EAnimation.RUN) {
             this.animatorController.setEyesDirection(EDirection.RIGHT);
             this.animatorController.changeAnimation(EAnimation.RUN);
@@ -99,7 +100,7 @@ public class Player extends PhysicalObject {
         return false;
     }
 
-    private boolean moveLeft() {
+    private boolean moveLeft() throws SlickException {
         if (this.movement.getMoveDirection() != EDirection.LEFT || this.animatorController.currentAnimationType() != EAnimation.RUN) {
             this.animatorController.setEyesDirection(EDirection.LEFT);
             this.animatorController.changeAnimation(EAnimation.RUN);
@@ -112,7 +113,7 @@ public class Player extends PhysicalObject {
         return false;
     }
 
-    private boolean moveDown() {
+    private boolean moveDown() throws SlickException {
         if (this.isOnEarth())
             this.animatorController.changeAnimation(EAnimation.DEFENSE);
         else
@@ -121,7 +122,7 @@ public class Player extends PhysicalObject {
         return true;
     }
 
-    private boolean moveUp() {
+    private boolean moveUp() throws SlickException {
         this.changeDirection();
         this.animatorController.changeAnimation(EAnimation.JUMP);
         if (!this.isOnEarth())
@@ -143,7 +144,7 @@ public class Player extends PhysicalObject {
         }
     }
 
-    private boolean executeLastDirectionEvent() {
+    private boolean executeLastDirectionEvent() throws SlickException {
         if (this.animatorController.canSwitchCurrent()) {
             EInput last = this.event.getTheLastEvent();
 

@@ -4,7 +4,6 @@ import com.andres_k.components.graphicComponents.background.BackgroundManager;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.LocalTaskManager;
-import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -33,9 +32,9 @@ public abstract class WindowController implements Observer {
 
     public abstract void leave();
 
-    public abstract void init() throws SlickException, JSONException, NoSuchMethodException;
+    public abstract void init() throws SlickException;
 
-    public void renderWindow(Graphics g) {
+    public void renderWindow(Graphics g) throws SlickException {
         this.backgroundManager.draw(g);
     }
 

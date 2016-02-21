@@ -6,7 +6,6 @@ import com.andres_k.components.eventComponent.input.InputEvent;
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.UserInterface;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.GlobalVariable;
-import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -52,11 +51,7 @@ public abstract class WindowBasedGame extends BasicGameState {
 
     public void initContents() throws SlickException {
         if (this.needContentsInit) {
-            try {
-                this.controller.init();
-            } catch (JSONException | NoSuchMethodException e) {
-                throw new SlickException(e.getMessage());
-            }
+            this.controller.init();
             this.gui.init();
             this.needContentsInit = false;
         }
@@ -92,7 +87,11 @@ public abstract class WindowBasedGame extends BasicGameState {
 
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
-        this.controller.renderWindow(graphics);
+        try {
+            this.controller.renderWindow(graphics);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.gui.draw(graphics);
     }
 

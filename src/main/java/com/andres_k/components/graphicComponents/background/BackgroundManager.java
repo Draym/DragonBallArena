@@ -3,6 +3,7 @@ package com.andres_k.components.graphicComponents.background;
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -17,8 +18,10 @@ public class BackgroundManager {
         this.components = new LinkedHashMap<>();
     }
 
-    public void draw(Graphics g) {
-        this.components.entrySet().forEach(entry -> entry.getValue().draw(g));
+    public void draw(Graphics g) throws SlickException {
+        for (Map.Entry<EBackground, BackgroundComponent> entry : this.components.entrySet()) {
+            entry.getValue().draw(g);
+        }
     }
 
     public void update() {
@@ -33,12 +36,6 @@ public class BackgroundManager {
     public void playEffect(EBackground key, int priority, Effect effect) {
         if (this.components.containsKey(key)) {
             this.components.get(key).playEffect(priority, effect);
-        }
-    }
-
-    public void stopEffect(EBackground key, String id) {
-        if (this.components.containsKey(key)) {
-            this.components.get(key).stopEffect(id);
         }
     }
 

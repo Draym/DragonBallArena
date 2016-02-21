@@ -32,7 +32,7 @@ public abstract class BackgroundComponent {
     }
 
     // FUNCTIONS
-    public void draw(Graphics g) {
+    public void draw(Graphics g) throws SlickException {
         this.animator.draw(g, this.x, this.y);
     }
 
@@ -46,11 +46,6 @@ public abstract class BackgroundComponent {
         this.animator.playEffect(priority, effect);
     }
 
-    public void stopEffect(String id) {
-        this.animator.stopEffect(id);
-    }
-
-
     // GETTERS
     public boolean isReady() {
         return this.ready;
@@ -61,7 +56,7 @@ public abstract class BackgroundComponent {
     }
 
     public boolean hasActivity() {
-        return this.animator.hasActivity();
+        return this.animator.hasEffectActivity();
     }
 
     public boolean effectIsRunning(String id) {

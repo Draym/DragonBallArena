@@ -51,7 +51,11 @@ public class ComboController {
 */
         if (this.combos.hasCombo(this.history)) {
             this.counter = 0;
-            animatorController.changeAnimation(this.combos.getCombo().getCurrentAnimation(), this.combos.getCombo().getCurrentAnimIndex());
+            try {
+                animatorController.changeAnimation(this.combos.getCombo().getCurrentAnimation(), this.combos.getCombo().getCurrentAnimIndex());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return true;
         }
         this.counter = -1;

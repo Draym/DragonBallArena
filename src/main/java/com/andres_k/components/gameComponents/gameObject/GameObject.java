@@ -9,6 +9,7 @@ import com.andres_k.components.gameComponents.gameObject.commands.movement.Movem
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 import java.util.List;
 
@@ -49,7 +50,7 @@ public abstract class GameObject {
 
     public abstract void clear();
 
-    public void draw(Graphics g) {
+    public void draw(Graphics g) throws SlickException {
         if (this.animatorController != null) {
             this.animatorController.draw(g, this.graphicalX(), this.graphicalY());
             if (GlobalVariable.drawCollision && this.animatorController.currentBodyAnimation() != null) {
@@ -59,7 +60,7 @@ public abstract class GameObject {
         }
     }
 
-    public abstract void update();
+    public abstract void update() throws SlickException;
 
     public abstract void eventPressed(EInput input);
 
@@ -113,7 +114,12 @@ public abstract class GameObject {
     }
 
     public BodySprite getBody() {
-        return this.animatorController.currentBodySprite();
+        try {
+            return this.animatorController.currentBodySprite();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public float graphicalX() {

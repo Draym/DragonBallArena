@@ -39,7 +39,7 @@ public class FontData extends DataManager {
         return "> Font complete";
     }
 
-    public void init() throws Exception {
+    public void init() throws SlickException {
         this.addFont(EFont.BASIC, new Font("Times New Roman", Font.BOLD, 16));
     }
 

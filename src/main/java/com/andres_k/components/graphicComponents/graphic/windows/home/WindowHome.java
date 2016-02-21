@@ -26,7 +26,11 @@ public class WindowHome extends WindowBasedGame {
 
     @Override
     public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        this.initBeforeEnter();
+        try {
+            this.initBeforeEnter();
+        } catch (Exception e) {
+            throw new SlickException(e.getMessage());
+        }
 
         WindowConfig.get().switchWindow(EnumWindow.getById(this.idWindow));
         MusicController.get().loop(ESound.BACKGROUND_HOME);

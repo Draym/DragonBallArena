@@ -2,10 +2,10 @@ package com.andres_k.components.gameComponents.animations;
 
 import com.andres_k.components.gameComponents.bodies.BodyAnimation;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
-import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.SlickException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,19 +61,21 @@ public class AnimatorContainer {
         this.animators.get(index).addConfig(config);
     }
 
-    public void addSoundEffect(ESound sound, int index, int frame) {
-        if (!this.animators.containsKey(index))
-            this.animators.put(index, new Animator());
-        this.animators.get(index).addSoundEffect(sound, frame);
-    }
-
     // GETTERS
 
-    public Animation getAnimation(int index) {
+    public Animation getAnimation(int index) throws SlickException {
         try {
             return this.animators.get(index).getAnimation();
         } catch (Exception e) {
-            return null;
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+
+    public Animator getAnimator(int index) throws SlickException {
+        try {
+            return this.animators.get(index);
+        } catch (Exception e) {
+            throw new NullPointerException(e.getMessage());
         }
     }
 

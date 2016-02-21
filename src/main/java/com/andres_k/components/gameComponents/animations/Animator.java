@@ -2,20 +2,20 @@ package com.andres_k.components.gameComponents.animations;
 
 import com.andres_k.components.gameComponents.bodies.BodyAnimation;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
-import com.andres_k.components.resourceComponent.sounds.ESound;
-import com.andres_k.components.resourceComponent.sounds.SoundController;
+import com.andres_k.components.graphicComponents.effects.EffectManager;
+import com.andres_k.components.graphicComponents.effects.effect.Effect;
+import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 /**
  * Created by andres_k on 18/11/2015.
  */
 public class Animator {
-    protected Map<Integer, ESound> soundEffects;
+    protected EffectManager effectManager;
     protected Animation animation;
     protected BodyAnimation body;
     protected AnimatorConfig config;
@@ -28,7 +28,7 @@ public class Animator {
         this.body = null;
         this.filter = new Color(1f, 1f, 1f);
         this.currentFrame = 0;
-        this.soundEffects = new HashMap<>();
+        this.effectManager = new EffectManager();
     }
 
     public Animator(Animator animator) {
@@ -42,23 +42,34 @@ public class Animator {
         this.config = animator.config;
         this.filter = animator.filter;
         this.currentFrame = animator.currentFrame;
-        this.soundEffects = new HashMap<>();
-        this.soundEffects.putAll(animator.soundEffects);
+        this.effectManager = new EffectManager(animator.effectManager);
     }
 
     // METHODS
 
     public void doAction(GameObject object, int frame) {
-        if (config != null)
+        if (this.config != null) {
             this.config.doAction(object, frame);
+        }
+    }
+
+    public void draw(Graphics g, float x, float y, boolean flipX, boolean flipY) {
+        if (this.animation != null) {
+            Image image = this.getAnimation().getCurrentFrame().getFlippedCopy(flipX, flipY);
+            if (this.effectManager.hasActivity()) {
+                this.effectManager.draw(g, image, x, y);
+            } else {
+                g.drawImage(image, x, y);
+            }
+        }
     }
 
     public void update(long delta) {
-        this.animation.update(delta);
-        if (this.currentFrame != this.animation.getFrame()) {
-            this.currentFrame = this.animation.getFrame();
-            if (this.soundEffects.containsKey(this.currentFrame)) {
-                SoundController.get().play(this.soundEffects.get(this.currentFrame));
+        if (this.animation != null) {
+            this.animation.update(delta);
+            if (this.currentFrame != this.animation.getFrame()) {
+                this.currentFrame = this.animation.getFrame();
+                this.effectManager.activateEffects(this.currentFrame);
             }
         }
     }
@@ -68,6 +79,27 @@ public class Animator {
             this.animation.restart();
         if (this.config != null)
             this.config.reset();
+    }
+
+    // EFFECTS
+    public void addEffect(int index, int priority, Effect effect) {
+        this.effectManager.addEffect(index, priority, effect);
+    }
+
+    public void playEffect(int priority, Effect effect) {
+        this.effectManager.playEffect(priority, effect);
+    }
+
+    public boolean hasEffectActivity() {
+        return this.effectManager.hasActivity();
+    }
+
+    public boolean effectIsRunning(String id) {
+        return this.effectManager.effectIsRunning(id);
+    }
+
+    public boolean effectIsActive(EffectType type) {
+        return this.effectManager.effectIsActive(type);
     }
 
     // ADD FUNCTIONS
@@ -81,10 +113,6 @@ public class Animator {
 
     public void addConfig(AnimatorConfig config) {
         this.config = config;
-    }
-
-    public void addSoundEffect(ESound sound, int frame) {
-        this.soundEffects.put(frame, sound);
     }
 
     // GETTERS

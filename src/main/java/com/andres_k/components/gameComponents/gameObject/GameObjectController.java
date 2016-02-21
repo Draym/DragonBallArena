@@ -54,7 +54,7 @@ public class GameObjectController {
         this.obstacles.clear();
     }
 
-    public void draw(Graphics g) {
+    public void draw(Graphics g) throws SlickException {
         for (GameObject player : this.players) {
             player.draw(g);
         }
@@ -120,15 +120,13 @@ public class GameObjectController {
         Console.write("\n" + player.getPseudo() + " : '" + score + "' pts.");
     }
 
-    public void changeGameState(boolean running) {
+    public void changeGameState(boolean running) throws SlickException {
         for (GameObject object : this.players) {
-            if (object.getAnimatorController() != null && object.getAnimatorController().currentAnimation() != null)
-                object.getAnimatorController().currentAnimation().setAutoUpdate(running);
+            object.getAnimatorController().currentAnimation().setAutoUpdate(running);
             object.resetActions();
         }
         for (GameObject object : this.obstacles) {
-            if (object.getAnimatorController() != null && object.getAnimatorController().currentAnimation() != null)
-                object.getAnimatorController().currentAnimation().setAutoUpdate(running);
+            object.getAnimatorController().currentAnimation().setAutoUpdate(running);
             object.resetActions();
         }
     }

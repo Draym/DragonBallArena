@@ -2,44 +2,58 @@ package com.andres_k.components.graphicComponents.effects;
 
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
+import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by andres_k on 25/01/2016.
  */
 public class EffectManager {
-    private List<Effect> effects;
+    private Map<Integer, Pair<Integer, Effect>> effects;
+    private List<Effect> availableEffects;
     private ImageConfiguration conf;
 
     public EffectManager() {
-        this.effects = new ArrayList<>();
+        this.effects = new HashMap<>();
+        this.availableEffects = new ArrayList<>();
         this.conf = new ImageConfiguration();
     }
 
     public EffectManager(EffectManager effectManager) {
-        this.effects = new ArrayList<>();
-
-        this.effects.addAll(effectManager.effects);
+        this.effects = new HashMap<>();
+        this.effects.putAll(effectManager.effects);
+        this.availableEffects = new ArrayList<>();
+        this.availableEffects.addAll(effectManager.availableEffects);
         this.conf = new ImageConfiguration(effectManager.conf);
+    }
+
+    public void activateEffects(int index) {
+        this.effects.entrySet().stream().forEach(entry -> {
+            if (entry.getKey() == index) {
+                this.playEffect(entry.getValue().getV1(), entry.getValue().getV2());
+            }
+        });
     }
 
     public void update() {
         boolean result;
         int level = -1;
 
-        for (int i = 0; i < this.effects.size(); ++i) {
+        for (int i = 0; i < this.availableEffects.size(); ++i) {
             if (level == -1) {
-                level = this.effects.get(i).getPriority();
-            } else if (level != this.effects.get(i).getPriority()) {
+                level = this.availableEffects.get(i).getPriority();
+            } else if (level != this.availableEffects.get(i).getPriority()) {
                 break;
             }
-            result = this.effects.get(i).update();
-            if (!this.effects.get(i).isRunning()) {
-                this.effects.remove(i);
+            result = this.availableEffects.get(i).update();
+            if (!this.availableEffects.get(i).isRunning()) {
+                this.availableEffects.remove(i);
             }
             if (!result) {
                 break;
@@ -47,8 +61,8 @@ public class EffectManager {
         }
     }
 
-    public void draw(Graphics g) {
-        this.effects.forEach(effect -> effect.draw(g));
+    private void draw(Graphics g) {
+        this.availableEffects.forEach(effect -> effect.draw(g));
     }
 
     public void draw(Graphics g, Image image, Float x, Float y) {
@@ -57,7 +71,7 @@ public class EffectManager {
         this.conf.changeSizes(image.getWidth(), image.getHeight());
         int level = -1;
 
-        for (Effect effect : this.effects) {
+        for (Effect effect : this.availableEffects) {
             if (level == -1) {
                 level = effect.getPriority();
             } else if (level != effect.getPriority()) {
@@ -80,23 +94,23 @@ public class EffectManager {
         }
     }
 
+    public void addEffect(int index, int priority, Effect effect) {
+        this.effects.put(index, new Pair<>(priority, effect));
+    }
+
     public void playEffect(int priority, Effect effect) {
         if (effect != null && priority >= 0) {
             effect.play();
             int index = 0;
 
-            for (Effect tmp : this.effects) {
+            for (Effect tmp : this.availableEffects) {
                 if (priority < tmp.getPriority())
                     break;
                 ++index;
             }
             effect.setPriority(priority);
-            this.effects.add(index, effect);
+            this.availableEffects.add(index, effect);
         }
-    }
-
-    public void stopEffect(String id) {
-        this.effects.stream().filter(effect -> effect.getId().equals(id)).forEach(this.effects::remove);
     }
 
     public boolean hasActivity() {
@@ -104,10 +118,10 @@ public class EffectManager {
     }
 
     public boolean effectIsRunning(String id) {
-        return this.effects.stream().anyMatch(effect -> effect.getId().equals(id));
+        return this.availableEffects.stream().anyMatch(effect -> effect.getId().equals(id));
     }
 
     public boolean effectIsActive(EffectType type) {
-        return this.effects.stream().anyMatch(effect -> effect.getType() == type);
+        return this.availableEffects.stream().anyMatch(effect -> effect.getType() == type);
     }
 }

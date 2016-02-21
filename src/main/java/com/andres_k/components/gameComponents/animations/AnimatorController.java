@@ -4,16 +4,17 @@ import com.andres_k.components.gameComponents.bodies.BodyAnimation;
 import com.andres_k.components.gameComponents.bodies.BodySprite;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
-import com.andres_k.components.graphicComponents.effects.EffectManager;
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ActivatedTimer;
-import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.Console;
 import org.codehaus.jettison.json.JSONException;
-import org.newdawn.slick.*;
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +29,6 @@ public class AnimatorController implements Observer {
     // animators
     private HashMap<EAnimation, AnimatorContainer> animators;
     private ActivatedTimer activatedTimer;
-    private EffectManager effectManager;
     private EDirection eyesDirection;
 
     private EAnimation current;
@@ -48,7 +48,6 @@ public class AnimatorController implements Observer {
         this.activatedTimer = new ActivatedTimer(true);
         this.eyesDirection = EDirection.RIGHT;
         this.nextRequiredAnimation = new Pair<>(EAnimation.NULL, 0);
-        this.effectManager = new EffectManager();
     }
 
     public AnimatorController(AnimatorController animatorController) throws SlickException {
@@ -66,35 +65,22 @@ public class AnimatorController implements Observer {
         this.activatedTimer = new ActivatedTimer(animatorController.activatedTimer);
         this.eyesDirection = animatorController.eyesDirection;
         this.nextRequiredAnimation = new Pair<>(animatorController.nextRequiredAnimation);
-        this.effectManager = new EffectManager(animatorController.effectManager);
-
     }
 
     // UPDATE
     public void update() {
-        this.effectManager.update();
-        this.updateAnimation();
-    }
-
-    public void updateAnimation() {
-        if (this.currentAnimation() != null) {
-            this.currentAnimator().update(GameConfig.currentTimeLoop);
-        }
-    }
-
-    public void draw(Graphics g, float x, float y) {
-        if (this.currentAnimation() != null) {
-            this.drawImage(g, this.currentAnimation().getCurrentFrame().getFlippedCopy(this.getEyesDirection().isHorizontalFlip(), false), x, y);
-        }
-    }
-
-    public void drawImage(Graphics g, Image image, float x, float y) {
-        if (this.currentAnimation() != null && this.isPrintable() && !this.isDeleted()) {
-            if (this.effectManager.hasActivity()) {
-                this.effectManager.draw(g, image, x, y);
-            } else {
-                g.drawImage(image, x, y);
+        if (this.animators.size() != 0) {
+            try {
+                this.currentAnimator().update(GameConfig.currentTimeLoop);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        }
+    }
+
+    public void draw(Graphics g, float x, float y) throws SlickException {
+        if (this.isPrintable() && !this.isDeleted()) {
+            this.currentAnimator().draw(g, x, y, this.getEyesDirection().isHorizontalFlip(), false);
         }
     }
 
@@ -131,7 +117,7 @@ public class AnimatorController implements Observer {
         }
     }
 
-    public void doCurrentAction(GameObject object) {
+    public void doCurrentAction(GameObject object) throws SlickException {
         this.getCurrentContainer().doAction(object, this.currentFrame());
         if (this.currentAnimation().isStopped()) {
             this.toNextAnimation();
@@ -180,13 +166,6 @@ public class AnimatorController implements Observer {
         this.animators.get(type).addConfig(config, index);
     }
 
-    public void addSoundEffect(EAnimation type, int index, int frame, ESound sound) {
-        if (!this.animators.containsKey(type)) {
-            this.animators.put(type, new AnimatorContainer());
-        }
-        this.animators.get(type).addSoundEffect(sound, index, frame);
-    }
-
     // METHODS
     public void restart() {
         for (Map.Entry<EAnimation, AnimatorContainer> entry : this.animators.entrySet()) {
@@ -215,24 +194,47 @@ public class AnimatorController implements Observer {
     }
 
     // GETTERS
+    public void addEffect(EAnimation type, int index, int frame, int priority, Effect effect) {
+        try {
+            this.getAnimator(type, index).addEffect(frame, priority, effect);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void playEffect(int priority, Effect effect) {
-        this.effectManager.playEffect(priority, effect);
+        try {
+            this.currentAnimator().playEffect(priority, effect);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void stopEffect(String id) {
-        this.effectManager.stopEffect(id);
-    }
-
-    public boolean hasActivity() {
-        return this.effectManager.hasActivity();
+    public boolean hasEffectActivity() {
+        try {
+            return this.currentAnimator().hasEffectActivity();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public boolean effectIsRunning(String id) {
-        return this.effectManager.effectIsRunning(id);
+        try {
+            return this.currentAnimator().effectIsRunning(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public boolean effectIsActive(EffectType type) {
-        return this.effectManager.effectIsActive(type);
+        try {
+            return this.currentAnimator().effectIsActive(type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public AnimatorContainer getCurrentContainer() {
@@ -247,40 +249,45 @@ public class AnimatorController implements Observer {
         }
     }
 
-    public Animator currentAnimator() {
+    public Animator currentAnimator() throws SlickException {
         try {
             return this.getCurrentContainer().getCurrentAnimator();
         } catch (Exception e) {
-            return null;
+            throw new NullPointerException(e.getMessage());
         }
     }
 
-    public Animation currentAnimation() {
+    public Animation currentAnimation() throws SlickException {
         try {
             return this.getCurrentContainer().getCurrentAnimation();
         } catch (Exception e) {
-            return null;
+            throw new NullPointerException(e.getMessage());
         }
     }
 
-    public BodyAnimation currentBodyAnimation() {
+    public BodyAnimation currentBodyAnimation() throws SlickException {
         try {
             return this.getCurrentContainer().getBodyAnimation();
         } catch (Exception e) {
-            return null;
+            throw new NullPointerException(e.getMessage());
         }
     }
 
-    public BodySprite currentBodySprite() {
+    public BodySprite currentBodySprite() throws SlickException {
         try {
             return this.currentBodyAnimation().getCurrentBody(this.currentFrame());
         } catch (Exception e) {
-            return null;
+            throw new NullPointerException(e.getMessage());
         }
     }
 
     public Pair<Float, Float> currentSizeAnimation() {
-        return new Pair<>((float) this.currentAnimation().getWidth(), (float) this.currentAnimation().getHeight());
+        try {
+            return new Pair<>((float) this.currentAnimation().getWidth(), (float) this.currentAnimation().getHeight());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new Pair<>(0f, 0f);
     }
 
     public boolean isPrintable() {
@@ -288,8 +295,12 @@ public class AnimatorController implements Observer {
     }
 
     public boolean isDeleted() {
-        if (this.current == EAnimation.EXPLODE && this.currentAnimation().isStopped()) {
-            this.deleted = true;
+        try {
+            if (this.current == EAnimation.EXPLODE && this.currentAnimation().isStopped()) {
+                this.deleted = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return this.deleted;
     }
@@ -308,7 +319,22 @@ public class AnimatorController implements Observer {
 
     public Animation getAnimation(EAnimation type, int index) {
         if (this.animators.containsKey(type)) {
-            return this.animators.get(type).getAnimation(index);
+            try {
+                return this.animators.get(type).getAnimation(index);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public Animator getAnimator(EAnimation type, int index) {
+        if (this.animators.containsKey(type)) {
+            try {
+                return this.animators.get(type).getAnimator(index);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
@@ -325,7 +351,7 @@ public class AnimatorController implements Observer {
         return this.eyesDirection;
     }
 
-    public boolean canSwitchCurrent() {
+    public boolean canSwitchCurrent() throws SlickException {
         return this.currentAnimation().isStopped() || EAnimation.checkLoop(this.current);
     }
 
@@ -362,7 +388,7 @@ public class AnimatorController implements Observer {
         return this.setCurrentAnimationType(type) && this.setCurrentAnimationIndex(index);
     }
 
-    public void changeAnimation(EAnimation type) {
+    public void changeAnimation(EAnimation type) throws SlickException {
         if (this.canSwitchCurrent()) {
             this.setCurrentAnimation(type, 0);
         } else {
@@ -370,7 +396,7 @@ public class AnimatorController implements Observer {
         }
     }
 
-    public void changeAnimation(EAnimation type, int index) {
+    public void changeAnimation(EAnimation type, int index) throws SlickException {
         if (!(type == EAnimation.NULL || index < 0)) {
             if (this.canSwitchCurrent()) {
                 this.setCurrentAnimation(type, index);
