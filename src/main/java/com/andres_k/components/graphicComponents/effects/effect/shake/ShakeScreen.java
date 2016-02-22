@@ -20,7 +20,7 @@ public class ShakeScreen extends ShakeIt {
             this.current = (this.current + 1 < this.pattern.size() ? this.current + 1 : 0);
             this.timer -= delta;
             if (this.timer <= 0) {
-                this.running = false;
+                this.stop();
             }
             Display.setLocation(Display.getX() + this.pattern.get(this.current).getV1(), Display.getY() + this.pattern.get(this.current).getV2());
             this.delta = 0;

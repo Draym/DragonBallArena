@@ -11,16 +11,30 @@ import org.newdawn.slick.Graphics;
  */
 public abstract class FlashIt extends Effect {
     protected ColorShape flash;
+    protected float save_light;
+    protected float save_constant;
     protected float light;
-    protected boolean upLight;
     protected float constant;
+    protected float duration;
+    protected boolean upLight;
 
     public FlashIt(String id, EffectType type, long speed, ColorShape shape) {
-        super(id, type, (510 / (speed / GameConfig.currentTimeLoop)) * GameConfig.currentTimeLoop);
+        super(id, type);
+        this.duration = (510 / (speed / GameConfig.currentTimeLoop)) * GameConfig.currentTimeLoop;
         this.flash = shape;
         this.light = shape.getColor().getAlpha();
         this.upLight = true;
         this.constant = (255 / (speed / GameConfig.currentTimeLoop));
+        this.save_light = this.light;
+        this.save_constant = this.constant;
+    }
+
+    @Override
+    public void restart() {
+        super.restart();
+        this.upLight = true;
+        this.light = this.save_light;
+        this.constant = this.save_constant;
     }
 
     @Override
@@ -42,7 +56,7 @@ public abstract class FlashIt extends Effect {
             this.constant = this.constant - (this.constant / 3);
         }
         else if (this.light == 0) {
-            this.running = false;
+            this.stop();
         }
         return true;
     }

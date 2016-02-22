@@ -42,8 +42,8 @@ public abstract class BackgroundComponent {
 
     public abstract void initialize() throws SlickException;
 
-    public void playEffect(int priority, Effect effect) {
-        this.animator.playEffect(priority, effect);
+    public void playEffect(Effect effect, int priority) {
+        this.animator.playEffect(effect, priority);
     }
 
     // GETTERS

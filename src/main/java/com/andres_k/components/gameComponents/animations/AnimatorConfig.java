@@ -49,7 +49,7 @@ public class AnimatorConfig {
         }
     }
 
-    public void reset() {
+    public void restart() {
         this.changedNextIndex = this.nextIndex;
     }
 

@@ -8,7 +8,9 @@ public enum EffectType {
     SHAKE_SCREEN("SHAKE_SCREEN"),
     SHAKE_IMAGE("SHAKE_IMAGE"),
     ZOOM("ZOOM"),
-    HIDE("HIDE");
+    HIDE("HIDE"),
+    ANIMATION("ANIMATION"),
+    SOUND("SOUND");
 
     public String value;
 

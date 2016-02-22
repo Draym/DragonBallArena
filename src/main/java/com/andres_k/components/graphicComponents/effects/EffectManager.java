@@ -41,6 +41,11 @@ public class EffectManager {
         });
     }
 
+    public void restart() {
+        this.availableEffects.clear();
+        this.effects.entrySet().forEach(entry -> entry.getValue().getV2().restart());
+    }
+
     public void update() {
         boolean result;
         int level = -1;
@@ -94,7 +99,7 @@ public class EffectManager {
         }
     }
 
-    public void addEffect(int index, int priority, Effect effect) {
+    public void addEffect(int index, Effect effect, int priority) {
         this.effects.put(index, new Pair<>(priority, effect));
     }
 

@@ -7,7 +7,6 @@ import com.andres_k.components.graphicComponents.effects.EffectFactory;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.resourceComponent.sounds.ESound;
-import com.andres_k.components.resourceComponent.sounds.SoundController;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
@@ -46,14 +45,14 @@ public class LoadController extends WindowController {
     @Override
     public void init() throws SlickException {
         this.backgroundManager.addComponent(EBackground.LOAD_SCREEN, new Wallpaper(ResourceManager.get().getBackgroundAnimator(EBackground.LOAD_SCREEN)));
-        this.backgroundManager.playEffect(EBackground.LOAD_SCREEN, 0, EffectFactory.createFlashEffect(200));
-        this.backgroundManager.playEffect(EBackground.LOAD_SCREEN, 0, EffectFactory.createShakeScreen(300, 5, 110));
+        this.backgroundManager.playEffect(EBackground.LOAD_SCREEN, EffectFactory.createFlashEffect(200), 0);
+        this.backgroundManager.playEffect(EBackground.LOAD_SCREEN, EffectFactory.createShakeScreen(300, 5, 110), 0);
+        this.backgroundManager.playEffect(EBackground.LOAD_SCREEN, EffectFactory.createSoundEffect(ESound.EFFECT_FLASH), 0);
 
         this.backgroundManager.addComponent(EBackground.LOGO, new Wallpaper(ResourceManager.get().getBackgroundAnimator(EBackground.LOGO), 370, -50));
-        this.backgroundManager.playEffect(EBackground.LOGO, 0, EffectFactory.hideIt(1000));
-        this.backgroundManager.playEffect(EBackground.LOGO, 1, EffectFactory.zoomIt(10, 0.1f, 1.3f));
-        this.backgroundManager.playEffect(EBackground.LOGO, 2, EffectFactory.createShakeScreen(160, 4, 30));
-        SoundController.get().play(ESound.EFFECT_FLASH);
+        this.backgroundManager.playEffect(EBackground.LOGO, EffectFactory.hideIt(1000), 0);
+        this.backgroundManager.playEffect(EBackground.LOGO, EffectFactory.zoomIt(10, 0.1f, 1.3f), 1);
+        this.backgroundManager.playEffect(EBackground.LOGO, EffectFactory.createShakeScreen(160, 4, 30), 2);
     }
 
     @Override

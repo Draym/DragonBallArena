@@ -13,25 +13,19 @@ public abstract class Effect {
     private int priority;
     protected boolean running;
     protected int delta;
-    private long duration;
-    private boolean activated;
 
-    protected Effect(String id, EffectType type, long duration) {
+    protected Effect(String id, EffectType type) {
         this.running = false;
         this.id = id;
         this.type = type;
-        this.duration = duration;
         this.delta = 0;
-        this.activated = false;
     }
 
     public Effect(Effect effect) {
         this.running = effect.running;
         this.id = effect.id;
         this.type = effect.type;
-        this.duration = effect.duration;
         this.delta = effect.delta;
-        this.activated = effect.activated;
     }
 
     public boolean update() {
@@ -39,13 +33,21 @@ public abstract class Effect {
         return true;
     }
 
-
     public abstract void draw(Graphics g);
 
     public abstract boolean applyChanges(ImageConfiguration conf);
 
+    public void restart() {
+        this.delta = 0;
+        this.stop();
+    }
+
     public void play() {
         this.running = true;
+    }
+
+    public void stop() {
+        this.running = false;
     }
 
     // GETTERS
@@ -57,16 +59,8 @@ public abstract class Effect {
         return this.type;
     }
 
-    public boolean isActivated() {
-        return this.activated;
-    }
-
     public boolean isRunning() {
         return this.running;
-    }
-
-    public long getDuration() {
-        return this.duration;
     }
 
     public int getPriority() {

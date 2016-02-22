@@ -79,12 +79,13 @@ public class Animator {
         if (this.animation != null)
             this.animation.restart();
         if (this.config != null)
-            this.config.reset();
+            this.config.restart();
+        this.effectManager.restart();
     }
 
     // EFFECTS
-    public void addEffect(int index, int priority, Effect effect) {
-        this.effectManager.addEffect(index, priority, effect);
+    public void addEffect(int index, Effect effect, int priority) {
+        this.effectManager.addEffect(index, effect, priority);
     }
 
     public void playEffect(int priority, Effect effect) {

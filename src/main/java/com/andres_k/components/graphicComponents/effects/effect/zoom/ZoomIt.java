@@ -18,16 +18,23 @@ public class ZoomIt extends Effect {
     protected boolean toEnd;
 
     public ZoomIt(String id, long duration, float start, float max) {
-        super(id, EffectType.ZOOM, duration);
+        super(id, EffectType.ZOOM);
         this.start = start;
         this.end = 1f;
         this.max = max;
         this.current = start;
-        this.interval = (MathTools.abs(this.max - this.end) + MathTools.abs(this.max - this.start)) / this.getDuration();
+        this.interval = (MathTools.abs(this.max - this.end) + MathTools.abs(this.max - this.start)) / duration;
         if (start > max) {
             this.interval *= (-1);
         }
         this.toEnd = false;
+    }
+
+    @Override
+    public void restart() {
+        super.restart();
+        this.toEnd = false;
+        this.current = this.start;
     }
 
     @Override
@@ -47,7 +54,7 @@ public class ZoomIt extends Effect {
             this.current = (this.current < this.end ? this.end : this.current);
         }
         else if (this.toEnd && this.current <= this.end) {
-            this.running = false;
+            this.stop();
         }
         return true;
     }
@@ -61,7 +68,6 @@ public class ZoomIt extends Effect {
         conf.x -= (((conf.imageSizeX * this.current) - conf.imageSizeX) / 2);
         conf.y -= (((conf.imageSizeY * this.current) - conf.imageSizeY) / 2);
         conf.scale = this.current;
-        //Console.write("conf: " + conf);
         return true;
     }
 }

@@ -194,15 +194,19 @@ public class AnimatorController implements Observer {
     }
 
     // GETTERS
-    public void addEffect(EAnimation type, int index, int frame, int priority, Effect effect) {
+    public void addEffect(EAnimation type, int index, int frame, Effect effect) {
+        this.addEffect(type, index, frame, effect, 0);
+    }
+
+    public void addEffect(EAnimation type, int index, int frame, Effect effect, int priority) {
         try {
-            this.getAnimator(type, index).addEffect(frame, priority, effect);
+            this.getAnimator(type, index).addEffect(frame, effect, priority);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void playEffect(int priority, Effect effect) {
+    public void playEffect(Effect effect, int priority) {
         try {
             this.currentAnimator().playEffect(priority, effect);
         } catch (Exception e) {

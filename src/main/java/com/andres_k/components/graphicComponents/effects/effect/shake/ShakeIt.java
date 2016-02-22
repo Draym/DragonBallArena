@@ -19,7 +19,7 @@ public abstract class ShakeIt extends Effect {
     protected List<Pair<Integer, Integer>> pattern;
 
     protected ShakeIt(String id, EffectType type, long duration, int power, int interval) {
-        super(id, type, duration);
+        super(id, type);
         this.timer = duration;
         this.current = 0;
         this.interval = interval;
@@ -28,6 +28,12 @@ public abstract class ShakeIt extends Effect {
         this.pattern.add(new Pair<>(power, 0));
         this.pattern.add(new Pair<>(-power, power));
         this.pattern.add(new Pair<>(power, 0));
+    }
+
+    @Override
+    public void restart() {
+        super.restart();
+        this.current = 0;
     }
 
     @Override
@@ -45,7 +51,7 @@ public abstract class ShakeIt extends Effect {
 
             this.timer -= this.delta;
             if (this.timer <= 0) {
-                this.running = false;
+                this.stop();
             }
             this.delta = 0;
         }

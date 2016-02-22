@@ -33,9 +33,9 @@ public class BackgroundManager {
         this.components.put(type, component);
     }
 
-    public void playEffect(EBackground key, int priority, Effect effect) {
+    public void playEffect(EBackground key, Effect effect, int priority) {
         if (this.components.containsKey(key)) {
-            this.components.get(key).playEffect(priority, effect);
+            this.components.get(key).playEffect(effect, priority);
         }
     }
 

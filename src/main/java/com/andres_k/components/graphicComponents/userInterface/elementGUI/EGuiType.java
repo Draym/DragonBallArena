@@ -16,7 +16,7 @@ public enum EGuiType {
 
     BUTTON("BUTTON"),
     TEXT("TEXT"),
-    IMAGE("IMAGE"),
+    IMAGE("ANIMATION"),
     BORDER("BORDER"),
 
     // specific

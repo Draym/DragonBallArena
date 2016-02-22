@@ -5,8 +5,10 @@ import com.andres_k.components.graphicComponents.effects.effect.flash.FlashImage
 import com.andres_k.components.graphicComponents.effects.effect.flash.FlashShape;
 import com.andres_k.components.graphicComponents.effects.effect.hide.HideIt;
 import com.andres_k.components.graphicComponents.effects.effect.shake.ShakeScreen;
+import com.andres_k.components.graphicComponents.effects.effect.sound.SoundEffect;
 import com.andres_k.components.graphicComponents.effects.effect.zoom.ZoomIt;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
+import com.andres_k.components.resourceComponent.sounds.ESound;
 
 import java.util.UUID;
 
@@ -25,6 +27,10 @@ public class EffectFactory {
 
     public static Effect createFlashEffect(long speed) {
         return new FlashImage(UUID.randomUUID().toString(), speed);
+    }
+
+    public static Effect createSoundEffect(ESound sound) {
+        return new SoundEffect(UUID.randomUUID().toString(), sound);
     }
 
     public static Effect hideIt(long duration) {

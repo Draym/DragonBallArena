@@ -23,7 +23,11 @@ public enum ESound {
     BUTTON_CLICK(ConfigPath.sound_gui + "/buttonClick.wav"),
     BUTTON_FOCUS(ConfigPath.sound_gui + "/buttonFocus.wav"),
     VALIDATE(ConfigPath.sound_gui + "/validate.wav"),
-    UNVALIDATE(ConfigPath.sound_gui + "/unValidate.wav");
+    UNVALIDATE(ConfigPath.sound_gui + "/unValidate.wav"),
+
+    //soundGoku
+    GOKU_KAMEHAMEHA_AIM(ConfigPath.sound_voices + "/goku" + "/Kamehameha - Aim.wav"),
+    GOKU_KAMEHAMEHA_FIRE(ConfigPath.sound_voices + "/goku" + "/Kamehameha - Fire.wav");
 
     private String path;
     private EGameObject object;

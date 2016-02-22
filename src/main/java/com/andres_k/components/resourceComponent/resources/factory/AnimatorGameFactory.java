@@ -1,11 +1,13 @@
 package com.andres_k.components.resourceComponent.resources.factory;
 
 import com.andres_k.components.gameComponents.animations.EAnimation;
+import com.andres_k.components.graphicComponents.effects.EffectFactory;
 import com.andres_k.components.resourceComponent.resources.ESprites;
 import com.andres_k.components.gameComponents.animations.AnimatorConfig;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.actionComponent.goku.GokuActions;
+import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.utils.configs.ConfigPath;
 import com.andres_k.utils.tools.StringTools;
 import org.codehaus.jettison.json.JSONException;
@@ -91,9 +93,11 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animatorController.addCollision(EAnimation.HAND_FLY_PROPELS, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuHandFlyPropels.json")));
             animatorController.addConfig(EAnimation.HAND_FLY_PROPELS, 0, new AnimatorConfig(GokuActions.class.getMethod("handFlyPropels", GameObject.class), EAnimation.FALL_FORCED));
             // SPE_ATTACK_1
-            animatorController.addAnimation(EAnimation.SPE_ATTACK_1, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuKamehameha.png", 247, 247), EAnimation.HAND_FLY_PROPELS.isLoop(), 0, 10, 0, 1, new int[]{150, 150, 150, 150, 250, 100, 10000, 150, 150, 150}));
+            animatorController.addAnimation(EAnimation.SPE_ATTACK_1, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuKamehameha.png", 247, 247), EAnimation.HAND_FLY_PROPELS.isLoop(), 0, 10, 0, 1, new int[]{300, 350, 400, 400, 620, 200, 800, 150, 150, 150}));
             animatorController.addCollision(EAnimation.SPE_ATTACK_1, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuKamehameha.json")));
             animatorController.addConfig(EAnimation.SPE_ATTACK_1, 0, new AnimatorConfig(GokuActions.class.getMethod("speAttack1", GameObject.class)));
+            animatorController.addEffect(EAnimation.SPE_ATTACK_1, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_KAMEHAMEHA_AIM));
+            animatorController.addEffect(EAnimation.SPE_ATTACK_1, 0, 5, EffectFactory.createSoundEffect(ESound.GOKU_KAMEHAMEHA_FIRE));
         }
         return animatorController;
     }

@@ -10,10 +10,18 @@ import org.newdawn.slick.Graphics;
  */
 public class HideIt extends Effect {
     protected long timer;
+    protected long current;
 
     public HideIt(String id, long duration) {
-        super(id, EffectType.HIDE, duration);
+        super(id, EffectType.HIDE);
         this.timer = duration;
+        this.current = 0;
+    }
+
+    @Override
+    public void restart() {
+        super.restart();
+        this.current = 0;
     }
 
     @Override
@@ -28,10 +36,10 @@ public class HideIt extends Effect {
 
     @Override
     public boolean applyChanges(ImageConfiguration conf) {
-        this.timer -= this.delta;
+        this.current += this.delta;
         conf.drawable = false;
-        if (this.timer <= 0) {
-            this.running = false;
+        if (this.current >= this.timer) {
+            this.stop();
         }
         this.delta = 0;
         return false;
