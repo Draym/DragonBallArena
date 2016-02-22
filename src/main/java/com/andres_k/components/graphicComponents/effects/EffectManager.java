@@ -7,43 +7,41 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by andres_k on 25/01/2016.
  */
 public class EffectManager {
-    private Map<Integer, Pair<Integer, Effect>> effects;
+    private List<Pair<Integer, Pair<Integer, Effect>>> stockedEffects;
     private List<Effect> availableEffects;
     private ImageConfiguration conf;
 
     public EffectManager() {
-        this.effects = new HashMap<>();
+        this.stockedEffects = new ArrayList<>();
         this.availableEffects = new ArrayList<>();
         this.conf = new ImageConfiguration();
     }
 
     public EffectManager(EffectManager effectManager) {
-        this.effects = new HashMap<>();
-        this.effects.putAll(effectManager.effects);
+        this.stockedEffects = new ArrayList<>();
+        this.stockedEffects.addAll(effectManager.stockedEffects);
         this.availableEffects = new ArrayList<>();
         this.availableEffects.addAll(effectManager.availableEffects);
         this.conf = new ImageConfiguration(effectManager.conf);
     }
 
     public void activateEffects(int index) {
-        this.effects.entrySet().stream().forEach(entry -> {
-            if (entry.getKey() == index) {
-                this.playEffect(entry.getValue().getV1(), entry.getValue().getV2());
+        this.stockedEffects.stream().forEach(entity -> {
+            if (entity.getV1() == index) {
+                this.playEffect(entity.getV2().getV1(), entity.getV2().getV2());
             }
         });
     }
 
     public void restart() {
         this.availableEffects.clear();
-        this.effects.entrySet().forEach(entry -> entry.getValue().getV2().restart());
+        this.stockedEffects.forEach(entry -> entry.getV2().getV2().restart());
     }
 
     public void update() {
@@ -100,7 +98,7 @@ public class EffectManager {
     }
 
     public void addEffect(int index, Effect effect, int priority) {
-        this.effects.put(index, new Pair<>(priority, effect));
+        this.stockedEffects.add(new Pair<>(index, new Pair<>(priority, effect)));
     }
 
     public void playEffect(int priority, Effect effect) {

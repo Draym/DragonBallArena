@@ -96,6 +96,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animatorController.addAnimation(EAnimation.SPE_ATTACK_1, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuKamehameha.png", 247, 247), EAnimation.HAND_FLY_PROPELS.isLoop(), 0, 10, 0, 1, new int[]{300, 350, 400, 400, 620, 200, 800, 150, 150, 150}));
             animatorController.addCollision(EAnimation.SPE_ATTACK_1, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuKamehameha.json")));
             animatorController.addConfig(EAnimation.SPE_ATTACK_1, 0, new AnimatorConfig(GokuActions.class.getMethod("speAttack1", GameObject.class)));
+            animatorController.addEffect(EAnimation.SPE_ATTACK_1, 0, 0, EffectFactory.createAnimationEffect(AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/special/Kameha" + "/Kameha_expr.png", 85, 70), false, 0, 3, 0, 1, new int[]{1000, 1000, 800}), 60, 60, false));
             animatorController.addEffect(EAnimation.SPE_ATTACK_1, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_KAMEHAMEHA_AIM));
             animatorController.addEffect(EAnimation.SPE_ATTACK_1, 0, 5, EffectFactory.createSoundEffect(ESound.GOKU_KAMEHAMEHA_FIRE));
         }

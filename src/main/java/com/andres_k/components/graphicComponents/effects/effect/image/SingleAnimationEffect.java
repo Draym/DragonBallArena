@@ -17,7 +17,7 @@ public class SingleAnimationEffect extends Effect {
     protected float y;
     protected boolean center;
 
-    protected SingleAnimationEffect(String id, Animation animation, float decalX, float decalY, boolean center) {
+    public SingleAnimationEffect(String id, Animation animation, float decalX, float decalY, boolean center) {
         super(id, EffectType.ANIMATION);
         this.animation = animation;
         this.decalX = decalX;
@@ -48,8 +48,12 @@ public class SingleAnimationEffect extends Effect {
 
     @Override
     public boolean applyChanges(ImageConfiguration conf) {
-        this.x = conf.x;
-        this.y = conf.y;
+        this.x = conf.x + this.decalX;
+        this.y = conf.y + this.decalY;
+        if (this.center) {
+            this.x -= this.animation.getWidth() / 2;
+            this.y -= this.animation.getHeight() / 2;
+        }
         return true;
     }
 }

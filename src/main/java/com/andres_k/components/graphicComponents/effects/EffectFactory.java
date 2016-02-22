@@ -4,11 +4,13 @@ import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.flash.FlashImage;
 import com.andres_k.components.graphicComponents.effects.effect.flash.FlashShape;
 import com.andres_k.components.graphicComponents.effects.effect.hide.HideIt;
+import com.andres_k.components.graphicComponents.effects.effect.image.SingleAnimationEffect;
 import com.andres_k.components.graphicComponents.effects.effect.shake.ShakeScreen;
 import com.andres_k.components.graphicComponents.effects.effect.sound.SoundEffect;
 import com.andres_k.components.graphicComponents.effects.effect.zoom.ZoomIt;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.resourceComponent.sounds.ESound;
+import org.newdawn.slick.Animation;
 
 import java.util.UUID;
 
@@ -31,6 +33,10 @@ public class EffectFactory {
 
     public static Effect createSoundEffect(ESound sound) {
         return new SoundEffect(UUID.randomUUID().toString(), sound);
+    }
+
+    public static Effect createAnimationEffect(Animation animation, float decalX, float decalY, boolean center) {
+        return new SingleAnimationEffect(UUID.randomUUID().toString(), animation, decalX, decalY, center);
     }
 
     public static Effect hideIt(long duration) {

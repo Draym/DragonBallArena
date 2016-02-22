@@ -27,7 +27,7 @@ public class Animator {
         this.config = null;
         this.body = null;
         this.filter = new Color(1f, 1f, 1f);
-        this.currentFrame = 0;
+        this.currentFrame = -1;
         this.effectManager = new EffectManager();
     }
 
@@ -76,6 +76,7 @@ public class Animator {
     }
 
     public void restart() {
+        this.currentFrame = -1;
         if (this.animation != null)
             this.animation.restart();
         if (this.config != null)
