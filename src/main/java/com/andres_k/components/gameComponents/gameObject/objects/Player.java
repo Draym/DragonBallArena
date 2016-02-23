@@ -13,10 +13,16 @@ import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.SlickException;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by andres_k on 10/07/2015.
  */
 public class Player extends PhysicalObject {
+    protected Map<String, Method> specialActions;
     protected EventController event;
     protected ComboController comboController;
     private long score;
@@ -35,6 +41,7 @@ public class Player extends PhysicalObject {
         this.event.addEvent(EInput.ATTACK_D);
         this.event.addEvent(EInput.ATTACK_SPE);
 
+        this.specialActions = new HashMap<>();
 
         try {
             this.comboController = new ComboController(this.type);
@@ -197,6 +204,14 @@ public class Player extends PhysicalObject {
 
             if (received.getV1() == ETaskType.UPGRADE_SCORE && received.getV2() instanceof Integer) {
                 this.score += (int) received.getV2();
+            } else if (received.getV1() == ETaskType.CREATE && received.getV2() instanceof String) {
+                if (this.specialActions.containsKey(received.getV2())) {
+                    try {
+                        this.specialActions.get(received.getV2()).invoke(this);
+                    } catch (IllegalAccessException | InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
         return null;

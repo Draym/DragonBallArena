@@ -41,7 +41,7 @@ public class BodyRect {
         } else if (this.type == EGameObject.ATTACK_BODY) {
             g.setColor(Color.orange);
         } else if (this.type == EGameObject.BLOCK_BODY) {
-            g.setColor(Color.green);
+            g.setColor(Color.black);
         }
         g.draw(this.getFlippedRect(haveToFlip, container, posX, posY));
     }

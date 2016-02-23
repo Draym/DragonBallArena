@@ -95,7 +95,7 @@ public class AnimatorController implements Observer {
             this.setCurrentAnimationType(next.getV1());
             this.setCurrentAnimationIndex(next.getV2());
         } catch (Exception e) {
-            Console.err("AnimatorController", "toNextCurrentAnimation", e.getMessage());
+//            Console.err("AnimatorController", "toNextCurrentAnimation", e.getMessage());
         }
     }
 
@@ -277,11 +277,11 @@ public class AnimatorController implements Observer {
         }
     }
 
-    public BodySprite currentBodySprite() throws SlickException {
+    public BodySprite currentBodySprite() {
         try {
             return this.currentBodyAnimation().getCurrentBody(this.currentFrame());
         } catch (Exception e) {
-            throw new NullPointerException(e.getMessage());
+            return null;
         }
     }
 

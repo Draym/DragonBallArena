@@ -17,16 +17,17 @@ import org.newdawn.slick.SlickException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by andres_k on 10/07/2015.
  */
 public class GameObjectController {
-    private List<GameObject> obstacles;
+    private List<GameObject> entities;
     private List<GameObject> players;
 
     public GameObjectController() {
-        this.obstacles = new ArrayList<>();
+        this.entities = new ArrayList<>();
         this.players = new ArrayList<>();
     }
 
@@ -35,10 +36,10 @@ public class GameObjectController {
     }
 
     public void initWorld() throws SlickException {
-        this.obstacles.add(GameObjectFactory.create(EGameObject.PLATFORM, ResourceManager.get().getGameAnimator(EGameObject.GROUND), "item1:ground", 950, 900));
-        this.obstacles.add(GameObjectFactory.create(EGameObject.PLATFORM, ResourceManager.get().getGameAnimator(EGameObject.GROUND), "item2:sky", 950, 0));
-        this.obstacles.add(GameObjectFactory.create(EGameObject.BORDER, ResourceManager.get().getGameAnimator(EGameObject.WALL), "item3:leftWall", 0, 475));
-        this.obstacles.add(GameObjectFactory.create(EGameObject.BORDER, ResourceManager.get().getGameAnimator(EGameObject.WALL), "item4:rightWall", 1900, 475));
+        this.entities.add(GameObjectFactory.create(EGameObject.PLATFORM, ResourceManager.get().getGameAnimator(EGameObject.GROUND), "item1:ground", 950, 900));
+        this.entities.add(GameObjectFactory.create(EGameObject.PLATFORM, ResourceManager.get().getGameAnimator(EGameObject.GROUND), "item2:sky", 950, 0));
+        this.entities.add(GameObjectFactory.create(EGameObject.BORDER, ResourceManager.get().getGameAnimator(EGameObject.WALL), "item3:leftWall", 0, 475));
+        this.entities.add(GameObjectFactory.create(EGameObject.BORDER, ResourceManager.get().getGameAnimator(EGameObject.WALL), "item4:rightWall", 1900, 475));
     }
 
     // FUNCTIONS
@@ -50,15 +51,15 @@ public class GameObjectController {
     public void leave() {
         this.players.forEach(GameObject::clear);
         this.players.clear();
-        this.obstacles.forEach(GameObject::clear);
-        this.obstacles.clear();
+        this.entities.forEach(GameObject::clear);
+        this.entities.clear();
     }
 
     public void draw(Graphics g) throws SlickException {
         for (GameObject player : this.players) {
             player.draw(g);
         }
-        for (GameObject object : this.obstacles) {
+        for (GameObject object : this.entities) {
             object.draw(g);
         }
     }
@@ -79,13 +80,13 @@ public class GameObjectController {
                 this.doMovement(this.players.get(i));
             }
         }
-        for (int i = 0; i < this.obstacles.size(); ++i) {
-            obstacles.get(i).update();
-            if (this.obstacles.get(i).isNeedDelete()) {
-                this.obstacles.remove(i);
+        for (int i = 0; i < this.entities.size(); ++i) {
+            entities.get(i).update();
+            if (this.entities.get(i).isNeedDelete()) {
+                this.entities.remove(i);
                 --i;
             } else {
-                this.doMovement(this.obstacles.get(i));
+                this.doMovement(this.entities.get(i));
             }
         }
     }
@@ -125,7 +126,7 @@ public class GameObjectController {
             object.getAnimatorController().currentAnimation().setAutoUpdate(running);
             object.resetActions();
         }
-        for (GameObject object : this.obstacles) {
+        for (GameObject object : this.entities) {
             object.getAnimatorController().currentAnimation().setAutoUpdate(running);
             object.resetActions();
         }
@@ -149,6 +150,10 @@ public class GameObjectController {
         }
     }
 
+    public void addEntity(GameObject entity) {
+        this.entities.add(entity);
+    }
+
     // COLLISION
 
     public CollisionResult checkCollision(GameObject current, ETaskType type) {
@@ -158,10 +163,11 @@ public class GameObjectController {
             List<GameObject> items = this.getAllExpectHim(current.getId());
             Pair<Float, Float> newPos;
 
-            if (type == ETaskType.STATIC)
+            if (type == ETaskType.STATIC) {
                 newPos = new Pair<>(current.getPosX(), current.getPosY());
-            else
+            } else {
                 newPos = current.predictNextPosition();
+            }
             result = current.checkCollision(items, newPos);
         }
         return result;
@@ -171,17 +177,8 @@ public class GameObjectController {
 
     public List<GameObject> getAllExpectHim(String id) {
         List<GameObject> items = new ArrayList<>();
-
-        for (GameObject object : this.players) {
-            if (!object.getId().equals(id)) {
-                items.add(object);
-            }
-        }
-        for (GameObject object : this.obstacles) {
-            if (!object.getId().equals(id)) {
-                items.add(object);
-            }
-        }
+        items.addAll(this.players.stream().filter(object -> !id.contains(object.getId())).collect(Collectors.toList()));
+        items.addAll(this.entities.stream().filter(object -> !id.contains(object.getId())).collect(Collectors.toList()));
         return items;
     }
 

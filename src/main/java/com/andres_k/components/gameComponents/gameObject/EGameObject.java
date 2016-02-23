@@ -13,29 +13,34 @@ public enum EGameObject {
     FILMY("FILMY"),
 
     //collisions
-    ATTACK_BODY("attackBody", "FILMY"),
-    DEFENSE_BODY("defenseBody", "SOLID"),
-    BLOCK_BODY("blockBody", "UNBREAKABLE"),
+    ATTACK_BODY("attackBody", FILMY.getValue()),
+    DEFENSE_BODY("defenseBody", SOLID.getValue()),
+    BLOCK_BODY("blockBody", UNBREAKABLE.getValue()),
 
     //types
-    ANIMATED("ANIMATED", "SOLID"),
-    DEADPAN("DEADPAN", "UNBREAKABLE"),
-    PLATFORM("PLATFORM", "DEADPAN"),
-    BORDER("BORDER", "DEADPAN"),
-    PLAYER("PLAYER", "ANIMATED"),
-    MONSTER("MONSTER", "ANIMATED"),
+    ANIMATED("ANIMATED", SOLID.getValue()),
+    DEADPAN("DEADPAN", UNBREAKABLE.getValue()),
+    PLATFORM("PLATFORM", DEADPAN.getValue()),
+    BORDER("BORDER", DEADPAN.getValue()),
+    PLAYER("PLAYER", ANIMATED.getValue()),
+    ENTITY("ENTITY", ANIMATED.getValue()),
 
     //items
-    GROUND("Ground", "PLATFORM"),
-    WALL("Wall", "BORDER"),
-    GOKU("Goku", "PLAYER"),
-    GOHAN("Gohan", "PLAYER", false),
-    VEGETA("Vegeta", "PLAYER", false),
-    PICOLO("Picolo", "PLAYER", false),
-    KAME_SENNIN("KameSennin", "PLAYER", false),
-    CELL("Cell", "PLAYER", false),
-    BUU("Buu", "PLAYER", false),
-    FRIEEZA("Frieeza", "PLAYER", false);
+    GROUND("Ground", PLATFORM.getValue()),
+    WALL("Wall", BORDER.getValue()),
+
+    //entities
+    KAMEHA("KAMEHA", ENTITY.getValue()),
+
+    //players
+    GOKU("Goku", PLAYER.getValue()),
+    GOHAN("Gohan", PLAYER.getValue(), false),
+    VEGETA("Vegeta", PLAYER.getValue(), false),
+    PICOLO("Picolo", PLAYER.getValue(), false),
+    KAME_SENNIN("KameSennin", PLAYER.getValue(), false),
+    CELL("Cell", PLAYER.getValue(), false),
+    BUU("Buu", PLAYER.getValue(), false),
+    FRIEEZA("Frieeza", PLAYER.getValue(), false);
 
 
     private final String value;

@@ -45,6 +45,12 @@ public abstract class GameObject {
         this.currentLife = this.maxLife;
     }
 
+    public void die() {
+        this.currentLife = 0;
+        this.animatorController.setCurrentAnimationType(EAnimation.EXPLODE);
+        this.alive = false;
+    }
+
     public void resetActions() {
     }
 
@@ -71,8 +77,9 @@ public abstract class GameObject {
     // MOVEMENT
 
     public void doMovement(CollisionResult collisionResult) {
-        if (!this.isNeedDelete())
+        if (!this.isNeedDelete()) {
             this.movement.nextPosition(collisionResult);
+        }
     }
 
     public Pair<Float, Float> predictNextPosition() {
@@ -89,10 +96,12 @@ public abstract class GameObject {
 //        Console.debug("\nCURRENT LIFE [" + this.type + "] vs [" + enemy.type + "]: " + this.currentLife + " - " + enemy.getDamage() + " = " + (this.currentLife - enemy.getDamage()));
         this.currentLife -= enemy.getDamage();
         if (this.currentLife <= 0) {
-            this.animatorController.setCurrentAnimationType(EAnimation.EXPLODE);
-            this.alive = false;
+            this.die();
         }
         // changer l'anim pour recevoir degat
+    }
+
+    public void manageEachCollisionExceptHit(EGameObject mine, GameObject enemy, EGameObject him) {
     }
 
     // GETTERS
@@ -114,12 +123,7 @@ public abstract class GameObject {
     }
 
     public BodySprite getBody() {
-        try {
-            return this.animatorController.currentBodySprite();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        return this.animatorController.currentBodySprite();
     }
 
     public float graphicalX() {

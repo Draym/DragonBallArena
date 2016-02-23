@@ -8,6 +8,7 @@ public enum ESprites {
     NOTHING(0),
     ITEM(1),
     PLAYER(2),
+    ENTITY(3),
     SCREEN_BACKGROUND(4),
     MAP_BACKGROUND(5),
 
@@ -74,6 +75,9 @@ public enum ESprites {
     //gameItem
     WALL(ITEM.getIndex()),
     GROUND(ITEM.getIndex()),
+
+    //gameEntity
+    KAMEHA(ENTITY.getIndex()),
 
     //background
     LOAD_SCREEN(SCREEN_BACKGROUND.getIndex()),

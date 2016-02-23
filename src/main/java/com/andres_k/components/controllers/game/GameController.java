@@ -4,6 +4,7 @@ import com.andres_k.components.controllers.WindowController;
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.eventComponent.input.InputGame;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
+import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObjectController;
 import com.andres_k.components.graphicComponents.background.EBackground;
 import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
@@ -158,6 +159,10 @@ public class GameController extends WindowController {
                         this.gameObjectController.changeGameState(this.running);
                     } catch (Exception e) {
                         e.printStackTrace();
+                    }
+                } else if (received.getTask() instanceof Pair) {
+                    if (((Pair) received.getTask()).getV1() == ETaskType.CREATE && ((Pair) received.getTask()).getV2() instanceof GameObject) {
+                        this.gameObjectController.addEntity((GameObject) ((Pair) received.getTask()).getV2());
                     }
                 }
             }

@@ -21,6 +21,7 @@ public class Animator {
     protected AnimatorConfig config;
     protected Color filter;
     private int currentFrame;
+    private boolean canDoAction;
 
     public Animator() {
         this.animation = null;
@@ -28,6 +29,7 @@ public class Animator {
         this.body = null;
         this.filter = new Color(1f, 1f, 1f);
         this.currentFrame = -1;
+        this.canDoAction = true;
         this.effectManager = new EffectManager();
     }
 
@@ -42,13 +44,15 @@ public class Animator {
         this.config = animator.config;
         this.filter = animator.filter;
         this.currentFrame = animator.currentFrame;
+        this.canDoAction = animator.canDoAction;
         this.effectManager = new EffectManager(animator.effectManager);
     }
 
     // METHODS
 
     public void doAction(GameObject object, int frame) {
-        if (this.config != null) {
+        if (this.config != null && (this.canDoAction || this.config.canExecuteEveryTime())) {
+            this.canDoAction = false;
             this.config.doAction(object, frame);
         }
     }
@@ -70,6 +74,7 @@ public class Animator {
             this.animation.update(delta);
             if (this.currentFrame != this.animation.getFrame()) {
                 this.currentFrame = this.animation.getFrame();
+                this.canDoAction = true;
                 this.effectManager.activateEffects(this.currentFrame);
             }
         }

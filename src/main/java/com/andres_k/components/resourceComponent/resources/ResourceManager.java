@@ -105,6 +105,7 @@ public final class ResourceManager {
                     return false;
                 }
             } catch (NoSuchMethodException | JSONException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
                 throw new SlickException(e.getMessage());
             }
         }

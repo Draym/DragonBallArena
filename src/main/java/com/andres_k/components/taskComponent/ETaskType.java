@@ -8,11 +8,11 @@ public enum ETaskType {
     GETTER,
     SETTER,
 
+    // gui
     RELAY,
     SEND_TO,
     EVENT,
     CUT,
-
     START_ACTIVITY,
     STOP_ACTIVITY,
     CLEAR_ACTIVITY,
@@ -27,6 +27,7 @@ public enum ETaskType {
 
     // ACTION
     START,
+    CREATE,
     EXIT,
     NEXT,
 

@@ -1,8 +1,12 @@
 package com.andres_k.components.gameComponents.gameObject.commands.actionComponent.goku;
 
+import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.actionComponent.BasicActions;
+import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.utils.configs.GameConfig;
+import com.andres_k.utils.stockage.Pair;
+import org.newdawn.slick.SlickException;
 
 /**
  * Created by andres_k on 30/11/2015.
@@ -41,6 +45,15 @@ public class GokuActions extends BasicActions {
 
     // KAMEHAMEHA
     public static void speAttack1(GameObject object) {
-
+        try {
+            object.getMovement().setPushY(GameConfig.speedJump / 4);
+            if (object.getAnimatorController().currentAnimation().getFrame() == 5 && object.isOnEarth()) {
+                object.getMovement().stopMovement();
+                object.getMovement().setUseGravity(false);
+                object.doTask(new Pair<>(ETaskType.CREATE, EGameObject.KAMEHA.toString()));
+            }
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
     }
 }

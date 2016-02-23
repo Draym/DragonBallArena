@@ -49,6 +49,7 @@ public class AnimatorGameData extends DataManager {
     public void initItems() throws NoSuchMethodException, SlickException, JSONException {
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.GROUND), EGameObject.GROUND);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.WALL), EGameObject.WALL);
+        this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.KAMEHA), EGameObject.KAMEHA);
     }
 
     private void addPlayerAnimator(AnimatorController animatorController, EGameObject type) {

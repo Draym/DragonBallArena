@@ -16,31 +16,37 @@ public class AnimatorConfig {
     private EAnimation nextType;
     private int nextIndex;
     private int changedNextIndex;
+    private boolean executeEveryTime;
 
-    public AnimatorConfig(Method action) {
-        this(action, -1, EAnimation.IDLE, 0);
+    public AnimatorConfig(Method action, boolean executeEveryTime) {
+        this(action, executeEveryTime, -1, EAnimation.IDLE, 0);
     }
 
-    public AnimatorConfig(Method action, EAnimation type) {
-        this(action, -1, type, 0);
+    public AnimatorConfig(Method action, boolean executeEveryTime, EAnimation type) {
+        this(action, executeEveryTime, -1, type, 0);
     }
 
-    public AnimatorConfig(Method action, EAnimation type, int index) {
-        this(action, -1, type, index);
+    public AnimatorConfig(EAnimation type, int index) {
+        this(null, false, -1, type, index);
     }
 
-    public AnimatorConfig(Method action, int start, EAnimation type, int index) {
+    public AnimatorConfig(Method action, boolean executeEveryTime, EAnimation type, int index) {
+        this(action, executeEveryTime, -1, type, index);
+    }
+
+    public AnimatorConfig(Method action, boolean executeEveryTime, int start, EAnimation type, int index) {
         this.action = action;
         this.start = start;
         this.nextType = type;
         this.nextIndex = index;
+        this.executeEveryTime = executeEveryTime;
         this.changedNextIndex = this.nextIndex;
     }
 
     // METHODS
 
     public void doAction(GameObject object, int index) {
-        if ((this.start == -1 || this.start == index)) {
+        if ((this.start == -1 || this.start == index) && this.action != null) {
             try {
                 this.action.invoke(this.action.getDeclaringClass(), object);
             } catch (IllegalAccessException | InvocationTargetException e) {
@@ -61,6 +67,10 @@ public class AnimatorConfig {
 
     public int getStart() {
         return this.start;
+    }
+
+    public boolean canExecuteEveryTime() {
+        return this.executeEveryTime;
     }
 
     // SETTERS

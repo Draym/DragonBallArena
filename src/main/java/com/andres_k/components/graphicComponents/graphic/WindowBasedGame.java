@@ -66,7 +66,7 @@ public abstract class WindowBasedGame extends BasicGameState {
 
         this.container.setTargetFrameRate(GameConfig.maxFps);
         this.container.setShowFPS(GlobalVariable.showFps);
-        this.container.setAlwaysRender(false);
+        this.container.setAlwaysRender(true);
         this.container.setVSync(true);
     }
 
