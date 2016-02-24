@@ -50,6 +50,8 @@ public class AnimatorGameData extends DataManager {
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.GROUND), EGameObject.GROUND);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.WALL), EGameObject.WALL);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.KAMEHA), EGameObject.KAMEHA);
+        this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.KAMEHA_Back), EGameObject.KAMEHA_Back);
+        this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.KAMEHA_Body), EGameObject.KAMEHA_Body);
     }
 
     private void addPlayerAnimator(AnimatorController animatorController, EGameObject type) {

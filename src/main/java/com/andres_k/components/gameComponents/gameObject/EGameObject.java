@@ -31,6 +31,8 @@ public enum EGameObject {
 
     //entities
     KAMEHA("KAMEHA", ENTITY.getValue()),
+    KAMEHA_Back("KAMEHA", ENTITY.getValue()),
+    KAMEHA_Body("KAMEHA", ENTITY.getValue()),
 
     //players
     GOKU("Goku", PLAYER.getValue()),

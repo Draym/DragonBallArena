@@ -28,7 +28,7 @@ public class Goku extends Player {
 
     public void createKamehameha() {
         try {
-            Kamehameha kameha = new Kamehameha(ResourceManager.get().getGameAnimator(EGameObject.KAMEHA), this.id, this.getPosX(), this.getPosY(), this.getAnimatorController().getEyesDirection(), 100, 500);
+            Kamehameha kameha = new Kamehameha(ResourceManager.get().getGameAnimator(EGameObject.KAMEHA), ResourceManager.get().getGameAnimator(EGameObject.KAMEHA_Body), ResourceManager.get().getGameAnimator(EGameObject.KAMEHA_Back), this.id, this.getPosX() + 120, this.getPosY(), this.getAnimatorController().getEyesDirection(), 100, 800);
             CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, kameha)));
         } catch (SlickException e) {
             e.printStackTrace();

@@ -78,6 +78,8 @@ public enum ESprites {
 
     //gameEntity
     KAMEHA(ENTITY.getIndex()),
+    KAMEHA_Back(ENTITY.getIndex()),
+    KAMEHA_Body(ENTITY.getIndex()),
 
     //background
     LOAD_SCREEN(SCREEN_BACKGROUND.getIndex()),

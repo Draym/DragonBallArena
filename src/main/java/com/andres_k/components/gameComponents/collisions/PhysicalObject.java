@@ -51,7 +51,8 @@ public abstract class PhysicalObject extends GameObject {
 
     public boolean checkBorderCollision(GameObject enemy, Pair<Float, Float> pos) {
         if (this.getAnimatorController().currentAnimationType() != EAnimation.EXPLODE &&
-                enemy.getAnimatorController().currentAnimationType() != EAnimation.EXPLODE) {
+                enemy.getAnimatorController().currentAnimationType() != EAnimation.EXPLODE &&
+                !enemy.getId().contains(this.getId())) {
             BodySprite myBody = this.getBody();
             BodySprite hisBody = enemy.getBody();
 
@@ -107,8 +108,6 @@ public abstract class PhysicalObject extends GameObject {
     }
 
     private void doCollision(GameObject enemy, BodyRect myRect, BodyRect hisRect, Shape myShape, Shape hisShape, CollisionResult result, Pair<Float, Float> pos, int mode) {
-        if (this.getType() == EGameObject.KAMEHA) {
-        }
         if (!myRect.containsCollision(hisRect.getId()) && !hisRect.containsCollision(myRect.getId())) {
             if (myRect.getType() == EGameObject.ATTACK_BODY && hisRect.getType() == EGameObject.DEFENSE_BODY) {
                 enemy.getHit(this);

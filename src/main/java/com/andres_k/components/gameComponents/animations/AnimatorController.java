@@ -2,6 +2,7 @@ package com.andres_k.components.gameComponents.animations;
 
 import com.andres_k.components.gameComponents.bodies.BodyAnimation;
 import com.andres_k.components.gameComponents.bodies.BodySprite;
+import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
@@ -120,6 +121,9 @@ public class AnimatorController implements Observer {
     public void doCurrentAction(GameObject object) throws SlickException {
         this.getCurrentContainer().doAction(object, this.currentFrame());
         if (this.currentAnimation().isStopped()) {
+            if (object.getType() == EGameObject.KAMEHA) {
+                Console.write("NextAnim");
+            }
             this.toNextAnimation();
             if (this.current == EAnimation.FALL) {
                 object.getMovement().resetGravity();

@@ -96,7 +96,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animatorController.addCollision(EAnimation.HAND_FLY_PROPELS, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuHandFlyPropels.json")));
             animatorController.addConfig(EAnimation.HAND_FLY_PROPELS, 0, new AnimatorConfig(GokuActions.class.getMethod("handFlyPropels", GameObject.class), true, EAnimation.FALL_FORCED));
             // SPE_ATTACK_1
-            animatorController.addAnimation(EAnimation.SPE_ATTACK_1, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuKamehameha.png", 247, 247), EAnimation.HAND_FLY_PROPELS.isLoop(), 0, 10, 0, 1, new int[]{300, 350, 400, 400, 620, 200, 800, 150, 150, 150}));
+            animatorController.addAnimation(EAnimation.SPE_ATTACK_1, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuKamehameha.png", 247, 247), EAnimation.HAND_FLY_PROPELS.isLoop(), 0, 10, 0, 1, new int[]{300, 350, 400, 400, 620, 200, 1000, 150, 150, 150}));
             animatorController.addCollision(EAnimation.SPE_ATTACK_1, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuKamehameha.json")));
             animatorController.addConfig(EAnimation.SPE_ATTACK_1, 0, new AnimatorConfig(GokuActions.class.getMethod("speAttack1", GameObject.class), false));
             animatorController.addEffect(EAnimation.SPE_ATTACK_1, 0, 0, EffectFactory.createAnimationEffect(AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_expr.png", 85, 70), false, 0, 3, 0, 1, new int[]{1000, 1000, 800}), 60, 60, false));
@@ -121,11 +121,22 @@ public class AnimatorGameFactory extends AnimatorFactory {
         AnimatorController animatorController = new AnimatorController();
 
         if (index == ESprites.KAMEHA) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_head0.png", 247, 247), false, 0, 1, 0, 1, new int[]{300}));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_head0.png", 247, 247), false, 0, 2, 0, 1, new int[]{150, 150}));
+            animatorController.addCollision(EAnimation.IDLE, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_head0.json")));
             animatorController.addConfig(EAnimation.IDLE, 0, new AnimatorConfig(EAnimation.SPE_ATTACK_1, 0));
             animatorController.addAnimation(EAnimation.SPE_ATTACK_1, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_head1.png", 247, 247), true, 0, 2, 0, 1, new int[]{150, 150}));
             animatorController.addCollision(EAnimation.SPE_ATTACK_1, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_head1.json")));
             animatorController.addConfig(EAnimation.SPE_ATTACK_1, 0, new AnimatorConfig(KamehaActions.class.getMethod("speAttack", GameObject.class), true));
+        } else if (index == ESprites.KAMEHA_Back) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_back1.png", 247, 247), true, 0, 2, 0, 1, new int[]{200, 200}));
+            animatorController.addCollision(EAnimation.IDLE, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_back1.json")));
+            animatorController.addAnimation(EAnimation.EXPLODE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_back2.png", 247, 247), false, 0, 4, 0, 1, new int[]{100, 100, 100, 100}));
+            animatorController.addCollision(EAnimation.EXPLODE, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_back2.json")));
+        } else if (index == ESprites.KAMEHA_Body) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_body1.png", 247, 247), true, 0, 2, 0, 1, new int[]{250, 250}));
+            animatorController.addCollision(EAnimation.IDLE, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_body1.json")));
+            animatorController.addAnimation(EAnimation.EXPLODE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_body2.png", 247, 247), false, 0, 4, 0, 1, new int[]{60, 60, 60, 60}));
+            animatorController.addCollision(EAnimation.EXPLODE, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_body2.json")));
         }
         return animatorController;
     }
