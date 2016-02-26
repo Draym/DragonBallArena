@@ -91,6 +91,16 @@ public class GameObjectController {
         }
     }
 
+    // TASK
+
+    public void taskForPlayer(String id, Object task) {
+        GameObject player = this.getPlayerById(id);
+
+        if (player != null) {
+            player.doTask(task);
+        }
+    }
+
     // EVENTS
     public void event(EInput event, EInput input) {
         if (event == EInput.KEY_RELEASED) {

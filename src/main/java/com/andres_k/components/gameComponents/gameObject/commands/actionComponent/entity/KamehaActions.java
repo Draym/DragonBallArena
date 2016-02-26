@@ -8,6 +8,6 @@ import com.andres_k.utils.configs.GameConfig;
  */
 public class KamehaActions {
     public static void speAttack(GameObject object) {
-        object.getMovement().setPushX(GameConfig.speedTravel);
+        object.getMovement().setPushX(GameConfig.speedTravel * 2);
     }
 }

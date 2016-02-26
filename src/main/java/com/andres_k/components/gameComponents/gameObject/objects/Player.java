@@ -133,7 +133,7 @@ public class Player extends PhysicalObject {
         this.changeDirection();
         this.animatorController.changeAnimation(EAnimation.JUMP);
         if (!this.isOnEarth())
-            this.animatorController.setCurrentAnimationIndex(1);
+            this.animatorController.forceCurrentAnimationIndex(1);
         this.setOnEarth(false);
         this.movement.resetGravity();
         this.event.addStackEvent(EInput.MOVE_UP);
@@ -199,7 +199,7 @@ public class Player extends PhysicalObject {
 
     @Override
     public Object doTask(Object task) {
-        if (task instanceof Pair) {
+        if (task instanceof Pair && ((Pair) task).getV1() instanceof ETaskType) {
             Pair<ETaskType, Object> received = (Pair<ETaskType, Object>) task;
 
             if (received.getV1() == ETaskType.UPGRADE_SCORE && received.getV2() instanceof Integer) {
@@ -211,6 +211,10 @@ public class Player extends PhysicalObject {
                     } catch (IllegalAccessException | InvocationTargetException e) {
                         e.printStackTrace();
                     }
+                }
+            } else if (received.getV1() == ETaskType.NEXT && received.getV2().equals("frame")) {
+                if (this.animatorController != null) {
+                    this.animatorController.forceNextFrame();
                 }
             }
         }

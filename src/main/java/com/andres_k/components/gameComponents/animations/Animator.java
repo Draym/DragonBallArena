@@ -89,6 +89,14 @@ public class Animator {
         this.effectManager.restart();
     }
 
+    public void nextFrame() {
+        if (!this.animation.isStopped()) {
+            int frame = this.animation.getFrame() + 1;
+            this.animation.restart();
+            this.animation.setCurrentFrame(frame);
+        }
+    }
+
     // EFFECTS
     public void addEffect(int index, Effect effect, int priority) {
         this.effectManager.addEffect(index, effect, priority);

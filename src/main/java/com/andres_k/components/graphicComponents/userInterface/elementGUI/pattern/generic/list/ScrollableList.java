@@ -26,9 +26,11 @@ public class ScrollableList extends ListElement {
             if (input.key == Input.KEY_UP) {
                 this.startPos = (this.startPos > 0 ? this.startPos - 1 : this.startPos);
                 this.updatePosition();
+                result = true;
             } else if (input.key == Input.KEY_DOWN) {
                 this.startPos = (this.startPos < (this.items.size() - this.positions.size()) ? this.startPos + 1 : this.startPos);
                 this.updatePosition();
+                result = true;
             }
         }
         return result;

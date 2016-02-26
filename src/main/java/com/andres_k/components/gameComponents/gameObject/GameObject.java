@@ -47,7 +47,7 @@ public abstract class GameObject {
 
     public void die() {
         this.currentLife = 0;
-        this.animatorController.setCurrentAnimationType(EAnimation.EXPLODE);
+        this.animatorController.forceCurrentAnimationType(EAnimation.EXPLODE);
         this.alive = false;
     }
 

@@ -7,6 +7,10 @@ import com.andres_k.components.gameComponents.collisions.PhysicalObject;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
+import com.andres_k.components.taskComponent.CentralTaskManager;
+import com.andres_k.components.taskComponent.ELocation;
+import com.andres_k.components.taskComponent.ETaskType;
+import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.Console;
@@ -27,6 +31,7 @@ public class Kamehameha extends PhysicalObject {
     private AnimatorController back;
     private boolean canCreateBodies;
     private float saveX;
+    private String parent;
 
     public Kamehameha(AnimatorController head, AnimatorController body, AnimatorController back, String parent, float x, float y, EDirection direction, float damage, float speed) {
         super(head, EGameObject.KAMEHA, parent + GlobalVariable.id_delimiter + UUID.randomUUID().toString(), (direction == EDirection.RIGHT ? x : x - 300), y + 10, damage, damage, speed, 0);
@@ -40,6 +45,7 @@ public class Kamehameha extends PhysicalObject {
         this.body.setEyesDirection(direction);
         this.bodiesAnim = new ArrayList<>();
         this.canCreateBodies = false;
+        this.parent = parent;
         if (direction == EDirection.RIGHT) {
             this.saveX = x - 140;
         } else {
@@ -106,10 +112,11 @@ public class Kamehameha extends PhysicalObject {
     @Override
     public void die() {
         super.die();
-        this.back.setCurrentAnimationType(EAnimation.EXPLODE);
-        this.body.setCurrentAnimationType(EAnimation.EXPLODE);
+        CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(this.parent, new Pair<>(ETaskType.NEXT, "frame"))));
+        this.back.forceCurrentAnimationType(EAnimation.EXPLODE);
+        this.body.forceCurrentAnimationType(EAnimation.EXPLODE);
         for (Pair<Float, AnimatorController> item : this.bodiesAnim) {
-            item.getV2().setCurrentAnimationType(EAnimation.EXPLODE);
+            item.getV2().forceCurrentAnimationType(EAnimation.EXPLODE);
         }
     }
 

@@ -93,8 +93,8 @@ public class AnimatorController implements Observer {
     private void toNextCurrentAnimation() {
         try {
             Pair<EAnimation, Integer> next = this.getCurrentContainer().getConfig().getNext();
-            this.setCurrentAnimationType(next.getV1());
-            this.setCurrentAnimationIndex(next.getV2());
+            this.forceCurrentAnimationType(next.getV1());
+            this.forceCurrentAnimationIndex(next.getV2());
         } catch (Exception e) {
 //            Console.err("AnimatorController", "toNextCurrentAnimation", e.getMessage());
         }
@@ -102,8 +102,8 @@ public class AnimatorController implements Observer {
 
     private void toNextRequiredAnimation() {
         try {
-            this.setCurrentAnimationType(this.nextRequiredAnimation.getV1());
-            this.setCurrentAnimationIndex(this.nextRequiredAnimation.getV2());
+            this.forceCurrentAnimationType(this.nextRequiredAnimation.getV1());
+            this.forceCurrentAnimationIndex(this.nextRequiredAnimation.getV2());
             this.resetNextRequiredAnimation();
         } catch (Exception e) {
             Console.err("AnimatorController", "toNextRequiredAnimation", e.getMessage());
@@ -134,9 +134,9 @@ public class AnimatorController implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof EAnimation) {
-            this.setCurrentAnimationType((EAnimation) arg);
+            this.forceCurrentAnimationType((EAnimation) arg);
         } else if (arg instanceof Integer) {
-            this.setCurrentAnimationIndex((Integer) arg);
+            this.forceCurrentAnimationIndex((Integer) arg);
         }
     }
 
@@ -176,7 +176,7 @@ public class AnimatorController implements Observer {
             entry.getValue().restart();
         }
 
-        this.setCurrentAnimationType(EAnimation.IDLE);
+        this.forceCurrentAnimationType(EAnimation.IDLE);
         this.printable = true;
         this.deleted = false;
     }
@@ -245,6 +245,7 @@ public class AnimatorController implements Observer {
         return false;
     }
 
+    // GETTERS
     public AnimatorContainer getCurrentContainer() {
         return this.animators.get(this.current);
     }
@@ -369,12 +370,12 @@ public class AnimatorController implements Observer {
         this.printable = printable;
     }
 
-    public boolean setCurrentAnimationIndex(int value) {
+    public boolean forceCurrentAnimationIndex(int value) {
         // Console.write("index -> " + value);
         return this.animators.get(this.current).setIndex(value);
     }
 
-    public boolean setCurrentAnimationType(EAnimation current) {
+    public boolean forceCurrentAnimationType(EAnimation current) {
         if (this.animators.containsKey(current)) {
             // Console.write("anim -> " + current);
             this.current = current;
@@ -387,18 +388,27 @@ public class AnimatorController implements Observer {
         return false;
     }
 
+    public boolean forceNextFrame() {
+        try {
+            this.currentAnimator().nextFrame();
+            return true;
+        } catch (SlickException e) {
+            return false;
+        }
+    }
+
     private void setNextRequiredAnimation(EAnimation type, int index) {
         this.nextRequiredAnimation.setV1(type);
         this.nextRequiredAnimation.setV2(index);
     }
 
-    private boolean setCurrentAnimation(EAnimation type, int index) {
-        return this.setCurrentAnimationType(type) && this.setCurrentAnimationIndex(index);
+    private boolean forceCurrentAnimation(EAnimation type, int index) {
+        return this.forceCurrentAnimationType(type) && this.forceCurrentAnimationIndex(index);
     }
 
     public void changeAnimation(EAnimation type) throws SlickException {
         if (this.canSwitchCurrent()) {
-            this.setCurrentAnimation(type, 0);
+            this.forceCurrentAnimation(type, 0);
         } else {
             this.setNextRequiredAnimation(type, 0);
         }
@@ -407,7 +417,7 @@ public class AnimatorController implements Observer {
     public void changeAnimation(EAnimation type, int index) throws SlickException {
         if (!(type == EAnimation.NULL || index < 0)) {
             if (this.canSwitchCurrent()) {
-                this.setCurrentAnimation(type, index);
+                this.forceCurrentAnimation(type, index);
             } else {
                 this.setNextRequiredAnimation(type, index);
             }

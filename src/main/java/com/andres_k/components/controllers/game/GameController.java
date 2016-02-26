@@ -163,6 +163,8 @@ public class GameController extends WindowController {
                 } else if (received.getTask() instanceof Pair) {
                     if (((Pair) received.getTask()).getV1() == ETaskType.CREATE && ((Pair) received.getTask()).getV2() instanceof GameObject) {
                         this.gameObjectController.addEntity((GameObject) ((Pair) received.getTask()).getV2());
+                    } else if (((Pair) received.getTask()).getV1() instanceof String) {
+                        this.gameObjectController.taskForPlayer((String) ((Pair) received.getTask()).getV1(), ((Pair) received.getTask()).getV2());
                     }
                 }
             }

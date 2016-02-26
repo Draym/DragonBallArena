@@ -181,7 +181,7 @@ public class ImageElement extends Element {
 
             if (order == ETaskType.SETTER) {
                 if (target.equals("index") && value instanceof Integer && this.animatorController != null) {
-                    this.animatorController.setCurrentAnimationIndex((Integer) value);
+                    this.animatorController.forceCurrentAnimationIndex((Integer) value);
                 } else if (target.equals("animation") && value instanceof EAnimation && this.animatorController != null) {
                     try {
                         this.animatorController.changeAnimation((EAnimation) value);
@@ -208,7 +208,7 @@ public class ImageElement extends Element {
                 }
             } else if (order == ETaskType.EVENT) {
                 if (target instanceof Integer && (int) target <= Input.KEY_NUMPAD9 && (int) target >= Input.KEY_NUMPAD0) {
-                    this.animatorController.setCurrentAnimationIndex((Integer) value);
+                    this.animatorController.forceCurrentAnimationIndex((Integer) value);
                 }
             }
         }
