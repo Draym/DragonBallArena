@@ -29,6 +29,18 @@ public class GokuActions extends BasicActions {
         }
     }
 
+    public static void rushAttack(GameObject object) {
+        object.getMovement().setPushY(0);
+        object.getMovement().addPushY(-0.25f);
+        object.getMovement().setUseGravity(true);
+        object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
+        if (object.getAnimatorController().getIndex() == 1) {
+            object.getMovement().setPushX(GameConfig.speedTravel * 2);
+        } else {
+            object.getMovement().setPushX(0);
+        }
+    }
+
     public static void handFlyPropels(GameObject object) {
         try {
             object.getMovement().addPushY(-0.1f);

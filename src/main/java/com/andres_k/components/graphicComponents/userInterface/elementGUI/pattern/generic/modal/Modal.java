@@ -97,7 +97,10 @@ public class Modal extends GuiElement {
                 this.OnCreate(false);
             }
         }
-        return this.content.event(input);
+        if (this.activated) {
+            return this.content.event(input);
+        }
+        return false;
     }
 
     @Override

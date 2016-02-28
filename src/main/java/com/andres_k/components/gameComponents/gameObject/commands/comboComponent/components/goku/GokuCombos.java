@@ -11,14 +11,16 @@ import com.andres_k.components.gameComponents.gameObject.commands.comboComponent
 public class GokuCombos extends ComboManager {
     public GokuCombos() {
         super();
-        this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.HANDATTACK));
-        this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.MOVE_HANDATTACK_RIGHT));
-        this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.MOVE_HANDATTACK_LEFT));
+        this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.HAND_ATTACK));
+        this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.MOVE_HAND_ATTACK_RIGHT));
+        this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.MOVE_HAND_ATTACK_LEFT));
 
         this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.HAND_FLY_PROPELS));
 
         this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.RUSH_RIGHT));
         this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.RUSH_LEFT));
+
+        this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.RUSH_ATTACK));
 
         this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.SPE_ATTACK_1));
     }

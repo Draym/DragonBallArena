@@ -59,6 +59,16 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animatorController.addAnimation(EAnimation.RUSH, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuRush.png", 247, 247), EAnimation.RUSH.isLoop(), 0, 2, 0, 1, new int[]{200, 200}));
             animatorController.addCollision(EAnimation.RUSH, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuRush.json")));
             animatorController.addConfig(EAnimation.RUSH, 0, new AnimatorConfig(GokuActions.class.getMethod("rush", GameObject.class), true));
+            // ATTACK_RUSH
+            animatorController.addAnimation(EAnimation.RUSH_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuRushAttack1.png", 247, 247), EAnimation.RUSH_ATTACK.isLoop(), 0, 2, 0, 1, new int[]{200, 200}));
+            animatorController.addCollision(EAnimation.RUSH_ATTACK, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuRushAttack1.json")));
+            animatorController.addConfig(EAnimation.RUSH_ATTACK, 0, new AnimatorConfig(GokuActions.class.getMethod("rushAttack", GameObject.class), true, EAnimation.RUSH_ATTACK, 1));
+            animatorController.addAnimation(EAnimation.RUSH_ATTACK, 1, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuRushAttack2.png", 247, 247), EAnimation.RUSH_ATTACK.isLoop(), 0, 3, 0, 1, new int[]{200, 200, 200}));
+            animatorController.addCollision(EAnimation.RUSH_ATTACK, 1, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuRushAttack2.json")));
+            animatorController.addConfig(EAnimation.RUSH_ATTACK, 1, new AnimatorConfig(GokuActions.class.getMethod("rushAttack", GameObject.class), true, EAnimation.RUSH_ATTACK, 2));
+            animatorController.addAnimation(EAnimation.RUSH_ATTACK, 2, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuRushAttack3.png", 247, 247), EAnimation.RUSH_ATTACK.isLoop(), 0, 1, 0, 1, new int[]{200}));
+            animatorController.addCollision(EAnimation.RUSH_ATTACK, 2, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuRushAttack3.json")));
+            animatorController.addConfig(EAnimation.RUSH_ATTACK, 2, new AnimatorConfig(GokuActions.class.getMethod("rushAttack", GameObject.class), true));
             // RECEIPT
             animatorController.addAnimation(EAnimation.RECEIPT, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuReceipt.png", 247, 247), EAnimation.RECEIPT.isLoop(), 0, 1, 0, 1, new int[]{130}));
             animatorController.addCollision(EAnimation.RECEIPT, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuReceipt.json")));

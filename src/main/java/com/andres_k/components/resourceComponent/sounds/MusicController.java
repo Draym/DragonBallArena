@@ -41,6 +41,9 @@ public final class MusicController implements Observer {
     }
 
     public boolean play(ESound value) {
+        if (this.volume <= 0) {
+            return false;
+        }
         if (this.musics.containsKey(value)) {
             if (this.musics.get(value).playing()) {
                 this.musics.get(value).resume();
@@ -53,6 +56,9 @@ public final class MusicController implements Observer {
     }
 
     public boolean loop(ESound value) {
+        if (this.volume <= 0) {
+            return false;
+        }
         if (this.musics.containsKey(value)) {
             if (this.musics.get(value).playing()) {
                 this.musics.get(value).resume();
@@ -65,6 +71,9 @@ public final class MusicController implements Observer {
     }
 
     public boolean resume(ESound value) {
+        if (this.volume <= 0) {
+            return false;
+        }
         if (this.musics.containsKey(value)) {
             this.musics.get(value).resume();
             return true;

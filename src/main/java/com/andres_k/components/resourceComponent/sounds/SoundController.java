@@ -48,7 +48,7 @@ public final class SoundController implements Observer {
 */
 
     public String play(ESound value) {
-        if (value != ESound.NOTHING) {
+        if (value != ESound.NOTHING && this.volume > 0) {
             try {
                 Sound sound = new Sound(value.getPath());
                 SoundElement soundElement = new SoundElement(sound, value);
@@ -64,7 +64,7 @@ public final class SoundController implements Observer {
     }
 
     public String loop(ESound value) {
-        if (value != ESound.NOTHING) {
+        if (value != ESound.NOTHING && this.volume > 0) {
             try {
                 Sound sound = new Sound(value.getPath());
                 SoundElement soundElement = new SoundElement(sound, value);
@@ -78,17 +78,6 @@ public final class SoundController implements Observer {
         }
         return null;
     }
-
-    /*
-    public boolean stop(String id) {
-        for (SoundElement element : this.sounds) {
-            if (element.getId().equals(id)) {
-                element.getSound().stop();
-                return true;
-            }
-        }
-        return false;
-    }*/
 
     public void changeVolume(float value) {
         this.volume = value;

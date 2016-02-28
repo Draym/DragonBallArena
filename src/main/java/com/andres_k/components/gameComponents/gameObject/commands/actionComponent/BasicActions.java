@@ -31,11 +31,13 @@ public class BasicActions {
     }
 
     public static void rush(GameObject object) {
-        object.getMovement().setUseGravity(false);
+        object.getMovement().addPushY(-0.25f);
+        object.getMovement().setPushY(0);
+        object.getMovement().setUseGravity(true);
+        object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
         if (object.getMovement().getMoveDirection() != EDirection.NONE) {
             object.getMovement().setPushX(GameConfig.speedTravel * 3.0f + object.getPosX() * 0.003f);
         }
-        object.getMovement().setPushY(0);
     }
 
     // MOVEMENT
@@ -67,7 +69,7 @@ public class BasicActions {
     }
 
     public static void run(GameObject object) {
-        object.getMovement().addPushY(-0.2f);
+        object.getMovement().addPushY(-0.25f);
         object.getMovement().setPushY(0);
         object.getMovement().setUseGravity(true);
         if (object.getMovement().getMoveDirection() != EDirection.NONE) {

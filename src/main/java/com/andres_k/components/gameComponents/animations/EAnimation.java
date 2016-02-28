@@ -35,6 +35,7 @@ public enum EAnimation {
     TOUCHED_RECEIPT(false),
 
     // ATTACK
+    RUSH_ATTACK(false),
     HAND_ATTACK(false),
     HAND_FLY_PROPELS(false),
     SPE_ATTACK_1(false),
