@@ -2,7 +2,6 @@ package com.andres_k.components.gameComponents.animations;
 
 import com.andres_k.components.gameComponents.bodies.BodyAnimation;
 import com.andres_k.components.gameComponents.bodies.BodySprite;
-import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
@@ -111,19 +110,18 @@ public class AnimatorController implements Observer {
     }
 
     public void toNextAnimation() {
-        if (this.nextRequiredAnimation.getV1() != EAnimation.NULL) {
+        if (this.animationHasNextAnimation()) {
+            this.toNextCurrentAnimation();
+        } else if (this.nextRequiredAnimation.getV1() != EAnimation.NULL) {
             this.toNextRequiredAnimation();
         } else {
-            this.toNextCurrentAnimation();
+            toNextCurrentAnimation();
         }
     }
 
     public void doCurrentAction(GameObject object) throws SlickException {
         this.getCurrentContainer().doAction(object, this.currentFrame());
         if (this.currentAnimation().isStopped()) {
-            if (object.getType() == EGameObject.KAMEHA) {
-                Console.write("NextAnim");
-            }
             this.toNextAnimation();
             if (this.current == EAnimation.FALL) {
                 object.getMovement().resetGravity();
@@ -362,6 +360,10 @@ public class AnimatorController implements Observer {
 
     public boolean canSwitchCurrent() throws SlickException {
         return this.currentAnimation().isStopped() || EAnimation.checkLoop(this.current);
+    }
+
+    public boolean animationHasNextAnimation() {
+        return this.getCurrentContainer().getNext().getV1() != EAnimation.IDLE;
     }
 
     // SETTERS

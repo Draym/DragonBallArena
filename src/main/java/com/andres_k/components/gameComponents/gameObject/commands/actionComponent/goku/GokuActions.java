@@ -55,8 +55,18 @@ public class GokuActions extends BasicActions {
         }
     }
 
+    public static void kiBasicAttack(GameObject object) {
+        try {
+            if (object.getAnimatorController().currentAnimation().getFrame() == object.getAnimatorController().currentAnimation().getFrameCount() - 1) {
+                object.doTask(new Pair<>(ETaskType.CREATE, EGameObject.KI_BLAST.toString()));
+            }
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+    }
+
     // KAMEHAMEHA
-    public static void speAttack1(GameObject object) {
+    public static void kiSpeAttack(GameObject object) {
         try {
             object.getMovement().setPushY(GameConfig.speedJump / 4);
             if (object.getAnimatorController().currentAnimation().getFrame() == 5 && object.isOnEarth()) {

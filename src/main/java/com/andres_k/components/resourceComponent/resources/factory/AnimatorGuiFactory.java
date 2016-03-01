@@ -143,25 +143,6 @@ public class AnimatorGuiFactory extends AnimatorFactory {
             animatorController.addAnimation(EAnimation.IDLE, 5, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "/buuCard.jpg"));
             animatorController.addAnimation(EAnimation.IDLE, 4, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "/frieezaCard.jpg"));
         }
-        /*
-        if (index == ESprites.CARDS_GOKU) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "/gokuCard.jpg"));
-        } else if (index == ESprites.CARDS_GOHAN) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "/gohanCard.jpg"));
-        } else if (index == ESprites.CARDS_VEGETA) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "/vegetaCard.jpg"));
-        } else if (index == ESprites.CARDS_PICOLO) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "/picoloCard.jpg"));
-        } else if (index == ESprites.CARDS_KAME_SENNIN) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "/kameSenninCard.jpg"));
-        } else if (index == ESprites.CARDS_CELL) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "/cellCard.jpg"));
-        } else if (index == ESprites.CARDS_BUU) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "/buuCard.jpg"));
-        } else if (index == ESprites.CARDS_FRIEEZA) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "/frieezaCard.jpg"));
-        }
-        */
         return animatorController;
     }
 }

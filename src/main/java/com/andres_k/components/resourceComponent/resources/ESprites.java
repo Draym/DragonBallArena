@@ -48,16 +48,7 @@ public enum ESprites {
 
     // GUI_CARDS
     CARDS_ALL(CARDS.getIndex()),
-    /*
-    CARDS_GOKU(CARDS.getIndex()),
-    CARDS_GOHAN(CARDS.getIndex()),
-    CARDS_VEGETA(CARDS.getIndex()),
-    CARDS_PICOLO(CARDS.getIndex()),
-    CARDS_KAME_SENNIN(CARDS.getIndex()),
-    CARDS_CELL(CARDS.getIndex()),
-    CARDS_BUU(CARDS.getIndex()),
-    CARDS_FRIEEZA(CARDS.getIndex()),
-*/
+
     // GUI_CARDS_AVATAR
     AVATAR_GOKU(AVATAR.getIndex()),
     AVATAR_GOHAN(AVATAR.getIndex()),
@@ -77,6 +68,7 @@ public enum ESprites {
     GROUND(ITEM.getIndex()),
 
     //gameEntity
+    KI_BLAST(ENTITY.getIndex()),
     KAMEHA(ENTITY.getIndex()),
     KAMEHA_Back(ENTITY.getIndex()),
     KAMEHA_Body(ENTITY.getIndex()),

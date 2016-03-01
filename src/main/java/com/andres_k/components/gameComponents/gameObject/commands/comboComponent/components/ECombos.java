@@ -11,7 +11,8 @@ public enum ECombos {
     HAND_FLY_PROPELS("HAND_FLY_PROPELS"),
     RUSH_RIGHT("RUSH_RIGHT"),
     RUSH_LEFT("RUSH_LEFT"),
-    SPE_ATTACK_1("SPE_ATTACK_1");
+    KI_BASIC_ATTACK("KI_BASIC_ATTACK"),
+    KI_SPE_ATTACK("KI_SPE_ATTACK");
 
 
     private String value;

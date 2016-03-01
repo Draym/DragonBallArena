@@ -61,7 +61,8 @@ public final class MusicController implements Observer {
         }
         if (this.musics.containsKey(value)) {
             if (this.musics.get(value).playing()) {
-                this.musics.get(value).resume();
+                this.musics.get(value).stop();
+                this.musics.get(value).loop(this.pitch, this.volume);
             } else {
                 this.musics.get(value).loop(this.pitch, this.volume);
             }

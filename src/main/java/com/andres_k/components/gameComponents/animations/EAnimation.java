@@ -38,11 +38,8 @@ public enum EAnimation {
     RUSH_ATTACK(false),
     HAND_ATTACK(false),
     HAND_FLY_PROPELS(false),
-    SPE_ATTACK_1(false),
-
-    // SPE ATTACK
-
-    // ULTIMATE ATTACK
+    KI_BASIC_ATTACK(false),
+    KI_SPE_ATTACK(false),
 
     // FINAL
     WIN(false),

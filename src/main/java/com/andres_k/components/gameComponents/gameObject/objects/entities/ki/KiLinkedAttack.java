@@ -1,42 +1,36 @@
-package com.andres_k.components.gameComponents.gameObject.objects.entities;
+package com.andres_k.components.gameComponents.gameObject.objects.entities.ki;
 
-import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.animations.EAnimation;
-import com.andres_k.components.gameComponents.collisions.PhysicalObject;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
+import com.andres_k.components.gameComponents.gameObject.objects.entities.KiEntity;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
-import com.andres_k.utils.configs.GlobalVariable;
+import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.MathTools;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by andres_k on 23/02/2016.
  */
-public class Kamehameha extends PhysicalObject {
-    private List<Pair<Float, AnimatorController>> bodiesAnim;
-    private AnimatorController body;
-    private AnimatorController back;
-    private boolean canCreateBodies;
-    private float saveX;
-    private String parent;
+public abstract class KiLinkedAttack extends KiEntity {
+    protected List<Pair<Float, AnimatorController>> bodiesAnim;
+    protected AnimatorController body;
+    protected AnimatorController back;
+    protected boolean canCreateBodies;
+    protected float saveX;
 
-    public Kamehameha(AnimatorController head, AnimatorController body, AnimatorController back, String parent, float x, float y, EDirection direction, float damage, float speed) {
-        super(head, EGameObject.KAMEHA, parent + GlobalVariable.id_delimiter + UUID.randomUUID().toString(), (direction == EDirection.RIGHT ? x : x - 300), y + 10, damage, damage, speed, 0);
-        this.movement.setMoveDirection(direction);
-        this.animatorController.setEyesDirection(direction);
+    protected KiLinkedAttack(AnimatorController head, AnimatorController body, AnimatorController back, EGameObject type, String parent, float x, float y, EDirection direction, float life, float damage, float speed, float weight) {
+        super(head, type, parent, x, y, direction, life, damage, speed, weight);
         this.body = body;
         this.back = back;
         this.back.setPrintable(false);
@@ -46,12 +40,7 @@ public class Kamehameha extends PhysicalObject {
         this.bodiesAnim = new ArrayList<>();
         this.canCreateBodies = false;
         this.parent = parent;
-        if (direction == EDirection.RIGHT) {
-            this.saveX = x - 140;
-        } else {
-
-            this.saveX = x - 470;
-        }
+        this.movement.setPushX(0f);
     }
 
     @Override
@@ -77,13 +66,12 @@ public class Kamehameha extends PhysicalObject {
 
     @Override
     public void update() throws SlickException {
-        this.animatorController.update();
-        this.animatorController.doCurrentAction(this);
-        this.movement.update();
+        super.update();
         this.back.update();
         this.body.update();
         this.bodiesAnim.stream().forEach(item -> item.getV2().update());
-        if (this.animatorController.currentAnimationType() == EAnimation.SPE_ATTACK_1) {
+        if (this.animatorController.currentAnimationType() == EAnimation.KI_SPE_ATTACK) {
+            this.movement.setPushX(GameConfig.speedTravel);
             this.body.setPrintable(true);
             this.back.setPrintable(true);
             this.canCreateBodies = true;
@@ -97,19 +85,6 @@ public class Kamehameha extends PhysicalObject {
     }
 
     @Override
-    public void eventPressed(EInput input) {
-    }
-
-    @Override
-    public void eventReleased(EInput input) {
-    }
-
-    @Override
-    public Object doTask(Object task) {
-        return null;
-    }
-
-    @Override
     public void die() {
         super.die();
         CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(this.parent, new Pair<>(ETaskType.NEXT, "frame"))));
@@ -117,14 +92,6 @@ public class Kamehameha extends PhysicalObject {
         this.body.forceCurrentAnimationType(EAnimation.EXPLODE);
         for (Pair<Float, AnimatorController> item : this.bodiesAnim) {
             item.getV2().forceCurrentAnimationType(EAnimation.EXPLODE);
-        }
-    }
-
-    @Override
-    public void manageEachCollisionExceptHit(EGameObject mine, GameObject enemy, EGameObject him) {
-        if (him == EGameObject.BLOCK_BODY && enemy.getType().isIn(EGameObject.DEADPAN)) {
-            Console.write("KAMEHA DIE");
-            this.die();
         }
     }
 
