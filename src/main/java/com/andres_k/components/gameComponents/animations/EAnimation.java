@@ -38,6 +38,8 @@ public enum EAnimation {
     RUSH_ATTACK(false),
     HAND_ATTACK(false),
     HAND_FLY_PROPELS(false),
+    JUMP_KICK(false),
+    SPIRAL_KICK(false),
     KI_BASIC_ATTACK(false),
     KI_SPE_ATTACK(false),
 

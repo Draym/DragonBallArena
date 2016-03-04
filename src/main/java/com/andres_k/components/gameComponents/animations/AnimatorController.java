@@ -110,6 +110,12 @@ public class AnimatorController implements Observer {
     }
 
     public void toNextAnimation() {
+        if (this.nextRequiredAnimation.getV1() != EAnimation.NULL) {
+            this.toNextRequiredAnimation();
+        } else {
+            toNextCurrentAnimation();
+        }
+/*
         if (this.animationHasNextAnimation()) {
             this.toNextCurrentAnimation();
         } else if (this.nextRequiredAnimation.getV1() != EAnimation.NULL) {
@@ -117,6 +123,7 @@ public class AnimatorController implements Observer {
         } else {
             toNextCurrentAnimation();
         }
+*/
     }
 
     public void doCurrentAction(GameObject object) throws SlickException {
@@ -363,7 +370,8 @@ public class AnimatorController implements Observer {
     }
 
     public boolean animationHasNextAnimation() {
-        return this.getCurrentContainer().getNext().getV1() != EAnimation.IDLE;
+        Pair<EAnimation, Integer> next = this.getCurrentContainer().getNext();
+        return  next != null && next.getV1() != EAnimation.IDLE;
     }
 
     // SETTERS

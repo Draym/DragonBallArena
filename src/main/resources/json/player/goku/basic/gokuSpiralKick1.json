@@ -1,0 +1,239 @@
+{
+  "path": "gokuSpiralKick1.png",
+  "spriteNumber": 7,
+  "spriteSizeX": 247,
+  "spriteSizeY": 247,
+  "sprites": [
+    {
+      "SpritePosX": 0,
+      "SpritePosY": 0,
+      "SpriteSizeX": 247,
+      "SpriteSizeY": 247,
+      "BodyPosX": 0.2105262577533722,
+      "BodyPosY": 155.7894287109375,
+      "BodySizeX": 86.10523986816406,
+      "BodySizeY": 90.73681640625,
+      "rectangles": [
+        {
+          "type": "defenseBody",
+          "posX": 0.8421050310134888,
+          "posY": 212.6315155029297,
+          "sizeX": 22.105255,
+          "sizeY": 33.89473
+        },
+        {
+          "type": "defenseBody",
+          "posX": 53.89472198486328,
+          "posY": 227.36834716796875,
+          "sizeX": 30.947357,
+          "sizeY": 17.684204
+        }
+      ]
+    },
+    {
+      "SpritePosX": 247,
+      "SpritePosY": 0,
+      "SpriteSizeX": 247,
+      "SpriteSizeY": 247,
+      "BodyPosX": 0.5788726806640625,
+      "BodyPosY": 139.7894287109375,
+      "BodySizeX": 76.63154602050781,
+      "BodySizeY": 106.73681640625,
+      "rectangles": [
+        {
+          "type": "defenseBody",
+          "posX": 0.5788726806640625,
+          "posY": 222.10519409179688,
+          "sizeX": 17.473679,
+          "sizeY": 24.421051
+        },
+        {
+          "type": "defenseBody",
+          "posX": 34.473602294921875,
+          "posY": 190.52626037597656,
+          "sizeX": 22.736847,
+          "sizeY": 37.684204
+        }
+      ]
+    },
+    {
+      "SpritePosX": 494,
+      "SpritePosY": 0,
+      "SpriteSizeX": 247,
+      "SpriteSizeY": 247,
+      "BodyPosX": 0.315643310546875,
+      "BodyPosY": 132.21047973632812,
+      "BodySizeX": 105.26315307617188,
+      "BodySizeY": 114.31576538085938,
+      "rectangles": [
+        {
+          "type": "defenseBody",
+          "posX": 44.31561279296875,
+          "posY": 211.1578369140625,
+          "sizeX": 22.947388,
+          "sizeY": 35.36841
+        }
+      ]
+    },
+    {
+      "SpritePosX": 741,
+      "SpritePosY": 0,
+      "SpriteSizeX": 247,
+      "SpriteSizeY": 247,
+      "BodyPosX": 0.47344970703125,
+      "BodyPosY": 139.7894287109375,
+      "BodySizeX": 115.57891845703125,
+      "BodySizeY": 106.73681640625,
+      "rectangles": [
+        {
+          "type": "defenseBody",
+          "posX": 52.0523681640625,
+          "posY": 211.1578369140625,
+          "sizeX": 32.21057,
+          "sizeY": 34.73683
+        },
+        {
+          "type": "attackBody",
+          "posX": 1.10504150390625,
+          "posY": 208.21046447753906,
+          "sizeX": 18.315796,
+          "sizeY": 30.105255
+        },
+        {
+          "type": "attackBody",
+          "posX": 1.9471435546875,
+          "posY": 184.63153076171875,
+          "sizeX": 110.526306,
+          "sizeY": 22.947357
+        }
+      ]
+    },
+    {
+      "SpritePosX": 988,
+      "SpritePosY": 0,
+      "SpriteSizeX": 247,
+      "SpriteSizeY": 247,
+      "BodyPosX": 0.63128662109375,
+      "BodyPosY": 136.84207153320312,
+      "BodySizeX": 127.36834716796875,
+      "BodySizeY": 109.68417358398438,
+      "rectangles": [
+        {
+          "type": "defenseBody",
+          "posX": 23.36810302734375,
+          "posY": 207.57888793945312,
+          "sizeX": 33.894714,
+          "sizeY": 35.999985
+        },
+        {
+          "type": "attackBody",
+          "posX": 71.3680419921875,
+          "posY": 186.10520935058594,
+          "sizeX": 56,
+          "sizeY": 58.947342
+        }
+      ]
+    },
+    {
+      "SpritePosX": 1235,
+      "SpritePosY": 0,
+      "SpriteSizeX": 247,
+      "SpriteSizeY": 247,
+      "BodyPosX": 0.7890625,
+      "BodyPosY": 132.42100524902344,
+      "BodySizeX": 117.894775390625,
+      "BodySizeY": 114.10523986816406,
+      "rectangles": [
+        {
+          "type": "defenseBody",
+          "posX": 49.2100830078125,
+          "posY": 137.47364807128906,
+          "sizeX": 8,
+          "sizeY": 60.421036
+        },
+        {
+          "type": "defenseBody",
+          "posX": 15.1048583984375,
+          "posY": 228.842041015625,
+          "sizeX": 14.736816,
+          "sizeY": 17.684204
+        },
+        {
+          "type": "defenseBody",
+          "posX": 22.683837890625,
+          "posY": 148.63153076171875,
+          "sizeX": 25.684204,
+          "sizeY": 79.36841
+        },
+        {
+          "type": "attackBody",
+          "posX": 92.157470703125,
+          "posY": 199.3683624267578,
+          "sizeX": 25.684204,
+          "sizeY": 39.78946
+        },
+        {
+          "type": "attackBody",
+          "posX": 50.8944091796875,
+          "posY": 230.3157196044922,
+          "sizeX": 39.78943,
+          "sizeY": 13.89473
+        }
+      ]
+    },
+    {
+      "SpritePosX": 1482,
+      "SpritePosY": 0,
+      "SpriteSizeX": 247,
+      "SpriteSizeY": 247,
+      "BodyPosX": 0.3153076171875,
+      "BodyPosY": 133.05259704589844,
+      "BodySizeX": 116.4210205078125,
+      "BodySizeY": 113.47364807128906,
+      "rectangles": [
+        {
+          "type": "defenseBody",
+          "posX": 76.3153076171875,
+          "posY": 158.73680114746094,
+          "sizeX": 19.789429,
+          "sizeY": 83.99997
+        },
+        {
+          "type": "defenseBody",
+          "posX": 96.104736328125,
+          "posY": 203.1578369140625,
+          "sizeX": 14.736938,
+          "sizeY": 24.842102
+        },
+        {
+          "type": "defenseBody",
+          "posX": 96.9468994140625,
+          "posY": 145.68417358398438,
+          "sizeX": 15.368408,
+          "sizeY": 52.21051
+        },
+        {
+          "type": "attackBody",
+          "posX": 2.631103515625,
+          "posY": 222.94729614257812,
+          "sizeX": 67.57898,
+          "sizeY": 22.947372
+        },
+        {
+          "type": "defenseBody",
+          "posX": 26.8416748046875,
+          "posY": 220.842041015625,
+          "sizeX": 20.631592,
+          "sizeY": 17.473679
+        },
+        {
+          "type": "defenseBody",
+          "posX": 48.1048583984375,
+          "posY": 210.3157196044922,
+          "sizeX": 25.894653,
+          "sizeY": 20.631577
+        }
+      ]
+    }
+  ]
+}

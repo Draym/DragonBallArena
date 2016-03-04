@@ -55,6 +55,42 @@ public class GokuActions extends BasicActions {
         }
     }
 
+    public static void jumpKickAttack(GameObject object) {
+        object.getMovement().setPushY(0);
+        object.getMovement().setUseGravity(false);
+        try {
+            if (object.getAnimatorController().getIndex() == 0 && object.getAnimatorController().currentAnimation().getFrame() == 0) {
+                object.getMovement().setPushX(0);
+            } else if (object.getAnimatorController().getIndex() == 0 && object.getAnimatorController().currentAnimation().getFrame() == 2) {
+                object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
+                object.getMovement().setPushX(2f);
+                object.getMovement().setPushY(-1f);
+            } else if (object.getAnimatorController().getIndex() == 2 && object.getAnimatorController().currentAnimation().getFrame() == 1) {
+                object.getMovement().setPushX(0);
+            }
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void spiralKickAttack(GameObject object) {
+        object.getMovement().setPushY(0);
+        object.getMovement().setUseGravity(false);
+        try {
+            if (object.getAnimatorController().getIndex() == 0 && object.getAnimatorController().currentAnimation().getFrame() == 0) {
+                object.getMovement().setPushX(0);
+            } else if (object.getAnimatorController().getIndex() == 0 && object.getAnimatorController().currentAnimation().getFrame() == 2) {
+                object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
+                object.getMovement().setPushX(2f);
+                object.getMovement().setPushY(-1f);
+            } else if (object.getAnimatorController().getIndex() == 2) {
+                object.getMovement().setPushX(0);
+            }
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void kiBasicAttack(GameObject object) {
         try {
             if (object.getAnimatorController().currentAnimation().getFrame() == object.getAnimatorController().currentAnimation().getFrameCount() - 1) {

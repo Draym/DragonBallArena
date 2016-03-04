@@ -117,13 +117,33 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animatorController.addConfig(EAnimation.KI_BASIC_ATTACK, 0, new AnimatorConfig(EAnimation.KI_BASIC_ATTACK, 1));
             animatorController.addAnimation(EAnimation.KI_BASIC_ATTACK, 1, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuKiBlast2.png", 247, 247), EAnimation.KI_BASIC_ATTACK.isLoop(), 0, 5, 0, 1, new int[]{150, 150, 60, 60, 60}));
             animatorController.addCollision(EAnimation.KI_BASIC_ATTACK, 1, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuKiBlast2.json")));
-            animatorController.addConfig(EAnimation.KI_BASIC_ATTACK, 1, new AnimatorConfig(GokuActions.class.getMethod("kiBasicAttack", GameObject.class), false));
+            animatorController.addConfig(EAnimation.KI_BASIC_ATTACK, 1, new AnimatorConfig(GokuActions.class.getMethod("kiBasicAttack", GameObject.class), false, EAnimation.KI_BASIC_ATTACK, 3));
             animatorController.addAnimation(EAnimation.KI_BASIC_ATTACK, 2, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuKiBlast3.png", 247, 247), EAnimation.KI_BASIC_ATTACK.isLoop(), 0, 6, 0, 1, new int[]{150, 150, 60, 60, 60, 60}));
             animatorController.addCollision(EAnimation.KI_BASIC_ATTACK, 2, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuKiBlast3.json")));
-            animatorController.addConfig(EAnimation.KI_BASIC_ATTACK, 2, new AnimatorConfig(GokuActions.class.getMethod("kiBasicAttack", GameObject.class), false));
-            animatorController.addAnimation(EAnimation.KI_BASIC_ATTACK, 3, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuKiBlast4.png", 247, 247), EAnimation.KI_BASIC_ATTACK.isLoop(), 0, 2, 0, 1, new int[]{250, 250}));
+            animatorController.addConfig(EAnimation.KI_BASIC_ATTACK, 2, new AnimatorConfig(GokuActions.class.getMethod("kiBasicAttack", GameObject.class), false, EAnimation.KI_BASIC_ATTACK, 3));
+            animatorController.addAnimation(EAnimation.KI_BASIC_ATTACK, 3, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuKiBlast4.png", 247, 247), EAnimation.KI_BASIC_ATTACK.isLoop(), 0, 2, 0, 1, new int[]{100, 100}));
             animatorController.addCollision(EAnimation.KI_BASIC_ATTACK, 3, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuKiBlast4.json")));
-
+            animatorController.addConfig(EAnimation.KI_BASIC_ATTACK, 3, new AnimatorConfig(EAnimation.IDLE, 0));
+            // JUMP_KICK
+            animatorController.addAnimation(EAnimation.JUMP_KICK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuJumpKick1.png", 247, 247), EAnimation.JUMP_KICK.isLoop(), 0, 4, 0, 1, new int[]{200, 150, 150, 100}));
+            animatorController.addCollision(EAnimation.JUMP_KICK, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuJumpKick1.json")));
+            animatorController.addConfig(EAnimation.JUMP_KICK, 0, new AnimatorConfig(GokuActions.class.getMethod("jumpKickAttack", GameObject.class), false, EAnimation.JUMP_KICK, 2));
+            animatorController.addAnimation(EAnimation.JUMP_KICK, 1, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuJumpKick2.png", 247, 247), EAnimation.JUMP_KICK.isLoop(), 0, 5, 0, 1, new int[]{60, 60, 60, 60, 60}));
+            animatorController.addCollision(EAnimation.JUMP_KICK, 1, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuJumpKick2.json")));
+            animatorController.addConfig(EAnimation.JUMP_KICK, 1, new AnimatorConfig(GokuActions.class.getMethod("jumpKickAttack", GameObject.class), false, EAnimation.JUMP_KICK, 2));
+            animatorController.addAnimation(EAnimation.JUMP_KICK, 2, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuJumpKick3.png", 247, 247), EAnimation.JUMP_KICK.isLoop(), 0, 4, 0, 1, new int[]{100, 150, 150, 100}));
+            animatorController.addCollision(EAnimation.JUMP_KICK, 2, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuJumpKick3.json")));
+            animatorController.addConfig(EAnimation.JUMP_KICK, 2, new AnimatorConfig(EAnimation.IDLE, 0));
+            // SPIRAL_KICK
+            animatorController.addAnimation(EAnimation.SPIRAL_KICK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuSpiralKick1.png", 247, 247), EAnimation.SPIRAL_KICK.isLoop(), 0, 7, 0, 1, new int[]{200, 150, 150, 100, 100, 100, 100}));
+            animatorController.addCollision(EAnimation.SPIRAL_KICK, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuSpiralKick1.json")));
+            animatorController.addConfig(EAnimation.SPIRAL_KICK, 0, new AnimatorConfig(GokuActions.class.getMethod("spiralKickAttack", GameObject.class), false, EAnimation.SPIRAL_KICK, 1));
+            animatorController.addAnimation(EAnimation.SPIRAL_KICK, 1, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuSpiralKick2.png", 247, 247), EAnimation.SPIRAL_KICK.isLoop(), 0, 4, 0, 1, new int[]{100, 100, 100, 100}));
+            animatorController.addCollision(EAnimation.SPIRAL_KICK, 1, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuSpiralKick2.json")));
+            animatorController.addConfig(EAnimation.SPIRAL_KICK, 1, new AnimatorConfig(GokuActions.class.getMethod("spiralKickAttack", GameObject.class), false, EAnimation.SPIRAL_KICK, 2));
+            animatorController.addAnimation(EAnimation.SPIRAL_KICK, 2, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuSpiralKick3.png", 247, 247), EAnimation.SPIRAL_KICK.isLoop(), 0, 2, 0, 1, new int[]{100, 150}));
+            animatorController.addCollision(EAnimation.SPIRAL_KICK, 2, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuSpiralKick3.json")));
+            animatorController.addConfig(EAnimation.SPIRAL_KICK, 2, new AnimatorConfig(EAnimation.IDLE, 0));
         }
         return animatorController;
     }
