@@ -61,7 +61,7 @@ public abstract class PhysicalObject extends GameObject {
                     || this.saveCollisions.get(hisBody.getId()) == myBody.getId())
                 return false;
             if (myBody.getFlippedBody(this.getAnimatorController().getEyesDirection().isHorizontalFlip(), pos.getV1(), pos.getV2())
-                    .intersects(hisBody.getFlippedBody(this.getAnimatorController().getEyesDirection().isHorizontalFlip(), enemy.getPosX(), enemy.getPosY()))) {
+                    .intersects(hisBody.getFlippedBody(enemy.getAnimatorController().getEyesDirection().isHorizontalFlip(), enemy.getPosX(), enemy.getPosY()))) {
                 this.saveCollisions.put(myBody.getId(), hisBody.getId());
                 return true;
             }

@@ -13,13 +13,13 @@ public class Combo {
     private List<ComboElement> elements;
     private boolean created;
     private int current;
-    private int incr;
+    private int pos;
 
     public Combo() {
         this.elements = new ArrayList<>();
         this.created = false;
         this.current = 0;
-        this.incr = 0;
+        this.pos = 0;
     }
 
     // INIT
@@ -35,7 +35,7 @@ public class Combo {
     // METHODS
 
     public boolean hasInputs(List<EInput> inputs) {
-        this.incr = 0;
+        this.pos = 0;
 
         for (int i = 0; i < inputs.size(); ++i) {
             int result = this.checkInput(inputs.get(i));
@@ -50,21 +50,21 @@ public class Combo {
     }
 
     private int checkInput(EInput input) {
-        if (this.incr >= this.elements.size()) {
+        if (this.pos >= this.elements.size()) {
             return -1;
         }
 
-        if (this.elements.get(this.incr).getInput() == EInput.INFINITE && this.incr > 0) {
-            if (this.elements.get(this.incr - 1).getInput() == input) {
-                this.current = this.incr - 1;
+        if (this.elements.get(this.pos).getInput() == EInput.INFINITE && this.pos > 0) {
+            if (this.elements.get(this.pos - 1).getInput() == input) {
+                this.current = this.pos - 1;
                 return 1;
             } else {
-                this.incr += 1;
+                this.pos += 1;
             }
         }
-        if (this.incr < this.elements.size() && this.elements.get(this.incr).getInput() == input) {
-            this.current = this.incr;
-            this.incr += 1;
+        if (this.pos < this.elements.size() && this.elements.get(this.pos).getInput() == input) {
+            this.current = this.pos;
+            this.pos += 1;
             return 0;
         }
         return -1;
