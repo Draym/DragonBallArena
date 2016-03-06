@@ -91,6 +91,12 @@ public class GokuActions extends BasicActions {
         }
     }
 
+    public static void kickPropelsAttack(GameObject object) {
+    }
+
+    public static void kiChargeAction(GameObject object) {
+    }
+
     public static void kiBasicAttack(GameObject object) {
         try {
             if (object.getAnimatorController().currentAnimation().getFrame() == object.getAnimatorController().currentAnimation().getFrameCount() - 1) {

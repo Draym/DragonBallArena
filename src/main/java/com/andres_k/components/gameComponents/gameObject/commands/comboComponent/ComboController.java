@@ -45,9 +45,9 @@ public class ComboController {
         this.history.add(input);
 /*
         Console.write("/---");
-        for (EnumInput val : this.history)
-            Console.write(val.getId());
-        Console.write("---\\");
+        for (EInput val : this.history)
+            Console.write(val.getValue());
+        Console.write("---");
 */
         if (this.combos.hasCombo(this.history)) {
             this.counter = 0;
@@ -58,6 +58,7 @@ public class ComboController {
             }
             return true;
         }
+//        Console.write("NO COMBO");
         this.counter = -1;
         this.reset();
         return false;

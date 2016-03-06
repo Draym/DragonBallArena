@@ -27,7 +27,7 @@ public class EventController {
         this.validToHistory.add(EInput.MOVE_DOWN);
         this.validToHistory.add(EInput.MOVE_RIGHT);
         this.validToHistory.add(EInput.MOVE_LEFT);
-        this.validToHistory.add(EInput.ATTACK_SPE);
+//        this.validToHistory.add(EInput.ATTACK_SPE);
         this.eventSaved = EInput.NOTHING;
     }
 
@@ -103,11 +103,8 @@ public class EventController {
     public EInput getTheLastEvent() {
         if (this.eventHistory.size() > 0) {
             return this.eventHistory.get(0);
-        } else {
-            EInput result = this.eventSaved;
-            this.eventSaved = EInput.NOTHING;
-            return result;
         }
+        return EInput.NOTHING;
     }
 
     public EInput consumeStackEvent() {

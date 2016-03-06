@@ -13,11 +13,13 @@ public class Combo {
     private List<ComboElement> elements;
     private boolean created;
     private int current;
+    private int incr;
 
     public Combo() {
         this.elements = new ArrayList<>();
         this.created = false;
         this.current = 0;
+        this.incr = 0;
     }
 
     // INIT
@@ -33,8 +35,10 @@ public class Combo {
     // METHODS
 
     public boolean hasInputs(List<EInput> inputs) {
+        this.incr = 0;
+
         for (int i = 0; i < inputs.size(); ++i) {
-            int result = this.checkInput(i, inputs.get(i));
+            int result = this.checkInput(inputs.get(i));
             if (result == -1) {
                 return false;
             } else if (result == 1) {
@@ -45,24 +49,22 @@ public class Combo {
         return true;
     }
 
-    private int checkInput(int index, EInput input) {
-        int pos = index;
-
-        if (pos >= this.elements.size()) {
-            pos = this.elements.size() - 1;
-        }
-        if (this.elements.get(pos).getInput() == EInput.INFINITE) {
-            if (this.elements.get(pos - 1).getInput() == input) {
-                this.current = pos;
-                return 1;
-            } else {
-                pos += 1;
-            }
-        } else if (pos != index) {
+    private int checkInput(EInput input) {
+        if (this.incr >= this.elements.size()) {
             return -1;
         }
-        if (pos < this.elements.size() && this.elements.get(pos).getInput() == input) {
-            this.current = pos;
+
+        if (this.elements.get(this.incr).getInput() == EInput.INFINITE && this.incr > 0) {
+            if (this.elements.get(this.incr - 1).getInput() == input) {
+                this.current = this.incr - 1;
+                return 1;
+            } else {
+                this.incr += 1;
+            }
+        }
+        if (this.incr < this.elements.size() && this.elements.get(this.incr).getInput() == input) {
+            this.current = this.incr;
+            this.incr += 1;
             return 0;
         }
         return -1;

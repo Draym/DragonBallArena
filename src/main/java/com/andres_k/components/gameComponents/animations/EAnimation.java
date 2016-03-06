@@ -15,7 +15,7 @@ public enum EAnimation {
     ON_CLICK(true),
 
     // MOVE
-    RUSH(true),
+    RUSH(false),
     RUN(true),
     JUMP(false),
     FALL(true),
@@ -40,6 +40,9 @@ public enum EAnimation {
     HAND_FLY_PROPELS(false),
     JUMP_KICK(false),
     SPIRAL_KICK(false),
+    KICK_PROPELS(false),
+    TRANSPOSITION(false),
+    KI_CHARGE(false),
     KI_BASIC_ATTACK(false),
     KI_SPE_ATTACK(false),
 
