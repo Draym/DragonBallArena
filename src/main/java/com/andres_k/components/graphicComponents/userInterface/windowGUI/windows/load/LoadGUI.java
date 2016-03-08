@@ -39,7 +39,7 @@ public class LoadGUI extends UserInterface {
         this.taskManager.register(title.getId(), title);
         ImageElement value = new ImageElement(ELocation.LOAD_GUI_LoadingBar_value.getId(), ResourceManager.get().getGuiAnimator(EGuiElement.LOAD_BAR), true);
         this.taskManager.register(value.getId(), value);
-        value.doTask(new Tuple<>(ETaskType.CUT, "body", 0.0f));
+        value.doTask(new Tuple<>(ETaskType.CUT, "body_X", 0.0f));
         loadingBar.addItem(new ElementWithTitle(title, container, true));
         loadingBar.addItem(value);
         this.elements.add(loadingBar);

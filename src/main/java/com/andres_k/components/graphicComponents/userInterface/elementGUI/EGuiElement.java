@@ -13,6 +13,7 @@ public enum EGuiElement {
     COMPONENT("COMPONENT"),
     CARDS("CARDS"),
     AVATAR("AVATAR"),
+    ICON("ICON"),
 
     // container
     PANEL1("PANEL1", CONTAINER.getValue()),
@@ -40,19 +41,14 @@ public enum EGuiElement {
     LOAD_BAR("LOAD_BAR", COMPONENT.getValue()),
     LOADING_ANIM("LOADING_ANIM", COMPONENT.getValue()),
     DISABLED("DISABLED", COMPONENT.getValue()),
+    HEALTH_BAR("HEALTH_BAR", COMPONENT.getValue()),
+    KI_BAR("KI_BAR", COMPONENT.getValue()),
+    ENERGY_BAR("ENERGY_BAR", COMPONENT.getValue()),
+    STATE_PLAYER("STATE_PLAYER", COMPONENT.getValue()),
 
     // GUI_CARDS
     CARDS_ALL("CARDS_ALL", CARDS.getValue()),
-    /*
-    CARDS_GOKU("CARDS_GOKU", CARDS.getValue()),
-    CARDS_GOHAN("CARDS_GOHAN", CARDS.getValue()),
-    CARDS_VEGETA("CARDS_VEGETA", CARDS.getValue()),
-    CARDS_PICOLO("CARDS_PICOLO", CARDS.getValue()),
-    CARDS_KAME_SENNIN("CARDS_KAME_SENNIN", CARDS.getValue()),
-    CARDS_CELL("CARDS_CELL", CARDS.getValue()),
-    CARDS_BUU("CARDS_BUU", CARDS.getValue()),
-    CARDS_FRIEEZA("CARDS_FRIEEZA", CARDS.getValue()),
-*/
+
     // GUI_AVATAR
     AVATAR_GOKU(EGameObject.GOKU.getValue(), AVATAR.getValue()),
     AVATAR_GOHAN(EGameObject.GOHAN.getValue(), AVATAR.getValue()),
@@ -62,7 +58,17 @@ public enum EGuiElement {
     AVATAR_CELL(EGameObject.CELL.getValue(), AVATAR.getValue()),
     AVATAR_BUU(EGameObject.BUU.getValue(), AVATAR.getValue()),
     AVATAR_FRIEEZA(EGameObject.FRIEEZA.getValue(), AVATAR.getValue()),
-    AVATAR_BORDER(EGameObject.FRIEEZA.getValue(), AVATAR.getValue());
+    AVATAR_BORDER("AVATAR_BORDER", AVATAR.getValue()),
+
+    // GUI_ICON
+    ICON_GOKU(EGameObject.GOKU.getValue(), ICON.getValue()),
+    ICON_GOHAN(EGameObject.GOHAN.getValue(), ICON.getValue()),
+    ICON_VEGETA(EGameObject.VEGETA.getValue(), ICON.getValue()),
+    ICON_PICOLO(EGameObject.PICOLO.getValue(), ICON.getValue()),
+    ICON_KAME_SENNIN(EGameObject.KAME_SENNIN.getValue(), ICON.getValue()),
+    ICON_CELL(EGameObject.CELL.getValue(), ICON.getValue()),
+    ICON_BUU(EGameObject.BUU.getValue(), ICON.getValue()),
+    ICON_FRIEEZA(EGameObject.FRIEEZA.getValue(), ICON.getValue());
 
     private final String value;
     private final String type;
@@ -85,35 +91,12 @@ public enum EGuiElement {
         return this.type;
     }
 
-    public static EGuiElement getEnumByValue(String value) {
+    public static EGuiElement getEnum(String value, String type) {
         EGuiElement[] enums = EGuiElement.values();
-        for (EGuiElement type : enums) {
-            if (type.getValue().equals(value))
-                return type;
+        for (EGuiElement item : enums) {
+            if (item.getValue().equals(value) && item.getType().equals(type))
+                return item;
         }
         return NULL;
-    }
-
-    public static EGuiElement getEnumByType(String value) {
-        EGuiElement[] enums = EGuiElement.values();
-        for (EGuiElement type : enums) {
-            if (value.equals(type.getValue())) {
-                return type;
-            }
-        }
-        return NULL;
-    }
-
-    public boolean isIn(EGuiElement dir) {
-        EGuiElement current = EGuiElement.getEnumByValue(this.value);
-
-        while (!current.getValue().equals(current.getType())) {
-            if (current == dir) {
-                return true;
-            } else {
-                current = EGuiElement.getEnumByType(current.getType());
-            }
-        }
-        return (current == dir);
     }
 }

@@ -73,14 +73,24 @@ public class GameGUI extends UserInterface {
         controlModal.addTasks(ElementFactory.createBasicModalTasks(ELocation.GAME_GUI_Controls, ELocation.GAME_GUI_Settings));
         this.taskManager.register(controlModal.getId(), controlModal);
         this.elements.add(controlModal);
-        this.initElements();
 
+        // state_players
+
+        ListElement ally = new ListElement(ELocation.GAME_GUI_State_AlliedPlayers.getId(), new ColorRect(new Rectangle(0, 10, 500, 100)), 5, 10, true);
+        this.taskManager.register(ally.getId(), ally);
+        this.elements.add(ally);
+        ListElement enemy = new ListElement(ELocation.GAME_GUI_State_EnemyPlayers.getId(), new ColorRect(new Rectangle(1410, 10, 500, 300)), 5, 10, true);
+        this.taskManager.register(enemy.getId(), enemy);
+        this.elements.add(enemy);
         this.initElements();
     }
 
     @Override
     public void initOnEnter() {
-
+        ListElement ally = (ListElement) this.getElementById(ELocation.GAME_GUI_State_AlliedPlayers.getId());
+        ally.clearItems();
+        ListElement enemy = (ListElement) this.getElementById(ELocation.GAME_GUI_State_EnemyPlayers.getId());
+        enemy.clearItems();
     }
 
     @Override

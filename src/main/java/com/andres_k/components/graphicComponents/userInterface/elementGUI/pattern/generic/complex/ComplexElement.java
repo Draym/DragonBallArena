@@ -5,6 +5,8 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiTy
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.taskComponent.ELocation;
+import com.andres_k.components.taskComponent.ETaskType;
+import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -102,6 +104,26 @@ public class ComplexElement extends GuiElement {
                 item.draw(g, container);
             }
         }
+    }
+
+    @Override
+    public Object doTask(Object task) {
+        if (task instanceof Pair) {
+            if (((Pair) task).getV1().equals(ETaskType.ADD) && ((Pair) task).getV2() instanceof GuiElement) {
+                GuiElement item = (GuiElement) ((Pair) task).getV2();
+                try {
+                    item.init();
+                    this.addItem(item);
+                    return true;
+                } catch (SlickException e) {
+                    e.printStackTrace();
+                }
+            } else if (((Pair) task).getV1().equals(ETaskType.DELETE) && ((Pair) task).getV2() instanceof String) {
+                this.deleteItem((String) ((Pair) task).getV2());
+                return true;
+            }
+        }
+        return super.doTask(task);
     }
 
     @Override

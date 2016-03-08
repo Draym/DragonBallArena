@@ -22,31 +22,38 @@ import org.newdawn.slick.geom.Rectangle;
 public class ImageElement extends Element {
     private AnimatorController animatorController;
     private float sizeXMAX;
+    private float sizeYMAX;
+    private boolean flip;
     private Pair<EAnimation, Integer> saveAnimation;
 
     public ImageElement(AnimatorController animatorController, boolean activated) {
-        this(ELocation.UNKNOWN.getId(), null, animatorController, PositionInBody.LEFT_UP, activated);
+        this(ELocation.UNKNOWN.getId(), null, animatorController, PositionInBody.LEFT_UP, false, activated);
     }
 
     public ImageElement(String id, AnimatorController animatorController, boolean activated) {
-        this(id, null, animatorController, PositionInBody.LEFT_UP, activated);
+        this(id, null, animatorController, PositionInBody.LEFT_UP, false, activated);
     }
 
     public ImageElement(ColorShape body, boolean activated) {
-        this(ELocation.UNKNOWN.getId(), body, null, PositionInBody.LEFT_UP, activated);
+        this(ELocation.UNKNOWN.getId(), body, null, PositionInBody.LEFT_UP, false, activated);
     }
 
     public ImageElement(String id, ColorShape body, boolean activated) {
-        this(id, body, null, PositionInBody.LEFT_UP, activated);
+        this(id, body, null, PositionInBody.LEFT_UP, false, activated);
     }
 
     public ImageElement(ColorShape body, AnimatorController animatorController, boolean activated) {
-        this(ELocation.UNKNOWN.getId(), body, animatorController, PositionInBody.LEFT_UP, activated);
+        this(ELocation.UNKNOWN.getId(), body, animatorController, PositionInBody.LEFT_UP, false, activated);
     }
 
-    public ImageElement(String id, ColorShape body, AnimatorController animatorController, PositionInBody position, boolean activated) {
+    public ImageElement(String id, ColorShape body, AnimatorController animatorController, boolean flip, boolean activated) {
+        this(id, body, animatorController, PositionInBody.LEFT_UP, flip, activated);
+    }
+
+    public ImageElement(String id, ColorShape body, AnimatorController animatorController, PositionInBody position, boolean flip, boolean activated) {
         super(EGuiType.IMAGE, id, body, position, activated);
         this.animatorController = animatorController;
+        this.flip = flip;
         if (this.animatorController != null) {
             if (this.body == null) {
                 this.body = new ColorRect(new Rectangle(0, 0, this.animatorController.currentSizeAnimation().getV1(), this.animatorController.currentSizeAnimation().getV2()));
@@ -55,8 +62,11 @@ public class ImageElement extends Element {
             }
             this.saveAnimation = new Pair<>(this.animatorController.currentAnimationType(), this.animatorController.getIndex());
         }
+        this.sizeXMAX = 0;
+        this.sizeYMAX = 0;
         if (this.body != null) {
             this.sizeXMAX = this.body.getSizeX();
+            this.sizeYMAX = this.body.getSizeY();
         }
         this.tasks.add(new Pair<>(EStatus.ON_CLICK, new Tuple<>(ETaskType.SETTER, "animation", EAnimation.ON_CLICK)));
         this.tasks.add(new Pair<>(EStatus.OFF_CLICK, new Tuple<>(ETaskType.SETTER, "animation", EAnimation.IDLE)));
@@ -150,8 +160,15 @@ public class ImageElement extends Element {
     private void drawCurrentImage(Graphics g, float x, float y) {
         try {
             int sizeX = (this.body.getSizeX() > this.animatorController.currentAnimation().getCurrentFrame().getWidth() ? this.animatorController.currentAnimation().getCurrentFrame().getWidth() : (int) this.body.getSizeX());
-            int sizeY = (this.body.getSizeY() > this.animatorController.currentAnimation().getCurrentFrame().getHeight() ? this.animatorController.currentAnimation().getCurrentFrame().getHeight() : (int) this.body.getSizeY());
-            g.drawImage(this.animatorController.currentAnimation().getCurrentFrame().getSubImage(0, 0, sizeX, sizeY), x, y);
+
+            int posY = (this.body.getSizeY() > this.animatorController.currentAnimation().getCurrentFrame().getHeight() ? 0 : this.animatorController.currentAnimation().getCurrentFrame().getHeight() - (int) this.body.getSizeY());
+            int sizeY = this.animatorController.currentAnimation().getCurrentFrame().getHeight() - posY;
+
+            if (this.flip) {
+                g.drawImage(this.animatorController.currentAnimation().getCurrentFrame().getSubImage(0, posY, sizeX, sizeY).getFlippedCopy(this.flip, false), x, y);
+            } else {
+                g.drawImage(this.animatorController.currentAnimation().getCurrentFrame().getSubImage(0, posY, sizeX, sizeY), x, y);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -189,9 +206,11 @@ public class ImageElement extends Element {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                } else if (target.equals("flip") && value instanceof Boolean) {
+                    this.flip = (boolean) value;
                 }
             } else if (order == ETaskType.CUT) {
-                if (target.equals("body") && value instanceof Float) {
+                if (target.equals("body_X") && value instanceof Float) {
                     float percent = (float) value;
                     if (percent >= 1) {
                         this.body.setPrintable(true);
@@ -204,6 +223,21 @@ public class ImageElement extends Element {
                     } else {
                         this.body.setPrintable(false);
                         this.body.setSizes(0, this.body.getSizeY());
+                    }
+                }
+                else if (target.equals("body_Y") && value instanceof Float) {
+                    float percent = (float) value;
+                    if (percent >= 1) {
+                        this.body.setPrintable(true);
+                        this.body.setSizes(this.body.getSizeX(), this.sizeYMAX);
+                    } else if (percent > 0) {
+                        if (!this.id.contains(EGuiType.BORDER.getValue())) {
+                            this.body.setPrintable(true);
+                            this.body.setSizes(this.body.getSizeX(), this.sizeYMAX * percent);
+                        }
+                    } else {
+                        this.body.setPrintable(false);
+                        this.body.setSizes(this.body.getSizeX(), 0);
                     }
                 }
             } else if (order == ETaskType.EVENT) {
@@ -270,5 +304,9 @@ public class ImageElement extends Element {
         }
         this.body = body;
         this.sizeXMAX = this.body.getSizeX();
+    }
+
+    public void setFlip(boolean flip) {
+        this.flip = flip;
     }
 }

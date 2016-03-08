@@ -5,8 +5,14 @@ import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.gameComponents.collisions.CollisionResult;
 import com.andres_k.components.gameComponents.gameObject.objects.Player;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.ElementFactory;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
+import com.andres_k.components.taskComponent.CentralTaskManager;
+import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
+import com.andres_k.components.taskComponent.utils.TaskComponent;
+import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.Console;
@@ -153,7 +159,12 @@ public class GameObjectController {
                 int randomX = RandomTools.getInt(WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1() - 600) + 300;
                 Console.write("Create player: " + type);
                 player = GameObjectFactory.create(type, ResourceManager.get().getGameAnimator(type),
-                        "player" + count + ":" + type.getValue(), randomX, WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2() - 200);
+                        "player" + count + GlobalVariable.id_delimiter + type.getValue(), randomX, WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2() - 200);
+                if (count == 0) {
+                    CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_GUI_State_AlliedPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(player.id, 475, 85, EGuiElement.getEnum(player.getType().getValue(), EGuiElement.ICON.getValue()), false))));
+                } else {
+                    CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_GUI_State_EnemyPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(player.id, 475, 85, EGuiElement.getEnum(player.getType().getValue(), EGuiElement.ICON.getValue()), true))));
+                }
             }
             ++count;
             this.players.add(player);

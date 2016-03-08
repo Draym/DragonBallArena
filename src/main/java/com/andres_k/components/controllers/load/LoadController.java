@@ -62,7 +62,7 @@ public class LoadController extends WindowController {
         if (!this.loadCompleted && !this.backgroundManager.hasActivity()) {
             try {
                 this.loadCompleted = ResourceManager.get().initialise(index);
-                CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.LOAD_GUI_LoadingBar_value, new Tuple<>(ETaskType.CUT, "body", ResourceManager.get().getPercentInitialised())));
+                CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.LOAD_GUI_LoadingBar_value, new Tuple<>(ETaskType.CUT, "body_X", ResourceManager.get().getPercentInitialised())));
                 Console.write("index {" + this.index + "} -> " + (this.loadCompleted ? "loadCompleted" : "running") + " " + (ResourceManager.get().getPercentInitialised() * 100f)+ "%\n");
                 if (ResourceManager.get().getPercentInitialised() == 1.0f) {
                     CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.LOAD_GUI_LoadingBar_title, new Tuple<>(ETaskType.SETTER, "value", "Press ENTER")));

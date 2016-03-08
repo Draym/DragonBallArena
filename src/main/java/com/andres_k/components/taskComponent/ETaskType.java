@@ -5,6 +5,8 @@ package com.andres_k.components.taskComponent;
  */
 public enum ETaskType {
     //Interface generic
+    ADD,
+    DELETE,
     GETTER,
     SETTER,
 

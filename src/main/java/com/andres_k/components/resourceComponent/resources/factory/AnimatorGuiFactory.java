@@ -24,6 +24,8 @@ public class AnimatorGuiFactory extends AnimatorFactory {
             return this.getGuiAvatarAnimator(index);
         } else if (index.getIndex() == ESprites.CARDS.getIndex()) {
             return this.getGuiCardsAnimator(index);
+        } else if (index.getIndex() == ESprites.ICON.getIndex()) {
+            return this.getGuiIconAnimator(index);
         }
         return null;
     }
@@ -84,6 +86,14 @@ public class AnimatorGuiFactory extends AnimatorFactory {
             animatorController.addAnimation(EAnimation.ON_CLICK, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/component" + "/tabON.png"));
         } else if (index == ESprites.DISABLED) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/component" + "/disabled.png"));
+        } else if (index == ESprites.HEALTH_BAR) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/component" + "/healthBar.png"));
+        } else if (index == ESprites.KI_BAR) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/component" + "/kiBar.png"));
+        } else if (index == ESprites.ENERGY_BAR) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/component" + "/energyBar.png"));
+        } else if (index == ESprites.STATE_PLAYER) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/component" + "/statePlayer.png"));
         }
         return animatorController;
     }
@@ -108,7 +118,7 @@ public class AnimatorGuiFactory extends AnimatorFactory {
         AnimatorController animatorController = new AnimatorController();
 
         if (index == ESprites.AVATAR_GOKU) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_avatar + "/gokuAvatar.png"));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_avatar + "/gokuAvatar2.png"));
         } else if (index == ESprites.AVATAR_GOHAN) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_avatar + "/gohanAvatar.png"));
         } else if (index == ESprites.AVATAR_VEGETA) {
@@ -142,6 +152,29 @@ public class AnimatorGuiFactory extends AnimatorFactory {
             animatorController.addAnimation(EAnimation.IDLE, 6, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "/cellCard.jpg"));
             animatorController.addAnimation(EAnimation.IDLE, 5, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "/buuCard.jpg"));
             animatorController.addAnimation(EAnimation.IDLE, 4, AnimationFactory.createUniqueFrame(ConfigPath.image_card + "/frieezaCard.jpg"));
+        }
+        return animatorController;
+    }
+
+    public AnimatorController getGuiIconAnimator(ESprites index) throws SlickException {
+        AnimatorController animatorController = new AnimatorController();
+
+        if (index == ESprites.ICON_GOKU) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_icon + "/gokuIcon.png"));
+        } else if (index == ESprites.ICON_GOHAN) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_icon + "/gohanIcon.png"));
+        } else if (index == ESprites.ICON_VEGETA) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_icon + "/vegetaIcon.png"));
+        } else if (index == ESprites.ICON_PICOLO) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_icon + "/picoloIcon.png"));
+        } else if (index == ESprites.ICON_KAME_SENNIN) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_icon + "/kameSenninIcon.png"));
+        } else if (index == ESprites.ICON_CELL) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_icon + "/cellIcon.png"));
+        } else if (index == ESprites.ICON_BUU) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_icon + "/buuIcon.png"));
+        } else if (index == ESprites.ICON_FRIEEZA) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_icon + "/frieezaIcon.png"));
         }
         return animatorController;
     }

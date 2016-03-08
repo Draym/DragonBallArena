@@ -18,6 +18,7 @@ public enum ESprites {
     CONTAINER(8),
     CARDS(9),
     AVATAR(10),
+    ICON(11),
 
     // GUI_COMPONENT
     TAB_STATUS(COMPONENT.getIndex()),
@@ -26,6 +27,10 @@ public enum ESprites {
     SLIDER_VALUE(COMPONENT.getIndex()),
     LOADING_ANIM(COMPONENT.getIndex()),
     DISABLED(COMPONENT.getIndex()),
+    HEALTH_BAR(COMPONENT.getIndex()),
+    KI_BAR(COMPONENT.getIndex()),
+    ENERGY_BAR(COMPONENT.getIndex()),
+    STATE_PLAYER(COMPONENT.getIndex()),
 
     // GUI_CONTAINER
     PANEL1(CONTAINER.getIndex()),
@@ -46,10 +51,10 @@ public enum ESprites {
     BUTTON_COMBO(BUTTON.getIndex()),
     BUTTON_LOCK(BUTTON.getIndex()),
 
-    // GUI_CARDS
+    // GUI_PLAYER_CARDS
     CARDS_ALL(CARDS.getIndex()),
 
-    // GUI_CARDS_AVATAR
+    // GUI_PLAYER_AVATAR
     AVATAR_GOKU(AVATAR.getIndex()),
     AVATAR_GOHAN(AVATAR.getIndex()),
     AVATAR_VEGETA(AVATAR.getIndex()),
@@ -59,6 +64,16 @@ public enum ESprites {
     AVATAR_BUU(AVATAR.getIndex()),
     AVATAR_FRIEEZA(AVATAR.getIndex()),
     AVATAR_BORDER(AVATAR.getIndex()),
+
+    // GUI_PLAYER_ICON
+    ICON_GOKU(ICON.getIndex()),
+    ICON_GOHAN(ICON.getIndex()),
+    ICON_VEGETA(ICON.getIndex()),
+    ICON_PICOLO(ICON.getIndex()),
+    ICON_KAME_SENNIN(ICON.getIndex()),
+    ICON_CELL(ICON.getIndex()),
+    ICON_BUU(ICON.getIndex()),
+    ICON_FRIEEZA(ICON.getIndex()),
 
     //gamePlayer
     GOKU(PLAYER.getIndex()),

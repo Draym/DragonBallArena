@@ -14,6 +14,7 @@ public class ConfigPath {
     public static final String image_map = "images/background/map";
     public static final String image_card = "images/charactersLogo/card";
     public static final String image_avatar = "images/charactersLogo/avatar";
+    public static final String image_icon = "images/charactersLogo/icon";
     public static final String image_gui = "images/gui";
     public static final String sound_musics = "sounds/musics";
     public static final String sound_voices = "sounds/voices";

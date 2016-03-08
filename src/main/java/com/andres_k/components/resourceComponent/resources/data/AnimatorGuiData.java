@@ -38,8 +38,10 @@ public class AnimatorGuiData extends DataManager {
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initButtons")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initButtons2")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initComponents")));
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initComponents2")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initAvatars")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initCards")));
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initIcons")));
     }
 
     @Override
@@ -77,6 +79,14 @@ public class AnimatorGuiData extends DataManager {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.TAB_STATUS), EGuiElement.TAB_STATUS);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.DISABLED), EGuiElement.DISABLED);
     }
+
+    public void initComponents2() throws NoSuchMethodException, SlickException, JSONException {
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.HEALTH_BAR), EGuiElement.HEALTH_BAR);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.KI_BAR), EGuiElement.KI_BAR);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.ENERGY_BAR), EGuiElement.ENERGY_BAR);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.STATE_PLAYER), EGuiElement.STATE_PLAYER);
+    }
+
     public void initAvatars() throws NoSuchMethodException, SlickException, JSONException {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.AVATAR_GOKU), EGuiElement.AVATAR_GOKU);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.AVATAR_GOHAN), EGuiElement.AVATAR_GOHAN);
@@ -90,17 +100,18 @@ public class AnimatorGuiData extends DataManager {
     }
 
     public void initCards() throws NoSuchMethodException, SlickException, JSONException {
-/*
-        this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_GOKU), EGuiElement.CARDS_GOKU);
-        this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_GOHAN), EGuiElement.CARDS_GOHAN);
-        this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_VEGETA), EGuiElement.CARDS_VEGETA);
-        this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_PICOLO), EGuiElement.CARDS_PICOLO);
-        this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_KAME_SENNIN), EGuiElement.CARDS_KAME_SENNIN);
-        this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_CELL), EGuiElement.CARDS_CELL);
-        this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_BUU), EGuiElement.CARDS_BUU);
-        this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_FRIEEZA), EGuiElement.CARDS_FRIEEZA);
-*/
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.CARDS_ALL), EGuiElement.CARDS_ALL);
+    }
+
+    public void initIcons() throws NoSuchMethodException, SlickException, JSONException {
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.ICON_GOKU), EGuiElement.ICON_GOKU);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.ICON_GOHAN), EGuiElement.ICON_GOHAN);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.ICON_VEGETA), EGuiElement.ICON_VEGETA);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.ICON_PICOLO), EGuiElement.ICON_PICOLO);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.ICON_KAME_SENNIN), EGuiElement.ICON_KAME_SENNIN);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.ICON_CELL), EGuiElement.ICON_CELL);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.ICON_BUU), EGuiElement.ICON_BUU);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.ICON_FRIEEZA), EGuiElement.ICON_FRIEEZA);
     }
 
     private void addAnimator(AnimatorController animatorController, EGuiElement type) {

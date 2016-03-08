@@ -11,6 +11,7 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.elemen
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.TextElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.ElementWithTitle;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.complex.ComplexRelayElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.specific.StateBarPlayerElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.StringTimer;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
 import com.andres_k.components.resourceComponent.fonts.EFont;
@@ -113,5 +114,9 @@ public class ElementFactory {
             }
         }
         return selectPlayer;
+    }
+
+    public static StateBarPlayerElement createStateBarPlayer(String playerId, int width, int height, EGuiElement icon, boolean flip) throws SlickException {
+        return new StateBarPlayerElement(playerId, new ColorRect(new Rectangle(0, 0, width, height)), ResourceManager.get().getGuiAnimator(icon), flip, true);
     }
 }

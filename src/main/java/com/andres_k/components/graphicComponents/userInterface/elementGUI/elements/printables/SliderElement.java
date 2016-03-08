@@ -39,7 +39,7 @@ public class SliderElement extends Element {
         this.sliderButton = sliderButton;
         this.task = task;
         this.percentValue = value;
-        this.sliderValue.doTask(new Tuple<>(ETaskType.CUT, "body", this.percentValue));
+        this.sliderValue.doTask(new Tuple<>(ETaskType.CUT, "body_X", this.percentValue));
     }
 
     @Override
@@ -217,7 +217,7 @@ public class SliderElement extends Element {
             if (this.container.isOnClick(x - this.getBody().getMinX(), y - this.getBody().getMinY())) {
                 this.clicked = true;
                 this.percentValue = (x - this.getBody().getMinX()) / this.container.getAbsoluteWidth();
-                this.sliderValue.doTask(new Tuple<>(ETaskType.CUT, "body", this.percentValue));
+                this.sliderValue.doTask(new Tuple<>(ETaskType.CUT, "body_X", this.percentValue));
                 CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.getEnumByLocation(this.getId()), task.getV1(), new Pair<>(task.getV2(), this.percentValue)));
             }
             if (this.sliderButton != null && this.sliderButton.isOnClick(x - this.getBody().getMinX() + this.getSliderButtonPosX(), y - this.getBody().getMinY() + this.getSliderButtonPosY())) {

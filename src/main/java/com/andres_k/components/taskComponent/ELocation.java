@@ -77,7 +77,9 @@ public enum ELocation {
     GAME_GUI_Options("Options", GAME_GUI.getId()),
     GAME_GUI_Settings("Settings", GAME_GUI.getId()),
     GAME_GUI_Controls("Controls", GAME_GUI.getId()),
-    GAME_GUI_Combos("Combos", GAME_GUI.getId());
+    GAME_GUI_Combos("Combos", GAME_GUI.getId()),
+    GAME_GUI_State_AlliedPlayers("StateAlliedPlayers", GAME_GUI.getId()),
+    GAME_GUI_State_EnemyPlayers("StateEnemyPlayers", GAME_GUI.getId());
 
     private String name;
     private String parent;
