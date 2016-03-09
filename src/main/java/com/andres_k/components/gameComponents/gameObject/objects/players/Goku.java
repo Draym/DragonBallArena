@@ -1,6 +1,7 @@
 package com.andres_k.components.gameComponents.gameObject.objects.players;
 
 import com.andres_k.components.gameComponents.animations.AnimatorController;
+import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.objects.Player;
 import com.andres_k.components.gameComponents.gameObject.objects.entities.KiEntity;
@@ -24,6 +25,8 @@ public class Goku extends Player {
         try {
             this.specialActions.put(EGameObject.KAMEHA.getValue(), this.getClass().getMethod("createKamehameha"));
             this.specialActions.put(EGameObject.KI_BLAST.getValue(), this.getClass().getMethod("createKiBlast"));
+            this.checkBeforeLaunch.put(EAnimation.KI_SPE_ATTACK, this.getClass().getMethod("checkToLaunchKamehameha"));
+            this.checkBeforeLaunch.put(EAnimation.KI_BASIC_ATTACK, this.getClass().getMethod("checkToLaunchKiBlast"));
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -47,5 +50,13 @@ public class Goku extends Player {
         } catch (SlickException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean checkToLaunchKamehameha() {
+        return (this.currentKi > 105 && this.isOnEarth());
+    }
+
+    public boolean checkToLaunchKiBlast() {
+        return (this.currentKi > 10);
     }
 }

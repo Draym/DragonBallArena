@@ -2,9 +2,11 @@ package com.andres_k.components.gameComponents.gameObject.commands.comboComponen
 
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
+import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.comboComponent.components.ComboManager;
 import com.andres_k.utils.configs.GameConfig;
+import com.andres_k.utils.stockage.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,16 +53,22 @@ public class ComboController {
 */
         if (this.combos.hasCombo(this.history)) {
             this.counter = 0;
+/*
             try {
                 animatorController.changeAnimation(this.combos.getCombo().getCurrentAnimation(), this.combos.getCombo().getCurrentAnimIndex());
             } catch (Exception e) {
                 e.printStackTrace();
             }
+  */
             return true;
         }
 //        Console.write("NO COMBO");
         this.counter = -1;
         this.reset();
         return false;
+    }
+
+    public Pair<EAnimation, Integer> getCurrentAnimation() {
+        return new Pair<>(this.combos.getCombo().getCurrentAnimation(), this.combos.getCombo().getCurrentAnimIndex());
     }
 }

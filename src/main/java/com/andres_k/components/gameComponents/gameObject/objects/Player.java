@@ -29,9 +29,11 @@ import java.util.Map;
  */
 public class Player extends PhysicalObject {
     protected Map<String, Method> specialActions;
+    protected Map<EAnimation, Method> checkBeforeLaunch;
     protected EventController event;
     protected ComboController comboController;
     private long score;
+    protected int currentActionPower;
     protected final int maxKi;
     protected int currentKi;
     protected final int maxEnergy;
@@ -52,7 +54,7 @@ public class Player extends PhysicalObject {
         this.event.addEvent(EInput.ATTACK_SPE);
 
         this.specialActions = new HashMap<>();
-
+        this.checkBeforeLaunch = new HashMap<>();
         try {
             this.comboController = new ComboController(this.type);
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
@@ -63,6 +65,7 @@ public class Player extends PhysicalObject {
         this.maxEnergy = 500;
         this.currentKi = this.maxKi;
         this.currentEnergy = this.maxEnergy;
+        this.currentActionPower = 0;
     }
 
     @Override
@@ -190,9 +193,35 @@ public class Player extends PhysicalObject {
             last = this.event.getTheLastEvent();
         }
         if (last != EInput.NOTHING && this.comboController != null) {
-            return this.comboController.nextComboStep(this.animatorController, last);
+            if (this.comboController.nextComboStep(this.animatorController, last)) {
+                Pair<EAnimation, Integer> nextAnim = this.comboController.getCurrentAnimation();
+
+                if (this.canLaunchAction(nextAnim.getV1())) {
+                    try {
+                        this.animatorController.changeAnimation(nextAnim.getV1(), nextAnim.getV2());
+                        return true;
+                    } catch (SlickException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
         return false;
+    }
+
+    private boolean canLaunchAction(EAnimation action) {
+        if (this.checkBeforeLaunch.containsKey(action)) {
+            try {
+                Object result = this.checkBeforeLaunch.get(action).invoke(this);
+
+                if (result instanceof Boolean) {
+                    return (boolean) result;
+                }
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
     }
 
     // EVENT
@@ -231,14 +260,18 @@ public class Player extends PhysicalObject {
                 }
             }
         } else if (task instanceof Tuple) {
-            if (((Tuple) task).getV1() instanceof ETaskType && ((Tuple) task).getV2() instanceof String && ((Tuple) task).getV3() instanceof Integer) {
-                Tuple<ETaskType, String, Integer> received = (Tuple<ETaskType, String, Integer>) task;
+            if (((Tuple) task).getV1() instanceof ETaskType && ((Tuple) task).getV2() instanceof String) {
+                Tuple<ETaskType, String, Object> received = (Tuple<ETaskType, String, Object>) task;
 
                 if (received.getV1().equals(ETaskType.ADD)) {
                     if (received.getV2().equals("ki")) {
-                        this.incrementCurrentKi(received.getV3());
+                        this.incrementCurrentKi((Integer) received.getV3());
                     } else if (received.getV2().equals("energy")) {
-                        this.incrementCurrentEnergy(received.getV3());
+                        this.incrementCurrentEnergy((Integer) received.getV3());
+                    }
+                } else if (received.getV1().equals(ETaskType.SETTER)) {
+                    if (received.getV2().equals("actionPower")) {
+                        this.setCurrentActionPower((Integer) received.getV3());
                     }
                 }
             }
@@ -280,7 +313,7 @@ public class Player extends PhysicalObject {
 
     @Override
     public float getDamage() {
-        return this.damage;
+        return this.damage * (float)this.currentActionPower;
     }
 
     // SETTERS
@@ -311,5 +344,9 @@ public class Player extends PhysicalObject {
             this.currentEnergy = this.maxEnergy;
         }
         CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "energy", (float)this.currentEnergy * 100 / (float)this.maxEnergy))));
+    }
+
+    public void setCurrentActionPower(int value) {
+        this.currentActionPower = value;
     }
 }

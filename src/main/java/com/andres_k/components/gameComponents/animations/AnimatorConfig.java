@@ -14,6 +14,7 @@ public class AnimatorConfig {
 
     private Method action;
     private EAnimation nextType;
+
     private int nextIndex;
     private int changedNextIndex;
     private boolean executeEveryTime;
