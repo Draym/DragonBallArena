@@ -11,7 +11,7 @@ import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
-import com.andres_k.components.taskComponent.utils.TaskComponent;
+import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
@@ -161,9 +161,9 @@ public class GameObjectController {
                 player = GameObjectFactory.create(type, ResourceManager.get().getGameAnimator(type),
                         "player" + count + GlobalVariable.id_delimiter + type.getValue(), randomX, WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2() - 200);
                 if (count == 0) {
-                    CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_GUI_State_AlliedPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(player.id, 475, 85, EGuiElement.getEnum(player.getType().getValue(), EGuiElement.ICON.getValue()), false))));
+                    CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, ELocation.GAME_GUI_State_AlliedPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(player.id, 475, 85, EGuiElement.getEnum(player.getType().getValue(), EGuiElement.ICON.getValue()), false))));
                 } else {
-                    CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_GUI_State_EnemyPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(player.id, 475, 85, EGuiElement.getEnum(player.getType().getValue(), EGuiElement.ICON.getValue()), true))));
+                    CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, ELocation.GAME_GUI_State_EnemyPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(player.id, 475, 85, EGuiElement.getEnum(player.getType().getValue(), EGuiElement.ICON.getValue()), true))));
                 }
             }
             ++count;

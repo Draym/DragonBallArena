@@ -7,6 +7,7 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -121,6 +122,13 @@ public class ComplexElement extends GuiElement {
             } else if (((Pair) task).getV1().equals(ETaskType.DELETE) && ((Pair) task).getV2() instanceof String) {
                 this.deleteItem((String) ((Pair) task).getV2());
                 return true;
+            }
+        } else if (task instanceof Tuple) {
+            if (((Tuple) task).getV1().equals(ETaskType.RELAY) && ((Tuple) task).getV2() instanceof String) {
+                GuiElement item = this.getElementById((String) ((Tuple) task).getV2());
+                if (item != null) {
+                    item.doTask(((Tuple) task).getV3());
+                }
             }
         }
         return super.doTask(task);

@@ -6,6 +6,7 @@ import com.andres_k.components.gameComponents.gameObject.commands.actionComponen
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.stockage.Tuple;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -92,9 +93,17 @@ public class GokuActions extends BasicActions {
     }
 
     public static void kickPropelsAttack(GameObject object) {
+
     }
 
     public static void kiChargeAction(GameObject object) {
+        try {
+            if (object.getAnimatorController().currentAnimation().getFrame() == 0) {
+                object.doTask(new Tuple<>(ETaskType.ADD, "ki", 50));
+            }
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void kiBasicAttack(GameObject object) {

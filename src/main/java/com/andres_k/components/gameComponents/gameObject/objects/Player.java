@@ -6,11 +6,17 @@ import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.collisions.PhysicalObject;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
+import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.comboComponent.ComboController;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
+import com.andres_k.components.taskComponent.CentralTaskManager;
+import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
+import com.andres_k.components.taskComponent.TaskFactory;
+import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.tools.Console;
+import com.andres_k.utils.stockage.Tuple;
 import org.newdawn.slick.SlickException;
 
 import java.lang.reflect.InvocationTargetException;
@@ -26,6 +32,10 @@ public class Player extends PhysicalObject {
     protected EventController event;
     protected ComboController comboController;
     private long score;
+    protected final int maxKi;
+    protected int currentKi;
+    protected final int maxEnergy;
+    protected int currentEnergy;
 
     public Player(AnimatorController animatorController, EGameObject type, String id, float x, float y, float life, float damage, float speed, float weight) {
         super(animatorController, type, id, x, y, life, damage, speed, weight);
@@ -49,6 +59,10 @@ public class Player extends PhysicalObject {
             this.comboController = null;
             e.printStackTrace();
         }
+        this.maxKi = 600;
+        this.maxEnergy = 500;
+        this.currentKi = this.maxKi;
+        this.currentEnergy = this.maxEnergy;
     }
 
     @Override
@@ -86,7 +100,6 @@ public class Player extends PhysicalObject {
                 && this.animatorController.currentAnimationType() != EAnimation.FALL
                 && this.animatorController.currentAnimationType() != EAnimation.FALL_FORCED
                 && this.animatorController.canSwitchCurrent()) {
-            Console.write("FALL");
             this.animatorController.changeAnimation(EAnimation.FALL);
             this.movement.resetGravity();
             return true;
@@ -217,6 +230,18 @@ public class Player extends PhysicalObject {
                     this.animatorController.forceNextFrame();
                 }
             }
+        } else if (task instanceof Tuple) {
+            if (((Tuple) task).getV1() instanceof ETaskType && ((Tuple) task).getV2() instanceof String && ((Tuple) task).getV3() instanceof Integer) {
+                Tuple<ETaskType, String, Integer> received = (Tuple<ETaskType, String, Integer>) task;
+
+                if (received.getV1().equals(ETaskType.ADD)) {
+                    if (received.getV2().equals("ki")) {
+                        this.incrementCurrentKi(received.getV3());
+                    } else if (received.getV2().equals("energy")) {
+                        this.incrementCurrentEnergy(received.getV3());
+                    }
+                }
+            }
         }
         return null;
     }
@@ -228,19 +253,63 @@ public class Player extends PhysicalObject {
     }
 
     public String getPseudo() {
-        if (this.id.contains(":")) {
-            return this.id.substring(this.id.indexOf(":") + 1, this.id.length());
+        if (this.id.contains(GlobalVariable.id_delimiter)) {
+            return this.id.substring(this.id.indexOf(GlobalVariable.id_delimiter) + 1, this.id.length());
         } else {
             return this.id;
         }
     }
 
     public int getIdIndex() {
-        if (this.id.contains(":")) {
-            int index = this.id.indexOf(":");
+        if (this.id.contains(GlobalVariable.id_delimiter)) {
+            int index = this.id.indexOf(GlobalVariable.id_delimiter);
             return Integer.valueOf(this.id.substring(index - 1, index));
         } else {
             return -1;
         }
+    }
+
+    @Override
+    public void getHit(GameObject enemy) {
+        this.currentLife -= enemy.getDamage();
+        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "life", this.currentLife * 100 / (float)this.maxLife))));
+        if (this.currentLife <= 0) {
+            this.die();
+        }
+    }
+
+    @Override
+    public float getDamage() {
+        return this.damage;
+    }
+
+    // SETTERS
+
+    public void setCurrentKi(int value) {
+        this.currentKi = value;
+    }
+
+    public void setCurrentEnergy(int value) {
+        this.currentEnergy = value;
+    }
+
+    public void incrementCurrentKi(int value) {
+        this.currentKi += value;
+        if (this.currentKi < 0) {
+            this.currentKi = 0;
+        } else if (this.currentKi > this.maxKi) {
+            this.currentKi = this.maxKi;
+        }
+        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "ki", (float)this.currentKi * 100 / (float)this.maxKi))));
+    }
+
+    public void incrementCurrentEnergy(int value) {
+        this.currentEnergy += value;
+        if (this.currentEnergy < 0) {
+            this.currentEnergy = 0;
+        } else if (this.currentEnergy > this.maxEnergy) {
+            this.currentEnergy = this.maxEnergy;
+        }
+        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "energy", (float)this.currentEnergy * 100 / (float)this.maxEnergy))));
     }
 }

@@ -93,12 +93,10 @@ public abstract class GameObject {
     // TOOLS
 
     public void getHit(GameObject enemy) {
-//        Console.debug("\nCURRENT LIFE [" + this.type + "] vs [" + enemy.type + "]: " + this.currentLife + " - " + enemy.getDamage() + " = " + (this.currentLife - enemy.getDamage()));
         this.currentLife -= enemy.getDamage();
         if (this.currentLife <= 0) {
             this.die();
         }
-        // changer l'anim pour recevoir degat
     }
 
     public void manageEachCollisionExceptHit(EGameObject mine, GameObject enemy, EGameObject him) {
