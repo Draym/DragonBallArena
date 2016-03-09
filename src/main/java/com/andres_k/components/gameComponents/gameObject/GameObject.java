@@ -12,6 +12,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by andres_k on 10/07/2015.
@@ -23,7 +25,7 @@ public abstract class GameObject {
     protected EGameObject type;
 
     protected boolean alive;
-
+    protected boolean wasHit;
     protected float maxLife;
     protected float currentLife;
     protected float damage;
@@ -38,6 +40,7 @@ public abstract class GameObject {
         this.maxLife = life;
         this.currentLife = life;
         this.damage = damage;
+        this.wasHit = false;
     }
 
     public void revive() {
@@ -92,11 +95,27 @@ public abstract class GameObject {
 
     // TOOLS
 
+    public void powerAfterDoDamage(float power) {
+    }
+
     public void getHit(GameObject enemy) {
-        this.currentLife -= enemy.getDamage();
-        if (this.currentLife <= 0) {
-            this.die();
+        if (!this.wasHit) {
+            this.currentLife -= enemy.getDamage();
+            if (this.currentLife <= 0) {
+                this.die();
+            }
+            this.wasHit = true;
+            this.resetHitStatus();
         }
+    }
+
+    protected final void resetHitStatus() {
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                wasHit = false;
+            }
+        }, 500);
     }
 
     public void manageEachCollisionExceptHit(EGameObject mine, GameObject enemy, EGameObject him) {

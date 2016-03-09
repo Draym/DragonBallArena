@@ -304,10 +304,16 @@ public class Player extends PhysicalObject {
 
     @Override
     public void getHit(GameObject enemy) {
-        this.currentLife -= enemy.getDamage();
-        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "life", this.currentLife * 100 / (float)this.maxLife))));
-        if (this.currentLife <= 0) {
-            this.die();
+        if (!this.wasHit) {
+            float enemyDamage = enemy.getDamage();
+            enemy.powerAfterDoDamage((enemyDamage - this.currentLife < 0 ? 0 : enemyDamage - this.currentLife));
+            this.currentLife -= enemyDamage;
+            CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "life", this.currentLife / this.maxLife))));
+            if (this.currentLife <= 0) {
+                this.die();
+            }
+            this.wasHit = true;
+            this.resetHitStatus();
         }
     }
 

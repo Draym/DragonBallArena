@@ -82,6 +82,7 @@ public class GameGUI extends UserInterface {
         ListElement enemy = new ListElement(ELocation.GAME_GUI_State_EnemyPlayers.getId(), new ColorRect(new Rectangle(1410, 10, 500, 300)), 5, 10, true);
         this.taskManager.register(enemy.getId(), enemy);
         this.elements.add(enemy);
+
         this.initElements();
     }
 

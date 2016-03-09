@@ -165,7 +165,7 @@ public class ImageElement extends Element {
             int sizeY = this.animatorController.currentAnimation().getCurrentFrame().getHeight() - posY;
 
             if (this.flip) {
-                g.drawImage(this.animatorController.currentAnimation().getCurrentFrame().getSubImage(0, posY, sizeX, sizeY).getFlippedCopy(this.flip, false), x, y);
+                g.drawImage(this.animatorController.currentAnimation().getCurrentFrame().getSubImage(0, posY, sizeX, sizeY).getFlippedCopy(this.flip, false), x + this.sizeXMAX - sizeX, y);
             } else {
                 g.drawImage(this.animatorController.currentAnimation().getCurrentFrame().getSubImage(0, posY, sizeX, sizeY), x, y);
             }
@@ -208,6 +208,7 @@ public class ImageElement extends Element {
                     }
                 } else if (target.equals("flip") && value instanceof Boolean) {
                     this.flip = (boolean) value;
+                    return true;
                 }
             } else if (order == ETaskType.CUT) {
                 if (target.equals("body_X") && value instanceof Float) {
@@ -224,6 +225,7 @@ public class ImageElement extends Element {
                         this.body.setPrintable(false);
                         this.body.setSizes(0, this.body.getSizeY());
                     }
+                    return true;
                 }
                 else if (target.equals("body_Y") && value instanceof Float) {
                     float percent = (float) value;
@@ -239,10 +241,12 @@ public class ImageElement extends Element {
                         this.body.setPrintable(false);
                         this.body.setSizes(this.body.getSizeX(), 0);
                     }
+                    return true;
                 }
             } else if (order == ETaskType.EVENT) {
                 if (target instanceof Integer && (int) target <= Input.KEY_NUMPAD9 && (int) target >= Input.KEY_NUMPAD0) {
                     this.animatorController.forceCurrentAnimationIndex((Integer) value);
+                    return true;
                 }
             }
         }
