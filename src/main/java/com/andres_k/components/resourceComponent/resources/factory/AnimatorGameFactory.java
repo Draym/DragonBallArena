@@ -90,6 +90,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animatorController.addAnimation(EAnimation.BLOCK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuBlock.png", 247, 247), EAnimation.BLOCK.isLoop(), 0, 1, 0, 1, new int[]{200}));
             animatorController.addCollision(EAnimation.BLOCK, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuBlock.json")));
             animatorController.addConfig(EAnimation.BLOCK, 0, new AnimationConfigItem(GokuActions.class.getMethod("block", GameObject.class), true));
+            animatorController.addEffect(EAnimation.BLOCK, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_BLOCK));
             // HAND_ATTACK
             animatorController.addAnimation(EAnimation.HAND_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuHandAttack1.png", 247, 247), EAnimation.HAND_ATTACK.isLoop(), 0, 4, 0, 1, new int[]{150, 150, 100, 150}));
             animatorController.addCollision(EAnimation.HAND_ATTACK, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuHandAttack1.json")));
@@ -174,14 +175,17 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animatorController.addAnimation(EAnimation.TOUCHED_SIMPLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuTouchedSimple.png", 247, 247), EAnimation.TOUCHED_SIMPLE.isLoop(), 0, 1, 0, 1, new int[]{300}));
             animatorController.addCollision(EAnimation.TOUCHED_SIMPLE, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuTouchedSimple.json")));
             animatorController.addConfig(EAnimation.TOUCHED_SIMPLE, 0, new AnimationConfigItem(GokuActions.class.getMethod("touchedSimple", GameObject.class), true, EAnimation.IDLE));
+            animatorController.addEffect(EAnimation.TOUCHED_SIMPLE, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_TOUCHED_SIMPLE));
             // TOUCHED_MEDIUM
             animatorController.addAnimation(EAnimation.TOUCHED_MEDIUM, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuTouchedMedium.png", 247, 247), EAnimation.TOUCHED_MEDIUM.isLoop(), 0, 1, 0, 1, new int[]{400}));
             animatorController.addCollision(EAnimation.TOUCHED_MEDIUM, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuTouchedMedium.json")));
             animatorController.addConfig(EAnimation.TOUCHED_MEDIUM, 0, new AnimationConfigItem(GokuActions.class.getMethod("touchedMedium", GameObject.class), true, EAnimation.IDLE));
+            animatorController.addEffect(EAnimation.TOUCHED_MEDIUM, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_TOUCHED_MEDIUM));
             // TOUCHED_PROPELS
             animatorController.addAnimation(EAnimation.TOUCHED_PROPELS, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuTouchedPropels.png", 247, 247), EAnimation.TOUCHED_PROPELS.isLoop(), 0, 2, 0, 1, new int[]{300, 300}));
             animatorController.addCollision(EAnimation.TOUCHED_PROPELS, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuTouchedPropels.json")));
             animatorController.addConfig(EAnimation.TOUCHED_PROPELS, 0, new AnimationConfigItem(GokuActions.class.getMethod("touchedPropels", GameObject.class), true, EAnimation.IDLE));
+            animatorController.addEffect(EAnimation.TOUCHED_PROPELS, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_TOUCHED_PROPELS));
             // TOUCHED_FLIP
             animatorController.addAnimation(EAnimation.TOUCHED_FLIP, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + name + state + "/gokuTouchedFlip.png", 247, 247), EAnimation.TOUCHED_FLIP.isLoop(), 0, 4, 0, 1, new int[]{150, 150, 150, 150}));
             animatorController.addCollision(EAnimation.TOUCHED_FLIP, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + name + state + "/gokuTouchedFlip.json")));

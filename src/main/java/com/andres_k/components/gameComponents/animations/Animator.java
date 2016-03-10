@@ -96,6 +96,9 @@ public class Animator {
         if (this.repercussion != null) {
             this.repercussion.restart();
         }
+        if (this.body != null) {
+            this.body.restart();
+        }
         this.effectManager.restart();
     }
 

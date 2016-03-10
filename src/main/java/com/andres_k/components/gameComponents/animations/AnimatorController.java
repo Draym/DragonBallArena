@@ -185,6 +185,7 @@ public class AnimatorController implements Observer {
     }
 
     // METHODS
+
     public void restart() {
         for (Map.Entry<EAnimation, AnimatorContainer> entry : this.animators.entrySet()) {
             entry.getValue().restart();

@@ -37,6 +37,10 @@ public class BodyAnimation {
         }
     }
 
+    public void restart() {
+        this.bodies.forEach(BodySprite::restart);
+    }
+
     // GETTERS
 
     public BodySprite getCurrentBody(int currentFrame) {

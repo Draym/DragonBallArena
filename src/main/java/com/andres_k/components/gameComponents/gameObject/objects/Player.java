@@ -309,10 +309,11 @@ public class Player extends PhysicalObject {
                 this.die();
             }
             AnimationRepercussionItem repercussionItem = enemy.getAnimatorController().getCurrentContainer().getRepercussion();
-            if (repercussionItem != null) {
+            if (repercussionItem != null && this.animatorController.currentAnimationType() != repercussionItem.getTargetType()) {
                 this.animatorController.forceCurrentAnimationType(repercussionItem.getTargetType());
                 this.animatorController.forceCurrentAnimationIndex(repercussionItem.getTargetIndex());
             }
+            this.setLastAttacker(enemy);
             this.wasHit = true;
             this.resetHitStatus();
         }

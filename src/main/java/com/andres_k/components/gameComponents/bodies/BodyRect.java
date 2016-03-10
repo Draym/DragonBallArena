@@ -46,6 +46,10 @@ public class BodyRect {
         g.draw(this.getFlippedRect(haveToFlip, container, posX, posY));
     }
 
+    public void restart() {
+        this.lastCollisions.clear();
+    }
+
     public void addCollision(UUID id) {
         if (!this.lastCollisions.contains(id))
             this.lastCollisions.add(id);

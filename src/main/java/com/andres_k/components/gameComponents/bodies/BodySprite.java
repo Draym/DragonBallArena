@@ -44,6 +44,10 @@ public class BodySprite {
         }
     }
 
+    public void restart() {
+        this.bodies.forEach(BodyRect::restart);
+    }
+
     public void update() {
     }
 

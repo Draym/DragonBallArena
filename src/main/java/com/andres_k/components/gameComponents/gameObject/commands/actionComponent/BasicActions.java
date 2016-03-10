@@ -44,14 +44,35 @@ public class BasicActions {
 
     public static void touchedSimple(GameObject object) {
         object.getMovement().setUseGravity(false);
+        if (object.getDirectionOfMyAttacker() == EDirection.RIGHT) {
+            object.getMovement().setMoveDirection(EDirection.LEFT);
+            object.getMovement().addPushX(GameConfig.speedTravel);
+        } else {
+            object.getMovement().setMoveDirection(EDirection.RIGHT);
+            object.getMovement().addPushX(GameConfig.speedTravel);
+        }
     }
 
     public static void touchedMedium(GameObject object) {
         object.getMovement().setUseGravity(false);
+        if (object.getDirectionOfMyAttacker() == EDirection.RIGHT) {
+            object.getMovement().setMoveDirection(EDirection.LEFT);
+            object.getMovement().addPushX(GameConfig.speedTravel);
+        } else {
+            object.getMovement().setMoveDirection(EDirection.RIGHT);
+            object.getMovement().addPushX(GameConfig.speedTravel);
+        }
     }
 
     public static void touchedPropels(GameObject object) {
         object.getMovement().setUseGravity(false);
+        if (object.getDirectionOfMyAttacker() == EDirection.RIGHT) {
+            object.getMovement().setMoveDirection(EDirection.LEFT);
+            object.getMovement().addPushX(GameConfig.speedTravel);
+        } else {
+            object.getMovement().setMoveDirection(EDirection.RIGHT);
+            object.getMovement().addPushX(GameConfig.speedTravel);
+        }
     }
 
     public static void touchedFlip(GameObject object) {

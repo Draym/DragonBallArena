@@ -5,6 +5,7 @@ import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.bodies.BodySprite;
 import com.andres_k.components.gameComponents.collisions.CollisionResult;
+import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.MovementController;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
@@ -19,6 +20,7 @@ import java.util.TimerTask;
  * Created by andres_k on 10/07/2015.
  */
 public abstract class GameObject {
+    private GameObject lastAttacker;
     protected AnimatorController animatorController;
     protected MovementController movement;
     protected String id;
@@ -41,6 +43,7 @@ public abstract class GameObject {
         this.currentLife = life;
         this.damage = damage;
         this.wasHit = false;
+        this.lastAttacker = null;
     }
 
     public void revive() {
@@ -189,9 +192,33 @@ public abstract class GameObject {
         return this.movement;
     }
 
+    public GameObject getLastAttacker() {
+        return this.lastAttacker;
+    }
+
+    public EDirection getDirectionOfMyAttacker() {
+        if (this.lastAttacker != null) {
+            if (this.getMovement().getX() > this.lastAttacker.getMovement().getX()) {
+                return EDirection.LEFT;
+            } else {
+                return EDirection.RIGHT;
+            }
+        }
+        return EDirection.NONE;
+    }
     // SETTERS
 
     public void setOnEarth(boolean value) {
         this.movement.setOnEarth(value);
+    }
+
+    public void setLastAttacker(GameObject attacker) {
+        this.lastAttacker = attacker;
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                lastAttacker = null;
+            }
+        }, 2000);
     }
 }
