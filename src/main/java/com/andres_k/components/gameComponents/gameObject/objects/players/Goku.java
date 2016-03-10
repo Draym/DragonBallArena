@@ -21,7 +21,7 @@ import org.newdawn.slick.SlickException;
 public class Goku extends Player {
 
     public Goku(AnimatorController animatorController, String id, float x, float y) {
-        super(animatorController, EGameObject.GOKU, id, x, y, 100, 1, 200, 15);
+        super(animatorController, EGameObject.GOKU, id, x, y, 1000, 1, 200, 15);
         try {
             this.specialActions.put(EGameObject.KAMEHA.getValue(), this.getClass().getMethod("createKamehameha"));
             this.specialActions.put(EGameObject.KI_BLAST.getValue(), this.getClass().getMethod("createKiBlast"));

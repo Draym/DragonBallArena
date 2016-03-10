@@ -1,5 +1,7 @@
 package com.andres_k.components.gameComponents.animations;
 
+import com.andres_k.components.gameComponents.animations.details.AnimationConfigItem;
+import com.andres_k.components.gameComponents.animations.details.AnimationRepercussionItem;
 import com.andres_k.components.gameComponents.bodies.BodyAnimation;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.graphicComponents.effects.EffectManager;
@@ -18,7 +20,8 @@ public class Animator {
     protected EffectManager effectManager;
     protected Animation animation;
     protected BodyAnimation body;
-    protected AnimatorConfig config;
+    protected AnimationConfigItem config;
+    protected AnimationRepercussionItem repercussion;
     protected Color filter;
     private int currentFrame;
     private boolean canDoAction;
@@ -27,6 +30,7 @@ public class Animator {
         this.animation = null;
         this.config = null;
         this.body = null;
+        this.repercussion = null;
         this.filter = new Color(1f, 1f, 1f);
         this.currentFrame = -1;
         this.canDoAction = true;
@@ -42,6 +46,7 @@ public class Animator {
         }
         this.body = animator.body;
         this.config = animator.config;
+        this.repercussion = animator.repercussion;
         this.filter = animator.filter;
         this.currentFrame = animator.currentFrame;
         this.canDoAction = animator.canDoAction;
@@ -82,10 +87,15 @@ public class Animator {
 
     public void restart() {
         this.currentFrame = -1;
-        if (this.animation != null)
+        if (this.animation != null) {
             this.animation.restart();
-        if (this.config != null)
+        }
+        if (this.config != null) {
             this.config.restart();
+        }
+        if (this.repercussion != null) {
+            this.repercussion.restart();
+        }
         this.effectManager.restart();
     }
 
@@ -127,8 +137,12 @@ public class Animator {
         this.body = body;
     }
 
-    public void addConfig(AnimatorConfig config) {
+    public void addConfig(AnimationConfigItem config) {
         this.config = config;
+    }
+
+    public void addRepercussion(AnimationRepercussionItem repercussion) {
+        this.repercussion = repercussion;
     }
 
     // GETTERS
@@ -137,8 +151,12 @@ public class Animator {
         return this.animation;
     }
 
-    public AnimatorConfig getConfig() {
+    public AnimationConfigItem getConfig() {
         return this.config;
+    }
+
+    public AnimationRepercussionItem getRepercussion() {
+        return this.repercussion;
     }
 
     public BodyAnimation getBodyAnimation() {

@@ -1,5 +1,7 @@
 package com.andres_k.components.gameComponents.animations;
 
+import com.andres_k.components.gameComponents.animations.details.AnimationConfigItem;
+import com.andres_k.components.gameComponents.animations.details.AnimationRepercussionItem;
 import com.andres_k.components.gameComponents.bodies.BodyAnimation;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.utils.stockage.Pair;
@@ -55,10 +57,16 @@ public class AnimatorContainer {
         this.animators.get(index).addCollision(body);
     }
 
-    public void addConfig(AnimatorConfig config, int index) {
+    public void addConfig(AnimationConfigItem config, int index) {
         if (!this.animators.containsKey(index))
             this.animators.put(index, new Animator());
         this.animators.get(index).addConfig(config);
+    }
+
+    public void addRepercussion(AnimationRepercussionItem repercussion, int index) {
+        if (!this.animators.containsKey(index))
+            this.animators.put(index, new Animator());
+        this.animators.get(index).addRepercussion(repercussion);
     }
 
     // GETTERS
@@ -87,8 +95,12 @@ public class AnimatorContainer {
         return this.animators.get(this.index).getAnimation();
     }
 
-    public AnimatorConfig getConfig() {
+    public AnimationConfigItem getConfig() {
         return this.animators.get(this.index).getConfig();
+    }
+
+    public AnimationRepercussionItem getRepercussion() {
+        return this.animators.get(this.index).getRepercussion();
     }
 
     public BodyAnimation getBodyAnimation() {

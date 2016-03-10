@@ -19,7 +19,6 @@ public enum EAnimation {
     RUN(true),
     JUMP(false),
     FALL(true),
-    FALL_FORCED(true),
     RECEIPT(false),
 
     // DEFENSE
@@ -31,8 +30,8 @@ public enum EAnimation {
     TOUCHED_MEDIUM(false),
     TOUCHED_PROPELS(false),
     TOUCHED_FLIP(false),
-    TOUCHED_FALL(true),
     TOUCHED_RECEIPT(false),
+    TOUCHED_FALL(false),
 
     // ATTACK
     RUSH_ATTACK(false),

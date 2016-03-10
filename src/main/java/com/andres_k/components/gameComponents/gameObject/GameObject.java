@@ -115,7 +115,7 @@ public abstract class GameObject {
             public void run() {
                 wasHit = false;
             }
-        }, 500);
+        }, 250);
     }
 
     public void manageEachCollisionExceptHit(EGameObject mine, GameObject enemy, EGameObject him) {

@@ -1,5 +1,7 @@
 package com.andres_k.components.gameComponents.animations;
 
+import com.andres_k.components.gameComponents.animations.details.AnimationConfigItem;
+import com.andres_k.components.gameComponents.animations.details.AnimationRepercussionItem;
 import com.andres_k.components.gameComponents.bodies.BodyAnimation;
 import com.andres_k.components.gameComponents.bodies.BodySprite;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
@@ -168,11 +170,18 @@ public class AnimatorController implements Observer {
         this.animators.get(type).addCollision(new BodyAnimation(jsonValue), index);
     }
 
-    public void addConfig(EAnimation type, int index, AnimatorConfig config) {
+    public void addConfig(EAnimation type, int index, AnimationConfigItem config) {
         if (!this.animators.containsKey(type)) {
             this.animators.put(type, new AnimatorContainer());
         }
         this.animators.get(type).addConfig(config, index);
+    }
+
+    public void addRepercussion(EAnimation type, int index, AnimationRepercussionItem config) {
+        if (!this.animators.containsKey(type)) {
+            this.animators.put(type, new AnimatorContainer());
+        }
+        this.animators.get(type).addRepercussion(config, index);
     }
 
     // METHODS

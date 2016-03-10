@@ -4,6 +4,7 @@ import com.andres_k.components.eventComponent.events.EventController;
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.animations.EAnimation;
+import com.andres_k.components.gameComponents.animations.details.AnimationRepercussionItem;
 import com.andres_k.components.gameComponents.collisions.PhysicalObject;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
@@ -33,7 +34,6 @@ public class Player extends PhysicalObject {
     protected EventController event;
     protected ComboController comboController;
     private long score;
-    protected int currentActionPower;
     protected final int maxKi;
     protected int currentKi;
     protected final int maxEnergy;
@@ -65,7 +65,6 @@ public class Player extends PhysicalObject {
         this.maxEnergy = 500;
         this.currentKi = this.maxKi;
         this.currentEnergy = this.maxEnergy;
-        this.currentActionPower = 0;
     }
 
     @Override
@@ -99,9 +98,10 @@ public class Player extends PhysicalObject {
 
     private boolean moveFall() throws SlickException {
         if (!this.isOnEarth()
-                && this.animatorController.currentAnimationType() != EAnimation.RECEIPT
                 && this.animatorController.currentAnimationType() != EAnimation.FALL
-                && this.animatorController.currentAnimationType() != EAnimation.FALL_FORCED
+                && this.animatorController.currentAnimationType() != EAnimation.RECEIPT
+                && this.animatorController.currentAnimationType() != EAnimation.TOUCHED_FALL
+                && this.animatorController.currentAnimationType() != EAnimation.TOUCHED_RECEIPT
                 && this.animatorController.canSwitchCurrent()) {
             this.animatorController.changeAnimation(EAnimation.FALL);
             this.movement.resetGravity();
@@ -269,10 +269,6 @@ public class Player extends PhysicalObject {
                     } else if (received.getV2().equals("energy")) {
                         this.incrementCurrentEnergy((Integer) received.getV3());
                     }
-                } else if (received.getV1().equals(ETaskType.SETTER)) {
-                    if (received.getV2().equals("actionPower")) {
-                        this.setCurrentActionPower((Integer) received.getV3());
-                    }
                 }
             }
         }
@@ -312,6 +308,11 @@ public class Player extends PhysicalObject {
             if (this.currentLife <= 0) {
                 this.die();
             }
+            AnimationRepercussionItem repercussionItem = enemy.getAnimatorController().getCurrentContainer().getRepercussion();
+            if (repercussionItem != null) {
+                this.animatorController.forceCurrentAnimationType(repercussionItem.getTargetType());
+                this.animatorController.forceCurrentAnimationIndex(repercussionItem.getTargetIndex());
+            }
             this.wasHit = true;
             this.resetHitStatus();
         }
@@ -319,7 +320,13 @@ public class Player extends PhysicalObject {
 
     @Override
     public float getDamage() {
-        return this.damage * (float)this.currentActionPower;
+        float power = 1;
+
+        AnimationRepercussionItem repercussionItem = this.animatorController.getCurrentContainer().getRepercussion();
+        if (repercussionItem != null) {
+            power = repercussionItem.getDamageToTheTarget();
+        }
+        return this.damage * power;
     }
 
     // SETTERS
@@ -352,7 +359,4 @@ public class Player extends PhysicalObject {
         CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "energy", (float)this.currentEnergy * 100 / (float)this.maxEnergy))));
     }
 
-    public void setCurrentActionPower(int value) {
-        this.currentActionPower = value;
-    }
 }

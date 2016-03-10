@@ -40,18 +40,34 @@ public class BasicActions {
         }
     }
 
-    // MOVEMENT
-    public static void fallForced(GameObject object) {
-        if (!object.isOnEarth()) {
-            if (object.getMovement().getGravity() > 8) {
-                object.getAnimatorController().getCurrentContainer().getConfig().setNextIndex(1);
-            }
-        }
+    // TOUCHED
+
+    public static void touchedSimple(GameObject object) {
+        object.getMovement().setUseGravity(false);
+    }
+
+    public static void touchedMedium(GameObject object) {
+        object.getMovement().setUseGravity(false);
+    }
+
+    public static void touchedPropels(GameObject object) {
+        object.getMovement().setUseGravity(false);
+    }
+
+    public static void touchedFlip(GameObject object) {
+        object.getMovement().setUseGravity(false);
+    }
+
+    public static void touchedFall(GameObject object) {
         if (object.isOnEarth()) {
             object.getAnimatorController().toNextAnimation();
         }
     }
 
+    public static void touchedReceipt(GameObject object) {
+    }
+
+    // MOVEMENT
     public static void fall(GameObject object) {
         object.getMovement().setPushY(0f);
 
@@ -69,9 +85,13 @@ public class BasicActions {
     }
 
     public static void run(GameObject object) {
-        object.getMovement().addPushY(-0.25f);
         object.getMovement().setPushY(0);
         object.getMovement().setUseGravity(true);
+        if (object.isOnEarth()) {
+            object.getMovement().addPushY(-1.5f);
+        } else {
+            object.getMovement().addPushY(-0.20f);
+        }
         if (object.getMovement().getMoveDirection() != EDirection.NONE) {
             object.getMovement().setPushX(GameConfig.speedTravel);
         }

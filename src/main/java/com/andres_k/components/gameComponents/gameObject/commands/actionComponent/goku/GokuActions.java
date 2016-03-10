@@ -18,9 +18,6 @@ public class GokuActions extends BasicActions {
 
     public static void handAttack(GameObject object) {
         try {
-            if (object.getAnimatorController().currentAnimation().getFrame() == 0) {
-                object.doTask(new Tuple<>(ETaskType.SETTER, "actionPower", 50));
-            }
             if (object.getAnimatorController().getIndex() == 1 && object.getAnimatorController().currentAnimation().getFrame() == 0) {
                 object.getMovement().setUseGravity(true);
                 object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
@@ -40,7 +37,6 @@ public class GokuActions extends BasicActions {
         try {
             if (object.getAnimatorController().currentAnimation().getFrame() == 0) {
                 object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
-                object.doTask(new Tuple<>(ETaskType.SETTER, "actionPower", 50));
             }
         } catch (SlickException e) {
             e.printStackTrace();
@@ -56,9 +52,6 @@ public class GokuActions extends BasicActions {
         try {
             object.getMovement().addPushY(-0.1f);
             object.getMovement().setUseGravity(false);
-            if (object.getAnimatorController().currentAnimation().getFrame() == 0) {
-                object.doTask(new Tuple<>(ETaskType.SETTER, "actionPower", 50));
-            }
             if (object.getAnimatorController().currentAnimation().getFrame() >= 3) {
                 object.getMovement().setPushX(GameConfig.speedTravel / 2);
             } else {
@@ -73,9 +66,6 @@ public class GokuActions extends BasicActions {
         try {
             object.getMovement().setPushY(0);
             object.getMovement().setUseGravity(false);
-            if (object.getAnimatorController().currentAnimation().getFrame() == 0) {
-                object.doTask(new Tuple<>(ETaskType.SETTER, "actionPower", 50));
-            }
             if (object.getAnimatorController().getIndex() == 0 && object.getAnimatorController().currentAnimation().getFrame() == 0) {
                 object.getMovement().setPushX(0);
             } else if (object.getAnimatorController().getIndex() == 0 && object.getAnimatorController().currentAnimation().getFrame() == 2) {
@@ -94,9 +84,6 @@ public class GokuActions extends BasicActions {
         try {
             object.getMovement().setPushY(0);
             object.getMovement().setUseGravity(false);
-            if (object.getAnimatorController().currentAnimation().getFrame() == 0) {
-                object.doTask(new Tuple<>(ETaskType.SETTER, "actionPower", 50));
-            }
             if (object.getAnimatorController().getIndex() == 0 && object.getAnimatorController().currentAnimation().getFrame() == 0) {
                 object.getMovement().setPushX(0);
             } else if (object.getAnimatorController().getIndex() == 0 && object.getAnimatorController().currentAnimation().getFrame() == 2) {
@@ -105,6 +92,7 @@ public class GokuActions extends BasicActions {
                 object.getMovement().setPushY(-1f);
             } else if (object.getAnimatorController().getIndex() == 2) {
                 object.getMovement().setPushX(0);
+                object.getMovement().setPushY(-GameConfig.speedTravel / 5);
             }
         } catch (SlickException e) {
             e.printStackTrace();
@@ -112,13 +100,7 @@ public class GokuActions extends BasicActions {
     }
 
     public static void kickPropelsAttack(GameObject object) {
-        try {
-            if (object.getAnimatorController().currentAnimation().getFrame() == 0) {
-                object.doTask(new Tuple<>(ETaskType.SETTER, "actionPower", 50));
-            }
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
+            object.getMovement().setPushY(-GameConfig.speedTravel / 4);
     }
 
     public static void kiChargeAction(GameObject object) {
@@ -135,9 +117,6 @@ public class GokuActions extends BasicActions {
         try {
             object.getMovement().setUseGravity(false);
             object.getMovement().setPushY(GameConfig.speedTravel / 3);
-            if (object.getAnimatorController().currentAnimation().getFrame() == 0) {
-                object.doTask(new Tuple<>(ETaskType.SETTER, "actionPower", 50));
-            }
             if (object.getAnimatorController().currentAnimation().getFrame() == object.getAnimatorController().currentAnimation().getFrameCount() - 1) {
                 object.doTask(new Pair<>(ETaskType.CREATE, EGameObject.KI_BLAST.toString()));
             }
@@ -149,9 +128,6 @@ public class GokuActions extends BasicActions {
     // KAMEHAMEHA
     public static void kiSpeAttack(GameObject object) {
         try {
-            if (object.getAnimatorController().currentAnimation().getFrame() == 0) {
-                object.doTask(new Tuple<>(ETaskType.SETTER, "actionPower", 50));
-            }
             if (object.getAnimatorController().currentAnimation().getFrame() == 5) {
                 object.getMovement().stopMovement();
                 object.getMovement().setUseGravity(false);

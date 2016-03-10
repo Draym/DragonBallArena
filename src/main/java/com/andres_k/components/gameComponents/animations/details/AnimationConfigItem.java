@@ -1,5 +1,6 @@
-package com.andres_k.components.gameComponents.animations;
+package com.andres_k.components.gameComponents.animations.details;
 
+import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.utils.stockage.Pair;
 
@@ -9,7 +10,7 @@ import java.lang.reflect.Method;
 /**
  * Created by andres_k on 17/11/2015.
  */
-public class AnimatorConfig {
+public class AnimationConfigItem {
     private int start;
 
     private Method action;
@@ -19,23 +20,23 @@ public class AnimatorConfig {
     private int changedNextIndex;
     private boolean executeEveryTime;
 
-    public AnimatorConfig(Method action, boolean executeEveryTime) {
+    public AnimationConfigItem(Method action, boolean executeEveryTime) {
         this(action, executeEveryTime, -1, EAnimation.IDLE, 0);
     }
 
-    public AnimatorConfig(Method action, boolean executeEveryTime, EAnimation type) {
+    public AnimationConfigItem(Method action, boolean executeEveryTime, EAnimation type) {
         this(action, executeEveryTime, -1, type, 0);
     }
 
-    public AnimatorConfig(EAnimation type, int index) {
+    public AnimationConfigItem(EAnimation type, int index) {
         this(null, false, -1, type, index);
     }
 
-    public AnimatorConfig(Method action, boolean executeEveryTime, EAnimation type, int index) {
+    public AnimationConfigItem(Method action, boolean executeEveryTime, EAnimation type, int index) {
         this(action, executeEveryTime, -1, type, index);
     }
 
-    public AnimatorConfig(Method action, boolean executeEveryTime, int start, EAnimation type, int index) {
+    public AnimationConfigItem(Method action, boolean executeEveryTime, int start, EAnimation type, int index) {
         this.action = action;
         this.start = start;
         this.nextType = type;
