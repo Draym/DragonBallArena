@@ -118,7 +118,7 @@ public abstract class PhysicalObject extends GameObject {
                 enemy.manageEachCollisionExceptHit(hisRect.getType(), this, myRect.getType());
             }
         }
-        if (myRect.getType() != EGameObject.ATTACK_BODY && hisRect.getType() != EGameObject.ATTACK_BODY) {
+        if (myRect.getType() != EGameObject.ATTACK_BODY && hisRect.getType() != EGameObject.ATTACK_BODY && !enemy.getType().isIn(EGameObject.ANIMATED)) {
             float diffPos;
             float diffNewPos;
             float diffAbsPos;
