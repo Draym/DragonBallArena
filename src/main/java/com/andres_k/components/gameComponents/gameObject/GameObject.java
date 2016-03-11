@@ -214,11 +214,11 @@ public abstract class GameObject {
 
     public void setLastAttacker(GameObject attacker) {
         this.lastAttacker = attacker;
-        new Timer().schedule(new TimerTask() {
+/*        new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 lastAttacker = null;
             }
-        }, 2000);
+        }, 2000);*/
     }
 }

@@ -310,6 +310,11 @@ public class Player extends PhysicalObject {
             }
             AnimationRepercussionItem repercussionItem = enemy.getAnimatorController().getCurrentContainer().getRepercussion();
             if (repercussionItem != null && this.animatorController.currentAnimationType() != repercussionItem.getTargetType()) {
+                this.movement.setPushX(repercussionItem.getRecoil().getV1());
+                this.movement.setPushY(repercussionItem.getRecoil().getV2());
+                this.movement.addPushX(repercussionItem.getAdditionalMove().getV1());
+                this.movement.addPushY(repercussionItem.getAdditionalMove().getV2());
+                this.movement.setMoveDirection((this.getDirectionOfMyAttacker() == EDirection.RIGHT ? EDirection.LEFT : EDirection.RIGHT));
                 this.animatorController.forceCurrentAnimationType(repercussionItem.getTargetType());
                 this.animatorController.forceCurrentAnimationIndex(repercussionItem.getTargetIndex());
             }

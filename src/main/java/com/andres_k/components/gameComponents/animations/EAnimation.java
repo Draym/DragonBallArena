@@ -31,7 +31,7 @@ public enum EAnimation {
     TOUCHED_PROPELS(false),
     TOUCHED_FLIP(false),
     TOUCHED_RECEIPT(false),
-    TOUCHED_FALL(false),
+    TOUCHED_FALL(true),
 
     // ATTACK
     RUSH_ATTACK(false),

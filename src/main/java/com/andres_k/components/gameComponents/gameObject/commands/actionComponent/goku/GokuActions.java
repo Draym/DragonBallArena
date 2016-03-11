@@ -21,7 +21,7 @@ public class GokuActions extends BasicActions {
             if (object.getAnimatorController().getIndex() == 1 && object.getAnimatorController().currentAnimation().getFrame() == 0) {
                 object.getMovement().setUseGravity(true);
                 object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
-                object.getMovement().addPushX(GameConfig.speedTravel * 2);
+                object.getMovement().addPushX(GameConfig.speedTravel * 3f);
             } else {
                 object.getMovement().setPushX(0);
             }
@@ -42,7 +42,7 @@ public class GokuActions extends BasicActions {
             e.printStackTrace();
         }
         if (object.getAnimatorController().getIndex() == 1) {
-            object.getMovement().setPushX(GameConfig.speedTravel * 2);
+            object.getMovement().setPushX(GameConfig.speedTravel * 2f);
         } else {
             object.getMovement().setPushX(0);
         }
@@ -53,9 +53,9 @@ public class GokuActions extends BasicActions {
             object.getMovement().addPushY(-0.1f);
             object.getMovement().setUseGravity(false);
             if (object.getAnimatorController().currentAnimation().getFrame() >= 3) {
-                object.getMovement().setPushX(GameConfig.speedTravel / 2);
+                object.getMovement().setPushX(GameConfig.speedTravel / 2f);
             } else {
-                object.getMovement().setPushX(GameConfig.speedTravel * 2);
+                object.getMovement().setPushX(GameConfig.speedTravel * 2f);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,8 +70,8 @@ public class GokuActions extends BasicActions {
                 object.getMovement().setPushX(0);
             } else if (object.getAnimatorController().getIndex() == 0 && object.getAnimatorController().currentAnimation().getFrame() == 2) {
                 object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
-                object.getMovement().setPushX(2f);
-                object.getMovement().setPushY(-1f);
+                object.getMovement().setPushX(GameConfig.speedTravel * 2f);
+                object.getMovement().setPushY(-GameConfig.speedTravel);
             } else if (object.getAnimatorController().getIndex() == 2 && object.getAnimatorController().currentAnimation().getFrame() == 1) {
                 object.getMovement().setPushX(0);
             }
@@ -88,11 +88,11 @@ public class GokuActions extends BasicActions {
                 object.getMovement().setPushX(0);
             } else if (object.getAnimatorController().getIndex() == 0 && object.getAnimatorController().currentAnimation().getFrame() == 2) {
                 object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
-                object.getMovement().setPushX(2f);
-                object.getMovement().setPushY(-1f);
+                object.getMovement().setPushX(GameConfig.speedTravel * 2f);
+                object.getMovement().setPushY(-GameConfig.speedTravel);
             } else if (object.getAnimatorController().getIndex() == 2) {
                 object.getMovement().setPushX(0);
-                object.getMovement().setPushY(-GameConfig.speedTravel / 5);
+                object.getMovement().setPushY(-GameConfig.speedTravel / 5f);
             }
         } catch (SlickException e) {
             e.printStackTrace();
@@ -100,7 +100,7 @@ public class GokuActions extends BasicActions {
     }
 
     public static void kickPropelsAttack(GameObject object) {
-            object.getMovement().setPushY(-GameConfig.speedTravel / 4);
+            object.getMovement().setPushY(-GameConfig.speedTravel / 4f);
     }
 
     public static void kiChargeAction(GameObject object) {
@@ -116,7 +116,7 @@ public class GokuActions extends BasicActions {
     public static void kiBasicAttack(GameObject object) {
         try {
             object.getMovement().setUseGravity(false);
-            object.getMovement().setPushY(GameConfig.speedTravel / 3);
+            object.getMovement().setPushY(GameConfig.speedTravel / 3f);
             if (object.getAnimatorController().currentAnimation().getFrame() == object.getAnimatorController().currentAnimation().getFrameCount() - 1) {
                 object.doTask(new Pair<>(ETaskType.CREATE, EGameObject.KI_BLAST.toString()));
             }

@@ -26,6 +26,11 @@ public enum ESound {
     UNVALIDATE(ConfigPath.sound_gui + "/unValidate.wav"),
 
     //soundGoku
+    GOKU_HAND_ATTACK(ConfigPath.sound_voices + "/goku" + "/gokuHandAttack.wav"),
+    GOKU_HAND_FLY_PROPELS(ConfigPath.sound_voices + "/goku" + "/gokuHandFlyPropels.wav"),
+    GOKU_RUSH_ATTACK(ConfigPath.sound_voices + "/goku" + "/gokuRushAttack.wav"),
+    GOKU_JUMP_KICK(ConfigPath.sound_voices + "/goku" + "/gokuJumpKick.wav"),
+    GOKU_KICK_PROPELS(ConfigPath.sound_voices + "/goku" + "/gokuKickPropels.wav"),
     GOKU_TOUCHED_SIMPLE(ConfigPath.sound_voices + "/goku" + "/gokuTouchedSimple.wav"),
     GOKU_TOUCHED_MEDIUM(ConfigPath.sound_voices + "/goku" + "/gokuTouchedMedium.wav"),
     GOKU_TOUCHED_PROPELS(ConfigPath.sound_voices + "/goku" + "/gokuTouchedPropels.wav"),
