@@ -1,5 +1,6 @@
 package com.andres_k.components.gameComponents.gameObject.commands.actionComponent;
 
+import com.andres_k.components.gameComponents.animations.details.AnimationRepercussionItem;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.utils.configs.GameConfig;
@@ -44,18 +45,34 @@ public class BasicActions {
 
     public static void touchedSimple(GameObject object) {
         object.getMovement().setUseGravity(false);
+        AnimationRepercussionItem repercussionItem = object.getLastAttacker().getAnimatorController().getCurrentContainer().getRepercussion();
+        if (repercussionItem != null) {
+            repercussionItem.applyRepercussion(object);
+        }
     }
 
     public static void touchedMedium(GameObject object) {
         object.getMovement().setUseGravity(false);
+        AnimationRepercussionItem repercussionItem = object.getLastAttacker().getAnimatorController().getCurrentContainer().getRepercussion();
+        if (repercussionItem != null) {
+            repercussionItem.applyRepercussion(object);
+        }
     }
 
     public static void touchedPropels(GameObject object) {
         object.getMovement().setUseGravity(false);
+        AnimationRepercussionItem repercussionItem = object.getLastAttacker().getAnimatorController().getCurrentContainer().getRepercussion();
+        if (repercussionItem != null) {
+            repercussionItem.applyRepercussion(object);
+        }
     }
 
     public static void touchedFlip(GameObject object) {
         object.getMovement().setUseGravity(false);
+        AnimationRepercussionItem repercussionItem = object.getLastAttacker().getAnimatorController().getCurrentContainer().getRepercussion();
+        if (repercussionItem != null) {
+            repercussionItem.applyRepercussion(object);
+        }
     }
 
     public static void touchedFall(GameObject object) {

@@ -1,6 +1,8 @@
 package com.andres_k.components.gameComponents.animations.details;
 
 import com.andres_k.components.gameComponents.animations.EAnimation;
+import com.andres_k.components.gameComponents.gameObject.GameObject;
+import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.utils.stockage.Pair;
 
 /**
@@ -32,6 +34,15 @@ public class AnimationRepercussionItem {
     public void restart() {
     }
 
+    public void applyRepercussion(GameObject object) {
+        object.getMovement().setMoveDirection((object.getDirectionOfMyAttacker() == EDirection.RIGHT ? EDirection.LEFT : EDirection.RIGHT));
+        object.getMovement().setPushX(this.getRecoil().getV1());
+        object.getMovement().setPushY(this.getRecoil().getV2());
+        object.getMovement().addPushX(this.getAdditionalMove().getV1());
+        object.getMovement().addPushY(this.getAdditionalMove().getV2());
+    }
+
+    // GETTERS
     public EAnimation getTargetType() {
         return this.targetType;
     }
