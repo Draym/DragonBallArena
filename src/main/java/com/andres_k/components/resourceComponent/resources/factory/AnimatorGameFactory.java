@@ -240,8 +240,8 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animatorController.addAnimation(EAnimation.EXPLODE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_body2.png", 247, 247), false, 0, 4, 0, 1, new int[]{60, 60, 60, 60}));
             animatorController.addCollision(EAnimation.EXPLODE, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_body2.json")));
         } else if (index == ESprites.GOKU_KI_BLAST) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kiBlast" + "/gokuKiBlast.png", 247, 247), true, 0, 2, 0, 1, new int[]{200, 200}));
-            animatorController.addCollision(EAnimation.IDLE, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kiBlast" + "/gokuKiBlast.json")));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kiBlast" + "/gokuKiBlast_head.png", 247, 247), true, 0, 2, 0, 1, new int[]{200, 200}));
+            animatorController.addCollision(EAnimation.IDLE, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kiBlast" + "/gokuKiBlast_head.json")));
             animatorController.addRepercussion(EAnimation.IDLE, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_SIMPLE, 10, new Pair<>(GameConfig.speedTravel, 0f)));
         }
         return animatorController;
