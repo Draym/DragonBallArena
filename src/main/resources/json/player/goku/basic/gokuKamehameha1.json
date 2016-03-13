@@ -1,0 +1,217 @@
+{
+  "path": "gokuKamehameha1.png",
+  "spriteNumber": 4,
+  "spriteSizeX": 247,
+  "spriteSizeY": 0,
+  "sprites": [
+    {
+      "SpritePosX": 0,
+      "SpritePosY": 0,
+      "SpriteSizeX": 247,
+      "SpriteSizeY": 247,
+      "BodyPosX": 0,
+      "BodyPosY": 138.79515075683594,
+      "BodySizeX": 91.08431243896484,
+      "BodySizeY": 107.9517822265625,
+      "rectangles": [
+        {
+          "type": "defenseBody",
+          "posX": 0.9836061596870422,
+          "posY": 222.1310577392578,
+          "sizeX": 18.36065,
+          "sizeY": 24.098358
+        },
+        {
+          "type": "defenseBody",
+          "posX": 61.147518157958984,
+          "posY": 206.06549072265625,
+          "sizeX": 24.098354,
+          "sizeY": 38.36064
+        },
+        {
+          "type": "defenseBody",
+          "posX": 19.344255447387695,
+          "posY": 215.24581909179688,
+          "sizeX": 17.213106,
+          "sizeY": 17.86885
+        },
+        {
+          "type": "defenseBody",
+          "posX": 34.91801834106445,
+          "posY": 161.96714782714844,
+          "sizeX": 34.262287,
+          "sizeY": 59.016373
+        },
+        {
+          "type": "defenseBody",
+          "posX": 59.01637268066406,
+          "posY": 154.91796875,
+          "sizeX": 21.14753,
+          "sizeY": 21.311478
+        }
+      ]
+    },
+    {
+      "SpritePosX": 247,
+      "SpritePosY": 0,
+      "SpriteSizeX": 247,
+      "SpriteSizeY": 247,
+      "BodyPosX": 0.710784912109375,
+      "BodyPosY": 141.92767333984375,
+      "BodySizeX": 90.84335327148438,
+      "BodySizeY": 104.81925964355469,
+      "rectangles": [
+        {
+          "type": "defenseBody",
+          "posX": 0.710784912109375,
+          "posY": 238.07223510742188,
+          "sizeX": 16.626495,
+          "sizeY": 8.433731
+        },
+        {
+          "type": "defenseBody",
+          "posX": 34.313751220703125,
+          "posY": 155.32839965820312,
+          "sizeX": 53.57663,
+          "sizeY": 46.569336
+        },
+        {
+          "type": "defenseBody",
+          "posX": 30.226165771484375,
+          "posY": 205.98532104492188,
+          "sizeX": 45.40143,
+          "sizeY": 14.160568
+        },
+        {
+          "type": "defenseBody",
+          "posX": 62.9268798828125,
+          "posY": 220.29188537597656,
+          "sizeX": 23.357666,
+          "sizeY": 24.379547
+        },
+        {
+          "type": "defenseBody",
+          "posX": 11.832000732421875,
+          "posY": 219.70794677734375,
+          "sizeX": 21.45987,
+          "sizeY": 17.810211
+        }
+      ]
+    },
+    {
+      "SpritePosX": 494,
+      "SpritePosY": 0,
+      "SpriteSizeX": 247,
+      "SpriteSizeY": 247,
+      "BodyPosX": 0.45770263671875,
+      "BodyPosY": 145.54212951660156,
+      "BodySizeX": 87.7108154296875,
+      "BodySizeY": 101.20480346679688,
+      "rectangles": [
+        {
+          "type": "defenseBody",
+          "posX": 0.59832763671875,
+          "posY": 223.7955322265625,
+          "sizeX": 21.897827,
+          "sizeY": 22.481735
+        },
+        {
+          "type": "defenseBody",
+          "posX": 22.49615478515625,
+          "posY": 207.44517517089844,
+          "sizeX": 17.372253,
+          "sizeY": 24.963486
+        },
+        {
+          "type": "defenseBody",
+          "posX": 40.89031982421875,
+          "posY": 208.02911376953125,
+          "sizeX": 29.051086,
+          "sizeY": 12.700729
+        },
+        {
+          "type": "defenseBody",
+          "posX": 58.84649658203125,
+          "posY": 222.189697265625,
+          "sizeX": 24.963501,
+          "sizeY": 22.043777
+        },
+        {
+          "type": "defenseBody",
+          "posX": 24.5399169921875,
+          "posY": 176.7882537841797,
+          "sizeX": 37.81024,
+          "sizeY": 30.656921
+        },
+        {
+          "type": "defenseBody",
+          "posX": 35.78082275390625,
+          "posY": 158.39410400390625,
+          "sizeX": 32.700684,
+          "sizeY": 18.39415
+        }
+      ]
+    },
+    {
+      "SpritePosX": 741,
+      "SpritePosY": 0,
+      "SpriteSizeX": 247,
+      "SpriteSizeY": 247,
+      "BodyPosX": 0.20465087890625,
+      "BodyPosY": 149.63851928710938,
+      "BodySizeX": 88.4337158203125,
+      "BodySizeY": 97.10841369628906,
+      "rectangles": [
+        {
+          "type": "defenseBody",
+          "posX": 0.92755126953125,
+          "posY": 235.66259765625,
+          "sizeX": 15.903564,
+          "sizeY": 10.120468
+        },
+        {
+          "type": "defenseBody",
+          "posX": 66.71063232421875,
+          "posY": 237.34933471679688,
+          "sizeX": 18.5542,
+          "sizeY": 6.746994
+        },
+        {
+          "type": "defenseBody",
+          "posX": 10.82452392578125,
+          "posY": 175.32839965820312,
+          "sizeX": 46.42334,
+          "sizeY": 30.51094
+        },
+        {
+          "type": "defenseBody",
+          "posX": 34.76611328125,
+          "posY": 161.4597930908203,
+          "sizeX": 33.284668,
+          "sizeY": 13.284668
+        },
+        {
+          "type": "defenseBody",
+          "posX": 24.985107421875,
+          "posY": 206.42327880859375,
+          "sizeX": 38.832092,
+          "sizeY": 14.306564
+        },
+        {
+          "type": "defenseBody",
+          "posX": 8.19677734375,
+          "posY": 222.33567810058594,
+          "sizeX": 28.029175,
+          "sizeY": 12.700729
+        },
+        {
+          "type": "defenseBody",
+          "posX": 55.78802490234375,
+          "posY": 222.7736358642578,
+          "sizeX": 20.875854,
+          "sizeY": 14.306564
+        }
+      ]
+    }
+  ]
+}
