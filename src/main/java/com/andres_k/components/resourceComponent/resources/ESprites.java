@@ -83,7 +83,7 @@ public enum ESprites {
     GROUND(ITEM.getIndex()),
 
     //gameEntity
-    KI_BLAST(ENTITY.getIndex()),
+    GOKU_KI_BLAST(ENTITY.getIndex()),
     KAMEHA(ENTITY.getIndex()),
     KAMEHA_Back(ENTITY.getIndex()),
     KAMEHA_Body(ENTITY.getIndex()),
