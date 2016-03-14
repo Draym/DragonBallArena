@@ -14,6 +14,8 @@ public class ImageConfiguration {
     public float rotation;
     public Color color;
     public boolean drawable;
+    public boolean flipX;
+    public boolean flipY;
 
     public ImageConfiguration() {
         this.x = 0;
@@ -24,6 +26,8 @@ public class ImageConfiguration {
         this.rotation = 0;
         this.color = null;
         this.drawable = true;
+        this.flipX = false;
+        this.flipY = false;
     }
 
     public ImageConfiguration(ImageConfiguration conf) {
@@ -39,6 +43,8 @@ public class ImageConfiguration {
             this.color = new Color(conf.color);
         }
         this.drawable = conf.drawable;
+        this.flipX = conf.flipX;
+        this.flipY = conf.flipY;
     }
 
     public void reset() {
@@ -46,6 +52,8 @@ public class ImageConfiguration {
         this.scale = 1f;
         this.color = null;
         this.rotation = 0f;
+        this.flipX = false;
+        this.flipY = false;
     }
 
     public void changePosition(float x, float y) {
@@ -56,6 +64,11 @@ public class ImageConfiguration {
     public void changeSizes(float sizeX, float sizeY) {
         this.imageSizeX = sizeX;
         this.imageSizeY = sizeY;
+    }
+
+    public void setFlip(boolean flipX, boolean flipY) {
+        this.flipX = flipX;
+        this.flipY = flipY;
     }
 
     @Override

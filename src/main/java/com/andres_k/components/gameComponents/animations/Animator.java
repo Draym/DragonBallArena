@@ -66,7 +66,7 @@ public class Animator {
         if (this.animation != null) {
             Image image = this.getAnimation().getCurrentFrame().getFlippedCopy(flipX, flipY);
             if (this.effectManager.hasActivity()) {
-                this.effectManager.draw(g, image, x, y);
+                this.effectManager.draw(g, image, x, y, flipX, flipY);
             } else {
                 g.drawImage(image, x, y);
             }

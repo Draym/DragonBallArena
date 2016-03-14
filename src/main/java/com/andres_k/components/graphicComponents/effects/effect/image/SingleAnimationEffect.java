@@ -3,6 +3,7 @@ package com.andres_k.components.graphicComponents.effects.effect.image;
 import com.andres_k.components.graphicComponents.effects.ImageConfiguration;
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
+import com.andres_k.utils.configs.GameConfig;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 
@@ -16,6 +17,8 @@ public class SingleAnimationEffect extends Effect {
     protected float x;
     protected float y;
     protected boolean center;
+    protected boolean flipX;
+    protected boolean flipY;
 
     public SingleAnimationEffect(String id, Animation animation, float decalX, float decalY, boolean center) {
         super(id, EffectType.ANIMATION);
@@ -25,6 +28,8 @@ public class SingleAnimationEffect extends Effect {
         this.center = center;
         this.x = 0;
         this.y = 0;
+        this.flipX = false;
+        this.flipY = false;
     }
 
     @Override
@@ -35,6 +40,7 @@ public class SingleAnimationEffect extends Effect {
 
     @Override
     public boolean update() {
+        this.animation.update(GameConfig.currentTimeLoop);
         if (this.animation.isStopped()) {
             this.stop();
         }
@@ -43,13 +49,23 @@ public class SingleAnimationEffect extends Effect {
 
     @Override
     public void draw(Graphics g) {
-        g.drawAnimation(this.animation, this.x, this.y);
+        g.drawImage(this.animation.getCurrentFrame().getFlippedCopy(this.flipX, this.flipY), this.x, this.y);
     }
 
     @Override
     public boolean applyChanges(ImageConfiguration conf) {
-        this.x = conf.x + this.decalX;
-        this.y = conf.y + this.decalY;
+        if (conf.flipX) {
+            this.x = conf.x + (this.decalX < 0 ? -this.decalX : 2 * this.decalX);
+        } else {
+            this.x = conf.x + this.decalX;
+        }
+        if (conf.flipY) {
+            this.y = conf.y + (this.decalY < 0 ? -this.decalY : 2 * this.decalY);
+        } else {
+            this.y = conf.y + this.decalY;
+        }
+        this.flipX = conf.flipX;
+        this.flipY = conf.flipY;
         if (this.center) {
             this.x -= this.animation.getWidth() / 2;
             this.y -= this.animation.getHeight() / 2;

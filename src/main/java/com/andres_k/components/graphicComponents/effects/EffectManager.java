@@ -68,10 +68,11 @@ public class EffectManager {
         this.availableEffects.forEach(effect -> effect.draw(g));
     }
 
-    public void draw(Graphics g, Image image, Float x, Float y) {
+    public void draw(Graphics g, Image image, Float x, Float y, boolean flipX, boolean flipY) {
         this.conf.reset();
         this.conf.changePosition(x, y);
         this.conf.changeSizes(image.getWidth(), image.getHeight());
+        this.conf.setFlip(flipX, flipY);
         int level = -1;
 
         for (Effect effect : this.availableEffects) {
