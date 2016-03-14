@@ -31,7 +31,7 @@ public enum EAnimation {
     TOUCHED_PROPELS(false),
     TOUCHED_FLIP(false),
     TOUCHED_RECEIPT(false),
-    TOUCHED_FALL(true),
+    TOUCHED_FALL(false),
 
     // ATTACK
     RUSH_ATTACK(false),
@@ -44,6 +44,7 @@ public enum EAnimation {
     KI_CHARGE(false),
     KI_BASIC_ATTACK(false),
     KI_SPE_ATTACK(false),
+    KI_SIMPLE_PROPELS(false),
 
     // FINAL
     WIN(false),

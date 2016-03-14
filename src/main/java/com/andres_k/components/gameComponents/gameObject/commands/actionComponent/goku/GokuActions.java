@@ -100,7 +100,18 @@ public class GokuActions extends BasicActions {
     }
 
     public static void kickPropelsAttack(GameObject object) {
-            object.getMovement().setPushY(-GameConfig.speedTravel / 4f);
+        try {
+            if (object.getAnimatorController().currentAnimation().getFrame() == object.getAnimatorController().currentAnimation().getFrameCount() - 1) {
+                object.getMovement().stopMovement();
+            } else {
+                object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
+                object.getMovement().setPushX(GameConfig.speedTravel / 3f);
+                object.getMovement().setPushY(-GameConfig.speedTravel / 4f);
+                object.getMovement().setUseGravity(false);
+            }
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void kiChargeAction(GameObject object) {
@@ -116,6 +127,7 @@ public class GokuActions extends BasicActions {
     public static void kiBasicAttack(GameObject object) {
         try {
             object.getMovement().setUseGravity(false);
+            object.getMovement().setPushX(0f);
             object.getMovement().setPushY(GameConfig.speedTravel / 3f);
             if (object.getAnimatorController().currentAnimation().getFrame() == object.getAnimatorController().currentAnimation().getFrameCount() - 1) {
                 object.doTask(new Pair<>(ETaskType.CREATE, EGameObject.KI_BLAST.toString()));
@@ -128,7 +140,8 @@ public class GokuActions extends BasicActions {
     // KAMEHAMEHA
     public static void kiSpeAttack(GameObject object) {
         try {
-            if (object.getAnimatorController().currentAnimation().getFrame() == 5) {
+            object.getMovement().setPushX(0f);
+            if (object.getAnimatorController().currentAnimation().getFrame() == 1) {
                 object.getMovement().stopMovement();
                 object.getMovement().setUseGravity(false);
                 object.doTask(new Pair<>(ETaskType.CREATE, EGameObject.KAMEHA.toString()));
