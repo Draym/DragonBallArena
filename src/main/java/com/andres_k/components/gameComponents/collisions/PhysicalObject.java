@@ -110,9 +110,11 @@ public abstract class PhysicalObject extends GameObject {
     private void doCollision(GameObject enemy, BodyRect myRect, BodyRect hisRect, Shape myShape, Shape hisShape, CollisionResult result, Pair<Float, Float> pos, int mode) {
         if (!myRect.containsCollision(hisRect.getId()) && !hisRect.containsCollision(myRect.getId())) {
             if (myRect.getType() == EGameObject.ATTACK_BODY && hisRect.getType() == EGameObject.DEFENSE_BODY) {
-                enemy.getHit(this);
+                enemy.manageGetHit(this);
             } else if (myRect.getType() == EGameObject.DEFENSE_BODY && hisRect.getType() == EGameObject.ATTACK_BODY) {
-                this.getHit(enemy);
+                this.manageGetHit(enemy);
+            } else if (myRect.getType() == EGameObject.ATTACK_BODY && hisRect.getType() == EGameObject.ATTACK_BODY) {
+                this.manageMutualHit(enemy);
             } else {
                 this.manageEachCollisionExceptHit(myRect.getType(), enemy, hisRect.getType());
                 enemy.manageEachCollisionExceptHit(hisRect.getType(), this, myRect.getType());

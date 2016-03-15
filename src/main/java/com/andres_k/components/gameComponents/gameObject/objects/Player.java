@@ -299,7 +299,7 @@ public class Player extends PhysicalObject {
     }
 
     @Override
-    public void getHit(GameObject enemy) {
+    public void manageGetHit(GameObject enemy) {
         if (!this.wasHit) {
             float enemyDamage = enemy.getDamage();
             enemy.powerAfterDoDamage((enemyDamage - this.currentLife < 0 ? 0 : enemyDamage - this.currentLife));
@@ -317,17 +317,6 @@ public class Player extends PhysicalObject {
             this.wasHit = true;
             this.resetHitStatus();
         }
-    }
-
-    @Override
-    public float getDamage() {
-        float power = 1;
-
-        AnimationRepercussionItem repercussionItem = this.animatorController.getCurrentContainer().getRepercussion();
-        if (repercussionItem != null) {
-            power = repercussionItem.getDamageToTheTarget();
-        }
-        return this.damage * power;
     }
 
     // SETTERS

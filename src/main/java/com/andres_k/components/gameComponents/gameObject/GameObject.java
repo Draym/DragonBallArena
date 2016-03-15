@@ -3,6 +3,7 @@ package com.andres_k.components.gameComponents.gameObject;
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.animations.EAnimation;
+import com.andres_k.components.gameComponents.animations.details.AnimationRepercussionItem;
 import com.andres_k.components.gameComponents.bodies.BodySprite;
 import com.andres_k.components.gameComponents.collisions.CollisionResult;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
@@ -101,15 +102,14 @@ public abstract class GameObject {
     public void powerAfterDoDamage(float power) {
     }
 
-    public void getHit(GameObject enemy) {
-        if (!this.wasHit) {
-            this.currentLife -= enemy.getDamage();
-            if (this.currentLife <= 0) {
-                this.die();
-            }
-            this.wasHit = true;
-            this.resetHitStatus();
-        }
+    public void manageEachCollisionExceptHit(EGameObject mine, GameObject enemy, EGameObject him) {
+    }
+
+    public void manageMutualHit(GameObject enemy) {
+    }
+
+    public void manageGetHit(GameObject enemy) {
+        this.getHit(enemy.getDamage());
     }
 
     protected final void resetHitStatus() {
@@ -121,7 +121,17 @@ public abstract class GameObject {
         }, 100);
     }
 
-    public void manageEachCollisionExceptHit(EGameObject mine, GameObject enemy, EGameObject him) {
+    protected boolean getHit(float damage) {
+        if (!this.wasHit) {
+            this.currentLife -= damage;
+            if (this.currentLife <= 0) {
+                this.die();
+            }
+            this.wasHit = true;
+            this.resetHitStatus();
+            return true;
+        }
+        return false;
     }
 
     // GETTERS
@@ -135,7 +145,13 @@ public abstract class GameObject {
     }
 
     public float getDamage() {
-        return this.damage;
+        float power = 1;
+
+        AnimationRepercussionItem repercussionItem = this.animatorController.getCurrentContainer().getRepercussion();
+        if (repercussionItem != null) {
+            power = repercussionItem.getDamageToTheTarget();
+        }
+        return this.damage * power;
     }
 
     public boolean isOnEarth() {
@@ -220,5 +236,10 @@ public abstract class GameObject {
                 lastAttacker = null;
             }
         }, 2000);*/
+    }
+
+    @Override
+    public String toString() {
+        return "(" + this.id + ") (" + this.type + ") [" + this.currentLife + "pv, " + this.damage + "dg]";
     }
 }

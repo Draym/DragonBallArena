@@ -8,9 +8,9 @@ import com.andres_k.components.gameComponents.gameObject.objects.entities.KiEnti
 /**
  * Created by andres_k on 01/03/2016.
  */
-public class KiBlast extends KiEntity {
-    public KiBlast(AnimatorController animatorController, String parent, float x, float y, EDirection direction, float damage, float speed) {
-        super(animatorController, EGameObject.KI_BLAST, parent, (direction == EDirection.RIGHT ? x : x - 300), y - 50, direction, damage, damage, speed, 0);
+public class KiProjectiles extends KiEntity {
+    public KiProjectiles(AnimatorController animatorController, EGameObject type, String parent, float x, float y, EDirection direction, float damage, float speed, float weight) {
+        super(animatorController, type, parent, x, y, direction, damage, speed, weight);
     }
 
     @Override

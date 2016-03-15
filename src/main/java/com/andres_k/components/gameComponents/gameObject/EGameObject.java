@@ -30,7 +30,10 @@ public enum EGameObject {
     WALL("Wall", BORDER.getValue()),
 
     //entities
-    KI_BLAST("GOKU_KI_BLAST", ENTITY.getValue()),
+    KI_BLAST("KI_BLAST", ENTITY.getValue()),
+    KI_BURST("KI_BURST", ENTITY.getValue()),
+    VEGETA_KI_BLAST_BACK("VEGETA_KI_BLAST_BACK", KI_BLAST.getValue()),
+    VEGETA_KI_BLAST_HEAD("VEGETA_KI_BLAST_HEAD", KI_BLAST.getValue()),
     KAMEHA("KAMEHA", ENTITY.getValue()),
     KAMEHA_Back("KAMEHA", ENTITY.getValue()),
     KAMEHA_Body("KAMEHA", ENTITY.getValue()),
@@ -38,7 +41,7 @@ public enum EGameObject {
     //players
     GOKU("Goku", PLAYER.getValue()),
     GOHAN("Gohan", PLAYER.getValue(), false),
-    VEGETA("Vegeta", PLAYER.getValue(), false),
+    VEGETA("Vegeta", PLAYER.getValue()),
     PICOLO("Picolo", PLAYER.getValue(), false),
     KAME_SENNIN("KameSennin", PLAYER.getValue(), false),
     CELL("Cell", PLAYER.getValue(), false),

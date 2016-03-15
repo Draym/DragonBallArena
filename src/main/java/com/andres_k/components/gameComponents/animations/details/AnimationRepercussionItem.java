@@ -15,6 +15,10 @@ public class AnimationRepercussionItem {
     private final Pair<Float, Float> recoil;
     private boolean itsAdditionalMove;
 
+    public AnimationRepercussionItem(float damageToTheTarget) {
+        this(EAnimation.NULL, 0, damageToTheTarget, new Pair<>(0f, 0f), false);
+    }
+
     public AnimationRepercussionItem(EAnimation targetType, float damageToTheTarget, Pair<Float, Float> recoil) {
         this(targetType, 0, damageToTheTarget, recoil, false);
     }

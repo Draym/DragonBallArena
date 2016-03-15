@@ -402,6 +402,7 @@ public class AnimatorController implements Observer {
             this.getCurrentContainer().restart();
             return true;
         } else if (current == EAnimation.EXPLODE) {
+            Console.write("DELETE EXPLOSE");
             this.setDeleted(true);
             return true;
         }

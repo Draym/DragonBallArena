@@ -44,12 +44,16 @@ public class AnimatorGameData extends DataManager {
 
     public void initPlayers() throws NoSuchMethodException, SlickException, JSONException {
         this.addPlayerAnimator(this.animatorFactory.getAnimator(ESprites.GOKU), EGameObject.GOKU);
+        this.addPlayerAnimator(this.animatorFactory.getAnimator(ESprites.VEGETA), EGameObject.VEGETA);
     }
 
     public void initItems() throws NoSuchMethodException, SlickException, JSONException {
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.GROUND), EGameObject.GROUND);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.WALL), EGameObject.WALL);
-        this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.GOKU_KI_BLAST), EGameObject.KI_BLAST);
+        this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.KI_BLAST), EGameObject.KI_BLAST);
+        this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.VEGETA_KI_BLAST_BACK), EGameObject.VEGETA_KI_BLAST_BACK);
+        this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.VEGETA_KI_BLAST_HEAD), EGameObject.VEGETA_KI_BLAST_HEAD);
+        this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.KI_BURST), EGameObject.KI_BURST);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.KAMEHA), EGameObject.KAMEHA);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.KAMEHA_Back), EGameObject.KAMEHA_Back);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.KAMEHA_Body), EGameObject.KAMEHA_Body);

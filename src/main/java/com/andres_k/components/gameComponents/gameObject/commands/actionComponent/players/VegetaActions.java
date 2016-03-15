@@ -1,4 +1,4 @@
-package com.andres_k.components.gameComponents.gameObject.commands.actionComponent.goku;
+package com.andres_k.components.gameComponents.gameObject.commands.actionComponent.players;
 
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
@@ -10,15 +10,13 @@ import com.andres_k.utils.stockage.Tuple;
 import org.newdawn.slick.SlickException;
 
 /**
- * Created by andres_k on 30/11/2015.
+ * Created by andres_k on 14/03/2016.
  */
-public class GokuActions extends BasicActions {
-
-    // ATTACKS
+public class VegetaActions extends BasicActions {
 
     public static void handAttack(GameObject object) {
         try {
-            if (object.getAnimatorController().getIndex() == 1 && object.getAnimatorController().currentAnimation().getFrame() == 0) {
+            if (object.getAnimatorController().currentAnimation().getFrame() == 0) {
                 object.getMovement().setUseGravity(true);
                 object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
                 object.getMovement().addPushX(GameConfig.speedTravel * 4f);
@@ -34,17 +32,13 @@ public class GokuActions extends BasicActions {
         object.getMovement().addPushY(-0.25f);
         object.getMovement().setPushY(0);
         object.getMovement().setUseGravity(true);
+        object.getMovement().setPushX(GameConfig.speedTravel * 2f);
         try {
             if (object.getAnimatorController().currentAnimation().getFrame() == 0) {
                 object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
             }
         } catch (SlickException e) {
             e.printStackTrace();
-        }
-        if (object.getAnimatorController().getIndex() == 1) {
-            object.getMovement().setPushX(GameConfig.speedTravel * 2f);
-        } else {
-            object.getMovement().setPushX(0);
         }
     }
 
@@ -62,51 +56,14 @@ public class GokuActions extends BasicActions {
         }
     }
 
-    public static void jumpKickAttack(GameObject object) {
-        try {
-            object.getMovement().setPushY(0);
-            object.getMovement().setUseGravity(false);
-            if (object.getAnimatorController().getIndex() == 0 && object.getAnimatorController().currentAnimation().getFrame() == 0) {
-                object.getMovement().setPushX(0);
-            } else if (object.getAnimatorController().getIndex() == 0 && object.getAnimatorController().currentAnimation().getFrame() == 2) {
-                object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
-                object.getMovement().setPushX(GameConfig.speedTravel * 2f);
-                object.getMovement().setPushY(-GameConfig.speedTravel);
-            } else if (object.getAnimatorController().getIndex() == 2 && object.getAnimatorController().currentAnimation().getFrame() == 1) {
-                object.getMovement().setPushX(0);
-            }
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void spiralKickAttack(GameObject object) {
-        try {
-            object.getMovement().setPushY(0);
-            object.getMovement().setUseGravity(false);
-            if (object.getAnimatorController().getIndex() == 0 && object.getAnimatorController().currentAnimation().getFrame() == 0) {
-                object.getMovement().setPushX(0);
-            } else if (object.getAnimatorController().getIndex() == 0 && object.getAnimatorController().currentAnimation().getFrame() == 2) {
-                object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
-                object.getMovement().setPushX(GameConfig.speedTravel * 2f);
-                object.getMovement().setPushY(-GameConfig.speedTravel);
-            } else if (object.getAnimatorController().getIndex() == 2) {
-                object.getMovement().setPushX(0);
-                object.getMovement().setPushY(-GameConfig.speedTravel / 5f);
-            }
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void kickPropelsAttack(GameObject object) {
         try {
             if (object.getAnimatorController().currentAnimation().getFrame() == object.getAnimatorController().currentAnimation().getFrameCount() - 1) {
                 object.getMovement().stopMovement();
             } else {
                 object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
-                object.getMovement().setPushX(GameConfig.speedTravel / 3f);
-                object.getMovement().setPushY(-GameConfig.speedTravel / 4f);
+                object.getMovement().setPushX(GameConfig.speedTravel);
+                object.getMovement().setPushY(-GameConfig.speedTravel / 3f);
                 object.getMovement().setUseGravity(false);
             }
         } catch (SlickException e) {
@@ -129,7 +86,7 @@ public class GokuActions extends BasicActions {
             object.getMovement().setUseGravity(false);
             object.getMovement().setPushX(0f);
             object.getMovement().setPushY(GameConfig.speedTravel / 3f);
-            if (object.getAnimatorController().currentAnimation().getFrame() == object.getAnimatorController().currentAnimation().getFrameCount() - 1) {
+            if (object.getAnimatorController().currentAnimation().getFrame() == 1 || object.getAnimatorController().currentAnimation().getFrame() == 3) {
                 object.doTask(new Pair<>(ETaskType.CREATE, EGameObject.KI_BLAST.toString()));
             }
         } catch (SlickException e) {
@@ -137,14 +94,12 @@ public class GokuActions extends BasicActions {
         }
     }
 
-    // KAMEHAMEHA
     public static void kiSpeAttack(GameObject object) {
         try {
-            object.getMovement().setPushX(0f);
-            if (object.getAnimatorController().currentAnimation().getFrame() == 1) {
-                object.getMovement().stopMovement();
-                object.getMovement().setUseGravity(false);
-                object.doTask(new Pair<>(ETaskType.CREATE, EGameObject.KAMEHA.toString()));
+            object.getMovement().stopMovement();
+            object.getMovement().setUseGravity(false);
+            if (object.getAnimatorController().currentAnimation().getFrame() == 3) {
+                object.doTask(new Pair<>(ETaskType.CREATE, EGameObject.KI_BURST.toString()));
             }
         } catch (SlickException e) {
             e.printStackTrace();

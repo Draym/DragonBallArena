@@ -4,6 +4,7 @@ import com.andres_k.components.gameComponents.animations.details.AnimationReperc
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.utils.configs.GameConfig;
+import org.newdawn.slick.SlickException;
 
 /**
  * Created by andres_k on 17/11/2015.
@@ -82,6 +83,16 @@ public class BasicActions {
     }
 
     public static void touchedReceipt(GameObject object) {
+        object.getMovement().setUseGravity(false);
+        try {
+            if (object.getAnimatorController().currentAnimation().getFrame() >= 2) {
+                object.getMovement().setPushY(0f);
+            } else {
+                object.getMovement().setPushY(0f);
+            }
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
     }
 
     // MOVEMENT

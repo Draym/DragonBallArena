@@ -19,8 +19,8 @@ import java.util.UUID;
 public abstract class KiEntity extends PhysicalObject {
     protected String parent;
 
-    protected KiEntity(AnimatorController animatorController, EGameObject type, String parent, float x, float y, EDirection direction, float life, float damage, float speed, float weight) {
-        super(animatorController, type, parent + GlobalVariable.id_delimiter + UUID.randomUUID().toString(), x, y, life, damage, speed, weight);
+    protected KiEntity(AnimatorController animatorController, EGameObject type, String parent, float x, float y, EDirection direction, float damage, float speed, float weight) {
+        super(animatorController, type, parent + GlobalVariable.id_delimiter + UUID.randomUUID().toString(), x, y, damage, damage, speed, weight);
         this.movement.setMoveDirection(direction);
         this.movement.setPushX(GameConfig.speedTravel);
         this.animatorController.setEyesDirection(direction);
@@ -60,4 +60,22 @@ public abstract class KiEntity extends PhysicalObject {
         }
     }
 
+    @Override
+    public void manageMutualHit(GameObject enemy) {
+        if (!this.wasHit) {
+            float saveDamage = this.damage;
+            super.manageGetHit(enemy);
+            this.damage = saveDamage;
+            enemy.manageGetHit(this);
+            this.damage = this.currentLife;
+            this.wasHit = true;
+            this.resetHitStatus();
+        }
+    }
+
+    @Override
+    public void manageGetHit(GameObject enemy) {
+        super.manageGetHit(enemy);
+        this.damage = this.currentLife;
+    }
 }

@@ -146,6 +146,9 @@ public class MovementController {
     }
 
     public float calculateGravity() {
+        if (this.currentSpeed == 0) {
+            return 0;
+        }
         return (((this.weight * this.gravity)) / this.currentSpeed) * this.exponential;
     }
 
