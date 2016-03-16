@@ -39,6 +39,7 @@ public enum EAnimation {
     HAND_FLY_PROPELS(false),
     JUMP_KICK(false),
     SPIRAL_KICK(false),
+    KICK_ATTACK(false),
     KICK_PROPELS(false),
     TRANSPOSITION(false),
     KI_CHARGE(false),

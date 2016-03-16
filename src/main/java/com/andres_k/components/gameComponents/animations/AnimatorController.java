@@ -397,12 +397,10 @@ public class AnimatorController implements Observer {
 
     public boolean forceCurrentAnimationType(EAnimation current) {
         if (this.animators.containsKey(current)) {
-            // Console.write("anim -> " + current);
             this.current = current;
             this.getCurrentContainer().restart();
             return true;
         } else if (current == EAnimation.EXPLODE) {
-            Console.write("DELETE EXPLOSE");
             this.setDeleted(true);
             return true;
         }

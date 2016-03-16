@@ -105,8 +105,9 @@ public class Animator {
     public void nextFrame() {
         if (!this.animation.isStopped()) {
             int frame = this.animation.getFrame() + 1;
-            this.animation.restart();
-            this.animation.setCurrentFrame(frame);
+            while (this.animation.getFrame() != frame) {
+                this.animation.update(10);
+            }
         }
     }
 

@@ -71,6 +71,28 @@ public class VegetaActions extends BasicActions {
         }
     }
 
+    public static void kickAttack(GameObject object) {
+        try {
+            object.getMovement().setUseGravity(false);
+            object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
+            if (object.getAnimatorController().currentAnimation().getFrame() == 1 ||
+                    object.getAnimatorController().currentAnimation().getFrame() == 2) {
+                object.getMovement().setPushX(GameConfig.speedTravel);
+            } else {
+                object.getMovement().setPushX(0);
+            }
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void spiralKick(GameObject object) {
+        object.getMovement().setUseGravity(false);
+        object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
+        object.getMovement().setPushX(GameConfig.speedTravel * 2f);
+        object.getMovement().setPushY(-GameConfig.speedTravel / 3f);
+    }
+
     public static void kiChargeAction(GameObject object) {
         try {
             if (object.getAnimatorController().currentAnimation().getFrame() == 0) {
@@ -110,7 +132,7 @@ public class VegetaActions extends BasicActions {
         try {
             object.getMovement().stopMovement();
             object.getMovement().setUseGravity(false);
-            if (object.getAnimatorController().currentAnimation().getFrame() == 6) {
+            if (object.getAnimatorController().currentAnimation().getFrame() == 7) {
                 object.doTask(new Pair<>(ETaskType.CREATE, EGameObject.KI_FINAL.toString()));
             }
         } catch (SlickException e) {

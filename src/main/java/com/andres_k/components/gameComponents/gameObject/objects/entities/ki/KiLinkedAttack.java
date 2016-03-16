@@ -93,15 +93,17 @@ public abstract class KiLinkedAttack extends KiAttack {
 
     @Override
     public void die() {
-        super.die();
-        if (this.back != null) {
-            this.back.forceCurrentAnimationType(EAnimation.EXPLODE);
-        }
-        if (this.body != null) {
-            this.body.forceCurrentAnimationType(EAnimation.EXPLODE);
-        }
-        for (Pair<Float, AnimatorController> item : this.bodiesAnim) {
-            item.getV2().forceCurrentAnimationType(EAnimation.EXPLODE);
+        if (!this.animatorController.isDeleted()) {
+            super.die();
+            if (this.back != null) {
+                this.back.forceCurrentAnimationType(EAnimation.EXPLODE);
+            }
+            if (this.body != null) {
+                this.body.forceCurrentAnimationType(EAnimation.EXPLODE);
+            }
+            for (Pair<Float, AnimatorController> item : this.bodiesAnim) {
+                item.getV2().forceCurrentAnimationType(EAnimation.EXPLODE);
+            }
         }
     }
 

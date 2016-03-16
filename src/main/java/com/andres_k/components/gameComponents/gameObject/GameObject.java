@@ -53,9 +53,11 @@ public abstract class GameObject {
     }
 
     public void die() {
-        this.currentLife = 0;
-        this.animatorController.forceCurrentAnimationType(EAnimation.EXPLODE);
-        this.alive = false;
+        if (!this.animatorController.isDeleted()) {
+            this.currentLife = 0;
+            this.animatorController.forceCurrentAnimationType(EAnimation.EXPLODE);
+            this.alive = false;
+        }
     }
 
     public void resetActions() {
