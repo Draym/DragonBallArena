@@ -22,7 +22,7 @@ import org.newdawn.slick.SlickException;
 public class Goku extends Player {
 
     public Goku(AnimatorController animatorController, String id, float x, float y) {
-        super(animatorController, EGameObject.GOKU, id, x, y, 1000, 1, 200, 15);
+        super(animatorController, EGameObject.GOKU, id, x, y, 3000, 1, 220, 15);
         try {
             this.specialActions.put(EGameObject.KAMEHA.getValue(), this.getClass().getMethod("createKamehameha"));
             this.specialActions.put(EGameObject.KI_BLAST.getValue(), this.getClass().getMethod("createKiBlast"));
@@ -36,8 +36,8 @@ public class Goku extends Player {
 
     public void createKamehameha() {
         try {
-            this.incrementCurrentKi(-105);
-            KiEntity entity = new Kameha(ResourceManager.get().getGameAnimator(EGameObject.KAMEHA), ResourceManager.get().getGameAnimator(EGameObject.KAMEHA_Body), ResourceManager.get().getGameAnimator(EGameObject.KAMEHA_Back), this.id, this.getPosX() + 120, this.getPosY() + 10, this.getAnimatorController().getEyesDirection(), 200 * this.damage, 1300);
+            this.incrementCurrentKi(-205);
+            KiEntity entity = new Kameha(ResourceManager.get().getGameAnimator(EGameObject.KAMEHA), ResourceManager.get().getGameAnimator(EGameObject.KAMEHA_Body), ResourceManager.get().getGameAnimator(EGameObject.KAMEHA_Back), this.id, this.getPosX() + 120, this.getPosY() + 10, this.getAnimatorController().getEyesDirection(), 300 * this.damage, 1300);
             CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity)));
         } catch (SlickException e) {
             e.printStackTrace();
@@ -46,8 +46,8 @@ public class Goku extends Player {
 
     public void createKiBlast() {
         try {
-            this.incrementCurrentKi(-10);
-            KiEntity entity = new KiProjectiles(ResourceManager.get().getGameAnimator(EGameObject.KI_BLAST), EGameObject.KI_BLAST, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 100 : this.getPosX() + - 100), this.getPosY() - 40, this.getAnimatorController().getEyesDirection(), 10 * this.damage, 800, 0);
+            this.incrementCurrentKi(-30);
+            KiEntity entity = new KiProjectiles(ResourceManager.get().getGameAnimator(EGameObject.KI_BLAST), EGameObject.KI_BLAST, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 100 : this.getPosX() + - 100), this.getPosY() - 40, this.getAnimatorController().getEyesDirection(), 25 * this.damage, 800, 0);
             CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity)));
         } catch (SlickException e) {
             e.printStackTrace();
@@ -55,11 +55,11 @@ public class Goku extends Player {
     }
 
     public boolean checkToLaunchKamehameha() {
-        return (this.currentKi > 105 && this.isOnEarth());
+        return (this.currentKi > 205 && this.isOnEarth());
     }
 
     public boolean checkToLaunchKiBlast() {
-        return (this.currentKi > 10);
+        return (this.currentKi > 30);
     }
 
     public boolean checkToLaunchKiCharge() {
