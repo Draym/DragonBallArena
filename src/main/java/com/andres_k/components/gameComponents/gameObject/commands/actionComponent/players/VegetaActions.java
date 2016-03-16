@@ -44,6 +44,35 @@ public class VegetaActions extends BasicActions {
         }
     }
 
+    public static void moveHandAttack(GameObject object) {
+        object.getMovement().addPushY(-0.25f);
+        object.getMovement().setPushY(0);
+        object.getMovement().setUseGravity(true);
+        object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
+        try {
+            if (object.getAnimatorController().currentAnimation().getFrame() <= 2) {
+                object.getMovement().setPushX(GameConfig.speedTravel * 2f);
+            } else {
+                object.getMovement().setPushX(0);
+            }
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void jumpHandAttack(GameObject object) {
+        object.getMovement().setUseGravity(false);
+        object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
+        if (object.getAnimatorController().getIndex() == 1 || object.getAnimatorController().getIndex() == 2) {
+            object.getMovement().setPushX(GameConfig.speedTravel * 2f);
+            object.getMovement().setPushY(-GameConfig.speedTravel / 2f);
+        } else {
+            object.getMovement().setPushX(0);
+            object.getMovement().setPushY(0);
+            object.getMovement().setUseGravity(true);
+        }
+    }
+
     public static void handFlyPropels(GameObject object) {
         try {
             object.getMovement().addPushY(-0.1f);
