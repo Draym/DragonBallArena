@@ -26,5 +26,6 @@ public class VegetaCombos extends ComboManager {
         this.combos.add(ComboFactory.createCombo(EGameObject.VEGETA, ECombos.KI_CHARGE));
         this.combos.add(ComboFactory.createCombo(EGameObject.VEGETA, ECombos.KI_BASIC_ATTACK));
         this.combos.add(ComboFactory.createCombo(EGameObject.VEGETA, ECombos.KI_SPE_ATTACK));
+        this.combos.add(ComboFactory.createCombo(EGameObject.VEGETA, ECombos.KI_FINAL_ATTACK));
     }
 }

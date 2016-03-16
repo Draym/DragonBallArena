@@ -49,17 +49,15 @@ public abstract class KiLinkedAttack extends KiAttack {
     @Override
     public void draw(Graphics g) throws SlickException {
         for (Pair<Float, AnimatorController> item : this.bodiesAnim) {
-            if (item.getV1() != this.saveX) {
-                item.getV2().draw(g, item.getV1(), this.graphicalY());
-            }
+            item.getV2().draw(g, item.getV1(), this.graphicalY());
         }
         if (this.body != null) {
             this.body.draw(g, this.getMaxBodyX(), this.graphicalY());
         }
+        super.draw(g);
         if (this.back != null) {
             this.back.draw(g, this.saveX, this.graphicalY());
         }
-        super.draw(g);
     }
 
     @Override
@@ -109,8 +107,13 @@ public abstract class KiLinkedAttack extends KiAttack {
 
     private void createNewBodySegment() throws SlickException {
         if (this.body != null && this.canCreateBodies) {
-            if (MathTools.abs(this.graphicalX() - this.getMaxBodyX()) >= 60) {
+            float distance = this.graphicalX() - this.getMaxBodyX();
+            if (this.animatorController.getEyesDirection() == EDirection.LEFT) {
+                distance = MathTools.abs(distance);
+            }
+            while (distance >= 60) {
                 this.bodiesAnim.add(new Pair<>(this.getMaxBodyX(), new AnimatorController(this.body)));
+                distance -= 60;
             }
         }
     }
@@ -124,7 +127,7 @@ public abstract class KiLinkedAttack extends KiAttack {
         }
     }
 
-    private float getMaxBodyX() {
+    protected float getMaxBodyX() {
         if (this.bodiesAnim.isEmpty())
             return this.saveX;
         if (this.animatorController.getEyesDirection() == EDirection.RIGHT) {

@@ -13,15 +13,11 @@ import com.andres_k.utils.stockage.Pair;
 /**
  * Created by andres_k on 01/03/2016.
  */
-public class Kamehameha extends KiLinkedAttack {
-    public Kamehameha(AnimatorController head, AnimatorController body, AnimatorController back, String parent, float x, float y, EDirection direction, float damage, float speed) {
-        super(head, body, back, EGameObject.KAMEHA, parent, (direction == EDirection.RIGHT ? x : x - 220), y, direction, damage, speed, 0);
-        if (direction == EDirection.RIGHT) {
-            this.saveX = x - 140;
-        } else {
+public class StaticKiRay extends KiLinkedAttack {
 
-            this.saveX = x - 470;
-        }
+    public StaticKiRay(AnimatorController head, AnimatorController body, AnimatorController back, EGameObject type, String parent, float x, float y, EDirection direction, float damage, float speed, float weight) {
+        super(head, body, back, type, parent, x, y, direction, damage, speed, weight);
+        this.saveX = x;
     }
 
     @Override

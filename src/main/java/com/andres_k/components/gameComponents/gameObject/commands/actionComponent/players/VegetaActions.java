@@ -105,4 +105,16 @@ public class VegetaActions extends BasicActions {
             e.printStackTrace();
         }
     }
+
+    public static void kiFinalAttack(GameObject object) {
+        try {
+            object.getMovement().stopMovement();
+            object.getMovement().setUseGravity(false);
+            if (object.getAnimatorController().currentAnimation().getFrame() == 6) {
+                object.doTask(new Pair<>(ETaskType.CREATE, EGameObject.KI_FINAL.toString()));
+            }
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+    }
 }

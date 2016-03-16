@@ -36,7 +36,10 @@ public enum ESound {
     GOKU_TOUCHED_PROPELS(ConfigPath.sound_voices + "/goku" + "/gokuTouchedPropels.wav"),
     GOKU_BLOCK(ConfigPath.sound_voices + "/goku" + "/gokuBlock.wav"),
     GOKU_KAMEHAMEHA_AIM(ConfigPath.sound_voices + "/goku" + "/Kamehameha - Aim.wav"),
-    GOKU_KAMEHAMEHA_FIRE(ConfigPath.sound_voices + "/goku" + "/Kamehameha - Fire.wav");
+    GOKU_KAMEHAMEHA_FIRE(ConfigPath.sound_voices + "/goku" + "/Kamehameha - Fire.wav"),
+
+    //soundVegete
+    VEGETA_FINAL_FLASH(ConfigPath.sound_voices + "/vegeta" + "/finalFlash.wav");
 
     private String path;
     private EGameObject object;

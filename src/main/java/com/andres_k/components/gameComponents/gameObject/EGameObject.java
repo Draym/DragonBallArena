@@ -32,11 +32,15 @@ public enum EGameObject {
     //entities
     KI_BLAST("KI_BLAST", ENTITY.getValue()),
     KI_BURST("KI_BURST", ENTITY.getValue()),
+    KI_FINAL("KI_FINAL", ENTITY.getValue()),
     VEGETA_KI_BLAST_BACK("VEGETA_KI_BLAST_BACK", KI_BLAST.getValue()),
     VEGETA_KI_BLAST_HEAD("VEGETA_KI_BLAST_HEAD", KI_BLAST.getValue()),
     KAMEHA("KAMEHA", ENTITY.getValue()),
     KAMEHA_Back("KAMEHA", ENTITY.getValue()),
     KAMEHA_Body("KAMEHA", ENTITY.getValue()),
+    FINAL_FLASH("FINAL_FLASH", ENTITY.getValue()),
+    FINAL_FLASH_Back("FINAL_FLASH", ENTITY.getValue()),
+    FINAL_FLASH_Body("FINAL_FLASH", ENTITY.getValue()),
 
     //players
     GOKU("Goku", PLAYER.getValue()),

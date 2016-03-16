@@ -323,30 +323,31 @@ public class Player extends PhysicalObject {
 
     public void setCurrentKi(int value) {
         this.currentKi = value;
+        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "ki", (float)this.currentKi * 100 / (float)this.maxKi))));
     }
 
     public void setCurrentEnergy(int value) {
         this.currentEnergy = value;
+        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "energy", (float)this.currentEnergy * 100 / (float)this.maxEnergy))));
     }
 
     public void incrementCurrentKi(int value) {
         this.currentKi += value;
         if (this.currentKi < 0) {
-            this.currentKi = 0;
+            this.setCurrentKi(0);
         } else if (this.currentKi > this.maxKi) {
-            this.currentKi = this.maxKi;
+            this.setCurrentKi(this.maxKi);
         }
-        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "ki", (float)this.currentKi * 100 / (float)this.maxKi))));
+        this.setCurrentKi(this.currentKi);
     }
 
     public void incrementCurrentEnergy(int value) {
         this.currentEnergy += value;
         if (this.currentEnergy < 0) {
-            this.currentEnergy = 0;
+            this.setCurrentEnergy(0);
         } else if (this.currentEnergy > this.maxEnergy) {
-            this.currentEnergy = this.maxEnergy;
+            this.setCurrentEnergy(this.maxEnergy);
         }
-        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "energy", (float)this.currentEnergy * 100 / (float)this.maxEnergy))));
+        this.setCurrentEnergy(this.currentEnergy);
     }
-
 }

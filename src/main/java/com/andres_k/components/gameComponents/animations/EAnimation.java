@@ -45,6 +45,7 @@ public enum EAnimation {
     KI_BASIC_ATTACK(false),
     KI_SPE_ATTACK(false),
     KI_SIMPLE_PROPELS(false),
+    KI_FINAL_ATTACK(false),
 
     // FINAL
     WIN(false),

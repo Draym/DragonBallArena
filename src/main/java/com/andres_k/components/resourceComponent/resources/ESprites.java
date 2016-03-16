@@ -91,6 +91,9 @@ public enum ESprites {
     KAMEHA(ENTITY.getIndex()),
     KAMEHA_Back(ENTITY.getIndex()),
     KAMEHA_Body(ENTITY.getIndex()),
+    FINAL_FLASH(ENTITY.getIndex()),
+    FINAL_FLASH_Back(ENTITY.getIndex()),
+    FINAL_FLASH_Body(ENTITY.getIndex()),
 
     //background
     LOAD_SCREEN(SCREEN_BACKGROUND.getIndex()),

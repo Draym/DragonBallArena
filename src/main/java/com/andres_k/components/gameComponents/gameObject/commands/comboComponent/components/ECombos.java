@@ -16,7 +16,8 @@ public enum ECombos {
     RUSH_LEFT("RUSH_LEFT"),
     KI_CHARGE("KI_CHARGE"),
     KI_BASIC_ATTACK("KI_BASIC_ATTACK"),
-    KI_SPE_ATTACK("KI_SPE_ATTACK");
+    KI_SPE_ATTACK("KI_SPE_ATTACK"),
+    KI_FINAL_ATTACK("KI_FINAL_ATTACK");
 
 
     private String value;

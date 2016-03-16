@@ -243,7 +243,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addConfig(EAnimation.RUSH_ATTACK, 0, new AnimationConfigItem(VegetaActions.class.getMethod("rushAttack", GameObject.class), true, EAnimation.IDLE));
         animatorController.addRepercussion(EAnimation.RUSH_ATTACK, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_PROPELS, 60, new Pair<>(GameConfig.speedTravel, 0f)));
         // RECEIPT
-        animatorController.addAnimation(EAnimation.RECEIPT, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaReceipt.png", 247, 247), EAnimation.RECEIPT.isLoop(), 0, 1, 0, 1, new int[]{130}));
+        animatorController  .addAnimation(EAnimation.RECEIPT, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaReceipt.png", 247, 247), EAnimation.RECEIPT.isLoop(), 0, 1, 0, 1, new int[]{130}));
         animatorController.addCollision(EAnimation.RECEIPT, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaReceipt.json")));
         animatorController.addConfig(EAnimation.RECEIPT, 0, new AnimationConfigItem(VegetaActions.class.getMethod("receipt", GameObject.class), true));
         animatorController.addAnimation(EAnimation.RECEIPT, 1, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaReceipt.png", 247, 247), EAnimation.RECEIPT.isLoop(), 0, 3, 0, 1, new int[]{100, 100, 100}));
@@ -276,6 +276,11 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addConfig(EAnimation.HAND_FLY_PROPELS, 0, new AnimationConfigItem(VegetaActions.class.getMethod("handFlyPropels", GameObject.class), false, EAnimation.FALL));
         animatorController.addRepercussion(EAnimation.HAND_FLY_PROPELS, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_FLIP, 40, new Pair<>(0f, 0f)));
         animatorController.addEffect(EAnimation.HAND_FLY_PROPELS, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_HAND_FLY_PROPELS));
+        // KI_FINAL_ATTACK
+        animatorController.addAnimation(EAnimation.KI_FINAL_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaFinalFlash.png", 247, 247), EAnimation.KI_FINAL_ATTACK.isLoop(), 0, 10, 0, 1, new int[]{120, 300, 120, 120, 120, 120, 120, 10000, 150, 150}));
+        animatorController.addCollision(EAnimation.KI_FINAL_ATTACK, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaFinalFlash.json")));
+        animatorController.addConfig(EAnimation.KI_FINAL_ATTACK, 0, new AnimationConfigItem(VegetaActions.class.getMethod("kiFinalAttack", GameObject.class), false));
+        animatorController.addEffect(EAnimation.KI_FINAL_ATTACK, 0, 0, EffectFactory.createSoundEffect(ESound.VEGETA_FINAL_FLASH));
         // KI_SPE_ATTACK
         animatorController.addAnimation(EAnimation.KI_SPE_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaKiBurst.png", 247, 247), EAnimation.KI_SPE_ATTACK.isLoop(), 0, 6, 0, 1, new int[]{150, 150, 150, 200, 300, 150}));
         animatorController.addCollision(EAnimation.KI_SPE_ATTACK, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaKiBurst.json")));
@@ -300,7 +305,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addAnimation(EAnimation.KI_CHARGE, 1, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaKiCharge2.png", 247, 247), EAnimation.KI_CHARGE.isLoop(), 0, 4, 0, 1, new int[]{100, 100, 100, 100}));
         animatorController.addCollision(EAnimation.KI_CHARGE, 1, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaKiCharge2.json")));
         animatorController.addConfig(EAnimation.KI_CHARGE, 1, new AnimationConfigItem(VegetaActions.class.getMethod("kiChargeAction", GameObject.class), false, EAnimation.KI_CHARGE, 2));
-        animatorController.addEffect(EAnimation.KI_CHARGE, 1, 0, EffectFactory.createAnimationEffect(AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaKi.png", 247, 247), false, 0, 4, 0, 1, new int[]{100, 100, 100, 100}), -47, 0, false));
+        animatorController.addEffect(EAnimation.KI_CHARGE, 1, 0, EffectFactory.createAnimationEffect(AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaKi.png", 247, 247), false, 0, 4, 0, 1, new int[]{100, 100, 100, 100}), -60, 0, false));
         animatorController.addAnimation(EAnimation.KI_CHARGE, 2, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaKiCharge3.png", 247, 247), EAnimation.KI_CHARGE.isLoop(), 0, 1, 0, 1, new int[]{150}));
         animatorController.addCollision(EAnimation.KI_CHARGE, 2, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaKiCharge3.json")));
         animatorController.addConfig(EAnimation.KI_CHARGE, 2, new AnimationConfigItem(EAnimation.IDLE, 0));
@@ -348,7 +353,18 @@ public class AnimatorGameFactory extends AnimatorFactory {
     public AnimatorController getEntityAnimator(ESprites index) throws SlickException, JSONException, NoSuchMethodException {
         AnimatorController animatorController = new AnimatorController();
 
-        if (index == ESprites.KAMEHA) {
+        if (index == ESprites.FINAL_FLASH) {
+            animatorController.addAnimation(EAnimation.RUN, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/finalFlash" + "/finalFlash_head.png", 247, 247), true, 0, 1, 0, 1, new int[]{150}));
+            animatorController.addCollision(EAnimation.RUN, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/finalFlash" + "/finalFlash_head.json")));
+            animatorController.addRepercussion(EAnimation.RUN, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_FALL, 1, new Pair<>(GameConfig.speedTravel, 0f)));
+            animatorController.forceCurrentAnimationType(EAnimation.RUN);
+        } else if (index == ESprites.FINAL_FLASH_Back) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/finalFlash" + "/finalFlash_back2.png", 247, 247), true, 0, 1, 0, 1, new int[]{200}));
+            animatorController.addCollision(EAnimation.IDLE, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/finalFlash" + "/finalFlash_back2.json")));
+        } else if (index == ESprites.FINAL_FLASH_Body) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/finalFlash" + "/finalFlash_body.png", 247, 247), true, 0, 1, 0, 1, new int[]{250, 250}));
+            animatorController.addCollision(EAnimation.IDLE, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/finalFlash" + "/finalFlash_body.json")));
+        } else if (index == ESprites.KAMEHA) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_head0.png", 247, 247), false, 0, 2, 0, 1, new int[]{150, 150}));
             animatorController.addCollision(EAnimation.IDLE, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_head0.json")));
             animatorController.addConfig(EAnimation.IDLE, 0, new AnimationConfigItem(EAnimation.RUN, 0));
