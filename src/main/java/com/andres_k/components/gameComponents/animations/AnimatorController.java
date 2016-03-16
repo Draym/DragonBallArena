@@ -314,6 +314,10 @@ public class AnimatorController implements Observer {
         return new Pair<>(0f, 0f);
     }
 
+    public boolean hasNextRequired() {
+        return this.nextRequiredAnimation.getV1() != EAnimation.NULL;
+    }
+
     public boolean isPrintable() {
         return this.printable;
     }
@@ -375,8 +379,13 @@ public class AnimatorController implements Observer {
         return this.eyesDirection;
     }
 
-    public boolean canSwitchCurrent() throws SlickException {
-        return this.currentAnimation().isStopped() || EAnimation.checkLoop(this.current);
+    public boolean canSwitchCurrent() {
+        try {
+            return this.currentAnimation().isStopped() || EAnimation.checkLoop(this.current);
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     public boolean animationHasNextAnimation() {

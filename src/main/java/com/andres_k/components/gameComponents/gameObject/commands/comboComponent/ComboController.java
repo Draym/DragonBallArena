@@ -44,27 +44,14 @@ public class ComboController {
     public boolean nextComboStep(AnimatorController animatorController, EInput input) {
         if (this.counter >= this.combos.getCurrentDuration() && this.combos.getCurrentDuration() != -1)
             this.history.clear();
-        this.history.add(input);
-/*
-        Console.write("/---");
-        for (EInput val : this.history)
-            Console.write(val.getValue());
-        Console.write("---");
-*/
-        if (this.combos.hasCombo(this.history)) {
-            this.counter = 0;
-/*
-            try {
-                animatorController.changeAnimation(this.combos.getCombo().getCurrentAnimation(), this.combos.getCombo().getCurrentAnimIndex());
-            } catch (Exception e) {
-                e.printStackTrace();
+            this.history.add(input);
+            if (this.combos.hasCombo(this.history)) {
+                this.counter = 0;
+                return true;
             }
-  */
-            return true;
-        }
-//        Console.write("NO COMBO");
-        this.counter = -1;
-        this.reset();
+            this.counter = -1;
+            this.reset();
+
         return false;
     }
 
