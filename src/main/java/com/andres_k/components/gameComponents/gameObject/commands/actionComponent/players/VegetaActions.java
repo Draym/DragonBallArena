@@ -32,10 +32,12 @@ public class VegetaActions extends BasicActions {
         object.getMovement().addPushY(-0.25f);
         object.getMovement().setPushY(0);
         object.getMovement().setUseGravity(true);
-        object.getMovement().setPushX(GameConfig.speedTravel * 2f);
+        object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
         try {
-            if (object.getAnimatorController().currentAnimation().getFrame() == 0) {
-                object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
+            if (object.getAnimatorController().currentAnimation().getFrame() <= 2) {
+                object.getMovement().setPushX(GameConfig.speedTravel * 2f);
+            } else {
+                object.getMovement().setPushX(GameConfig.speedTravel / 2f);
             }
         } catch (SlickException e) {
             e.printStackTrace();
@@ -52,6 +54,23 @@ public class VegetaActions extends BasicActions {
                 object.getMovement().setPushX(GameConfig.speedTravel * 2f);
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void kneesAttack(GameObject object) {
+        try {
+            object.getMovement().setUseGravity(false);
+            object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
+            if (object.getAnimatorController().currentAnimation().getFrame() >= 1 &&
+                    object.getAnimatorController().currentAnimation().getFrame() <= 3) {
+                object.getMovement().setPushX(GameConfig.speedTravel * 1.5f);
+                object.getMovement().setPushY(-GameConfig.speedTravel / 5);
+            } else {
+                object.getMovement().setPushX(0);
+                object.getMovement().setPushY(0);
+            }
+        } catch (SlickException e) {
             e.printStackTrace();
         }
     }
@@ -89,7 +108,7 @@ public class VegetaActions extends BasicActions {
     public static void spiralKick(GameObject object) {
         object.getMovement().setUseGravity(false);
         object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
-        object.getMovement().setPushX(GameConfig.speedTravel * 2f);
+        object.getMovement().setPushX(GameConfig.speedTravel);
         object.getMovement().setPushY(-GameConfig.speedTravel / 3f);
     }
 

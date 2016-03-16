@@ -34,9 +34,12 @@ public enum EAnimation {
     TOUCHED_FALL(false),
 
     // ATTACK
+    JUMP_ATTACK(false),
+    MOVE_ATTACK(false),
     RUSH_ATTACK(false),
     HAND_ATTACK(false),
     HAND_FLY_PROPELS(false),
+    KNEES_ATTACK(false),
     JUMP_KICK(false),
     SPIRAL_KICK(false),
     KICK_ATTACK(false),

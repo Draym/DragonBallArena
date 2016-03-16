@@ -109,6 +109,7 @@ public class ComboFactory {
         if (type == ECombos.HAND_ATTACK) {
             addElement(combo, EInput.ATTACK_A, EAnimation.HAND_ATTACK, 0, EAnimation.TOUCHED_SIMPLE, 0, true, 1000, 1);
             addElement(combo, EInput.ATTACK_A, EAnimation.HAND_ATTACK, 1, true, 1000, 3);
+            addElement(combo, EInput.ATTACK_B, EAnimation.KNEES_ATTACK, 1, true, 1000, 1);
         } else if (type == ECombos.MOVE_HAND_ATTACK_RIGHT) {
             addElement(combo, EInput.MOVE_RIGHT, EAnimation.NULL, 0, false, -1, 1);
             addElement(combo, EInput.ATTACK_A, EAnimation.HAND_ATTACK, 1, EAnimation.TOUCHED_SIMPLE, 0, true, 250, 2);
