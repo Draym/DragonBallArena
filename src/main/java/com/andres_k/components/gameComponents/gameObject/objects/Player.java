@@ -303,15 +303,12 @@ public class Player extends PhysicalObject {
         if (!this.wasHit) {
             float enemyDamage = enemy.getDamage();
             enemy.powerAfterDoDamage((enemyDamage - this.currentLife < 0 ? 0 : enemyDamage - this.currentLife));
-            this.currentLife -= enemyDamage;
-            CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "life", this.currentLife / this.maxLife))));
-            if (this.currentLife <= 0) {
-                this.die();
-            }
+            this.incrementCurrentLife(-enemyDamage);
+
             AnimationRepercussionItem repercussionItem = enemy.getAnimatorController().getCurrentContainer().getRepercussion();
-            if (repercussionItem != null && this.animatorController.currentAnimationType() != repercussionItem.getTargetType()) {
-                this.animatorController.forceCurrentAnimationType(repercussionItem.getTargetType());
-                this.animatorController.forceCurrentAnimationIndex(repercussionItem.getTargetIndex());
+            if (repercussionItem != null) {
+                repercussionItem.applyAnimationRepercussion(this);
+                repercussionItem.applyEffectRepercussion(enemy, this);
             }
             this.setLastAttacker(enemy);
             this.wasHit = true;
@@ -320,6 +317,15 @@ public class Player extends PhysicalObject {
     }
 
     // SETTERS
+
+    @Override
+    public boolean setCurrentLife(float value) {
+        if (super.setCurrentLife(value)) {
+            CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "life", value / this.maxLife))));
+            return true;
+        }
+        return false;
+    }
 
     public void setCurrentKi(int value) {
         this.currentKi = value;

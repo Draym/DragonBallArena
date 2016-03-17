@@ -150,7 +150,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addAnimation(EAnimation.KI_SIMPLE_PROPELS, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuKiSimplePropels.png", 247, 247), EAnimation.KI_SIMPLE_PROPELS.isLoop(), 0, 10, 0, 1, new int[]{110, 90, 80, 80, 60, 80, 110, 110, 100, 80}));
         animatorController.addCollision(EAnimation.KI_SIMPLE_PROPELS, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuKiSimplePropels.json")));
         animatorController.addConfig(EAnimation.KI_SIMPLE_PROPELS, 0, new AnimationConfigItem(EAnimation.IDLE, 0));
-        animatorController.addRepercussion(EAnimation.KI_SIMPLE_PROPELS, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_FALL, 70, new Pair<>(GameConfig.speedTravel * 2f, -0.5f)));
+        animatorController.addRepercussion(EAnimation.KI_SIMPLE_PROPELS, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_PROJECTED, 70, new Pair<>(GameConfig.speedTravel * 2f, -0.5f)));
         animatorController.addEffect(EAnimation.KI_SIMPLE_PROPELS, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_HAND_FLY_PROPELS));
         // KI_SPE_ATTACK
         animatorController.addAnimation(EAnimation.KI_SPE_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuKamehameha1.png", 247, 247), EAnimation.KI_SPE_ATTACK.isLoop(), 0, 4, 0, 1, new int[]{300, 350, 400, 700}));
@@ -206,6 +206,10 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addAnimation(EAnimation.TOUCHED_FLIP, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuTouchedFlip.png", 247, 247), EAnimation.TOUCHED_FLIP.isLoop(), 0, 4, 0, 1, new int[]{150, 150, 150, 150}));
         animatorController.addCollision(EAnimation.TOUCHED_FLIP, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuTouchedFlip.json")));
         animatorController.addConfig(EAnimation.TOUCHED_FLIP, 0, new AnimationConfigItem(GokuActions.class.getMethod("touchedFlip", GameObject.class), true, EAnimation.TOUCHED_FALL));
+        // TOUCHED_PROJECTED
+        animatorController.addAnimation(EAnimation.TOUCHED_PROJECTED, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuTouchedProjected.png", 247, 247), EAnimation.TOUCHED_PROJECTED.isLoop(), 0, 1, 0, 1, new int[]{500}));
+        animatorController.addCollision(EAnimation.TOUCHED_PROJECTED, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuTouchedProjected.json")));
+        animatorController.addConfig(EAnimation.TOUCHED_PROJECTED, 0, new AnimationConfigItem(VegetaActions.class.getMethod("touchedProjected", GameObject.class), true, EAnimation.TOUCHED_FALL));
         //TOUCHED_FALL
         animatorController.addAnimation(EAnimation.TOUCHED_FALL, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuTouchedFall.png", 247, 247), EAnimation.TOUCHED_FALL.isLoop(), 0, 1, 0, 1, new int[]{10000}));
         animatorController.addCollision(EAnimation.TOUCHED_FALL, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuTouchedFall.json")));
@@ -271,10 +275,10 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addConfig(EAnimation.HAND_ATTACK, 0, new AnimationConfigItem(VegetaActions.class.getMethod("handAttack", GameObject.class), true));
         animatorController.addRepercussion(EAnimation.HAND_ATTACK, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_SIMPLE, 40, new Pair<>(GameConfig.speedTravel * 2f, 0f), true));
         // HAND_FLY_PROPELS
-        animatorController.addAnimation(EAnimation.HAND_FLY_PROPELS, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaHandPropels1.png", 247, 247), EAnimation.HAND_FLY_PROPELS.isLoop(), 0, 5, 0, 1, new int[]{150, 120, 100, 120, 100}));
+        animatorController.addAnimation(EAnimation.HAND_FLY_PROPELS, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaHandPropels1.png", 247, 247), EAnimation.HAND_FLY_PROPELS.isLoop(), 0, 5, 0, 1, new int[]{150, 120, 100, 120, 150}));
         animatorController.addCollision(EAnimation.HAND_FLY_PROPELS, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaHandPropels1.json")));
         animatorController.addConfig(EAnimation.HAND_FLY_PROPELS, 0, new AnimationConfigItem(VegetaActions.class.getMethod("handFlyPropels", GameObject.class), false, EAnimation.FALL));
-        animatorController.addRepercussion(EAnimation.HAND_FLY_PROPELS, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_FLIP, 50, new Pair<>(0f, 0f)));
+        animatorController.addRepercussion(EAnimation.HAND_FLY_PROPELS, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_FLIP, 0, 50, 0, 0, 50, 100, 0, new Pair<>(0f, 0f), false));
         animatorController.addEffect(EAnimation.HAND_FLY_PROPELS, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_HAND_FLY_PROPELS));
         // MOVE_HAND_ATTACK
         animatorController.addAnimation(EAnimation.MOVE_HAND_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaMoveHandAttack1.png", 247, 247), EAnimation.MOVE_HAND_ATTACK.isLoop(), 0, 4, 0, 1, new int[]{200, 150, 200, 200}));
@@ -308,7 +312,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addAnimation(EAnimation.KICK_PROPELS, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaKickPropels.png", 247, 247), EAnimation.KICK_PROPELS.isLoop(), 0, 5, 0, 1, new int[]{200, 150, 150, 100, 100}));
         animatorController.addCollision(EAnimation.KICK_PROPELS, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaKickPropels.json")));
         animatorController.addConfig(EAnimation.KICK_PROPELS, 0, new AnimationConfigItem(VegetaActions.class.getMethod("kickPropelsAttack", GameObject.class), false, EAnimation.IDLE));
-        animatorController.addRepercussion(EAnimation.KICK_PROPELS, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_FLIP, 80, new Pair<>(0f, -GameConfig.speedTravel)));
+        animatorController.addRepercussion(EAnimation.KICK_PROPELS, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_FLIP, 80, new Pair<>(GameConfig.speedTravel / 2f, -GameConfig.speedTravel)));
         animatorController.addEffect(EAnimation.KICK_PROPELS, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_KICK_PROPELS));
         //KICK_ATTACK
         animatorController.addAnimation(EAnimation.KICK_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaKickAttack1.png", 247, 247), EAnimation.KICK_ATTACK.isLoop(), 0, 2, 0, 1, new int[]{120, 120}));
@@ -339,6 +343,10 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addAnimation(EAnimation.KI_BASIC_ATTACK, 1, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaKiBlast2.png", 247, 247), EAnimation.KI_BASIC_ATTACK.isLoop(), 0, 4, 0, 1, new int[]{80, 150, 80, 150}));
         animatorController.addCollision(EAnimation.KI_BASIC_ATTACK, 1, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaKiBlast2.json")));
         animatorController.addConfig(EAnimation.KI_BASIC_ATTACK, 1, new AnimationConfigItem(VegetaActions.class.getMethod("kiBasicAttack", GameObject.class), false));
+        // KI_EXPLODE
+        animatorController.addAnimation(EAnimation.KI_EXPLODE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaKiExplode.png", 247, 247), EAnimation.KI_EXPLODE.isLoop(), 0, 6, 0, 1, new int[]{100, 100, 150, 150, 300, 150}));
+        animatorController.addCollision(EAnimation.KI_EXPLODE, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaKiExplode.json")));
+        animatorController.addConfig(EAnimation.KI_EXPLODE, 0, new AnimationConfigItem(VegetaActions.class.getMethod("kiExplode", GameObject.class), false));
         // KI_CHARGE
         animatorController.addAnimation(EAnimation.KI_CHARGE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaKiCharge1.png", 247, 247), EAnimation.KI_CHARGE.isLoop(), 0, 2, 0, 1, new int[]{200, 150}));
         animatorController.addCollision(EAnimation.KI_CHARGE, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaKiCharge1.json")));
@@ -369,6 +377,10 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addAnimation(EAnimation.TOUCHED_FLIP, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaTouchedFlip.png", 247, 247), EAnimation.TOUCHED_FLIP.isLoop(), 0, 4, 0, 1, new int[]{150, 150, 150, 150}));
         animatorController.addCollision(EAnimation.TOUCHED_FLIP, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaTouchedFlip.json")));
         animatorController.addConfig(EAnimation.TOUCHED_FLIP, 0, new AnimationConfigItem(VegetaActions.class.getMethod("touchedFlip", GameObject.class), true, EAnimation.TOUCHED_FALL));
+        // TOUCHED_PROJECTED
+        animatorController.addAnimation(EAnimation.TOUCHED_PROJECTED, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaTouchedProjected.png", 247, 247), EAnimation.TOUCHED_PROJECTED.isLoop(), 0, 1, 0, 1, new int[]{500}));
+        animatorController.addCollision(EAnimation.TOUCHED_PROJECTED, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaTouchedProjected.json")));
+        animatorController.addConfig(EAnimation.TOUCHED_PROJECTED, 0, new AnimationConfigItem(VegetaActions.class.getMethod("touchedProjected", GameObject.class), true, EAnimation.TOUCHED_FALL));
         //TOUCHED_FALL
         animatorController.addAnimation(EAnimation.TOUCHED_FALL, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaTouchedFall.png", 247, 247), EAnimation.TOUCHED_FALL.isLoop(), 0, 1, 0, 1, new int[]{10000}));
         animatorController.addCollision(EAnimation.TOUCHED_FALL, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaTouchedFall.json")));
@@ -397,7 +409,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
         if (index == ESprites.FINAL_FLASH) {
             animatorController.addAnimation(EAnimation.RUN, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/finalFlash" + "/finalFlash_head.png", 247, 247), true, 0, 1, 0, 1, new int[]{150}));
             animatorController.addCollision(EAnimation.RUN, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/finalFlash" + "/finalFlash_head.json")));
-            animatorController.addRepercussion(EAnimation.RUN, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_FALL, 1, new Pair<>(GameConfig.speedTravel, 0f)));
+            animatorController.addRepercussion(EAnimation.RUN, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_PROJECTED, 1, new Pair<>(GameConfig.speedTravel, 0f)));
             animatorController.forceCurrentAnimationType(EAnimation.RUN);
         } else if (index == ESprites.FINAL_FLASH_Back) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/finalFlash" + "/finalFlash_back2.png", 247, 247), true, 0, 1, 0, 1, new int[]{200}));
@@ -413,7 +425,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animatorController.addConfig(EAnimation.IDLE, 0, new AnimationConfigItem(EAnimation.RUN, 0));
             animatorController.addAnimation(EAnimation.RUN, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_head1.png", 247, 247), true, 0, 2, 0, 1, new int[]{150, 150}));
             animatorController.addCollision(EAnimation.RUN, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_head1.json")));
-            animatorController.addRepercussion(EAnimation.RUN, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_MEDIUM, 1, new Pair<>(GameConfig.speedTravel, 0f)));
+            animatorController.addRepercussion(EAnimation.RUN, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_PROJECTED, 1, new Pair<>(GameConfig.speedTravel, 0f)));
         } else if (index == ESprites.KAMEHA_Back) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_back1.png", 247, 247), true, 0, 2, 0, 1, new int[]{200, 200}));
             animatorController.addCollision(EAnimation.IDLE, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_back1.json")));
@@ -439,7 +451,12 @@ public class AnimatorGameFactory extends AnimatorFactory {
         } else if (index == ESprites.KI_BURST) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kiBurst" + "/kiBurst.png", 247, 247), false, 0, 6, 0, 1, new int[]{100, 100, 200, 100, 70, 40}));
             animatorController.addCollision(EAnimation.IDLE, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kiBurst" + "/kiBurst.json")));
-            animatorController.addRepercussion(EAnimation.IDLE, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_FALL, 1, new Pair<>(GameConfig.speedTravel, 0f)));
+            animatorController.addRepercussion(EAnimation.IDLE, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_PROJECTED, 1, new Pair<>(GameConfig.speedTravel, -GameConfig.speedTravel / 3f)));
+            animatorController.addConfig(EAnimation.IDLE, 0, new AnimationConfigItem(EAnimation.EXPLODE, 0));
+        } else if (index == ESprites.KI_EXPLODE) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kiExplode" + "/kiExplode.png", 247, 247), false, 0, 4, 0, 1, new int[]{150, 150, 150, 150}));
+            animatorController.addCollision(EAnimation.IDLE, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kiExplode" + "/kiExplode.json")));
+            animatorController.addRepercussion(EAnimation.IDLE, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_PROJECTED, 1, new Pair<>(GameConfig.speedTravel, -GameConfig.speedTravel)));
             animatorController.addConfig(EAnimation.IDLE, 0, new AnimationConfigItem(EAnimation.EXPLODE, 0));
         }
         return animatorController;

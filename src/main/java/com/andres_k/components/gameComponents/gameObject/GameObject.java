@@ -125,10 +125,7 @@ public abstract class GameObject {
 
     protected boolean getHit(float damage) {
         if (!this.wasHit) {
-            this.currentLife -= damage;
-            if (this.currentLife <= 0) {
-                this.die();
-            }
+            this.incrementCurrentLife(-damage);
             this.wasHit = true;
             this.resetHitStatus();
             return true;
@@ -225,6 +222,19 @@ public abstract class GameObject {
         return EDirection.NONE;
     }
     // SETTERS
+
+    public boolean setCurrentLife(float value) {
+        this.currentLife = (value > this.maxLife ? this.maxLife : value);
+        if (this.currentLife <= 0) {
+            this.die();
+            return false;
+        }
+        return true;
+    }
+
+    public void incrementCurrentLife(float value) {
+        this.setCurrentLife(this.currentLife + value);
+    }
 
     public void setOnEarth(boolean value) {
         this.movement.setOnEarth(value);

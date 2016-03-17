@@ -29,6 +29,7 @@ public class Goku extends Player {
             this.checkBeforeLaunch.put(EAnimation.KI_SPE_ATTACK, this.getClass().getMethod("checkToLaunchKamehameha"));
             this.checkBeforeLaunch.put(EAnimation.KI_BASIC_ATTACK, this.getClass().getMethod("checkToLaunchKiBlast"));
             this.checkBeforeLaunch.put(EAnimation.KI_CHARGE, this.getClass().getMethod("checkToLaunchKiCharge"));
+            this.checkBeforeLaunch.put(EAnimation.RUSH, this.getClass().getMethod("checkToLaunchRush"));
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -52,6 +53,11 @@ public class Goku extends Player {
         } catch (SlickException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean checkToLaunchRush() {
+        this.incrementCurrentKi(-1);
+        return (this.currentKi > 1);
     }
 
     public boolean checkToLaunchKamehameha() {

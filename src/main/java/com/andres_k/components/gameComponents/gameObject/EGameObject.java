@@ -30,6 +30,7 @@ public enum EGameObject {
     WALL("Wall", BORDER.getValue()),
 
     //entities
+    KI_EXPLODE("KI_EXPLODE", ENTITY.getValue()),
     KI_BLAST("KI_BLAST", ENTITY.getValue()),
     KI_BURST("KI_BURST", ENTITY.getValue()),
     KI_FINAL("KI_FINAL", ENTITY.getValue()),

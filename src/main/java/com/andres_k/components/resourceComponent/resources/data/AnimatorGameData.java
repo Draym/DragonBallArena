@@ -35,6 +35,7 @@ public class AnimatorGameData extends DataManager {
         this.methods.clear();
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initPlayers")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initItems")));
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initItems2")));
     }
 
     @Override
@@ -54,12 +55,16 @@ public class AnimatorGameData extends DataManager {
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.VEGETA_KI_BLAST_BACK), EGameObject.VEGETA_KI_BLAST_BACK);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.VEGETA_KI_BLAST_HEAD), EGameObject.VEGETA_KI_BLAST_HEAD);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.KI_BURST), EGameObject.KI_BURST);
+    }
+
+    public void initItems2() throws NoSuchMethodException, SlickException, JSONException {
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.KAMEHA), EGameObject.KAMEHA);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.KAMEHA_Back), EGameObject.KAMEHA_Back);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.KAMEHA_Body), EGameObject.KAMEHA_Body);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.FINAL_FLASH), EGameObject.FINAL_FLASH);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.FINAL_FLASH_Back), EGameObject.FINAL_FLASH_Back);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.FINAL_FLASH_Body), EGameObject.FINAL_FLASH_Body);
+        this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.KI_EXPLODE), EGameObject.KI_EXPLODE);
     }
 
     private void addPlayerAnimator(AnimatorController animatorController, EGameObject type) {

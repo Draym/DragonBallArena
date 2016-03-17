@@ -4,7 +4,6 @@ import com.andres_k.components.gameComponents.animations.details.AnimationReperc
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.utils.configs.GameConfig;
-import org.newdawn.slick.SlickException;
 
 /**
  * Created by andres_k on 17/11/2015.
@@ -47,7 +46,7 @@ public class BasicActions {
         object.getMovement().setUseGravity(false);
         AnimationRepercussionItem repercussionItem = object.getLastAttacker().getAnimatorController().getCurrentContainer().getRepercussion();
         if (repercussionItem != null) {
-            repercussionItem.applyRepercussion(object);
+            repercussionItem.applyMoveRepercussion(object);
         }
     }
 
@@ -55,7 +54,7 @@ public class BasicActions {
         object.getMovement().setUseGravity(false);
         AnimationRepercussionItem repercussionItem = object.getLastAttacker().getAnimatorController().getCurrentContainer().getRepercussion();
         if (repercussionItem != null) {
-            repercussionItem.applyRepercussion(object);
+            repercussionItem.applyMoveRepercussion(object);
         }
     }
 
@@ -63,7 +62,7 @@ public class BasicActions {
         object.getMovement().setUseGravity(false);
         AnimationRepercussionItem repercussionItem = object.getLastAttacker().getAnimatorController().getCurrentContainer().getRepercussion();
         if (repercussionItem != null) {
-            repercussionItem.applyRepercussion(object);
+            repercussionItem.applyMoveRepercussion(object);
         }
     }
 
@@ -72,7 +71,16 @@ public class BasicActions {
         object.getMovement().setPushY(0f);
         AnimationRepercussionItem repercussionItem = object.getLastAttacker().getAnimatorController().getCurrentContainer().getRepercussion();
         if (repercussionItem != null) {
-            repercussionItem.applyRepercussion(object);
+            repercussionItem.applyMoveRepercussion(object);
+        }
+    }
+
+    public static void touchedProjected(GameObject object) {
+        object.getMovement().setUseGravity(false);
+        object.getMovement().setPushY(0f);
+        AnimationRepercussionItem repercussionItem = object.getLastAttacker().getAnimatorController().getCurrentContainer().getRepercussion();
+        if (repercussionItem != null) {
+            repercussionItem.applyMoveRepercussion(object);
         }
     }
 
@@ -84,15 +92,8 @@ public class BasicActions {
 
     public static void touchedReceipt(GameObject object) {
         object.getMovement().setUseGravity(false);
-        try {
-            if (object.getAnimatorController().currentAnimation().getFrame() >= 2) {
-                object.getMovement().setPushY(0f);
-            } else {
-                object.getMovement().setPushY(0f);
-            }
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
+        object.getMovement().setPushX(0);
+        object.getMovement().setPushY(0);
     }
 
     // MOVEMENT

@@ -64,7 +64,7 @@ public class VegetaActions extends BasicActions {
         object.getMovement().setUseGravity(false);
         object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
         if (object.getAnimatorController().getIndex() == 1 || object.getAnimatorController().getIndex() == 2) {
-            object.getMovement().setPushX(GameConfig.speedTravel * 2f);
+            object.getMovement().setPushX(GameConfig.speedTravel / 2f);
             object.getMovement().setPushY(-GameConfig.speedTravel / 2f);
         } else {
             object.getMovement().setPushX(0);
@@ -170,6 +170,18 @@ public class VegetaActions extends BasicActions {
             object.getMovement().setUseGravity(false);
             if (object.getAnimatorController().currentAnimation().getFrame() == 3) {
                 object.doTask(new Pair<>(ETaskType.CREATE, EGameObject.KI_BURST.toString()));
+            }
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void kiExplode(GameObject object) {
+        try {
+            object.getMovement().stopMovement();
+            object.getMovement().setUseGravity(false);
+            if (object.getAnimatorController().currentAnimation().getFrame() == 2) {
+                object.doTask(new Pair<>(ETaskType.CREATE, EGameObject.KI_EXPLODE.toString()));
             }
         } catch (SlickException e) {
             e.printStackTrace();

@@ -153,8 +153,15 @@ public class ComboFactory {
             addElement(combo, EInput.ATTACK_SPE, EAnimation.NULL, 0, false, 150, 1);
             addElement(combo, EInput.ATTACK_D, EAnimation.KI_SPE_ATTACK, 0, true, 100, 1);
         } else if (type == ECombos.KI_FINAL_ATTACK) {
-            addElement(combo, EInput.ATTACK_SPE, EAnimation.NULL, 0, false, 200, 2);
-            addElement(combo, EInput.ATTACK_D, EAnimation.KI_FINAL_ATTACK, 0, true, 100, 1);
+            addElement(combo, EInput.ATTACK_SPE, EAnimation.NULL, 0, false, 300, 2);
+            addElement(combo, EInput.ATTACK_B, EAnimation.NULL, 0, false, 300, 1);
+            addElement(combo, EInput.ATTACK_A, EAnimation.NULL, 0, false, 300, 1);
+            addElement(combo, EInput.ATTACK_C, EAnimation.NULL, 0, false, 300, 1);
+            addElement(combo, EInput.ATTACK_D, EAnimation.KI_FINAL_ATTACK, 0, true, 300, 1);
+        } else if (type == ECombos.KI_EXPLODE) {
+            addElement(combo, EInput.ATTACK_SPE, EAnimation.NULL, 0, false, 300, 2);
+            addElement(combo, EInput.ATTACK_B, EAnimation.NULL, 0, false, 300, 1);
+            addElement(combo, EInput.ATTACK_D, EAnimation.KI_EXPLODE, 0, true, 300, 1);
         }
         return combo;
     }
