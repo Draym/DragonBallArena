@@ -34,7 +34,7 @@
     },
     {
       "name": "Ki Charge",
-      "combo": "SPE - SPE -SPE"
+      "combo": "SPE - SPE - SPE"
     },
     {
       "name": "Ki Basic",
@@ -43,6 +43,10 @@
     {
       "name": "Ki Spe",
       "combo": "SPE - D"
+    },
+    {
+      "name": "Ki Final",
+      "combo": "SPE - SPE - C - A - B - D"
     }
   ],
   "Vegeta": [
@@ -87,12 +91,12 @@
       "combo": "SPE - D"
     },
     {
-      "name": "Ki Final",
-      "combo": "SPE - SPE - B - A - C - D"
-    },
-    {
       "name": "Ki Explode",
       "combo": "SPE - SPE - B - D"
+    },
+    {
+      "name": "Ki Final",
+      "combo": "SPE - SPE - B - A - C - D"
     }
   ]
 }

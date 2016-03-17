@@ -2,6 +2,7 @@ package com.andres_k.components.graphicComponents.effects;
 
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
+import com.andres_k.components.graphicComponents.effects.effect.directive.ClearEffects;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -34,7 +35,11 @@ public class EffectManager {
     public void activateEffects(int index) {
         this.stockedEffects.stream().forEach(entity -> {
             if (entity.getV1() == index) {
-                this.playEffect(entity.getV2().getV1(), entity.getV2().getV2());
+                if (entity.getV2().getV2() instanceof ClearEffects) {
+                    this.availableEffects.clear();
+                } else {
+                    this.playEffect(entity.getV2().getV1(), entity.getV2().getV2());
+                }
             }
         });
     }

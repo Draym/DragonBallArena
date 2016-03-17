@@ -3,7 +3,7 @@ package com.andres_k.components.gameComponents.gameObject.objects.entities.ki.li
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
-import com.andres_k.components.gameComponents.gameObject.objects.entities.ki.KiLinkedAttack;
+import com.andres_k.components.gameComponents.gameObject.objects.entities.ki.KiProjectiles;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
@@ -11,13 +11,12 @@ import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.stockage.Pair;
 
 /**
- * Created by andres_k on 01/03/2016.
+ * Created by andres_k on 17/03/2016.
  */
-public class StaticKiRay extends KiLinkedAttack {
+public class Genkidama extends KiProjectiles {
 
-    public StaticKiRay(AnimatorController head, AnimatorController body, AnimatorController back, EGameObject type, String parent, float x, float y, EDirection direction, float damage, float speed, float weight) {
-        super(head, body, back, type, parent, x, y, direction, damage, speed, weight);
-        this.saveX = x;
+    public Genkidama(AnimatorController animatorController, EGameObject type, String parent, float x, float y, EDirection direction, float damage, float speed, float weight) {
+        super(animatorController, type, parent, x, y, direction, damage, speed, weight);
     }
 
     @Override
@@ -27,5 +26,4 @@ public class StaticKiRay extends KiLinkedAttack {
             CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(this.parent, new Pair<>(ETaskType.NEXT, "frame"))));
         }
     }
-
 }

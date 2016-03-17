@@ -29,11 +29,19 @@ public class MathTools {
         return new Pair<>(x * delta, y * delta);
     }
 
-    public static void flip(int mode, Rectangle container, Pair<Float, Float> point, Pair<Float, Float> sizes) {
+    public static void flipRect(int mode, Rectangle container, Pair<Float, Float> point, Pair<Float, Float> sizes) {
         if (mode == 1) {
             point.setV1(container.getMaxX() - (point.getV1() - container.getMinX()) - sizes.getV1());
         } else {
             point.setV2(container.getMaxY() - (point.getV2() - container.getMinY()) - sizes.getV2());
+        }
+    }
+
+    public static void flipCircle(int mode, Rectangle container, Pair<Float, Float> point, Pair<Float, Float> sizes) {
+        if (mode == 1) {
+            point.setV1(container.getMaxX() - (point.getV1() - container.getMinX()));
+        } else {
+            point.setV2(container.getMaxY() - (point.getV2() - container.getMinY()));
         }
     }
 

@@ -88,7 +88,7 @@ public abstract class KiLinkedAttack extends KiAttack {
 
     @Override
     public boolean isNeedDelete() {
-        return (this.animatorController == null || (this.back != null && this.back.isDeleted()));
+        return (this.animatorController == null || (this.back != null && this.back.isDeleted()) || (this.back == null && this.animatorController.isDeleted()));
     }
 
     @Override

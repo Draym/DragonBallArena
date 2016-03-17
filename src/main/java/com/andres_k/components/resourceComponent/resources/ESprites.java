@@ -95,6 +95,7 @@ public enum ESprites {
     FINAL_FLASH(ENTITY.getIndex()),
     FINAL_FLASH_Back(ENTITY.getIndex()),
     FINAL_FLASH_Body(ENTITY.getIndex()),
+    GENKIDAMA(ENTITY.getIndex()),
 
     //background
     LOAD_SCREEN(SCREEN_BACKGROUND.getIndex()),

@@ -73,8 +73,13 @@ public class BodyRect {
     public Shape getFlippedRect(boolean haveToFlip, Rectangle container, float posX, float posY) {
         Pair<Float, Float> newPoint = new Pair<>(this.positions.getV1() + container.getMinX(), this.positions.getV2() + container.getMinY());
 
-        if (haveToFlip)
-            MathTools.flip(1, container, newPoint, this.sizes);
+        if (haveToFlip) {
+            if (this.sizes.getV2() < 0) {
+                MathTools.flipCircle(1, container, newPoint, this.sizes);
+            } else {
+                MathTools.flipRect(1, container, newPoint, this.sizes);
+            }
+        }
 
         if (this.sizes.getV2() < 0) {
             return new Circle(newPoint.getV1(), newPoint.getV2(), this.sizes.getV1());

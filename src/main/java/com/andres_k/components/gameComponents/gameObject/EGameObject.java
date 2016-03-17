@@ -42,6 +42,7 @@ public enum EGameObject {
     FINAL_FLASH("FINAL_FLASH", ENTITY.getValue()),
     FINAL_FLASH_Back("FINAL_FLASH", ENTITY.getValue()),
     FINAL_FLASH_Body("FINAL_FLASH", ENTITY.getValue()),
+    GENKIDAMA("GENKIDAMA", ENTITY.getValue()),
 
     //players
     GOKU("Goku", PLAYER.getValue()),

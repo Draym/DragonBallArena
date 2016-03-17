@@ -150,4 +150,17 @@ public class GokuActions extends BasicActions {
             e.printStackTrace();
         }
     }
+
+    // GENKIDAMA
+    public static void kiFinalAttack(GameObject object) {
+        try {
+            object.getMovement().stopMovement();
+            object.getMovement().setUseGravity(false);
+            if (object.getAnimatorController().currentAnimation().getFrame() == 5) {
+                object.doTask(new Pair<>(ETaskType.CREATE, EGameObject.GENKIDAMA.toString()));
+            }
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+    }
 }

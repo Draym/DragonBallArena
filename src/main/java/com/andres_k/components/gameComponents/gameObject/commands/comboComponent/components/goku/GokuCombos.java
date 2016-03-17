@@ -28,5 +28,6 @@ public class GokuCombos extends ComboManager {
         this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.KI_CHARGE));
         this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.KI_BASIC_ATTACK));
         this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.KI_SPE_ATTACK));
+        this.combos.add(ComboFactory.createCombo(EGameObject.GOKU, ECombos.KI_FINAL_ATTACK));
     }
 }

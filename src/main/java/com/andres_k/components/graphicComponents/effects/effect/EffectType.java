@@ -10,7 +10,8 @@ public enum EffectType {
     ZOOM("ZOOM"),
     HIDE("HIDE"),
     ANIMATION("ANIMATION"),
-    SOUND("SOUND");
+    SOUND("SOUND"),
+    CLEAR("CLEAR");
 
     public String value;
 
