@@ -36,7 +36,7 @@ public enum ELocation {
 
     //GUI_GLOBAL_ELEMENT
     GUI_ELEMENT_PlayerControls("Controls", MASTER.getId()),
-    GUI_ELEMENT_Combos("Combos", MASTER.getId()),
+    GUI_ELEMENT_CombosList("CombosList", MASTER.getId()),
     GUI_ELEMENT_Volumes("Volumes", MASTER.getId()),
 
     //LOAD_GUI

@@ -1,14 +1,20 @@
 package com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.game;
 
+import com.andres_k.components.gameComponents.gameObject.EGameObject;
+import com.andres_k.components.gameComponents.gameObject.commands.comboComponent.combo.ComboAvailableList;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElementsManager;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.ElementFactory;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.buttons.Button;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.ImageElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.TextElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.ElementWithTitle;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.complex.ComplexElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.list.ListElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.list.PaginatedList;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.modal.Modal;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.StringTimer;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorCircle;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.UserInterface;
@@ -17,12 +23,16 @@ import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
+import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.WindowConfig;
+import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
+import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Rectangle;
 
+import java.util.List;
 import java.util.Observable;
 
 /**
@@ -47,9 +57,9 @@ public class GameGUI extends UserInterface {
         buttonList.addItem(ElementFactory.createButtonTitleText("  Exit  ", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 25, EGuiElement.BUTTON_EXIT, ElementFactory.createBasicButtonTasks(ELocation.GAME_GUI, ELocation.GAME_CONTROLLER, EnumWindow.HOME), ElementFactory.createImageFocusTasks()));
         options.addItem(buttonList);
 
-        Modal controlsModal = new Modal(ELocation.GAME_GUI_Options.getId(), new ColorRect(new Rectangle(0, 0, WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1(), WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1()), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), options, true);
-        this.taskManager.register(controlsModal.getId(), controlsModal);
-        this.elements.add(controlsModal);
+        Modal optionModal = new Modal(ELocation.GAME_GUI_Options.getId(), new ColorRect(new Rectangle(0, 0, WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1(), WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1()), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), options, true);
+        this.taskManager.register(optionModal.getId(), optionModal);
+        this.elements.add(optionModal);
 
         // settings
         ComplexElement settings = new ComplexElement(new ColorRect(new Rectangle(WindowConfig.get().centerPosX(EnumWindow.GAME, 582), WindowConfig.get().centerPosY(EnumWindow.GAME, 488), 582, 488)), true);
@@ -83,15 +93,40 @@ public class GameGUI extends UserInterface {
         this.taskManager.register(enemy.getId(), enemy);
         this.elements.add(enemy);
 
+        // combos
+        PaginatedList playerCombos = new PaginatedList(ELocation.GUI_ELEMENT_CombosList.getId(), new ColorRect(new Rectangle(5, 50, 570, 390)), new ColorRect(new Rectangle(20, 60, 540, 310)), EGuiElement.TAB_STATUS, 10, 0, 20, 0, true, true);
+
+        ComplexElement combos = new ComplexElement(new ColorRect(new Rectangle(WindowConfig.get().centerPosX(EnumWindow.GAME, 582), WindowConfig.get().centerPosY(EnumWindow.GAME, 450), 582, 450)), true);
+        combos.addItem(new ImageElement((ResourceManager.get().getGuiAnimator(EGuiElement.PANEL3)), true));
+        combos.addItem(new Button(new ImageElement(new ColorCircle(new Circle(530, 15, 0)), ResourceManager.get().getGuiAnimator(EGuiElement.BUTTON_CLOSE), true), ElementFactory.createBasicButtonTasks(ELocation.UNKNOWN, ELocation.GAME_GUI_Combos, ETaskType.ON_KILL, ESound.NOTHING, ESound.UNVALIDATE)));
+        combos.addItem(playerCombos);
+
+        Modal comboModal = new Modal(ELocation.GAME_GUI_Combos.getId(), new ColorRect(new Rectangle(0, 0, WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1(), WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1()), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), combos);
+        comboModal.addTasks(ElementFactory.createBasicModalTasks(ELocation.GAME_GUI_Combos, ELocation.GAME_GUI_Options));
+        this.taskManager.register(comboModal.getId(), comboModal);
+        this.elements.add(comboModal);
+
         this.initElements();
     }
 
     @Override
-    public void initOnEnter() {
+    public void initOnEnter() throws SlickException {
         ListElement ally = (ListElement) this.getElementById(ELocation.GAME_GUI_State_AlliedPlayers.getId());
         ally.clearItems();
         ListElement enemy = (ListElement) this.getElementById(ELocation.GAME_GUI_State_EnemyPlayers.getId());
         enemy.clearItems();
+        PaginatedList combos = (PaginatedList) this.getElementById(ELocation.GUI_ELEMENT_CombosList.getId());
+        combos.clear();
+
+        for (EGameObject player : GameConfig.typePlayer) {
+            combos.createList(ElementFactory.createText(player.getValue(), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 0, 0), 0, 20);
+            List<Pair<String, String>> combosList = ComboAvailableList.get().getPlayerCombos(player);
+            for (Pair<String, String> item : combosList) {
+                TextElement title = new TextElement(new StringTimer(StringTools.formatIt(item.getV1(), 20, ":", 10, "")), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.BASIC, 16, true);
+                TextElement content = ElementFactory.createText(item.getV2(), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 200, 0);
+                combos.addItem(player.getValue(), new ElementWithTitle(new ColorRect(new org.newdawn.slick.geom.Rectangle(0, 0, 0, 0)), title, content, true));
+            }
+        }
     }
 
     @Override

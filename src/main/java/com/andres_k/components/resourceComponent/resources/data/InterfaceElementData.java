@@ -45,7 +45,8 @@ public class InterfaceElementData extends DataManager {
         this.methods.clear();
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initVolumesContent")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initControlsContent")));
-        this.methods.add(new Pair<>(false, this.getClass().getMethod("initCombosContent")));
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initGokuCombosList")));
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initVegetaCombosList")));
     }
 
     @Override
@@ -64,9 +65,9 @@ public class InterfaceElementData extends DataManager {
     }
 
     public void initControlsContent() throws NoSuchMethodException, SlickException, JSONException {
-        PaginatedList playerControls = new PaginatedList(ELocation.GUI_ELEMENT_PlayerControls.getId(), new ColorRect(new Rectangle(5, 50, 570, 390)), new ColorRect(new org.newdawn.slick.geom.Rectangle(20, 60, 540, 310)), EGuiElement.TAB_STATUS, 10, 0, 20, 0, true, true);
-        playerControls.addList(ElementFactory.createText("Player 1", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 0, 0), 0, 20);
-        playerControls.addList(ElementFactory.createText("Player 2", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 0, 0), 0, 20);
+        PaginatedList playerControls = new PaginatedList(ELocation.GUI_ELEMENT_PlayerControls.getId(), new ColorRect(new Rectangle(5, 50, 570, 390)), new ColorRect(new Rectangle(20, 60, 540, 310)), EGuiElement.TAB_STATUS, 10, 0, 20, 0, true, true);
+        playerControls.createList(ElementFactory.createText("Player 1", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 0, 0), 0, 20);
+        playerControls.createList(ElementFactory.createText("Player 2", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 0, 0), 0, 20);
         InputData.getAvailableInput().entrySet().forEach(entry -> {
             TextElement title = new TextElement(new StringTimer(StringTools.formatIt(entry.getKey().getContainer().getValue(), 20, ":", 10, "")), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.BASIC, 16, true);
             TextElement content = ElementFactory.createText(entry.getValue(), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 200, 0);
@@ -78,7 +79,11 @@ public class InterfaceElementData extends DataManager {
         GuiElementsManager.get().add(playerControls.getId(), playerControls);
     }
 
-    public void initCombosContent() throws NoSuchMethodException, SlickException, JSONException {
+    public void initGokuCombosList() throws NoSuchMethodException, SlickException, JSONException {
+    }
+
+    public void initVegetaCombosList() throws NoSuchMethodException, SlickException, JSONException {
+
     }
 
 }

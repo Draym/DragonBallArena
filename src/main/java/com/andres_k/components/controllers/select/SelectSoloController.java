@@ -22,12 +22,11 @@ public class SelectSoloController extends WindowController {
 
     @Override
     public void enter() throws SlickException {
-
+        GameConfig.typePlayer.clear();
     }
 
     @Override
     public void leave() {
-        GameConfig.typePlayer.clear();
     }
 
     @Override

@@ -15,7 +15,6 @@ import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
-import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
@@ -205,7 +204,16 @@ public class PaginatedList extends GuiElement {
     }
 
     // MODIFIER
-    public void addList(TextElement text, float marginX, float marginY) throws SlickException {
+    public void addList(String key, GuiElement list) {
+        if (list instanceof ListElement) {
+            this.lists.put(key, (ListElement) list);
+            if (this.lists.size() == 1) {
+                this.switchCurrent(key);
+            }
+        }
+    }
+
+    public void createList(TextElement text, float marginX, float marginY) throws SlickException {
         this.tabs.add(new ElementWithTitle(text.getValue(), text, new ImageElement(new ColorRect(new Rectangle(this.getNextTabPosX(), this.getNextTabPosY(), 0, 0)), ResourceManager.get().getGuiAnimator(this.tabImage), true), true));
         if (this.scrollable) {
             this.lists.put(text.getValue(), new ScrollableList(this.bodyList, marginX, marginY, true));
@@ -247,7 +255,6 @@ public class PaginatedList extends GuiElement {
         if (!this.current.equals(id) && this.lists.containsKey(id)) {
             this.current = id;
 
-            Console.write("switch to " + id);
             this.tabs.forEach(tab -> {
                 if (tab.getId().equals(id)) {
                     tab.doTask(new Tuple<>(ETaskType.SETTER, "animation", EAnimation.ON_CLICK));

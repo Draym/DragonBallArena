@@ -20,7 +20,7 @@ public class ScrollableList extends ListElement {
 
     @Override
     public boolean event(InputEvent input) {
-        boolean result = super.event(input);
+        boolean result = false;
 
         if (input.type == EInput.KEY_RELEASED) {
             if (input.key == Input.KEY_UP) {
@@ -32,7 +32,11 @@ public class ScrollableList extends ListElement {
                 this.updatePosition();
                 result = true;
             }
+        } else if (input.type == EInput.KEY_PRESSED) {
+            if (input.key == Input.KEY_UP || input.key == Input.KEY_DOWN) {
+                result = true;
+            }
         }
-        return result;
+        return (result || super.event(input));
     }
 }
