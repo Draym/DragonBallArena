@@ -33,19 +33,23 @@
       "combo": "SPE - B"
     },
     {
+      "name": "Transposition",
+      "combo": "SPE - DOWN"
+    },
+    {
       "name": "Ki Charge",
       "combo": "SPE - SPE - SPE"
     },
     {
-      "name": "Ki Basic",
+      "name": "Ki Blast",
       "combo": "D - D - D - D"
     },
     {
-      "name": "Ki Spe",
+      "name": "Kamehameha",
       "combo": "SPE - D"
     },
     {
-      "name": "Ki Final",
+      "name": "Genkidama",
       "combo": "SPE - SPE - C - A - B - D"
     }
   ],
@@ -79,15 +83,19 @@
       "combo": "C - C - C - SPE - C"
     },
     {
+      "name": "Transposition",
+      "combo": "SPE - DOWN"
+    },
+    {
       "name": "Ki Charge",
       "combo": "SPE - SPE - SPE"
     },
     {
-      "name": "Ki Basic",
+      "name": "Ki Blast",
       "combo": "D - D - D - D"
     },
     {
-      "name": "Ki Spe",
+      "name": "Ki Burst",
       "combo": "SPE - D"
     },
     {
@@ -95,7 +103,7 @@
       "combo": "SPE - SPE - B - D"
     },
     {
-      "name": "Ki Final",
+      "name": "FinalFlash",
       "combo": "SPE - SPE - B - A - C - D"
     }
   ]

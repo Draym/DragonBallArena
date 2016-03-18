@@ -117,7 +117,7 @@ public abstract class GameObject {
 
     public void teleportBehindMyAttacker() {
         if (this.lastAttacker != null) {
-            this.movement.setPositions(this.lastAttacker.getPosX() + (this.lastAttacker.getAnimatorController().getEyesDirection() == EDirection.RIGHT ? - 70 : 70), this.lastAttacker.getPosY() - 80);
+            this.movement.setPositions(this.lastAttacker.getPosX() + (this.lastAttacker.getAnimatorController().getEyesDirection() == EDirection.RIGHT ? - 70 : 70), this.lastAttacker.getPosY() - 70);
             this.animatorController.setEyesDirection(this.lastAttacker.getAnimatorController().getEyesDirection());
             this.useAttackerTimer = true;
         }
