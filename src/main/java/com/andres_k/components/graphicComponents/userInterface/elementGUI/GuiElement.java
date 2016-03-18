@@ -179,6 +179,10 @@ public abstract class GuiElement implements Observer {
         return null;
     }
 
+    public boolean isClicked() {
+        return this.clicked;
+    }
+
     public boolean isActivated() {
         return this.activated;
     }

@@ -1,5 +1,6 @@
 package com.andres_k.components.eventComponent.input;
 
+import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.FilesTools;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -52,7 +53,9 @@ public class InputData {
     // SETTERS
 
     public static boolean setAvailableInput(EInput type, String value){
+        Console.write("Try to change: " + type + " : " + value);
         if (availableInput.containsKey(type) && !availableInput.containsValue(value)){
+            Console.write("replace");
             availableInput.replace(type, value);
             try {
                 configs.put(type.getValue(), value);

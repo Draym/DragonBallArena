@@ -2,7 +2,6 @@ package com.andres_k.components.resourceComponent.resources.data;
 
 import com.andres_k.components.eventComponent.input.InputData;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
-import com.andres_k.components.graphicComponents.userInterface.elementGUI.EStatus;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElementsManager;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.ElementFactory;
@@ -12,6 +11,7 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.elemen
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.ElementWithTitle;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.complex.ComplexElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.list.PaginatedList;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.specific.AlterableInputControlElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.StringTimer;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
 import com.andres_k.components.resourceComponent.fonts.EFont;
@@ -20,7 +20,6 @@ import com.andres_k.components.resourceComponent.sounds.MusicController;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.ColorTools;
 import com.andres_k.utils.tools.StringTools;
 import org.codehaus.jettison.json.JSONException;
@@ -70,10 +69,7 @@ public class InterfaceElementData extends DataManager {
         playerControls.createList(ElementFactory.createText("Player 2", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 0, 0), 0, 20);
         InputData.getAvailableInput().entrySet().forEach(entry -> {
             TextElement title = new TextElement(new StringTimer(StringTools.formatIt(entry.getKey().getContainer().getValue(), 20, ":", 10, "")), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.BASIC, 16, true);
-            TextElement content = ElementFactory.createText(entry.getValue(), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 200, 0);
-            content.addTask(new Pair<>(EStatus.ON_CLICK, new Tuple<>(ETaskType.SETTER, "color", ColorTools.Colors.TRANSPARENT_YELLOW)));
-            content.addTask(new Pair<>(EStatus.OFF_CLICK, new Tuple<>(ETaskType.SETTER, "color", ColorTools.Colors.NONE)));
-            content.addTask(new Pair<>(EStatus.ON_KILL, new Tuple<>(ETaskType.SETTER, "color", ColorTools.Colors.NONE)));
+            TextElement content = new AlterableInputControlElement(entry.getKey().getValue(), new StringTimer(entry.getValue()), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 200, 0, Element.PositionInBody.MIDDLE_MID, true);
             playerControls.addItem("Player " + (entry.getKey().getIndex() + 1), new ElementWithTitle(new ColorRect(new org.newdawn.slick.geom.Rectangle(0, 0, 0, 0)), title, content, true));
         });
         GuiElementsManager.get().add(playerControls.getId(), playerControls);

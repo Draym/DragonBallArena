@@ -25,10 +25,10 @@ import java.awt.*;
  * Created by andres_k on 04/02/2016.
  */
 public class TextElement extends Element {
-    private StringTimer textTimer;
-    private TrueTypeFont font;
-    private float size;
-    private Color textColor;
+    protected StringTimer textTimer;
+    protected TrueTypeFont font;
+    protected float size;
+    protected Color textColor;
 
     public TextElement(StringTimer textTimer, Color textColor, boolean activated) {
         this(ELocation.UNKNOWN.getId(), textTimer, textColor, activated);
@@ -159,7 +159,6 @@ public class TextElement extends Element {
                 if (target.equals("value") && value instanceof String) {
                     this.textTimer.setValue((String) value);
                 } else if (target.equals("color") && value instanceof ColorTools.Colors) {
-                    Console.write("change color");
                     this.body.setColor(ColorTools.get((ColorTools.Colors) value));
                 }
             }
