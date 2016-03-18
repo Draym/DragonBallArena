@@ -20,6 +20,9 @@ public class VegetaCombos extends ComboManager {
         this.combos.add(ComboFactory.createCombo(EGameObject.VEGETA, ECombos.RUSH_RIGHT));
         this.combos.add(ComboFactory.createCombo(EGameObject.VEGETA, ECombos.RUSH_LEFT));
 
+        this.combos.add(ComboFactory.createCombo(EGameObject.VEGETA, ECombos.DEFENSE_MODE));
+        this.combos.add(ComboFactory.createCombo(EGameObject.VEGETA, ECombos.BLOCK));
+
         this.combos.add(ComboFactory.createCombo(EGameObject.VEGETA, ECombos.RUSH_ATTACK));
         this.combos.add(ComboFactory.createCombo(EGameObject.VEGETA, ECombos.KICK_PROPELS_ATTACK));
         this.combos.add(ComboFactory.createCombo(EGameObject.VEGETA, ECombos.KICK_ATTACK));

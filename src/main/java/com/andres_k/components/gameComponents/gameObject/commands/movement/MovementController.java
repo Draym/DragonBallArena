@@ -248,4 +248,9 @@ public class MovementController {
     public void setMoveDirection(EDirection direction) {
         this.moveDirection = direction;
     }
+
+    public void setPositions(float x, float y) {
+        this.positions.setV1(x);
+        this.positions.setV2(y);
+    }
 }

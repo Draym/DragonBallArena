@@ -45,7 +45,12 @@ public class ComboFactory {
     public static Combo createGokuCombo(ECombos type) {
         Combo combo = new Combo();
 
-        if (type == ECombos.HAND_ATTACK) {
+        if (type == ECombos.DEFENSE_MODE) {
+            addElement(combo, EInput.MOVE_DOWN, EAnimation.DEFENSE, 1, true, 100, 1);
+        } else if (type == ECombos.BLOCK) {
+            addElement(combo, EInput.ATTACK_SPE, EAnimation.NULL, 1, false, 300, 1);
+            addElement(combo, EInput.MOVE_DOWN, EAnimation.BLOCK, 1, true, 100, 1);
+        } else if (type == ECombos.HAND_ATTACK) {
             addElement(combo, EInput.ATTACK_A, EAnimation.HAND_ATTACK, 0, EAnimation.TOUCHED_SIMPLE, 0, true, 1000, 1);
             addElement(combo, EInput.ATTACK_A, EAnimation.HAND_ATTACK, 1, true, 1000, 3);
             addElement(combo, EInput.ATTACK_SPE, EAnimation.NULL, 1, true, 250, 1);
@@ -112,7 +117,12 @@ public class ComboFactory {
     public static Combo createVegetaCombo(ECombos type) {
         Combo combo = new Combo();
 
-        if (type == ECombos.HAND_ATTACK) {
+        if (type == ECombos.DEFENSE_MODE) {
+            addElement(combo, EInput.MOVE_DOWN, EAnimation.DEFENSE, 1, true, 100, 1);
+        } else if (type == ECombos.BLOCK) {
+            addElement(combo, EInput.ATTACK_SPE, EAnimation.NULL, 1, false, 300, 1);
+            addElement(combo, EInput.MOVE_DOWN, EAnimation.BLOCK, 1, true, 100, 1);
+        } else if (type == ECombos.HAND_ATTACK) {
             addElement(combo, EInput.ATTACK_A, EAnimation.HAND_ATTACK, 0, EAnimation.TOUCHED_SIMPLE, 0, true, 1000, 1);
             addElement(combo, EInput.ATTACK_A, EAnimation.HAND_ATTACK, 1, true, 1000, 3);
             addElement(combo, EInput.ATTACK_B, EAnimation.KNEES_ATTACK, 1, true, 1000, 1);

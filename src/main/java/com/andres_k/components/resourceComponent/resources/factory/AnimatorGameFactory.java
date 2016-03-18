@@ -93,10 +93,14 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addCollision(EAnimation.DEFENSE, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuDef.json")));
         animatorController.addConfig(EAnimation.DEFENSE, 0, new AnimationConfigItem(GokuActions.class.getMethod("defense", GameObject.class), true));
         // BLOCK
-        animatorController.addAnimation(EAnimation.BLOCK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuBlock.png", 247, 247), EAnimation.BLOCK.isLoop(), 0, 1, 0, 1, new int[]{200}));
+        animatorController.addAnimation(EAnimation.BLOCK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuBlock.png", 247, 247), EAnimation.BLOCK.isLoop(), 0, 1, 0, 1, new int[]{700}));
         animatorController.addCollision(EAnimation.BLOCK, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuBlock.json")));
         animatorController.addConfig(EAnimation.BLOCK, 0, new AnimationConfigItem(GokuActions.class.getMethod("block", GameObject.class), true));
         animatorController.addEffect(EAnimation.BLOCK, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_BLOCK));
+        //TRANSPOSITION
+        animatorController.addAnimation(EAnimation.TRANSPOSITION, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuTransposition.png", 247, 247), EAnimation.TRANSPOSITION.isLoop(), 0, 6, 0, 1, new int[]{200, 100, 100, 100, 200, 200}));
+        animatorController.addCollision(EAnimation.TRANSPOSITION, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuTransposition.json")));
+        animatorController.addConfig(EAnimation.TRANSPOSITION, 0, new AnimationConfigItem(GokuActions.class.getMethod("transposition", GameObject.class), false));
         // HAND_ATTACK
         animatorController.addAnimation(EAnimation.HAND_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuHandAttack1.png", 247, 247), EAnimation.HAND_ATTACK.isLoop(), 0, 4, 0, 1, new int[]{150, 150, 100, 150}));
         animatorController.addCollision(EAnimation.HAND_ATTACK, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuHandAttack1.json")));
@@ -277,7 +281,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addCollision(EAnimation.DEFENSE, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaDef.json")));
         animatorController.addConfig(EAnimation.DEFENSE, 0, new AnimationConfigItem(VegetaActions.class.getMethod("defense", GameObject.class), true));
         // BLOCK
-        animatorController.addAnimation(EAnimation.BLOCK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaBlock.png", 247, 247), EAnimation.BLOCK.isLoop(), 0, 1, 0, 1, new int[]{200}));
+        animatorController.addAnimation(EAnimation.BLOCK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaBlock.png", 247, 247), EAnimation.BLOCK.isLoop(), 0, 1, 0, 1, new int[]{700}));
         animatorController.addCollision(EAnimation.BLOCK, 0, StringTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaBlock.json")));
         animatorController.addConfig(EAnimation.BLOCK, 0, new AnimationConfigItem(VegetaActions.class.getMethod("block", GameObject.class), true));
         animatorController.addEffect(EAnimation.BLOCK, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_BLOCK));

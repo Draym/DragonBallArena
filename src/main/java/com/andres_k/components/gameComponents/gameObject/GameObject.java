@@ -8,6 +8,7 @@ import com.andres_k.components.gameComponents.bodies.BodySprite;
 import com.andres_k.components.gameComponents.collisions.CollisionResult;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.MovementController;
+import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Graphics;
@@ -22,6 +23,9 @@ import java.util.TimerTask;
  */
 public abstract class GameObject {
     private GameObject lastAttacker;
+    private long resetAttackerTimer;
+    private boolean useAttackerTimer;
+
     protected AnimatorController animatorController;
     protected MovementController movement;
     protected String id;
@@ -45,6 +49,7 @@ public abstract class GameObject {
         this.damage = damage;
         this.wasHit = false;
         this.lastAttacker = null;
+        this.initResetAttackerTimer(false);
     }
 
     public void revive() {
@@ -75,7 +80,15 @@ public abstract class GameObject {
         }
     }
 
-    public abstract void update() throws SlickException;
+    public void update() throws SlickException {
+        if (this.useAttackerTimer) {
+            this.resetAttackerTimer -= GameConfig.currentTimeLoop;
+            if (this.resetAttackerTimer <= 0) {
+                this.lastAttacker = null;
+                this.initResetAttackerTimer(false);
+            }
+        }
+    }
 
     public abstract void eventPressed(EInput input);
 
@@ -101,10 +114,18 @@ public abstract class GameObject {
 
     // TOOLS
 
+    public void teleportBehindMyAttacker() {
+        if (this.lastAttacker != null) {
+            this.movement.setPositions(this.lastAttacker.getPosX() + (this.lastAttacker.getAnimatorController().getEyesDirection() == EDirection.RIGHT ? - 70 : 70), this.lastAttacker.getPosY() - 80);
+            this.animatorController.setEyesDirection(this.lastAttacker.getAnimatorController().getEyesDirection());
+            this.useAttackerTimer = true;
+        }
+    }
+
     public void powerAfterDoDamage(float power) {
     }
 
-    public void manageEachCollisionExceptHit(EGameObject mine, GameObject enemy, EGameObject him) {
+    public void manageEachCollisionExceptValidHit(EGameObject mine, GameObject enemy, EGameObject him) {
     }
 
     public void manageMutualHit(GameObject enemy) {
@@ -112,6 +133,16 @@ public abstract class GameObject {
 
     public void manageGetHit(GameObject enemy) {
         this.getHit(enemy.getDamage());
+    }
+
+    protected boolean getHit(float damage) {
+        if (!this.wasHit) {
+            this.incrementCurrentLife(-damage);
+            this.wasHit = true;
+            this.resetHitStatus();
+            return true;
+        }
+        return false;
     }
 
     protected final void resetHitStatus() {
@@ -123,14 +154,9 @@ public abstract class GameObject {
         }, 100);
     }
 
-    protected boolean getHit(float damage) {
-        if (!this.wasHit) {
-            this.incrementCurrentLife(-damage);
-            this.wasHit = true;
-            this.resetHitStatus();
-            return true;
-        }
-        return false;
+    private void initResetAttackerTimer(boolean useTimer) {
+        this.resetAttackerTimer = 400;
+        this.useAttackerTimer = useTimer;
     }
 
     // GETTERS
@@ -208,6 +234,7 @@ public abstract class GameObject {
     }
 
     public GameObject getLastAttacker() {
+        this.initResetAttackerTimer(true);
         return this.lastAttacker;
     }
 
@@ -221,6 +248,7 @@ public abstract class GameObject {
         }
         return EDirection.NONE;
     }
+
     // SETTERS
 
     public boolean setCurrentLife(float value) {
@@ -242,12 +270,13 @@ public abstract class GameObject {
 
     public void setLastAttacker(GameObject attacker) {
         this.lastAttacker = attacker;
-/*        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                lastAttacker = null;
-            }
-        }, 2000);*/
+        if (this.lastAttacker != null) {
+            this.initResetAttackerTimer(true);
+        }
+    }
+
+    public void setUseAttackerTimer(boolean value) {
+        this.useAttackerTimer = value;
     }
 
     @Override

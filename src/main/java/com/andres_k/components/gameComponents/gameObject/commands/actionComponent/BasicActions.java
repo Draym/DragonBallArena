@@ -1,5 +1,6 @@
 package com.andres_k.components.gameComponents.gameObject.commands.actionComponent;
 
+import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.animations.details.AnimationRepercussionItem;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
@@ -22,8 +23,11 @@ public class BasicActions {
     }
 
     public static void block(GameObject object) {
-        object.getMovement().setPushX(GameConfig.speedTravel / 5);
+        object.getMovement().setPushX(0f);
         object.getMovement().setPushY(0f);
+        if (!object.isOnEarth()) {
+            object.getAnimatorController().getCurrentContainer().getConfig().setNextType(EAnimation.FALL);
+        }
     }
 
     public static void receipt(GameObject object) {

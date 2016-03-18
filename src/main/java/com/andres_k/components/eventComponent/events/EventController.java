@@ -24,10 +24,9 @@ public class EventController {
         this.eventStack = new ArrayList<>();
         this.validToHistory = new ArrayList<>();
         this.validToHistory.add(EInput.MOVE_UP);
-        this.validToHistory.add(EInput.MOVE_DOWN);
+        //this.validToHistory.add(EInput.MOVE_DOWN);
         this.validToHistory.add(EInput.MOVE_RIGHT);
         this.validToHistory.add(EInput.MOVE_LEFT);
-//        this.validToHistory.add(EInput.ATTACK_SPE);
         this.eventSaved = EInput.NOTHING;
     }
 

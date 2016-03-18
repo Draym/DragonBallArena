@@ -22,7 +22,7 @@ import org.newdawn.slick.SlickException;
  */
 public class Vegeta extends Player {
     public Vegeta(AnimatorController animatorController, String id, float x, float y) {
-        super(animatorController, EGameObject.VEGETA, id, x, y, 3300, 1, 200, 15);
+        super(animatorController, EGameObject.VEGETA, id, x, y, 3300, 1, 220, 15);
         try {
             this.specialActions.put(EGameObject.KI_BLAST.getValue(), this.getClass().getMethod("createKiBlast"));
             this.specialActions.put(EGameObject.KI_BURST.getValue(), this.getClass().getMethod("createKiBurst"));
@@ -34,6 +34,7 @@ public class Vegeta extends Player {
             this.checkBeforeLaunch.put(EAnimation.KI_CHARGE, this.getClass().getMethod("checkToLaunchKiCharge"));
             this.checkBeforeLaunch.put(EAnimation.KI_EXPLODE, this.getClass().getMethod("checkToLaunchKiExplode"));
             this.checkBeforeLaunch.put(EAnimation.RUSH, this.getClass().getMethod("checkToLaunchRush"));
+            this.checkBeforeLaunch.put(EAnimation.DEFENSE, this.getClass().getMethod("checkToLaunchDefense"));
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -104,5 +105,9 @@ public class Vegeta extends Player {
 
     public boolean checkToLaunchKiExplode() {
         return (this.currentKi > 150);
+    }
+
+    public boolean checkToLaunchDefense() {
+        return (this.isOnEarth());
     }
 }

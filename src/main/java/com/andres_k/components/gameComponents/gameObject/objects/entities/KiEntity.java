@@ -53,7 +53,7 @@ public abstract class KiEntity extends PhysicalObject {
     }
 
     @Override
-    public void manageEachCollisionExceptHit(EGameObject mine, GameObject enemy, EGameObject him) {
+    public void manageEachCollisionExceptValidHit(EGameObject mine, GameObject enemy, EGameObject him) {
         if (him == EGameObject.BLOCK_BODY && enemy.getType().isIn(EGameObject.DEADPAN)) {
             Console.write(this.type + " die");
             this.die();

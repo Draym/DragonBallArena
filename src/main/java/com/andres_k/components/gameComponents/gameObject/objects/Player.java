@@ -74,6 +74,7 @@ public class Player extends PhysicalObject {
 
     @Override
     public void update() throws SlickException {
+        super.update();
         this.comboController.update();
         this.animatorController.update();
         this.executeLastActionEvent();
@@ -136,15 +137,6 @@ public class Player extends PhysicalObject {
         return false;
     }
 
-    private boolean moveDown() throws SlickException {
-        if (this.isOnEarth())
-            this.animatorController.changeAnimation(EAnimation.DEFENSE);
-        else
-            this.animatorController.changeAnimation(EAnimation.FALL);
-        this.event.addStackEvent(EInput.MOVE_DOWN);
-        return true;
-    }
-
     private boolean moveUp() throws SlickException {
         this.changeDirection();
         this.animatorController.changeAnimation(EAnimation.JUMP);
@@ -176,8 +168,6 @@ public class Player extends PhysicalObject {
                     return this.moveRight();
                 } else if (last == EInput.MOVE_LEFT) {
                     return this.moveLeft();
-                } else if (last == EInput.MOVE_DOWN) {
-                    return this.moveDown();
                 } else if (last == EInput.MOVE_UP) {
                     return this.moveUp();
                 }
@@ -299,6 +289,22 @@ public class Player extends PhysicalObject {
     }
 
     @Override
+    public void manageEachCollisionExceptValidHit(EGameObject mine, GameObject enemy, EGameObject him) {
+        if (mine == EGameObject.BLOCK_BODY && him == EGameObject.ATTACK_BODY) {
+            this.setLastAttacker(enemy);
+            if (this.animatorController.currentAnimationType() == EAnimation.DEFENSE) {
+                AnimationRepercussionItem repercussionItem = enemy.getAnimatorController().getCurrentContainer().getRepercussion();
+                if (repercussionItem != null &&
+                        (repercussionItem.getTargetType() == EAnimation.TOUCHED_PROJECTED ||
+                                repercussionItem.getTargetType() == EAnimation.TOUCHED_FLIP ||
+                                repercussionItem.getTargetType() == EAnimation.TOUCHED_FALL)) {
+                    this.manageGetHit(enemy);
+                }
+            }
+        }
+    }
+
+    @Override
     public void manageGetHit(GameObject enemy) {
         if (!this.wasHit) {
             float enemyDamage = enemy.getDamage();
@@ -329,12 +335,12 @@ public class Player extends PhysicalObject {
 
     public void setCurrentKi(int value) {
         this.currentKi = value;
-        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "ki", (float)this.currentKi * 100 / (float)this.maxKi))));
+        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "ki", (float) this.currentKi * 100 / (float) this.maxKi))));
     }
 
     public void setCurrentEnergy(int value) {
         this.currentEnergy = value;
-        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "energy", (float)this.currentEnergy * 100 / (float)this.maxEnergy))));
+        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "energy", (float) this.currentEnergy * 100 / (float) this.maxEnergy))));
     }
 
     public void incrementCurrentKi(int value) {

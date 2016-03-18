@@ -4,6 +4,7 @@ import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.collisions.PhysicalObject;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
+import org.newdawn.slick.SlickException;
 
 /**
  * Created by andres_k on 10/07/2015.
@@ -19,7 +20,8 @@ public class Obstacle extends PhysicalObject {
     }
 
     @Override
-    public void update() {
+    public void update() throws SlickException {
+        super.update();
         this.animatorController.update();
     }
 

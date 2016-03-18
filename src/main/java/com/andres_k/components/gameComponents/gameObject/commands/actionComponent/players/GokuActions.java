@@ -1,5 +1,6 @@
 package com.andres_k.components.gameComponents.gameObject.commands.actionComponent.players;
 
+import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.actionComponent.BasicActions;
@@ -14,8 +15,34 @@ import org.newdawn.slick.SlickException;
  */
 public class GokuActions extends BasicActions {
 
-    // ATTACKS
+    // DEFENSE
 
+    public static void transposition(GameObject object) {
+        object.getMovement().setUseGravity(false);
+        object.getMovement().setPushX(0f);
+        object.getMovement().setPushY(0f);
+        try {
+            if (object.getAnimatorController().currentAnimation().getFrame() == 3) {
+                object.teleportBehindMyAttacker();
+            }
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void block(GameObject object) {
+        object.getMovement().setPushX(0f);
+        object.getMovement().setPushY(0f);
+        if (!object.isOnEarth()) {
+            object.getAnimatorController().getCurrentContainer().getConfig().setNextType(EAnimation.FALL);
+        }
+        if (object.getLastAttacker() != null) {
+            object.getAnimatorController().forceCurrentAnimationType(EAnimation.TRANSPOSITION);
+            object.setUseAttackerTimer(false);
+        }
+    }
+
+    // ATTACKS
     public static void handAttack(GameObject object) {
         try {
             if (object.getAnimatorController().getIndex() == 1 && object.getAnimatorController().currentAnimation().getFrame() == 0) {

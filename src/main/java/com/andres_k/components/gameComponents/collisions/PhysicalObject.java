@@ -116,8 +116,8 @@ public abstract class PhysicalObject extends GameObject {
             } else if (myRect.getType() == EGameObject.ATTACK_BODY && hisRect.getType() == EGameObject.ATTACK_BODY) {
                 this.manageMutualHit(enemy);
             } else {
-                this.manageEachCollisionExceptHit(myRect.getType(), enemy, hisRect.getType());
-                enemy.manageEachCollisionExceptHit(hisRect.getType(), this, myRect.getType());
+                this.manageEachCollisionExceptValidHit(myRect.getType(), enemy, hisRect.getType());
+                enemy.manageEachCollisionExceptValidHit(hisRect.getType(), this, myRect.getType());
             }
         }
         if (myRect.getType() != EGameObject.ATTACK_BODY && hisRect.getType() != EGameObject.ATTACK_BODY && !enemy.getType().isIn(EGameObject.ANIMATED)) {
