@@ -2,7 +2,7 @@ package com.andres_k.components.controllers;
 
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.Console;
-import com.andres_k.utils.tools.StringTools;
+import com.andres_k.utils.tools.FilesTools;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -22,7 +22,7 @@ public class ScoreData {
     public static void init(String file) throws JSONException {
         Console.debug("file: " + file);
         dataScore = new ArrayList<>();
-        configs = new JSONObject(StringTools.readFile(file));
+        configs = new JSONObject(FilesTools.readFile(file));
         ScoreData.file = file;
 
         JSONArray array = configs.getJSONArray("scores");
@@ -85,7 +85,7 @@ public class ScoreData {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        StringTools.writeInFile(file, configs.toString());
+        FilesTools.writeInFile(file, configs.toString());
         return true;
     }
 }

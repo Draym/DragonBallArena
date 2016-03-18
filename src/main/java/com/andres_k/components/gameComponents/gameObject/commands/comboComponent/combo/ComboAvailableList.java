@@ -3,7 +3,7 @@ package com.andres_k.components.gameComponents.gameObject.commands.comboComponen
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.utils.configs.ConfigPath;
 import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.tools.StringTools;
+import com.andres_k.utils.tools.FilesTools;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -19,7 +19,7 @@ public final class ComboAvailableList {
     private ComboAvailableList() {
         this.playerCombos = new HashMap<>();
         try {
-            JSONObject configs = new JSONObject(StringTools.readFile(ConfigPath.comboAvailableList));
+            JSONObject configs = new JSONObject(FilesTools.readFile(ConfigPath.comboAvailableList));
 
             Iterator iterator = configs.keys();
             while (iterator.hasNext()) {

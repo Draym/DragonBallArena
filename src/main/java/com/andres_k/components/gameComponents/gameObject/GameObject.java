@@ -11,6 +11,7 @@ import com.andres_k.components.gameComponents.gameObject.commands.movement.Movem
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
@@ -132,17 +133,20 @@ public abstract class GameObject {
     }
 
     public void manageGetHit(GameObject enemy) {
-        this.getHit(enemy.getDamage());
-    }
-
-    protected boolean getHit(float damage) {
         if (!this.wasHit) {
-            this.incrementCurrentLife(-damage);
+            float enemyDamage = enemy.getDamage();
+            enemy.powerAfterDoDamage((enemyDamage - this.currentLife < 0 ? 0 : enemyDamage - this.currentLife));
+            this.incrementCurrentLife(-enemyDamage);
+
+            AnimationRepercussionItem repercussionItem = enemy.getAnimatorController().getCurrentContainer().getRepercussion();
+            if (repercussionItem != null) {
+                repercussionItem.applyAnimationRepercussion(this);
+                repercussionItem.applyEffectRepercussion(enemy, this);
+            }
+            this.setLastAttacker(enemy);
             this.wasHit = true;
             this.resetHitStatus();
-            return true;
         }
-        return false;
     }
 
     protected final void resetHitStatus() {
@@ -269,7 +273,7 @@ public abstract class GameObject {
     }
 
     public void setLastAttacker(GameObject attacker) {
-        this.lastAttacker = attacker;
+        this.lastAttacker = GameObjectController.get().getObjectById(StringTools.getWord(attacker.getId(), "", ".", 0, 1));
         if (this.lastAttacker != null) {
             this.initResetAttackerTimer(true);
         }

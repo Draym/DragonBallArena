@@ -314,6 +314,10 @@ public class AnimatorController implements Observer {
         return new Pair<>(0f, 0f);
     }
 
+    public boolean hasAnimation(EAnimation animation) {
+        return this.animators.containsKey(animation);
+    }
+
     public boolean hasNextRequired() {
         return this.nextRequiredAnimation.getV1() != EAnimation.NULL;
     }

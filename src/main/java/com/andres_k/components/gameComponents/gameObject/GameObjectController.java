@@ -28,14 +28,23 @@ import java.util.stream.Collectors;
 /**
  * Created by andres_k on 10/07/2015.
  */
-public class GameObjectController {
+public final class GameObjectController {
     private List<GameObject> entities;
     private List<GameObject> players;
 
-    public GameObjectController() {
+    private GameObjectController() {
         this.entities = new ArrayList<>();
         this.players = new ArrayList<>();
     }
+
+    private static class SingletonHolder {
+        private final static GameObjectController instance = new GameObjectController();
+    }
+
+    public static GameObjectController get() {
+        return SingletonHolder.instance;
+    }
+
 
     // INIT
     public void init() {
@@ -207,6 +216,21 @@ public class GameObjectController {
         for (GameObject player : this.players) {
             if (player.getId().contains(id)) {
                 return player;
+            }
+        }
+        return null;
+    }
+
+    public GameObject getObjectById(String id) {
+        Console.write("CHECK ID: '" + id + "'");
+        for (GameObject player : this.players) {
+            if (player.getId().contains(id)) {
+                return player;
+            }
+        }
+        for (GameObject entity : this.entities) {
+            if (entity.getId().contains(id)) {
+                return entity;
             }
         }
         return null;

@@ -304,24 +304,6 @@ public class Player extends PhysicalObject {
         }
     }
 
-    @Override
-    public void manageGetHit(GameObject enemy) {
-        if (!this.wasHit) {
-            float enemyDamage = enemy.getDamage();
-            enemy.powerAfterDoDamage((enemyDamage - this.currentLife < 0 ? 0 : enemyDamage - this.currentLife));
-            this.incrementCurrentLife(-enemyDamage);
-
-            AnimationRepercussionItem repercussionItem = enemy.getAnimatorController().getCurrentContainer().getRepercussion();
-            if (repercussionItem != null) {
-                repercussionItem.applyAnimationRepercussion(this);
-                repercussionItem.applyEffectRepercussion(enemy, this);
-            }
-            this.setLastAttacker(enemy);
-            this.wasHit = true;
-            this.resetHitStatus();
-        }
-    }
-
     // SETTERS
 
     @Override

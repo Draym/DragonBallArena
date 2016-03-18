@@ -5,6 +5,7 @@ import com.andres_k.components.gameComponents.animations.details.AnimationReperc
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.utils.configs.GameConfig;
+import org.newdawn.slick.SlickException;
 
 /**
  * Created by andres_k on 17/11/2015.
@@ -22,11 +23,28 @@ public class BasicActions {
         object.getMovement().setPushY(0f);
     }
 
+    public static void transposition(GameObject object) {
+        object.getMovement().setUseGravity(false);
+        object.getMovement().setPushX(0f);
+        object.getMovement().setPushY(0f);
+        try {
+            if (object.getAnimatorController().currentAnimation().getFrame() == 3) {
+                object.teleportBehindMyAttacker();
+            }
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void block(GameObject object) {
         object.getMovement().setPushX(0f);
         object.getMovement().setPushY(0f);
         if (!object.isOnEarth()) {
             object.getAnimatorController().getCurrentContainer().getConfig().setNextType(EAnimation.FALL);
+        }
+        if (object.getLastAttacker() != null && object.getAnimatorController().hasAnimation(EAnimation.TRANSPOSITION)) {
+            object.getAnimatorController().forceCurrentAnimationType(EAnimation.TRANSPOSITION);
+            object.setUseAttackerTimer(false);
         }
     }
 

@@ -30,7 +30,6 @@ import java.util.*;
  * Created by andres_k on 08/07/2015.
  */
 public class GameController extends WindowController {
-    private GameObjectController gameObjectController;
     private InputGame inputGame;
     private List<EGameObject> playerTypes;
 
@@ -39,14 +38,12 @@ public class GameController extends WindowController {
     public GameController() throws JSONException {
         super(ELocation.GAME_CONTROLLER);
         this.inputGame = new InputGame();
-        this.gameObjectController = new GameObjectController();
-
         this.playerTypes = new ArrayList<>();
     }
 
     @Override
     public void enter() throws SlickException {
-        this.gameObjectController.enter();
+        GameObjectController.get().enter();
 
         this.createPlayerForGame();
         //CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.GAME_CONTROLLER, EnumLocation.GAME_GUI, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundStart("admin", "admin", true))));
@@ -64,13 +61,13 @@ public class GameController extends WindowController {
     @Override
     public void leave() {
         this.running = false;
-        this.gameObjectController.leave();
+        GameObjectController.get().leave();
         GameConfig.typePlayer.clear();
     }
 
     @Override
     public void init() throws SlickException {
-        this.gameObjectController.init();
+        GameObjectController.get().init();
 
         this.backgroundManager.addComponent(EBackground.VALLEY_MAP, new Wallpaper(ResourceManager.get().getBackgroundAnimator(EBackground.VALLEY_MAP)));
     }
@@ -88,17 +85,17 @@ public class GameController extends WindowController {
     @Override
     public void renderWindow(Graphics g) throws SlickException {
         this.backgroundManager.draw(g);
-        this.gameObjectController.draw(g);
+        GameObjectController.get().draw(g);
     }
 
     @Override
     public void update(GameContainer gameContainer) throws SlickException {
-        if (this.running || this.gameObjectController.isTheEndOfTheGame()) {
+        if (this.running || GameObjectController.get().isTheEndOfTheGame()) {
             this.backgroundManager.update();
-            this.gameObjectController.update(this.running);
+            GameObjectController.get().update(this.running);
         }
         if (this.running) {
-            if (this.gameObjectController.isTheEndOfTheGame()) {
+            if (GameObjectController.get().isTheEndOfTheGame()) {
                 //    CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.GAME_CONTROLLER, EnumLocation.GAME_GUI, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundEnd("admin", "admin", "enemy"))));
                 this.running = false;
             }
@@ -109,13 +106,13 @@ public class GameController extends WindowController {
     public void keyPressed(int key, char c) {
         if (this.running) {
             EInput result = this.inputGame.checkInput(key);
-            this.gameObjectController.event(EInput.KEY_PRESSED, result);
+            GameObjectController.get().event(EInput.KEY_PRESSED, result);
         }
     }
 
     @Override
     public void keyReleased(int key, char c) {
-        if ((!this.running && this.gameObjectController.isTheEndOfTheGame()) && key == Input.KEY_ENTER) {
+        if ((!this.running && GameObjectController.get().isTheEndOfTheGame()) && key == Input.KEY_ENTER) {
             try {
                 this.restart();
             } catch (SlickException e) {
@@ -125,7 +122,7 @@ public class GameController extends WindowController {
 
         if (this.running) {
             EInput result = this.inputGame.checkInput(key);
-            this.gameObjectController.event(EInput.KEY_RELEASED, result);
+            GameObjectController.get().event(EInput.KEY_RELEASED, result);
         }
     }
 
@@ -156,15 +153,15 @@ public class GameController extends WindowController {
                 } else if (received.getTask() instanceof MessageOverlayMenu) {
                     this.running = !((MessageOverlayMenu) received.getTask()).isActivated();
                     try {
-                        this.gameObjectController.changeGameState(this.running);
+                        GameObjectController.get().changeGameState(this.running);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 } else if (received.getTask() instanceof Pair) {
                     if (((Pair) received.getTask()).getV1() == ETaskType.CREATE && ((Pair) received.getTask()).getV2() instanceof GameObject) {
-                        this.gameObjectController.addEntity((GameObject) ((Pair) received.getTask()).getV2());
+                        GameObjectController.get().addEntity((GameObject) ((Pair) received.getTask()).getV2());
                     } else if (((Pair) received.getTask()).getV1() instanceof String) {
-                        this.gameObjectController.taskForPlayer((String) ((Pair) received.getTask()).getV1(), ((Pair) received.getTask()).getV2());
+                        GameObjectController.get().taskForPlayer((String) ((Pair) received.getTask()).getV1(), ((Pair) received.getTask()).getV2());
                     }
                 }
             }
@@ -174,6 +171,6 @@ public class GameController extends WindowController {
     }
 
     public void createPlayerForGame() throws SlickException {
-        this.gameObjectController.createPlayers(this.playerTypes);
+        GameObjectController.get().createPlayers(this.playerTypes);
     }
 }
