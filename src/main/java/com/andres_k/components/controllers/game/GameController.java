@@ -9,7 +9,6 @@ import com.andres_k.components.gameComponents.gameObject.GameObjectController;
 import com.andres_k.components.graphicComponents.background.EBackground;
 import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
-import com.andres_k.components.networkComponents.networkSend.messageInterface.MessageOverlayMenu;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
@@ -150,14 +149,7 @@ public class GameController extends WindowController {
                         this.playerTypes.addAll(GameConfig.typePlayer);
                         this.stateWindow.enterState(EnumWindow.GAME.getId());
                     }
-                } else if (received.getTask() instanceof MessageOverlayMenu) {
-                    this.running = !((MessageOverlayMenu) received.getTask()).isActivated();
-                    try {
-                        GameObjectController.get().changeGameState(this.running);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else if (received.getTask() instanceof Pair) {
+                }  else if (received.getTask() instanceof Pair) {
                     if (((Pair) received.getTask()).getV1() == ETaskType.CREATE && ((Pair) received.getTask()).getV2() instanceof GameObject) {
                         GameObjectController.get().addEntity((GameObject) ((Pair) received.getTask()).getV2());
                     } else if (((Pair) received.getTask()).getV1() instanceof String) {

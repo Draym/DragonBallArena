@@ -14,9 +14,7 @@ public class Main {
         try {
             MasterGame game = new MasterGame();
             game.start();
-        } catch (SlickException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (SlickException | JSONException e) {
             e.printStackTrace();
         }
     }
