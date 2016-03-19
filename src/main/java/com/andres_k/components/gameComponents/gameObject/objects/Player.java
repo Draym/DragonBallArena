@@ -11,6 +11,8 @@ import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.comboComponent.ComboController;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
+import com.andres_k.components.networkComponents.networkGame.NetworkController;
+import com.andres_k.components.networkComponents.networkSend.messageServer.MessageStatePlayer;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
@@ -267,6 +269,14 @@ public class Player extends PhysicalObject {
 
     // GETTERS
 
+    public int getCurrentKi() {
+        return this.currentKi;
+    }
+
+    public int getCurrentEnergy() {
+        return this.currentEnergy;
+    }
+
     public long getScore() {
         return this.score;
     }
@@ -304,11 +314,21 @@ public class Player extends PhysicalObject {
         }
     }
 
+    @Override
+    public boolean die() {
+        if (super.die()) {
+            NetworkController.get().sendMessage(new MessageStatePlayer(this));
+            return true;
+        }
+        return false;
+    }
+
     // SETTERS
 
     @Override
     public boolean setCurrentLife(float value) {
         if (super.setCurrentLife(value)) {
+            NetworkController.get().sendMessage(new MessageStatePlayer(this));
             CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "life", value / this.maxLife))));
             return true;
         }
@@ -317,11 +337,13 @@ public class Player extends PhysicalObject {
 
     public void setCurrentKi(int value) {
         this.currentKi = value;
+        NetworkController.get().sendMessage(new MessageStatePlayer(this));
         CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "ki", (float) this.currentKi * 100 / (float) this.maxKi))));
     }
 
     public void setCurrentEnergy(int value) {
         this.currentEnergy = value;
+        NetworkController.get().sendMessage(new MessageStatePlayer(this));
         CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "energy", (float) this.currentEnergy * 100 / (float) this.maxEnergy))));
     }
 

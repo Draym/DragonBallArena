@@ -18,8 +18,8 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class WindowHome extends WindowBasedGame {
 
-    public WindowHome(int idWindow, LocalTaskManager windowsTask) throws JSONException, SlickException {
-        super(idWindow, new HomeController(), new HomeGUI());
+    public WindowHome(LocalTaskManager windowsTask) throws JSONException, SlickException {
+        super(EnumWindow.HOME.getId(), new HomeController(EnumWindow.HOME.getId()), new HomeGUI());
         this.gui.register(windowsTask);
         this.controller.register(windowsTask);
     }

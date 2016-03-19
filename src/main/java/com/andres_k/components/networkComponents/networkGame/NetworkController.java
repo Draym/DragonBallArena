@@ -1,32 +1,37 @@
 package com.andres_k.components.networkComponents.networkGame;
 
-import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.networkComponents.networkSend.MessageModel;
+import com.andres_k.components.networkComponents.networkSend.messageServer.MessageGameLaunch;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.TaskFactory;
-import com.andres_k.components.taskComponent.utils.TaskComponent;
+import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.NetworkServerConfig;
+import com.andres_k.utils.tools.Console;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 
 import java.io.IOException;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Created by andres_k on 11/03/2015.
  */
-public class NetworkController implements Observer {
+public final class NetworkController {
     private Client client;
 
-    public NetworkController() {
+    private NetworkController() {
         this.client = new Client();
         NetworkRegister.register(this.client);
-
-        CentralTaskManager.get().register(ELocation.SERVER.getId(), this);
         this.client.start();
+    }
+
+    private static class SingletonHolder {
+        private final static NetworkController instance = new NetworkController();
+    }
+
+    public static NetworkController get() {
+        return SingletonHolder.instance;
     }
 
     //FUNCTIONS
@@ -37,11 +42,15 @@ public class NetworkController implements Observer {
                 public void received(Connection connection, Object object) {
                     if (object instanceof MessageModel) {
                         MessageModel response = (MessageModel) object;
-                        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.SERVER_MESSAGE, ELocation.GAME_CONTROLLER, response));
+                        Console.write("RECEIVED TO SERVER: " + object);
+                        if (response instanceof MessageGameLaunch) {
+                            CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.SERVER, ELocation.BATTLE_CONNECTION_CONTROLLER, response));
+                        } else {
+                            CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.SERVER, ELocation.GAME_CONTROLLER, response));
+                        }
                     }
                 }
             });
-            CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.SERVER_MESSAGE, ELocation.HOME_CONTROLLER, EnumWindow.GAME));
             return true;
         } catch (IOException e) {
             System.err.println("ERROR: " + e.getMessage());
@@ -54,15 +63,17 @@ public class NetworkController implements Observer {
         this.client.close();
     }
 
-    public void call(MessageModel request) {
-        /* QUAND LE SERVER SERA ON :
-        if (this.client.isConnected()) {
-            this.client.sendTCP(request);
-        }*/
+    public void sendMessage(MessageModel request) {
+        if (GameConfig.onLine) {
+            if (this.client.isConnected()) {
+                this.client.sendTCP(NetworkProfile.get().formatMessage(request));
+            }
+        }
         //faire le mode offline avec:
-        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.SERVER_MESSAGE, ELocation.GAME_CONTROLLER, request));
+        //CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.SERVER_MESSAGE, ELocation.GAME_CONTROLLER, request));
     }
 
+    /*
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof TaskComponent) {
@@ -78,5 +89,5 @@ public class NetworkController implements Observer {
                 }
             }
         }
-    }
+    }*/
 }

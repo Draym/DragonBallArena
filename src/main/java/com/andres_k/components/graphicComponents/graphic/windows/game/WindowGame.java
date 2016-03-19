@@ -18,8 +18,8 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class WindowGame extends WindowBasedGame {
 
-    public WindowGame(int idWindow, LocalTaskManager windowsTask) throws JSONException {
-        super(idWindow, new GameController(), new GameGUI());
+    public WindowGame(LocalTaskManager windowsTask) throws JSONException {
+        super(EnumWindow.GAME.getId(), new GameController(EnumWindow.GAME.getId()), new GameGUI());
         this.gui.register(windowsTask);
         this.controller.register(windowsTask);
     }

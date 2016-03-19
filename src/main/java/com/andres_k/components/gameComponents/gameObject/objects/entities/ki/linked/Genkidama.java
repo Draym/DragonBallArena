@@ -20,10 +20,11 @@ public class Genkidama extends KiProjectiles {
     }
 
     @Override
-    public void die() {
-        if (!this.animatorController.isDeleted()) {
-            super.die();
+    public boolean die() {
+        if (super.die()) {
             CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(this.parent, new Pair<>(ETaskType.NEXT, "frame"))));
+            return true;
         }
+        return false;
     }
 }

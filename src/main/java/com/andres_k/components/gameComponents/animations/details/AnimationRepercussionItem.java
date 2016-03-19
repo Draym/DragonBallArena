@@ -76,8 +76,7 @@ public class AnimationRepercussionItem {
 
     public void applyAnimationRepercussion(GameObject target) {
         if (target.getAnimatorController().currentAnimationType() != this.getTargetType()) {
-            target.getAnimatorController().forceCurrentAnimationType(this.getTargetType());
-            target.getAnimatorController().forceCurrentAnimationIndex(this.getTargetIndex());
+            target.getAnimatorController().forceCurrentAnimation(this.getTargetType(), this.getTargetIndex());
         }
     }
 

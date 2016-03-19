@@ -1,9 +1,9 @@
-package com.andres_k.components.graphicComponents.graphic.windows.select;
+package com.andres_k.components.graphicComponents.graphic.windows.waiting;
 
-import com.andres_k.components.controllers.select.SelectSoloController;
+import com.andres_k.components.controllers.waiting.BattleConnectionController;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
-import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.select.SelectSoloGUI;
+import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.waiting.BattleConnectionGUI;
 import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.resourceComponent.sounds.MusicController;
 import com.andres_k.components.taskComponent.LocalTaskManager;
@@ -14,11 +14,11 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**
- * Created by andres_k on 09/02/2016.
+ * Created by andres_k on 19/03/2016.
  */
-public class WindowSelectSolo extends WindowBasedGame {
-    public WindowSelectSolo(LocalTaskManager windowsTask) throws JSONException, SlickException {
-        super(EnumWindow.SELECT_SOLO.getId(), new SelectSoloController(EnumWindow.SELECT_SOLO.getId()), new SelectSoloGUI());
+public class WindowBattleConnection extends WindowBasedGame {
+    public WindowBattleConnection(LocalTaskManager windowsTask) throws JSONException, SlickException {
+        super(EnumWindow.BATTLE_CONNECTION.getId(), new BattleConnectionController(EnumWindow.BATTLE_CONNECTION.getId()), new BattleConnectionGUI());
         this.gui.register(windowsTask);
         this.controller.register(windowsTask);
     }
@@ -28,12 +28,12 @@ public class WindowSelectSolo extends WindowBasedGame {
         this.initBeforeEnter();
 
         WindowConfig.get().switchWindow(EnumWindow.getById(this.idWindow));
-        MusicController.get().loop(ESound.BACKGROUND_SELECT);
+        MusicController.get().loop(ESound.BACKGROUND_CONNECTION);
     }
 
     @Override
     public void leave(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        MusicController.get().stop(ESound.BACKGROUND_SELECT);
+        MusicController.get().stop(ESound.BACKGROUND_CONNECTION);
         this.clean();
     }
 }

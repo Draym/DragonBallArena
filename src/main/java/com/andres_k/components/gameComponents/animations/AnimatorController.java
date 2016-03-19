@@ -403,6 +403,18 @@ public class AnimatorController implements Observer {
         this.printable = printable;
     }
 
+    public boolean forceCurrentAnimation(EAnimation type, int index) {
+        if (this.forceCurrentAnimationType(type)) {
+            if (this.forceCurrentAnimationIndex(index)) {
+//                NetworkController.get().sendMessage(new MessageActionPlayer(type, index));
+                return true;
+            } else {
+  //              NetworkController.get().sendMessage(new MessageActionPlayer(type, 0));
+            }
+        }
+        return false;
+    }
+
     public boolean forceCurrentAnimationIndex(int value) {
         // Console.write("index -> " + value);
         return this.animators.get(this.current).setIndex(value);
@@ -432,10 +444,6 @@ public class AnimatorController implements Observer {
     private void setNextRequiredAnimation(EAnimation type, int index) {
         this.nextRequiredAnimation.setV1(type);
         this.nextRequiredAnimation.setV2(index);
-    }
-
-    private boolean forceCurrentAnimation(EAnimation type, int index) {
-        return this.forceCurrentAnimationType(type) && this.forceCurrentAnimationIndex(index);
     }
 
     public void changeAnimation(EAnimation type) throws SlickException {

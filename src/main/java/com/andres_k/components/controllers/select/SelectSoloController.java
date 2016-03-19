@@ -3,10 +3,8 @@ package com.andres_k.components.controllers.select;
 import com.andres_k.components.controllers.WindowController;
 import com.andres_k.components.graphicComponents.background.EBackground;
 import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
-import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.ELocation;
-import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.configs.GameConfig;
 import org.newdawn.slick.SlickException;
 
@@ -16,13 +14,14 @@ import java.util.Observable;
  * Created by andres_k on 09/02/2016.
  */
 public class SelectSoloController extends WindowController {
-    public SelectSoloController() {
-        super(ELocation.SELECT_SOLO_CONTROLLER);
+    public SelectSoloController(int idWindow) {
+        super(ELocation.SELECT_SOLO_CONTROLLER, idWindow);
     }
 
     @Override
     public void enter() throws SlickException {
         GameConfig.typePlayer.clear();
+        GameConfig.onLine = false;
     }
 
     @Override
@@ -56,14 +55,6 @@ public class SelectSoloController extends WindowController {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof TaskComponent) {
-            TaskComponent received = (TaskComponent) arg;
-
-            if (received.getTarget().equals(ELocation.SELECT_SOLO_CONTROLLER)) {
-                if (received.getTask() instanceof EnumWindow && !received.getTask().equals(EnumWindow.EXIT)) {
-                    this.stateWindow.enterState(((EnumWindow) received.getTask()).getId());
-                }
-            }
-        }
+        super.update(o, arg);
     }
 }

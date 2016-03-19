@@ -40,6 +40,6 @@ public class TaskComponent {
 
     @Override
     public String toString() {
-        return "{" + this.sender + "} -> {" + target + "} : " + task;
+        return "{" + this.sender + "} -> {" + this.target + "} : " + this.task;
     }
 }

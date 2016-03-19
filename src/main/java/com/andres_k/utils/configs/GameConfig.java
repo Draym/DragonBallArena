@@ -10,6 +10,8 @@ import java.util.ArrayList;
  */
 public class GameConfig {
 
+    public static boolean onLine = false;
+
     public static final int maxFps = 60;
     public static long timeLoop = 30;
     public static long currentTimeLoop = 30;

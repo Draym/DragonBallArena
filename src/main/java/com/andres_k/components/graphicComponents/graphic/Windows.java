@@ -3,10 +3,11 @@ package com.andres_k.components.graphicComponents.graphic;
 
 import com.andres_k.components.graphicComponents.graphic.windows.game.WindowGame;
 import com.andres_k.components.graphicComponents.graphic.windows.home.WindowHome;
-import com.andres_k.components.graphicComponents.graphic.windows.load.WindowLoad;
+import com.andres_k.components.graphicComponents.graphic.windows.waiting.WindowLoad;
 import com.andres_k.components.graphicComponents.graphic.windows.select.WindowSelectMulti;
 import com.andres_k.components.graphicComponents.graphic.windows.select.WindowSelectSolo;
 import com.andres_k.components.graphicComponents.graphic.windows.select.WindowSelectVersus;
+import com.andres_k.components.graphicComponents.graphic.windows.waiting.WindowBattleConnection;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.LocalTaskManager;
@@ -34,12 +35,13 @@ public class Windows extends StateBasedGame {
         this.windowsTask = new LocalTaskManager(ELocation.WINDOWS);
         CentralTaskManager.get().register(ELocation.WINDOWS.getId(), this.windowsTask);
 
-        this.windows.add(new WindowLoad(EnumWindow.LOAD.getId(), this.windowsTask));
-        this.windows.add(new WindowHome(EnumWindow.HOME.getId(), this.windowsTask));
-        this.windows.add(new WindowGame(EnumWindow.GAME.getId(), this.windowsTask));
-        this.windows.add(new WindowSelectSolo(EnumWindow.SELECT_SOLO.getId(), this.windowsTask));
-        this.windows.add(new WindowSelectVersus(EnumWindow.SELECT_VERSUS.getId(), this.windowsTask));
-        this.windows.add(new WindowSelectMulti(EnumWindow.SELECT_MULTI.getId(), this.windowsTask));
+        this.windows.add(new WindowLoad(this.windowsTask));
+        this.windows.add(new WindowHome(this.windowsTask));
+        this.windows.add(new WindowGame(this.windowsTask));
+        this.windows.add(new WindowSelectSolo(this.windowsTask));
+        this.windows.add(new WindowSelectVersus(this.windowsTask));
+        this.windows.add(new WindowSelectMulti(this.windowsTask));
+        this.windows.add(new WindowBattleConnection(this.windowsTask));
     }
 
 

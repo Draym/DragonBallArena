@@ -1,14 +1,18 @@
 package com.andres_k.components.controllers;
 
 import com.andres_k.components.graphicComponents.background.BackgroundManager;
+import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
 import com.andres_k.components.taskComponent.ELocation;
+import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.components.taskComponent.LocalTaskManager;
+import com.andres_k.components.taskComponent.utils.TaskComponent;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.util.Observable;
 import java.util.Observer;
 
 /**
@@ -19,13 +23,15 @@ public abstract class WindowController implements Observer {
     protected WindowBasedGame window;
     protected BackgroundManager backgroundManager;
     protected ELocation location;
+    protected int idWindow;
     protected LocalTaskManager taskManager;
 
-    protected WindowController(ELocation location) {
+    protected WindowController(ELocation location, int idWindow) {
         this.location = location;
         this.taskManager = new LocalTaskManager(this.location);
         this.taskManager.register(this.location.getId(), this);
         this.backgroundManager = new BackgroundManager();
+        this.idWindow = idWindow;
     }
 
     public abstract void enter() throws SlickException;
@@ -40,6 +46,9 @@ public abstract class WindowController implements Observer {
 
     public void update(GameContainer gameContainer) throws SlickException {
         this.backgroundManager.update();
+    }
+
+    public void beforeEnter() {
     }
 
     public abstract void keyPressed(int key, char c);
@@ -60,11 +69,31 @@ public abstract class WindowController implements Observer {
     }
 
     // SETTERS
-    public void setStateWindow(StateBasedGame stateWindow){
+    public void setStateWindow(StateBasedGame stateWindow) {
         this.stateWindow = stateWindow;
     }
 
-    public void setWindow(WindowBasedGame window){
+    public void setWindow(WindowBasedGame window) {
         this.window = window;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg instanceof TaskComponent) {
+            TaskComponent received = (TaskComponent) arg;
+
+            if (received.getTarget().equals(this.location)) {
+                if (received.getTask() instanceof EnumWindow && !received.getTask().equals(EnumWindow.EXIT)) {
+                    this.stateWindow.enterState(((EnumWindow) received.getTask()).getId());
+                } else if (received.getTask() instanceof ETaskType) {
+                    if (received.getTask() == ETaskType.EXIT) {
+                        this.window.quit();
+                    } else if (received.getTask() == ETaskType.START) {
+                        this.beforeEnter();
+                        this.stateWindow.enterState(this.idWindow);
+                    }
+                }
+            }
+        }
     }
 }

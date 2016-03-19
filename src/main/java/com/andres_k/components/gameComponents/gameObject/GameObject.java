@@ -58,12 +58,14 @@ public abstract class GameObject {
         this.currentLife = this.maxLife;
     }
 
-    public void die() {
+    public boolean die() {
         if (!this.animatorController.isDeleted()) {
             this.currentLife = 0;
             this.animatorController.forceCurrentAnimationType(EAnimation.EXPLODE);
             this.alive = false;
+            return true;
         }
+        return false;
     }
 
     public void resetActions() {

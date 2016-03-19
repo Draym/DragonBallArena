@@ -1,4 +1,4 @@
-package com.andres_k.components.controllers.load;
+package com.andres_k.components.controllers.waiting;
 
 import com.andres_k.components.controllers.WindowController;
 import com.andres_k.components.graphicComponents.background.EBackground;
@@ -24,12 +24,11 @@ import java.util.Observable;
  * Created by andres_k on 08/07/2015.
  */
 public class LoadController extends WindowController {
-
     private int index;
     private boolean loadCompleted;
 
-    public LoadController() throws JSONException, SlickException {
-        super(ELocation.LOAD_CONTROLLER);
+    public LoadController(int idWindow) throws JSONException, SlickException {
+        super(ELocation.LOAD_CONTROLLER, idWindow);
         this.index = 1;
         this.loadCompleted = false;
     }

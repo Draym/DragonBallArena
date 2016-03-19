@@ -11,7 +11,7 @@ public enum ESound {
     //musics
     BACKGROUND_LOAD(ConfigPath.sound_musics + "/DBZ_theme.ogg"),
     BACKGROUND_HOME(ConfigPath.sound_musics + "/DBZ_namek.ogg"),
-    BACKGROUND_MULTI(ConfigPath.sound_musics + "/DBZ_embraceBlueSky.ogg"),
+    BACKGROUND_CONNECTION(ConfigPath.sound_musics + "/DBZ_embraceBlueSky.ogg"),
     BACKGROUND_CREDITS(ConfigPath.sound_musics + "/DBZ_capsuleObtain.ogg"),
     BACKGROUND_SELECT(ConfigPath.sound_musics + "/DBZ_overTheGalaxy.ogg"),
     BACKGROUND_GAME(ConfigPath.sound_musics + "/backgroundGame.ogg"),

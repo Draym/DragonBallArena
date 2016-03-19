@@ -40,7 +40,7 @@ public class MusicData extends DataManager {
     }
 
     public void initBackgroundMulti() throws NoSuchMethodException, SlickException, JSONException {
-        MusicController.get().addMusic(ESound.BACKGROUND_MULTI);
+        MusicController.get().addMusic(ESound.BACKGROUND_CONNECTION);
     }
 
     public void initBackgroundCredits() throws NoSuchMethodException, SlickException, JSONException {

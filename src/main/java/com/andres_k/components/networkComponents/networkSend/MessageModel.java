@@ -7,6 +7,11 @@ public abstract class MessageModel {
     protected String pseudo;
     protected String id;
 
+    public MessageModel() {
+        this.pseudo = "";
+        this.id = "";
+    }
+
     public MessageModel(String pseudo, String id){
         this.pseudo = pseudo;
         this.id = id;
@@ -18,5 +23,13 @@ public abstract class MessageModel {
 
     public String getId(){
         return this.id;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

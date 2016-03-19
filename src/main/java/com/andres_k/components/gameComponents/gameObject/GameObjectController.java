@@ -163,6 +163,8 @@ public final class GameObjectController {
         Integer count = 0;
 
         for (EGameObject type : playerNames) {
+            this.createPlayer(type, "player" + count + GlobalVariable.id_delimiter + type.getValue(), WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1() - 600, 300, 0, 700, (count == 0));
+/*
             GameObject player = null;
             while (player == null || this.checkCollision(player, ETaskType.STATIC).hasCollision()) {
                 int randomX = RandomTools.getInt(WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1() - 600) + 300;
@@ -175,13 +177,53 @@ public final class GameObjectController {
                     CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, ELocation.GAME_GUI_State_EnemyPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(player.id, 475, 85, EGuiElement.getEnum(player.getType().getValue(), EGuiElement.ICON.getValue()), true))));
                 }
             }
-            ++count;
             this.players.add(player);
+*/
+            ++count;
         }
+    }
+
+    public void createPlayer(EGameObject type, String id, int boundX, int startX, int boundY, int startY, boolean ally) throws SlickException {
+        GameObject player = null;
+
+        while (player == null || this.checkCollision(player, ETaskType.STATIC).hasCollision()) {
+            int randomX = RandomTools.getInt(boundX) + startX;
+            int randomY = RandomTools.getInt(boundY) + startY;
+            player = GameObjectFactory.create(type, ResourceManager.get().getGameAnimator(type), id, randomX, randomY);
+            if (ally) {
+                CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, ELocation.GAME_GUI_State_AlliedPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(player.id, 475, 85, EGuiElement.getEnum(player.getType().getValue(), EGuiElement.ICON.getValue()), false))));
+            } else {
+                CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, ELocation.GAME_GUI_State_EnemyPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(player.id, 475, 85, EGuiElement.getEnum(player.getType().getValue(), EGuiElement.ICON.getValue()), true))));
+            }
+        }
+        Console.write("Create Player: " + player);
+        this.players.add(player);
+    }
+
+    public void createEntity(EGameObject type, String id, int boundX, int startX, int boundY, int startY) throws SlickException {
+        GameObject object = null;
+
+        while (object == null || this.checkCollision(object, ETaskType.STATIC).hasCollision()) {
+            int randomX = RandomTools.getInt(boundX) + startX;
+            int randomY = RandomTools.getInt(boundY) + startY;
+            object = GameObjectFactory.create(type, ResourceManager.get().getGameAnimator(type), id, randomX, randomY);
+            CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, ELocation.GAME_GUI_State_EnemyPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(object.id, 475, 85, EGuiElement.getEnum(object.getType().getValue(), EGuiElement.ICON.getValue()), true))));
+        }
+        Console.write("Create Entity: " + object);
+        this.entities.add(object);
     }
 
     public void addEntity(GameObject entity) {
         this.entities.add(entity);
+    }
+
+    public void deleteEntity(String id) {
+        for (int i = 0; i < this.entities.size(); ++i) {
+            if (this.entities.get(i).getId().equals(id)) {
+                this.entities.remove(i);
+                --i;
+            }
+        }
     }
 
     // COLLISION

@@ -9,13 +9,17 @@ import com.andres_k.components.gameComponents.gameObject.GameObjectController;
 import com.andres_k.components.graphicComponents.background.EBackground;
 import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
+import com.andres_k.components.networkComponents.networkSend.MessageModel;
+import com.andres_k.components.networkComponents.networkSend.messageServer.MessageActionPlayer;
+import com.andres_k.components.networkComponents.networkSend.messageServer.MessageDeletePlayer;
+import com.andres_k.components.networkComponents.networkSend.messageServer.MessageNewPlayer;
+import com.andres_k.components.networkComponents.networkSend.messageServer.MessageStatePlayer;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
-import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
-import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.configs.GameConfig;
+import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
@@ -34,8 +38,8 @@ public class GameController extends WindowController {
 
     private boolean running;
 
-    public GameController() throws JSONException {
-        super(ELocation.GAME_CONTROLLER);
+    public GameController(int idWindow) throws JSONException {
+        super(ELocation.GAME_CONTROLLER, idWindow);
         this.inputGame = new InputGame();
         this.playerTypes = new ArrayList<>();
     }
@@ -102,6 +106,12 @@ public class GameController extends WindowController {
     }
 
     @Override
+    public void beforeEnter() {
+        this.playerTypes.clear();
+        this.playerTypes.addAll(GameConfig.typePlayer);
+    }
+
+    @Override
     public void keyPressed(int key, char c) {
         if (this.running) {
             EInput result = this.inputGame.checkInput(key);
@@ -137,28 +147,46 @@ public class GameController extends WindowController {
     public void update(Observable o, Object arg) {
         if (arg instanceof TaskComponent) {
             TaskComponent received = (TaskComponent) arg;
-
-            if (received.getTarget().equals(ELocation.GAME_CONTROLLER)) {
-                if (received.getTask() instanceof EnumWindow && !received.getTask().equals(EnumWindow.EXIT)) {
-                    this.stateWindow.enterState(((EnumWindow) received.getTask()).getId());
-                } else if (received.getTask() instanceof ETaskType) {
-                    if (received.getTask() == ETaskType.EXIT) {
-                        this.window.quit();
-                    } else if (received.getTask() == ETaskType.START) {
-                        this.playerTypes.clear();
-                        this.playerTypes.addAll(GameConfig.typePlayer);
-                        this.stateWindow.enterState(EnumWindow.GAME.getId());
+            if (received.getTarget().equals(this.location)) {
+                if (received.getTask() instanceof MessageModel) {
+                    try {
+                        this.resolveNetworkTask((MessageModel) received.getTask());
+                    } catch (SlickException e) {
+                        e.printStackTrace();
                     }
-                }  else if (received.getTask() instanceof Pair) {
+                } else if (received.getTask() instanceof Pair) {
                     if (((Pair) received.getTask()).getV1() == ETaskType.CREATE && ((Pair) received.getTask()).getV2() instanceof GameObject) {
                         GameObjectController.get().addEntity((GameObject) ((Pair) received.getTask()).getV2());
+                        return;
                     } else if (((Pair) received.getTask()).getV1() instanceof String) {
                         GameObjectController.get().taskForPlayer((String) ((Pair) received.getTask()).getV1(), ((Pair) received.getTask()).getV2());
+                        return;
                     }
                 }
             }
-        } else if (arg instanceof Pair) {
+        }/* else if (arg instanceof Pair) {
             CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.GAME_CONTROLLER, (ELocation) ((Pair) arg).getV1(), ((Pair) arg).getV2()));
+            return;
+        }*/
+        super.update(o, arg);
+    }
+
+    public void resolveNetworkTask(MessageModel task) throws SlickException {
+        if (task instanceof MessageNewPlayer) {
+            GameObjectController.get().createEntity(EGameObject.getEnumByValue(((MessageNewPlayer) task).getPlayerType()), task.getId(), (WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1() - 600), 300, 0, 700);
+        } else if (task instanceof MessageDeletePlayer) {
+            GameObjectController.get().deleteEntity(task.getId());
+        } else if (task instanceof MessageActionPlayer) {
+            GameObject player = GameObjectController.get().getObjectById(task.getId());
+            if (player != null && player.getAnimatorController() != null) {
+                player.getAnimatorController().forceCurrentAnimationType(((MessageActionPlayer) task).getAction());
+                player.getAnimatorController().forceCurrentAnimationIndex(((MessageActionPlayer) task).getIndex());
+            }
+        } else if (task instanceof MessageStatePlayer) {
+            GameObject player = GameObjectController.get().getObjectById(task.getId());
+            if (player != null) {
+                
+            }
         }
     }
 

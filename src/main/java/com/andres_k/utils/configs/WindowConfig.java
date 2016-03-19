@@ -24,7 +24,7 @@ public class WindowConfig {
         this.windows.put(EnumWindow.SELECT_SOLO, new Pair<>(1600, 900));
         this.windows.put(EnumWindow.SELECT_VERSUS, new Pair<>(1600, 900));
         this.windows.put(EnumWindow.SELECT_MULTI, new Pair<>(1600, 900));
-        this.windows.put(EnumWindow.BEFORE_BATTLE, new Pair<>(1440, 900));
+        this.windows.put(EnumWindow.BATTLE_CONNECTION, new Pair<>(1600, 900));
         this.windows.put(EnumWindow.GAME, new Pair<>(1900, 900));
     }
 

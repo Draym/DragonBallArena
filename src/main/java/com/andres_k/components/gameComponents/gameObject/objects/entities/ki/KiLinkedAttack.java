@@ -92,9 +92,8 @@ public abstract class KiLinkedAttack extends KiAttack {
     }
 
     @Override
-    public void die() {
-        if (!this.animatorController.isDeleted()) {
-            super.die();
+    public boolean die() {
+        if (super.die()) {
             if (this.back != null) {
                 this.back.forceCurrentAnimationType(EAnimation.EXPLODE);
             }
@@ -104,7 +103,9 @@ public abstract class KiLinkedAttack extends KiAttack {
             for (Pair<Float, AnimatorController> item : this.bodiesAnim) {
                 item.getV2().forceCurrentAnimationType(EAnimation.EXPLODE);
             }
+            return true;
         }
+        return false;
     }
 
     private void createNewBodySegment() throws SlickException {

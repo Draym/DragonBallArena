@@ -1,9 +1,9 @@
-package com.andres_k.components.graphicComponents.graphic.windows.load;
+package com.andres_k.components.graphicComponents.graphic.windows.waiting;
 
-import com.andres_k.components.controllers.load.LoadController;
+import com.andres_k.components.controllers.waiting.LoadController;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
-import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.load.LoadGUI;
+import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.waiting.LoadGUI;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.resourceComponent.sounds.MusicController;
@@ -23,8 +23,8 @@ import java.util.TimerTask;
  */
 public class WindowLoad extends WindowBasedGame {
 
-    public WindowLoad(int idWindow, LocalTaskManager windowsTask) throws JSONException, SlickException {
-        super(idWindow, new LoadController(), new LoadGUI());
+    public WindowLoad(LocalTaskManager windowsTask) throws JSONException, SlickException {
+        super(EnumWindow.LOAD.getId(), new LoadController(EnumWindow.LOAD.getId()), new LoadGUI());
         this.gui.register(windowsTask);
         this.controller.register(windowsTask);
     }

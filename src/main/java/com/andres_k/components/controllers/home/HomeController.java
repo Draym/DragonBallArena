@@ -3,12 +3,8 @@ package com.andres_k.components.controllers.home;
 import com.andres_k.components.controllers.WindowController;
 import com.andres_k.components.graphicComponents.background.EBackground;
 import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
-import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.ELocation;
-import com.andres_k.components.taskComponent.ETaskType;
-import com.andres_k.components.taskComponent.utils.TaskComponent;
-import com.andres_k.utils.tools.Console;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
 
@@ -19,8 +15,8 @@ import java.util.Observable;
  */
 public class HomeController extends WindowController {
 
-    public HomeController() throws JSONException, SlickException {
-        super(ELocation.HOME_CONTROLLER);
+    public HomeController(int idWindow) throws JSONException, SlickException {
+        super(ELocation.HOME_CONTROLLER, idWindow);
     }
 
     @Override
@@ -55,35 +51,6 @@ public class HomeController extends WindowController {
 
     @Override
     public void update(Observable o, Object arg) {
-        Console.write("Home Received: " + arg);
-        if (arg instanceof TaskComponent) {
-            TaskComponent received = (TaskComponent) arg;
-
-            if (received.getTarget().equals(ELocation.HOME_CONTROLLER)) {
-                if (received.getTask() instanceof EnumWindow && !received.getTask().equals(EnumWindow.EXIT)) {
-                    if (this.stateWindow != null) {
-                        this.stateWindow.enterState(((EnumWindow) received.getTask()).getId());
-                    }
-                } else if (received.getTask() instanceof ETaskType) {
-                    if (received.getTask() == ETaskType.EXIT) {
-                        this.window.quit();
-                    }
-                }
-                //todo a refaire !
-                /*
-                else if (received.getTask() instanceof MessageGameNew) {
-                    if (((MessageGameNew) received.getTask()).getType() == EnumTask.START) {
-                        CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.HOME_CONTROLLER, EnumLocation.GAME_CONTROLLER, received.getTask()));
-                    } else if (((MessageGameNew) received.getTask()).getType() == EnumTask.NEXT) {
-                        List<String> values = ((MessageGameNew) received.getTask()).getValues();
-
-                        if (values.size() > 0) {
-                            GlobalVariable.currentPlayer = Integer.valueOf(values.get(0));
-                            GlobalVariable.currentPlayer = (GlobalVariable.currentPlayer > GlobalVariable.maxPlayer ? GlobalVariable.maxPlayer : GlobalVariable.currentPlayer);
-                        }
-                    }
-                }*/
-            }
-        }
+        super.update(o, arg);
     }
 }

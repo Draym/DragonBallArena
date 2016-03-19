@@ -31,8 +31,8 @@ public class AnimatorBackgroundFactory extends AnimatorFactory {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_background + "/logo.png"));
         } else if (index == ESprites.SELECT_SCREEN) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_background + "/backgroundSelect.jpg"));
-        } else if (index == ESprites.BATTLE_SCREEN) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_background + "/backgroundBattle.jpg"));
+        } else if (index == ESprites.BATTLE_CONNECTION_SCREEN) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_background + "/backgroundBattleConnection.jpg"));
         } else if (index == ESprites.HOME_SCREEN) {
             Animation animation = AnimationFactory.loadAnimation(ConfigPath.image_background + "/Home/backgroundHome ", ".jpg", 37, 37 /*125*/ /*192*/, true, 80);
             animation.setPingPong(true);

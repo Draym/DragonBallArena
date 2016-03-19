@@ -3,7 +3,7 @@ package com.andres_k.components.graphicComponents.graphic.windows.select;
 import com.andres_k.components.controllers.select.SelectMultiController;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
-import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.select.SelectMultiGui;
+import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.select.SelectMultiGUI;
 import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.resourceComponent.sounds.MusicController;
 import com.andres_k.components.taskComponent.LocalTaskManager;
@@ -17,8 +17,8 @@ import org.newdawn.slick.state.StateBasedGame;
  * Created by andres_k on 09/02/2016.
  */
 public class WindowSelectMulti extends WindowBasedGame {
-    public WindowSelectMulti(int idWindow, LocalTaskManager windowsTask) throws JSONException, SlickException {
-        super(idWindow, new SelectMultiController(), new SelectMultiGui());
+    public WindowSelectMulti(LocalTaskManager windowsTask) throws JSONException, SlickException {
+        super(EnumWindow.SELECT_MULTI.getId(), new SelectMultiController(EnumWindow.SELECT_MULTI.getId()), new SelectMultiGUI());
         this.gui.register(windowsTask);
         this.controller.register(windowsTask);
     }

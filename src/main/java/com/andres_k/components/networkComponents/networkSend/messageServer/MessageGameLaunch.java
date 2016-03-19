@@ -3,8 +3,8 @@ package com.andres_k.components.networkComponents.networkSend.messageServer;
 import com.andres_k.components.networkComponents.networkSend.MessageModel;
 
 /**
- * Created by andres_k on 18/11/2015.
+ * Created by andres_k on 19/03/2016.
  */
-public class MessageDisconnect extends MessageModel {
-    public MessageDisconnect() {}
+public class MessageGameLaunch extends MessageModel {
+    public MessageGameLaunch() {}
 }

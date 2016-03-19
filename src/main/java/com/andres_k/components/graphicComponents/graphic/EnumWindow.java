@@ -7,7 +7,7 @@ public enum EnumWindow {
     EXIT(-1),
     LOAD(0), HOME(1), GAME(2),
     SELECT_SOLO(3), SELECT_VERSUS(4), SELECT_MULTI(5),
-    BEFORE_BATTLE(6);
+    BATTLE_CONNECTION(6);
 
     private int id;
 

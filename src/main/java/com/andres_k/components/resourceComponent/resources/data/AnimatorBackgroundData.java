@@ -35,7 +35,7 @@ public class AnimatorBackgroundData extends DataManager {
         this.methods.clear();
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initHomeScreen")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initSelectScreen")));
-        this.methods.add(new Pair<>(false, this.getClass().getMethod("initBattleScreen")));
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initBeforeBattleScreen")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initMaps")));
     }
 
@@ -57,8 +57,8 @@ public class AnimatorBackgroundData extends DataManager {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.SELECT_SCREEN), EBackground.SELECT_SCREEN);
     }
 
-    public void initBattleScreen() throws NoSuchMethodException, SlickException, JSONException {
-        this.addAnimator(this.animatorFactory.getAnimator(ESprites.BATTLE_SCREEN), EBackground.BEFORE_BATTLE_SCREEN);
+    public void initBeforeBattleScreen() throws NoSuchMethodException, SlickException, JSONException {
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.BATTLE_CONNECTION_SCREEN), EBackground.BATTLE_CONNECTION_SCREEN);
     }
 
     public void initMaps() throws NoSuchMethodException, SlickException, JSONException {
