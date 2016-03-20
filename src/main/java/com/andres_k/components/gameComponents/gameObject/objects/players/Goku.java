@@ -51,9 +51,10 @@ public class Goku extends Player {
                 if (ResourceManager.get().getGameAnimator(EGameObject.GOKU) != null) {
                     this.transformationTimer.cancel();
                     this.transformed = false;
-                    this.movement.setCurrentSpeed(220);
-                    this.movement.setWeight(15);
+                    this.movement.setMoveSpeed(220f);
+                    this.movement.setWeight(15f);
                     this.maxLife = 3000;
+                    this.damage = 1f;
                     this.setCurrentLife(this.currentLife);
                     EAnimation saveAnim = this.animatorController.currentAnimationType();
                     int index = this.animatorController.getIndex();
@@ -73,8 +74,8 @@ public class Goku extends Player {
             try {
                 if (ResourceManager.get().getGameAnimator(EGameObject.GOKU_S1) != null) {
                     this.transformed = true;
-                    this.movement.setCurrentSpeed(this.movement.getCurrentSpeed() * 3f);
-                    this.movement.setWeight(this.movement.getWeight() * 3f);
+                    this.movement.setMoveSpeed(this.movement.getMoveSpeed() * 1.5f);
+                    this.movement.setWeight(this.movement.getWeight() * 1.5f);
                     this.maxLife = this.maxLife * 2f;
                     this.damage = this.damage * 3f;
                     this.setCurrentEnergy(this.maxEnergy);
@@ -88,7 +89,7 @@ public class Goku extends Player {
                     this.transformationTimer.scheduleAtFixedRate(new TimerTask() {
                         @Override
                         public void run() {
-                            incrementCurrentEnergy(-50);
+                            incrementCurrentEnergy(-200);
                         }
                     }, 11000, 10000);
                 }

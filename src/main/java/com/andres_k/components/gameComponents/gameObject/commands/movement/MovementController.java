@@ -19,20 +19,20 @@ public class MovementController {
     private boolean onEarth;
     private boolean useGravity;
 
-    private float speed;
-    private float currentSpeed;
+    private float moveSpeed;
+    private float gravitySpeed;
     private float weight;
     private float pushX;
     private float pushY;
     private float pushGravity;
     private float exponential;
 
-    public MovementController(Pair<Float, Float> positions, float gravity, float speed, float weight, boolean onEarth) {
+    public MovementController(Pair<Float, Float> positions, float gravity, float moveSpeed, float weight, boolean onEarth) {
         this.positions = new Pair<>(positions.getV1(), positions.getV2());
         this.onEarth = onEarth;
         this.gravity = gravity;
-        this.speed = speed;
-        this.currentSpeed = this.speed;
+        this.moveSpeed = moveSpeed;
+        this.gravitySpeed = this.moveSpeed;
         this.weight = weight;
         this.pushX = 0;
         this.pushY = 0;
@@ -45,8 +45,8 @@ public class MovementController {
         this.positions = new Pair<>(movement.positions.getV1(), movement.positions.getV2());
         this.onEarth = movement.onEarth;
         this.gravity = movement.gravity;
-        this.speed = movement.speed;
-        this.currentSpeed = this.speed;
+        this.moveSpeed = movement.moveSpeed;
+        this.gravitySpeed = this.moveSpeed;
         this.weight = movement.weight;
         this.pushX = movement.pushX;
         this.pushY = movement.pushY;
@@ -105,7 +105,7 @@ public class MovementController {
     private void nextX(CollisionResult collisionResult) {
         if (!collisionResult.hasCollisionX()) {
             this.positions.setV1(this.getNextX());
-        } else if (this.speed != 0) {
+        } else if (this.moveSpeed != 0) {
             CollisionItem item = collisionResult.getLowCollisionX(new EGameObject[]{EGameObject.PLATFORM});
 
             if (item != null) {
@@ -119,7 +119,7 @@ public class MovementController {
     private void nextY(CollisionResult collisionResult) {
         if (!collisionResult.hasCollisionY()) {
             this.positions.setV2(this.getNextY());
-        } else if (this.speed != 0) {
+        } else if (this.moveSpeed != 0) {
             CollisionItem item = collisionResult.getLowCollisionY(new EGameObject[]{EGameObject.BORDER});
 
             if (item != null) {
@@ -142,14 +142,14 @@ public class MovementController {
     }
 
     public float calculateDistance(float msec) {
-        return this.speed * (msec / 1000);
+        return this.moveSpeed * (msec / 1000);
     }
 
     public float calculateGravity() {
-        if (this.currentSpeed == 0) {
+        if (this.gravitySpeed == 0) {
             return 0;
         }
-        return (((this.weight * this.gravity)) / this.currentSpeed) * this.exponential;
+        return (((this.weight * this.gravity)) / this.gravitySpeed) * this.exponential;
     }
 
     public float calculatePushX() {
@@ -209,12 +209,12 @@ public class MovementController {
         return this.pushGravity / this.calculateGravity();
     }
 
-    public float getSpeed() {
-        return this.speed;
+    public float getMoveSpeed() {
+        return this.moveSpeed;
     }
 
-    public float getCurrentSpeed() {
-        return this.currentSpeed;
+    public float getGravitySpeed() {
+        return this.gravitySpeed;
     }
 
     public float getWeight() {
@@ -245,8 +245,12 @@ public class MovementController {
         this.resetGravity();
     }
 
-    public void setCurrentSpeed(float value) {
-        this.currentSpeed = value;
+    public void setGravitySpeed(float value) {
+        this.gravitySpeed = value;
+    }
+
+    public void setMoveSpeed(float value) {
+        this.moveSpeed = value;
     }
 
     public void setWeight(float value) {

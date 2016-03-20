@@ -164,7 +164,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addRepercussion(EAnimation.KI_SIMPLE_PROPELS, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_PROJECTED, 70, new Pair<>(GameConfig.speedTravel * 2f, -0.5f)));
         animatorController.addEffect(EAnimation.KI_SIMPLE_PROPELS, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_HAND_FLY_PROPELS));
         // KI_FINAL_ATTACK
-        animatorController.addAnimation(EAnimation.KI_FINAL_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuGenkidama.png", 247, 247), EAnimation.KI_FINAL_ATTACK.isLoop(), 0, 10, 0, 1, new int[]{600, 400, 400, 400, 150, 150, 150, 10000, 300, 250}));
+        animatorController.addAnimation(EAnimation.KI_FINAL_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuGenkidama.png", 247, 247), EAnimation.KI_FINAL_ATTACK.isLoop(), 0, 10, 0, 1, new int[]{600, 400, 400, 400, 150, 150, 150, 5000, 300, 250}));
         animatorController.addCollision(EAnimation.KI_FINAL_ATTACK, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuGenkidama.json")));
         animatorController.addConfig(EAnimation.KI_FINAL_ATTACK, 0, new AnimationConfigItem(GokuActions.class.getMethod("kiFinalAttack", GameObject.class), false));
         animatorController.addEffect(EAnimation.KI_FINAL_ATTACK, 0, 1, EffectFactory.createAnimationEffect(AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/genkidama" + "/genkidama1.png", 260, 260), true, 0, 2, 0, 1, new int[]{80, 80}), -90, -50, false));
@@ -179,7 +179,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addConfig(EAnimation.KI_SPE_ATTACK, 0, new AnimationConfigItem(EAnimation.KI_SPE_ATTACK, 1));
         animatorController.addEffect(EAnimation.KI_SPE_ATTACK, 0, 0, EffectFactory.createAnimationEffect(AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_expr.png", 85, 70), false, 0, 2, 0, 1, new int[]{1000, 1000}), 60, 60, false));
         animatorController.addEffect(EAnimation.KI_SPE_ATTACK, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_KAMEHAMEHA_AIM));
-        animatorController.addAnimation(EAnimation.KI_SPE_ATTACK, 1, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuKamehameha2.png", 247, 247), EAnimation.KI_SPE_ATTACK.isLoop(), 0, 6, 0, 1, new int[]{220, 200, 10000, 300, 100, 100}));
+        animatorController.addAnimation(EAnimation.KI_SPE_ATTACK, 1, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuKamehameha2.png", 247, 247), EAnimation.KI_SPE_ATTACK.isLoop(), 0, 6, 0, 1, new int[]{220, 200, 5000, 300, 100, 100}));
         animatorController.addCollision(EAnimation.KI_SPE_ATTACK, 1, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuKamehameha2.json")));
         animatorController.addConfig(EAnimation.KI_SPE_ATTACK, 1, new AnimationConfigItem(GokuActions.class.getMethod("kiSpeAttack", GameObject.class), false));
         animatorController.addEffect(EAnimation.KI_SPE_ATTACK, 1, 1, EffectFactory.createSoundEffect(ESound.GOKU_KAMEHAMEHA_FIRE));
@@ -353,11 +353,11 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addConfig(EAnimation.SPIRAL_KICK, 0, new AnimationConfigItem(VegetaActions.class.getMethod("spiralKick", GameObject.class), false));
         animatorController.addRepercussion(EAnimation.SPIRAL_KICK, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_MEDIUM, 100, new Pair<>(GameConfig.speedTravel, 0f)));
         // KI_FINAL_ATTACK
-        animatorController.addAnimation(EAnimation.KI_FINAL_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaFinalFlash.png", 247, 247), EAnimation.KI_FINAL_ATTACK.isLoop(), 0, 11, 0, 1, new int[]{150, 300, 150, 150, 200, 150, 150, 10000, 400, 250, 200}));
+        animatorController.addAnimation(EAnimation.KI_FINAL_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaFinalFlash.png", 247, 247), EAnimation.KI_FINAL_ATTACK.isLoop(), 0, 11, 0, 1, new int[]{150, 300, 150, 150, 200, 150, 150, 5000, 400, 250, 200}));
         animatorController.addCollision(EAnimation.KI_FINAL_ATTACK, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaFinalFlash.json")));
         animatorController.addConfig(EAnimation.KI_FINAL_ATTACK, 0, new AnimationConfigItem(VegetaActions.class.getMethod("kiFinalAttack", GameObject.class), false));
         animatorController.addEffect(EAnimation.KI_FINAL_ATTACK, 0, 0, EffectFactory.createSoundEffect(ESound.VEGETA_FINAL_FLASH));
-        animatorController.addEffect(EAnimation.KI_FINAL_ATTACK, 0, 6, EffectFactory.createAnimationEffect(AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/finalFlash" + "/finalFlashBackEffect.png", 247, 247), false, 0, 2, 0, 1, new int[]{150, 10000}), -24, 0, false));
+        animatorController.addEffect(EAnimation.KI_FINAL_ATTACK, 0, 6, EffectFactory.createAnimationEffect(AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/finalFlash" + "/finalFlashBackEffect.png", 247, 247), false, 0, 2, 0, 1, new int[]{150, 5000}), -24, 0, false));
         animatorController.addEffect(EAnimation.KI_FINAL_ATTACK, 0, 8, new ClearEffects());
         animatorController.addEffect(EAnimation.KI_FINAL_ATTACK, 0, 8, EffectFactory.createAnimationEffect(AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/finalFlash" + "/finalFlashBackEffect.png", 247, 247), false, 2, 3, 0, 1, new int[]{350}), -24, 0, false));
         // KI_SPE_ATTACK
@@ -640,7 +640,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addRepercussion(EAnimation.KI_SIMPLE_PROPELS, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_PROJECTED, 70, new Pair<>(GameConfig.speedTravel * 2f, -0.5f)));
         animatorController.addEffect(EAnimation.KI_SIMPLE_PROPELS, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_HAND_FLY_PROPELS));
         // KI_FINAL_ATTACK
-        animatorController.addAnimation(EAnimation.KI_FINAL_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuMegaKameha.png", 247, 247), EAnimation.KI_FINAL_ATTACK.isLoop(), 0, 14, 0, 1, new int[]{250, 250, 250, 250, 250, 150, 200, 250, 200, 10000, 250, 250, 150, 200}));
+        animatorController.addAnimation(EAnimation.KI_FINAL_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuMegaKameha.png", 247, 247), EAnimation.KI_FINAL_ATTACK.isLoop(), 0, 14, 0, 1, new int[]{250, 250, 250, 250, 250, 150, 200, 250, 200, 5000, 250, 250, 150, 200}));
         animatorController.addCollision(EAnimation.KI_FINAL_ATTACK, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuMegaKameha.json")));
         animatorController.addConfig(EAnimation.KI_FINAL_ATTACK, 0, new AnimationConfigItem(GokuS1Actions.class.getMethod("kiFinalAttack", GameObject.class), true));
         // KI_SPE_ATTACK
@@ -649,7 +649,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addConfig(EAnimation.KI_SPE_ATTACK, 0, new AnimationConfigItem(EAnimation.KI_SPE_ATTACK, 1));
         animatorController.addEffect(EAnimation.KI_SPE_ATTACK, 0, 0, EffectFactory.createAnimationEffect(AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_expr.png", 85, 70), false, 0, 2, 0, 1, new int[]{1000, 1000}), 60, 60, false));
         animatorController.addEffect(EAnimation.KI_SPE_ATTACK, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_KAMEHAMEHA_AIM));
-        animatorController.addAnimation(EAnimation.KI_SPE_ATTACK, 1, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuKamehameha2.png", 247, 247), EAnimation.KI_SPE_ATTACK.isLoop(), 0, 6, 0, 1, new int[]{220, 200, 10000, 300, 100, 100}));
+        animatorController.addAnimation(EAnimation.KI_SPE_ATTACK, 1, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuKamehameha2.png", 247, 247), EAnimation.KI_SPE_ATTACK.isLoop(), 0, 6, 0, 1, new int[]{220, 200, 5000, 300, 100, 100}));
         animatorController.addCollision(EAnimation.KI_SPE_ATTACK, 1, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuKamehameha2.json")));
         animatorController.addConfig(EAnimation.KI_SPE_ATTACK, 1, new AnimationConfigItem(GokuS1Actions.class.getMethod("kiSpeAttack", GameObject.class), false));
         animatorController.addEffect(EAnimation.KI_SPE_ATTACK, 1, 1, EffectFactory.createSoundEffect(ESound.GOKU_KAMEHAMEHA_FIRE));
@@ -823,7 +823,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addConfig(EAnimation.SPIRAL_KICK, 0, new AnimationConfigItem(VegetaActions.class.getMethod("spiralKick", GameObject.class), false));
         animatorController.addRepercussion(EAnimation.SPIRAL_KICK, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_MEDIUM, 100, new Pair<>(GameConfig.speedTravel, 0f)));
         // KI_FINAL_ATTACK
-        animatorController.addAnimation(EAnimation.KI_FINAL_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaFinalFlash.png", 247, 247), EAnimation.KI_FINAL_ATTACK.isLoop(), 0, 11, 0, 1, new int[]{150, 300, 150, 150, 200, 150, 150, 10000, 400, 250, 200}));
+        animatorController.addAnimation(EAnimation.KI_FINAL_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaFinalFlash.png", 247, 247), EAnimation.KI_FINAL_ATTACK.isLoop(), 0, 11, 0, 1, new int[]{150, 300, 150, 150, 200, 150, 150, 5000, 400, 250, 200}));
         animatorController.addCollision(EAnimation.KI_FINAL_ATTACK, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaFinalFlash.json")));
         animatorController.addConfig(EAnimation.KI_FINAL_ATTACK, 0, new AnimationConfigItem(VegetaActions.class.getMethod("kiFinalAttack", GameObject.class), false));
         animatorController.addEffect(EAnimation.KI_FINAL_ATTACK, 0, 0, EffectFactory.createSoundEffect(ESound.VEGETA_FINAL_FLASH));

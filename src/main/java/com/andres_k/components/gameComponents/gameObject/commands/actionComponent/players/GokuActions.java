@@ -142,7 +142,7 @@ public class GokuActions extends BasicActions {
     public static void kiSpeAttack(GameObject object) {
         try {
             object.getMovement().setPushX(0f);
-            if (object.getAnimatorController().currentAnimation().getFrame() == 1) {
+            if (object.getAnimatorController().currentAnimation().getFrame() == 2) {
                 object.getMovement().stopMovement();
                 object.getMovement().setUseGravity(false);
                 object.doTask(new Pair<>(ETaskType.CREATE, EGameObject.KAMEHA.toString()));

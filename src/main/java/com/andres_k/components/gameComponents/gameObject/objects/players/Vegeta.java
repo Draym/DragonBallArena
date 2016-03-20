@@ -50,7 +50,7 @@ public class Vegeta extends Player {
                 if (ResourceManager.get().getGameAnimator(EGameObject.VEGETA) != null) {
                     this.transformationTimer.cancel();
                     this.transformed = false;
-                    this.movement.setCurrentSpeed(220);
+                    this.movement.setGravitySpeed(220);
                     this.maxLife = 3300;
                     this.setCurrentLife(this.currentLife);
                     EAnimation saveAnim = this.animatorController.currentAnimationType();
@@ -71,7 +71,6 @@ public class Vegeta extends Player {
             try {
                 if (ResourceManager.get().getGameAnimator(EGameObject.VEGETA_S1) != null) {
                     this.transformed = true;
-//                    this.movement.setCurrentSpeed(this.movement.getCurrentSpeed() * 1.5f);
                     this.maxLife = this.maxLife * 2f;
                     this.damage = this.damage * 3f;
                     this.setCurrentEnergy(this.maxEnergy);
