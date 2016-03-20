@@ -357,6 +357,9 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addCollision(EAnimation.KI_FINAL_ATTACK, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaFinalFlash.json")));
         animatorController.addConfig(EAnimation.KI_FINAL_ATTACK, 0, new AnimationConfigItem(VegetaActions.class.getMethod("kiFinalAttack", GameObject.class), false));
         animatorController.addEffect(EAnimation.KI_FINAL_ATTACK, 0, 0, EffectFactory.createSoundEffect(ESound.VEGETA_FINAL_FLASH));
+        animatorController.addEffect(EAnimation.KI_FINAL_ATTACK, 0, 6, EffectFactory.createAnimationEffect(AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/finalFlash" + "/finalFlashBackEffect.png", 247, 247), false, 0, 2, 0, 1, new int[]{150, 10000}), -24, 0, false));
+        animatorController.addEffect(EAnimation.KI_FINAL_ATTACK, 0, 8, new ClearEffects());
+        animatorController.addEffect(EAnimation.KI_FINAL_ATTACK, 0, 8, EffectFactory.createAnimationEffect(AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/finalFlash" + "/finalFlashBackEffect.png", 247, 247), false, 2, 3, 0, 1, new int[]{350}), -24, 0, false));
         // KI_SPE_ATTACK
         animatorController.addAnimation(EAnimation.KI_SPE_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaKiBurst.png", 247, 247), EAnimation.KI_SPE_ATTACK.isLoop(), 0, 6, 0, 1, new int[]{150, 150, 150, 200, 300, 150}));
         animatorController.addCollision(EAnimation.KI_SPE_ATTACK, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaKiBurst.json")));
