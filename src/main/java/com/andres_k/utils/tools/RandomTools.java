@@ -27,4 +27,9 @@ public class RandomTools {
         return random.nextBoolean();
     }
 
+    public static boolean isSuccess(float percent) {
+        int random = getInt(100);
+        Console.write("random: " + random + " ? " + percent);
+        return random < percent;
+    }
 }

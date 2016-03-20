@@ -167,6 +167,10 @@ public abstract class GameObject {
 
     // GETTERS
 
+    public float getCurrentPercentLife() {
+        return this.currentLife * 100 / this.maxLife;
+    }
+
     public float getMaxLife() {
         return this.maxLife;
     }

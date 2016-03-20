@@ -16,8 +16,10 @@ import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.RandomTools;
 import org.newdawn.slick.SlickException;
 
+import java.util.Timer;
 import java.util.TimerTask;
 
 /**
@@ -50,6 +52,8 @@ public class Goku extends Player {
             try {
                 if (ResourceManager.get().getGameAnimator(EGameObject.GOKU) != null) {
                     this.transformationTimer.cancel();
+                    this.transformationTimer.purge();
+                    this.transformationTimer = new Timer();
                     this.transformed = false;
                     this.movement.setMoveSpeed(220f);
                     this.movement.setWeight(15f);
@@ -70,7 +74,7 @@ public class Goku extends Player {
     }
 
     public void transformS1() {
-        if (this.currentKi == this.maxKi && !this.transformed) {
+        if (this.currentKi == this.maxKi && !this.transformed && RandomTools.isSuccess((100 - this.getCurrentPercentLife()) / 2)) {
             try {
                 if (ResourceManager.get().getGameAnimator(EGameObject.GOKU_S1) != null) {
                     this.transformed = true;
@@ -89,7 +93,7 @@ public class Goku extends Player {
                     this.transformationTimer.scheduleAtFixedRate(new TimerTask() {
                         @Override
                         public void run() {
-                            incrementCurrentEnergy(-200);
+                           incrementCurrentEnergy(-100);
                         }
                     }, 11000, 10000);
                 }

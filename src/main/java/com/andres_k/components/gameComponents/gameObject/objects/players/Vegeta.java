@@ -15,8 +15,10 @@ import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.RandomTools;
 import org.newdawn.slick.SlickException;
 
+import java.util.Timer;
 import java.util.TimerTask;
 
 /**
@@ -49,9 +51,13 @@ public class Vegeta extends Player {
             try {
                 if (ResourceManager.get().getGameAnimator(EGameObject.VEGETA) != null) {
                     this.transformationTimer.cancel();
+                    this.transformationTimer.purge();
+                    this.transformationTimer = new Timer();
                     this.transformed = false;
-                    this.movement.setGravitySpeed(220);
+                    this.movement.setMoveSpeed(220f);
+                    this.movement.setWeight(15f);
                     this.maxLife = 3300;
+                    this.damage = 1f;
                     this.setCurrentLife(this.currentLife);
                     EAnimation saveAnim = this.animatorController.currentAnimationType();
                     int index = this.animatorController.getIndex();
@@ -67,12 +73,14 @@ public class Vegeta extends Player {
     }
 
     public void transformS1() {
-        if (this.currentKi == this.maxKi && !this.transformed) {
+        if (this.currentKi == this.maxKi && !this.transformed && RandomTools.isSuccess((100 - this.getCurrentPercentLife()) / 2)) {
             try {
                 if (ResourceManager.get().getGameAnimator(EGameObject.VEGETA_S1) != null) {
                     this.transformed = true;
-                    this.maxLife = this.maxLife * 2f;
-                    this.damage = this.damage * 3f;
+                    this.movement.setMoveSpeed(this.movement.getMoveSpeed() * 1.5f);
+                    this.movement.setWeight(this.movement.getWeight() * 1.5f);
+                    this.maxLife = this.maxLife * 2.5f;
+                    this.damage = this.damage * 2.2f;
                     this.setCurrentEnergy(this.maxEnergy);
                     this.setCurrentLife(this.maxLife);
                     EAnimation saveAnim = this.animatorController.currentAnimationType();
@@ -84,7 +92,7 @@ public class Vegeta extends Player {
                     this.transformationTimer.scheduleAtFixedRate(new TimerTask() {
                         @Override
                         public void run() {
-                            incrementCurrentEnergy(-50);
+                            incrementCurrentEnergy(-100);
                         }
                     }, 11000, 10000);
                 }
