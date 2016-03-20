@@ -74,6 +74,10 @@ public class BattleConnectionGUI extends UserInterface {
         this.taskManager.register(controlModal.getId(), controlModal);
         this.elements.add(controlModal);
 
+        // loading
+        ImageElement loadingBar = new ImageElement(new ColorRect(new Rectangle(490, 755, 0, 0)), ResourceManager.get().getGuiAnimator(EGuiElement.LOADING_ANIM), true);
+        this.elements.add(loadingBar);
+
         this.initElements();
     }
 

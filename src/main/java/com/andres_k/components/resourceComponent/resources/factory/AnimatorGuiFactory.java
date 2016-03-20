@@ -76,7 +76,7 @@ public class AnimatorGuiFactory extends AnimatorFactory {
         if (index == ESprites.LOAD_BAR) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/component" + "/loadingBar.png"));
         } else if (index == ESprites.LOADING_ANIM) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_gui + "/component" + "/loading.png", 400, 95), EAnimation.IDLE.isLoop(), 0, 2, 0, 1, new int[]{200, 200}));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_gui + "/component" + "/loading.png", 588, 142), EAnimation.IDLE.isLoop(), 0, 3, 0, 1, new int[]{200, 200, 200}));
         } else if (index == ESprites.SLIDER) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createUniqueFrame(ConfigPath.image_gui + "/component" + "/slider.png"));
         } else if (index == ESprites.SLIDER_VALUE) {
