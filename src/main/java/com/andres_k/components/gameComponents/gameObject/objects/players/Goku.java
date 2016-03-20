@@ -96,7 +96,7 @@ public class Goku extends Player {
         try {
             if (this.currentKi >= 400) {
                 this.incrementCurrentKi(-400);
-                KiEntity entity = new Kameha(ResourceManager.get().getGameAnimator(EGameObject.KAMEHA), ResourceManager.get().getGameAnimator(EGameObject.KAMEHA_Body), ResourceManager.get().getGameAnimator(EGameObject.KAMEHA_Back), this.id, this.getPosX() + 120, this.getPosY() + 10, this.getAnimatorController().getEyesDirection(), 600 * this.damage, 1500);
+                KiEntity entity = new Kameha(ResourceManager.get().getGameAnimator(EGameObject.MEGA_KAMEHA), ResourceManager.get().getGameAnimator(EGameObject.MEGA_KAMEHA_Body), ResourceManager.get().getGameAnimator(EGameObject.MEGA_KAMEHA_Back), this.id, this.getPosX() + 120, this.getPosY() + 10, this.getAnimatorController().getEyesDirection(), 600 * this.damage, 1500);
                 CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity)));
             }
         } catch (SlickException e) {

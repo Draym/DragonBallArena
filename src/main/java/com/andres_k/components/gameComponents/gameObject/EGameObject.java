@@ -37,12 +37,14 @@ public enum EGameObject {
     VEGETA_KI_BLAST_BACK("VEGETA_KI_BLAST_BACK", KI_BLAST.getValue()),
     VEGETA_KI_BLAST_HEAD("VEGETA_KI_BLAST_HEAD", KI_BLAST.getValue()),
     MEGA_KAMEHA("MEGA_KAMEHA", ENTITY.getValue()),
+    MEGA_KAMEHA_Back("MEGA_KAMEHA_Back", ENTITY.getValue()),
+    MEGA_KAMEHA_Body("MEGA_KAMEHA_Body", ENTITY.getValue()),
     KAMEHA("KAMEHA", ENTITY.getValue()),
-    KAMEHA_Back("KAMEHA", ENTITY.getValue()),
-    KAMEHA_Body("KAMEHA", ENTITY.getValue()),
+    KAMEHA_Back("KAMEHA_Back", ENTITY.getValue()),
+    KAMEHA_Body("KAMEHA_Body", ENTITY.getValue()),
     FINAL_FLASH("FINAL_FLASH", ENTITY.getValue()),
-    FINAL_FLASH_Back("FINAL_FLASH", ENTITY.getValue()),
-    FINAL_FLASH_Body("FINAL_FLASH", ENTITY.getValue()),
+    FINAL_FLASH_Back("FINAL_FLASH_Back", ENTITY.getValue()),
+    FINAL_FLASH_Body("FINAL_FLASH_Body", ENTITY.getValue()),
     GENKIDAMA("GENKIDAMA", ENTITY.getValue()),
 
     //players
