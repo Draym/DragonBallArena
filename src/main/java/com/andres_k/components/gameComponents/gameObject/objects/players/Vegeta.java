@@ -67,8 +67,8 @@ public class Vegeta extends Player {
                 if (ResourceManager.get().getGameAnimator(EGameObject.VEGETA_S1) != null) {
                     this.transformed = true;
 //                    this.movement.setCurrentSpeed(this.movement.getCurrentSpeed() * 1.5f);
-                    this.maxLife = this.maxLife * 1.5f;
-                    this.damage = this.damage * 1.5f;
+                    this.maxLife = this.maxLife * 2f;
+                    this.damage = this.damage * 3f;
                     this.setCurrentEnergy(this.maxEnergy);
                     this.setCurrentLife(this.maxLife);
                     EAnimation saveAnim = this.animatorController.currentAnimationType();
@@ -82,7 +82,7 @@ public class Vegeta extends Player {
                         public void run() {
                             incrementCurrentEnergy(-50);
                         }
-                    }, 1000, 10000);
+                    }, 11000, 10000);
                 }
             } catch (SlickException e) {
                 e.printStackTrace();

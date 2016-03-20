@@ -29,8 +29,7 @@ public class GokuS1Actions extends GokuActions {
             object.getMovement().setPushX(0f);
             object.getMovement().setUseGravity(false);
             if (object.getAnimatorController().currentAnimation().getFrame() == 6 ||
-                    object.getAnimatorController().currentAnimation().getFrame() == 8 ||
-                    object.getAnimatorController().currentAnimation().getFrame() == 10) {
+                    object.getAnimatorController().currentAnimation().getFrame() == 8) {
                 object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
                 object.getMovement().addPushX(GameConfig.speedTravel * 5f);
             }

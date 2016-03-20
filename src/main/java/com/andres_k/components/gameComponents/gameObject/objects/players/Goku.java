@@ -69,8 +69,8 @@ public class Goku extends Player {
                     this.transformed = true;
                     this.movement.setCurrentSpeed(this.movement.getCurrentSpeed() * 3f);
                     this.movement.setWeight(this.movement.getWeight() * 3f);
-                    this.maxLife = this.maxLife * 1.5f;
-                    this.damage = this.damage * 1.5f;
+                    this.maxLife = this.maxLife * 2f;
+                    this.damage = this.damage * 3f;
                     this.setCurrentEnergy(this.maxEnergy);
                     this.setCurrentLife(this.maxLife);
                     EAnimation saveAnim = this.animatorController.currentAnimationType();
