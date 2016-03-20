@@ -8,8 +8,8 @@ import com.andres_k.components.networkComponents.networkSend.MessageModel;
  */
 public class MessageStatePlayer extends MessageModel {
     private float life;
-    private int ki;
-    private int energy;
+    private float ki;
+    private float energy;
 
     public MessageStatePlayer(Player player) {
         this.life = player.getCurrentLife();
@@ -21,11 +21,11 @@ public class MessageStatePlayer extends MessageModel {
         return this.life;
     }
 
-    public int getKi() {
+    public float getKi() {
         return this.ki;
     }
 
-    public int getEnergy() {
+    public float getEnergy() {
         return this.energy;
     }
 
@@ -33,11 +33,11 @@ public class MessageStatePlayer extends MessageModel {
         this.life = life;
     }
 
-    public void setKi(int ki) {
+    public void setKi(float ki) {
         this.ki = ki;
     }
 
-    public void setEnergy(int energy) {
+    public void setEnergy(float energy) {
         this.energy = energy;
     }
 }

@@ -17,6 +17,8 @@ import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.SlickException;
 
+import java.util.TimerTask;
+
 /**
  * Created by andres_k on 14/03/2016.
  */
@@ -24,6 +26,8 @@ public class Vegeta extends Player {
     public Vegeta(AnimatorController animatorController, String id, float x, float y) {
         super(animatorController, EGameObject.VEGETA, id, x, y, 3300, 1, 220, 15);
         try {
+            this.specialActions.put(EGameObject.VEGETA.getValue(), this.getClass().getMethod("transformBasic"));
+            this.specialActions.put(EGameObject.VEGETA_S1.getValue(), this.getClass().getMethod("transformS1"));
             this.specialActions.put(EGameObject.KI_BLAST.getValue(), this.getClass().getMethod("createKiBlast"));
             this.specialActions.put(EGameObject.KI_BURST.getValue(), this.getClass().getMethod("createKiBurst"));
             this.specialActions.put(EGameObject.KI_FINAL.getValue(), this.getClass().getMethod("createKiFinal"));
@@ -40,11 +44,59 @@ public class Vegeta extends Player {
         }
     }
 
+    public void transformBasic() {
+        if (this.transformed) {
+            try {
+                if (ResourceManager.get().getGameAnimator(EGameObject.VEGETA) != null) {
+                    this.transformationTimer.cancel();
+                    this.transformed = false;
+                    this.movement.setCurrentSpeed(220);
+                    this.maxLife = 3300;
+                    this.setCurrentLife(this.currentLife);
+                    this.animatorController = ResourceManager.get().getGameAnimator(EGameObject.VEGETA);
+                }
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void transformS1() {
+        if (this.currentKi == this.maxKi && !this.transformed) {
+            try {
+                if (ResourceManager.get().getGameAnimator(EGameObject.VEGETA_S1) != null) {
+                    this.transformed = true;
+//                    this.movement.setCurrentSpeed(this.movement.getCurrentSpeed() * 1.5f);
+                    this.maxLife = this.maxLife * 1.5f;
+                    this.damage = this.damage * 1.5f;
+                    this.setCurrentEnergy(this.maxEnergy);
+                    this.setCurrentLife(this.maxLife);
+                    EAnimation saveAnim = this.animatorController.currentAnimationType();
+                    int index = this.animatorController.getIndex();
+                    EDirection saveDir = this.animatorController.getEyesDirection();
+                    this.animatorController = ResourceManager.get().getGameAnimator(EGameObject.VEGETA_S1);
+                    this.animatorController.forceCurrentAnimation(saveAnim, index);
+                    this.animatorController.setEyesDirection(saveDir);
+                    this.transformationTimer.scheduleAtFixedRate(new TimerTask() {
+                        @Override
+                        public void run() {
+                            incrementCurrentEnergy(-50);
+                        }
+                    }, 1000, 10000);
+                }
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void createKiFinal() {
         try {
-            KiEntity entity = new FinalFlash(ResourceManager.get().getGameAnimator(EGameObject.FINAL_FLASH), ResourceManager.get().getGameAnimator(EGameObject.FINAL_FLASH_Body), ResourceManager.get().getGameAnimator(EGameObject.FINAL_FLASH_Back), this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 70 : this.getPosX() - 80), this.getPosY(), (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() -147 : this.getPosX() - 223), this.getAnimatorController().getEyesDirection(), this.currentKi * this.damage, 1700);
-            this.setCurrentKi(0);
-            CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity)));
+            if (this.currentKi >= 300) {
+                KiEntity entity = new FinalFlash(ResourceManager.get().getGameAnimator(EGameObject.FINAL_FLASH), ResourceManager.get().getGameAnimator(EGameObject.FINAL_FLASH_Body), ResourceManager.get().getGameAnimator(EGameObject.FINAL_FLASH_Back), this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 70 : this.getPosX() - 80), this.getPosY(), (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() - 147 : this.getPosX() - 223), this.getAnimatorController().getEyesDirection(), this.currentKi * this.damage, 1700);
+                this.setCurrentKi(0);
+                CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity)));
+            }
         } catch (SlickException e) {
             e.printStackTrace();
         }
@@ -52,9 +104,11 @@ public class Vegeta extends Player {
 
     public void createKiBurst() {
         try {
-            this.incrementCurrentKi(-100);
-            KiEntity entity = new KiAttack(ResourceManager.get().getGameAnimator(EGameObject.KI_BURST), EGameObject.KI_BURST, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 70 : this.getPosX() - 80), this.getPosY() - 5, this.getAnimatorController().getEyesDirection(), 120 * this.damage, 0, 0);
-            CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity)));
+            if (this.currentKi >= 100) {
+                this.incrementCurrentKi(-100);
+                KiEntity entity = new KiAttack(ResourceManager.get().getGameAnimator(EGameObject.KI_BURST), EGameObject.KI_BURST, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 70 : this.getPosX() - 80), this.getPosY() - 5, this.getAnimatorController().getEyesDirection(), 200 * this.damage, 0, 0);
+                CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity)));
+            }
         } catch (SlickException e) {
             e.printStackTrace();
         }
@@ -62,9 +116,11 @@ public class Vegeta extends Player {
 
     public void createKiExplode() {
         try {
-            this.incrementCurrentKi(-150);
-            KiEntity entity = new KiAttack(ResourceManager.get().getGameAnimator(EGameObject.KI_EXPLODE), EGameObject.KI_EXPLODE, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() - 85 : this.getPosX() + 85), this.getPosY(), this.getAnimatorController().getEyesDirection(), 200 * this.damage, 0, 0);
-            CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity)));
+            if (this.currentKi >= 150) {
+                this.incrementCurrentKi(-150);
+                KiEntity entity = new KiAttack(ResourceManager.get().getGameAnimator(EGameObject.KI_EXPLODE), EGameObject.KI_EXPLODE, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() - 85 : this.getPosX() + 85), this.getPosY(), this.getAnimatorController().getEyesDirection(), 280 * this.damage, 0, 0);
+                CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity)));
+            }
         } catch (SlickException e) {
             e.printStackTrace();
         }
@@ -72,11 +128,13 @@ public class Vegeta extends Player {
 
     public void createKiBlast() {
         try {
-            this.incrementCurrentKi(-15);
-            KiEntity entity1 = new KiAttack(ResourceManager.get().getGameAnimator(EGameObject.VEGETA_KI_BLAST_BACK), EGameObject.KI_BLAST, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 95 : this.getPosX() - 95), this.getPosY() - 15, this.getAnimatorController().getEyesDirection(), this.damage, 0, 0);
-            CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity1)));
-            KiEntity entity2 = new KiProjectiles(ResourceManager.get().getGameAnimator(EGameObject.VEGETA_KI_BLAST_HEAD), EGameObject.KI_BLAST, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 95 : this.getPosX() - 95), this.getPosY() - 15, this.getAnimatorController().getEyesDirection(),  10 * this.damage, 1200, 0);
-            CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity2)));
+            if (this.currentKi >= 15) {
+                this.incrementCurrentKi(-15);
+                KiEntity entity1 = new KiAttack(ResourceManager.get().getGameAnimator(EGameObject.VEGETA_KI_BLAST_BACK), EGameObject.KI_BLAST, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 95 : this.getPosX() - 95), this.getPosY() - 15, this.getAnimatorController().getEyesDirection(), this.damage, 0, 0);
+                CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity1)));
+                KiEntity entity2 = new KiProjectiles(ResourceManager.get().getGameAnimator(EGameObject.VEGETA_KI_BLAST_HEAD), EGameObject.KI_BLAST, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 95 : this.getPosX() - 95), this.getPosY() - 15, this.getAnimatorController().getEyesDirection(), 10 * this.damage, 1200, 0);
+                CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity2)));
+            }
         } catch (SlickException e) {
             e.printStackTrace();
         }

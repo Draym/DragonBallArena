@@ -26,6 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
 
 /**
  * Created by andres_k on 10/07/2015.
@@ -36,10 +37,12 @@ public class Player extends PhysicalObject {
     protected EventController event;
     protected ComboController comboController;
     private long score;
-    protected final int maxKi;
-    protected int currentKi;
-    protected final int maxEnergy;
-    protected int currentEnergy;
+    protected final float maxKi;
+    protected float currentKi;
+    protected final float maxEnergy;
+    protected float currentEnergy;
+    protected boolean transformed;
+    protected Timer transformationTimer;
 
     public Player(AnimatorController animatorController, EGameObject type, String id, float x, float y, float life, float damage, float speed, float weight) {
         super(animatorController, type, id, x, y, life, damage, speed, weight);
@@ -67,6 +70,8 @@ public class Player extends PhysicalObject {
         this.maxEnergy = 500;
         this.currentKi = this.maxKi;
         this.currentEnergy = this.maxEnergy;
+        this.transformed = false;
+        this.transformationTimer = new Timer();
     }
 
     @Override
@@ -88,6 +93,9 @@ public class Player extends PhysicalObject {
             } else {
                 this.executeLastDirectionEvent();
             }
+        }
+        if (this.transformed && this.currentEnergy == 0) {
+            this.tryToTransformTo(this.type);
         }
     }
 
@@ -250,6 +258,8 @@ public class Player extends PhysicalObject {
                 if (this.animatorController != null) {
                     this.animatorController.forceNextFrame();
                 }
+            } else if (received.getV1() == ETaskType.TRANSFORM && received.getV2() instanceof EGameObject) {
+                this.tryToTransformTo((EGameObject) received.getV2());
             }
         } else if (task instanceof Tuple) {
             if (((Tuple) task).getV1() instanceof ETaskType && ((Tuple) task).getV2() instanceof String) {
@@ -257,45 +267,14 @@ public class Player extends PhysicalObject {
 
                 if (received.getV1().equals(ETaskType.ADD)) {
                     if (received.getV2().equals("ki")) {
-                        this.incrementCurrentKi((Integer) received.getV3());
+                        this.incrementCurrentKi((Float) received.getV3());
                     } else if (received.getV2().equals("energy")) {
-                        this.incrementCurrentEnergy((Integer) received.getV3());
+                        this.incrementCurrentEnergy((Float) received.getV3());
                     }
                 }
             }
         }
         return null;
-    }
-
-    // GETTERS
-
-    public int getCurrentKi() {
-        return this.currentKi;
-    }
-
-    public int getCurrentEnergy() {
-        return this.currentEnergy;
-    }
-
-    public long getScore() {
-        return this.score;
-    }
-
-    public String getPseudo() {
-        if (this.id.contains(GlobalVariable.id_delimiter)) {
-            return this.id.substring(this.id.indexOf(GlobalVariable.id_delimiter) + 1, this.id.length());
-        } else {
-            return this.id;
-        }
-    }
-
-    public int getIdIndex() {
-        if (this.id.contains(GlobalVariable.id_delimiter)) {
-            int index = this.id.indexOf(GlobalVariable.id_delimiter);
-            return Integer.valueOf(this.id.substring(index - 1, index));
-        } else {
-            return -1;
-        }
     }
 
     @Override
@@ -323,6 +302,47 @@ public class Player extends PhysicalObject {
         return false;
     }
 
+    protected void tryToTransformTo(EGameObject requiredType) {
+        if (this.specialActions.containsKey(requiredType.getValue())) {
+            try {
+                this.specialActions.get(requiredType.getValue()).invoke(this);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // GETTERS
+
+    public float getCurrentKi() {
+        return this.currentKi;
+    }
+
+    public float getCurrentEnergy() {
+        return this.currentEnergy;
+    }
+
+    public long getScore() {
+        return this.score;
+    }
+
+    public String getPseudo() {
+        if (this.id.contains(GlobalVariable.id_delimiter)) {
+            return this.id.substring(this.id.indexOf(GlobalVariable.id_delimiter) + 1, this.id.length());
+        } else {
+            return this.id;
+        }
+    }
+
+    public int getIdIndex() {
+        if (this.id.contains(GlobalVariable.id_delimiter)) {
+            int index = this.id.indexOf(GlobalVariable.id_delimiter);
+            return Integer.valueOf(this.id.substring(index - 1, index));
+        } else {
+            return -1;
+        }
+    }
+
     // SETTERS
 
     @Override
@@ -335,35 +355,39 @@ public class Player extends PhysicalObject {
         return false;
     }
 
-    public void setCurrentKi(int value) {
+    public void setCurrentKi(float value) {
         this.currentKi = value;
         NetworkController.get().sendMessage(new MessageStatePlayer(this));
-        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "ki", (float) this.currentKi * 100 / (float) this.maxKi))));
+        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "ki", this.currentKi * 100 / this.maxKi))));
     }
 
-    public void setCurrentEnergy(int value) {
+    public void setCurrentEnergy(float value) {
         this.currentEnergy = value;
         NetworkController.get().sendMessage(new MessageStatePlayer(this));
-        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "energy", (float) this.currentEnergy * 100 / (float) this.maxEnergy))));
+        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "energy", this.currentEnergy * 100 / this.maxEnergy))));
     }
 
-    public void incrementCurrentKi(int value) {
-        this.currentKi += value;
-        if (this.currentKi < 0) {
-            this.setCurrentKi(0);
-        } else if (this.currentKi > this.maxKi) {
-            this.setCurrentKi(this.maxKi);
+    public void incrementCurrentKi(float value) {
+        if ((value < 0 && this.currentKi != 0) || (value > 0 && this.currentKi != this.maxKi)) {
+            this.currentKi += value;
+            if (this.currentKi < 0) {
+                this.setCurrentKi(0);
+            } else if (this.currentKi > this.maxKi) {
+                this.setCurrentKi(this.maxKi);
+            }
+            this.setCurrentKi(this.currentKi);
         }
-        this.setCurrentKi(this.currentKi);
     }
 
-    public void incrementCurrentEnergy(int value) {
-        this.currentEnergy += value;
-        if (this.currentEnergy < 0) {
-            this.setCurrentEnergy(0);
-        } else if (this.currentEnergy > this.maxEnergy) {
-            this.setCurrentEnergy(this.maxEnergy);
+    public void incrementCurrentEnergy(float value) {
+        if ((value < 0 && this.currentEnergy != 0) || (value > 0 && this.currentEnergy != this.maxEnergy)) {
+            this.currentEnergy += value;
+            if (this.currentEnergy < 0) {
+                this.setCurrentEnergy(0);
+            } else if (this.currentEnergy > this.maxEnergy) {
+                this.setCurrentEnergy(this.maxEnergy);
+            }
+            this.setCurrentEnergy(this.currentEnergy);
         }
-        this.setCurrentEnergy(this.currentEnergy);
     }
 }

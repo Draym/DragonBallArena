@@ -78,6 +78,8 @@ public enum ESprites {
     //gamePlayer
     GOKU(PLAYER.getIndex()),
     VEGETA(PLAYER.getIndex()),
+    GOKU_S1(PLAYER.getIndex()),
+    VEGETA_S1(PLAYER.getIndex()),
 
     //gameItem
     WALL(ITEM.getIndex()),

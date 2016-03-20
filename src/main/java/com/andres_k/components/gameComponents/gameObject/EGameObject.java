@@ -36,6 +36,7 @@ public enum EGameObject {
     KI_FINAL("KI_FINAL", ENTITY.getValue()),
     VEGETA_KI_BLAST_BACK("VEGETA_KI_BLAST_BACK", KI_BLAST.getValue()),
     VEGETA_KI_BLAST_HEAD("VEGETA_KI_BLAST_HEAD", KI_BLAST.getValue()),
+    MEGA_KAMEHA("MEGA_KAMEHA", ENTITY.getValue()),
     KAMEHA("KAMEHA", ENTITY.getValue()),
     KAMEHA_Back("KAMEHA", ENTITY.getValue()),
     KAMEHA_Body("KAMEHA", ENTITY.getValue()),
@@ -52,7 +53,11 @@ public enum EGameObject {
     KAME_SENNIN("KameSennin", PLAYER.getValue(), false),
     CELL("Cell", PLAYER.getValue(), false),
     BUU("Buu", PLAYER.getValue(), false),
-    FRIEEZA("Frieeza", PLAYER.getValue(), false);
+    FRIEEZA("Frieeza", PLAYER.getValue(), false),
+
+    // transform
+    GOKU_S1("Goku_S1", PLAYER.getValue()),
+    VEGETA_S1("Vegeta_S1", PLAYER.getValue());
 
 
     private final String value;

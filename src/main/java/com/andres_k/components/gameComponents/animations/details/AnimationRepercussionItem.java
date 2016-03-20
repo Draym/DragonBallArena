@@ -16,11 +16,11 @@ public class AnimationRepercussionItem {
     private final Pair<Float, Float> recoil;
     private final boolean itsAdditionalMove;
     private final float damageToTheTarget;
-    private final int gainLife;
-    private final int lostKi;
-    private final int lostEnergy;
-    private final int gainKi;
-    private final int gainEnergy;
+    private final float gainLife;
+    private final float lostKi;
+    private final float lostEnergy;
+    private final float gainKi;
+    private final float gainEnergy;
 
     public AnimationRepercussionItem(float damageToTheTarget) {
         this(EAnimation.NULL, 0, damageToTheTarget, new Pair<>(0f, 0f), false);
@@ -38,11 +38,11 @@ public class AnimationRepercussionItem {
         this(targetType, targetIndex, damageToTheTarget, 0, 0, 0, 0, 0, recoil, itsAdditionalMove);
     }
 
-    public AnimationRepercussionItem(EAnimation targetType, int targetIndex, float damageToTheTarget, int lostKi, int lostEnergy, Pair<Float, Float> recoil, boolean itsAdditionalMove) {
+    public AnimationRepercussionItem(EAnimation targetType, int targetIndex, float damageToTheTarget, float lostKi, float lostEnergy, Pair<Float, Float> recoil, boolean itsAdditionalMove) {
         this(targetType, targetIndex, damageToTheTarget, 0, lostKi, 0, lostEnergy, 0, recoil, itsAdditionalMove);
     }
 
-    public AnimationRepercussionItem(EAnimation targetType, int targetIndex, float damageToTheTarget, int gainLife, int lostKi, int gainKi, int lostEnergy, int gainEnergy, Pair<Float, Float> recoil, boolean itsAdditionalMove) {
+    public AnimationRepercussionItem(EAnimation targetType, int targetIndex, float damageToTheTarget, float gainLife, float lostKi, float gainKi, float lostEnergy, float gainEnergy, Pair<Float, Float> recoil, boolean itsAdditionalMove) {
         this.targetType = targetType;
         this.targetIndex = targetIndex;
         this.recoil = recoil;

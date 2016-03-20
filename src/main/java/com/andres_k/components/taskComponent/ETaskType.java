@@ -36,6 +36,7 @@ public enum ETaskType {
     //others
     UPGRADE_SCORE,
     CHANGE_VOLUME,
+    TRANSFORM,
 
     //Sound
     PLAY_SOUND,

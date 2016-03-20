@@ -116,7 +116,9 @@ public class GokuActions extends BasicActions {
     public static void kiChargeAction(GameObject object) {
         try {
             if (object.getAnimatorController().currentAnimation().getFrame() == 0) {
-                object.doTask(new Tuple<>(ETaskType.ADD, "ki", 50));
+                object.doTask(new Tuple<>(ETaskType.ADD, "ki", 50f));
+            } else if (object.getAnimatorController().currentAnimation().getFrame() == 3) {
+                object.doTask(new Pair<>(ETaskType.TRANSFORM, EGameObject.GOKU_S1));
             }
         } catch (SlickException e) {
             e.printStackTrace();

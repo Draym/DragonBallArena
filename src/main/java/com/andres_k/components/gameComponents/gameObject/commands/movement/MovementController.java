@@ -217,6 +217,10 @@ public class MovementController {
         return this.currentSpeed;
     }
 
+    public float getWeight() {
+        return this.weight;
+    }
+
     public EDirection getMoveDirection() {
         return this.moveDirection;
     }
@@ -243,6 +247,10 @@ public class MovementController {
 
     public void setCurrentSpeed(float value) {
         this.currentSpeed = value;
+    }
+
+    public void setWeight(float value) {
+        this.weight = value;
     }
 
     public void setMoveDirection(EDirection direction) {

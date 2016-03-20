@@ -267,7 +267,9 @@ public abstract class GameObject {
     }
 
     public void incrementCurrentLife(float value) {
-        this.setCurrentLife(this.currentLife + value);
+        if ((value < 0 && this.currentLife != 0) || (value > 0 && this.currentLife != this.maxLife)) {
+            this.setCurrentLife(this.currentLife + value);
+        }
     }
 
     public void setOnEarth(boolean value) {

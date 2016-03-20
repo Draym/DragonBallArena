@@ -34,6 +34,7 @@ public class AnimatorGameData extends DataManager {
     protected void initialiseMethods() throws NoSuchMethodException {
         this.methods.clear();
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initPlayers")));
+        this.methods.add(new Pair<>(false, this.getClass().getMethod("initPlayers2")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initItems")));
         this.methods.add(new Pair<>(false, this.getClass().getMethod("initItems2")));
     }
@@ -45,7 +46,12 @@ public class AnimatorGameData extends DataManager {
 
     public void initPlayers() throws NoSuchMethodException, SlickException, JSONException {
         this.addPlayerAnimator(this.animatorFactory.getAnimator(ESprites.GOKU), EGameObject.GOKU);
+        this.addPlayerAnimator(this.animatorFactory.getAnimator(ESprites.GOKU_S1), EGameObject.GOKU_S1);
+    }
+
+    public void initPlayers2() throws NoSuchMethodException, SlickException, JSONException {
         this.addPlayerAnimator(this.animatorFactory.getAnimator(ESprites.VEGETA), EGameObject.VEGETA);
+        this.addPlayerAnimator(this.animatorFactory.getAnimator(ESprites.VEGETA_S1), EGameObject.VEGETA_S1);
     }
 
     public void initItems() throws NoSuchMethodException, SlickException, JSONException {
