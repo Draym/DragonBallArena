@@ -56,7 +56,7 @@ public class Vegeta extends Player {
                     EAnimation saveAnim = this.animatorController.currentAnimationType();
                     int index = this.animatorController.getIndex();
                     EDirection saveDir = this.animatorController.getEyesDirection();
-                    this.animatorController = ResourceManager.get().getGameAnimator(EGameObject.VEGETA_S1);
+                    this.animatorController = ResourceManager.get().getGameAnimator(EGameObject.VEGETA);
                     this.animatorController.forceCurrentAnimation(saveAnim, index);
                     this.animatorController.setEyesDirection(saveDir);
                 }

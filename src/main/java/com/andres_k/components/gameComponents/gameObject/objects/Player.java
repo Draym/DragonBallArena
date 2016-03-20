@@ -94,7 +94,7 @@ public class Player extends PhysicalObject {
                 this.executeLastDirectionEvent();
             }
         }
-        if (this.transformed && this.currentEnergy == 0) {
+        if (this.transformed && this.currentEnergy <= 0) {
             this.tryToTransformTo(this.type);
         }
     }
@@ -297,7 +297,7 @@ public class Player extends PhysicalObject {
     public boolean die() {
         if (super.die()) {
             NetworkController.get().sendMessage(new MessageStatePlayer(this));
-            CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "life", 0))));
+            CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 0 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Pair<>(ETaskType.DELETE, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER)));
             return true;
         }
         return false;

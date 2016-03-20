@@ -48,20 +48,20 @@ public class Goku extends Player {
     public void transformBasic() {
         if (this.transformed) {
             try {
-            if (ResourceManager.get().getGameAnimator(EGameObject.GOKU) != null) {
-                this.transformationTimer.cancel();
-                this.transformed = false;
-                this.movement.setCurrentSpeed(220);
-                this.movement.setWeight(15);
-                this.maxLife = 3000;
-                this.setCurrentLife(this.currentLife);
-                EAnimation saveAnim = this.animatorController.currentAnimationType();
-                int index = this.animatorController.getIndex();
-                EDirection saveDir = this.animatorController.getEyesDirection();
-                this.animatorController = ResourceManager.get().getGameAnimator(EGameObject.GOKU_S1);
-                this.animatorController.forceCurrentAnimation(saveAnim, index);
-                this.animatorController.setEyesDirection(saveDir);
-            }
+                if (ResourceManager.get().getGameAnimator(EGameObject.GOKU) != null) {
+                    this.transformationTimer.cancel();
+                    this.transformed = false;
+                    this.movement.setCurrentSpeed(220);
+                    this.movement.setWeight(15);
+                    this.maxLife = 3000;
+                    this.setCurrentLife(this.currentLife);
+                    EAnimation saveAnim = this.animatorController.currentAnimationType();
+                    int index = this.animatorController.getIndex();
+                    EDirection saveDir = this.animatorController.getEyesDirection();
+                    this.animatorController = ResourceManager.get().getGameAnimator(EGameObject.GOKU);
+                    this.animatorController.forceCurrentAnimation(saveAnim, index);
+                    this.animatorController.setEyesDirection(saveDir);
+                }
             } catch (SlickException e) {
                 e.printStackTrace();
             }
