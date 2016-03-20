@@ -445,12 +445,15 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/finalFlash" + "/finalFlash_body.png", 247, 247), true, 0, 1, 0, 1, new int[]{250, 250}));
             animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/finalFlash" + "/finalFlash_body.json")));
         } else if (index == ESprites.KAMEHA) {
+/*
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_head0.png", 247, 247), false, 0, 2, 0, 1, new int[]{150, 150}));
             animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_head0.json")));
             animatorController.addConfig(EAnimation.IDLE, 0, new AnimationConfigItem(EAnimation.RUN, 0));
+*/
             animatorController.addAnimation(EAnimation.RUN, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_head1.png", 247, 247), true, 0, 2, 0, 1, new int[]{150, 150}));
             animatorController.addCollision(EAnimation.RUN, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_head1.json")));
             animatorController.addRepercussion(EAnimation.RUN, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_PROJECTED, 1, new Pair<>(GameConfig.speedTravel, 0f)));
+            animatorController.forceCurrentAnimationType(EAnimation.RUN);
         } else if (index == ESprites.KAMEHA_Back) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_back1.png", 247, 247), true, 0, 2, 0, 1, new int[]{200, 200}));
             animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_back1.json")));
@@ -462,22 +465,25 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animatorController.addAnimation(EAnimation.EXPLODE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_body2.png", 247, 247), false, 0, 4, 0, 1, new int[]{60, 60, 60, 60}));
             animatorController.addCollision(EAnimation.EXPLODE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_body2.json")));
         } else if (index == ESprites.MEGA_KAMEHA) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/megaKameha" + "/megaKameha_head0.png", 247, 247), false, 0, 1, 0, 1, new int[]{250}));
-            animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_head0.json")));
+/*
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/megaKameha" + "/megaKameha_head0.png", 247, 247), false, 0, 1, 0, 1, new int[]{600}));
+            animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/megaKameha" + "/kameha_head0.json")));
             animatorController.addConfig(EAnimation.IDLE, 0, new AnimationConfigItem(EAnimation.RUN, 0));
+*/
             animatorController.addAnimation(EAnimation.RUN, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/megaKameha" + "/megaKameha_head1.png", 247, 247), true, 0, 1, 0, 1, new int[]{150}));
-            animatorController.addCollision(EAnimation.RUN, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_head1.json")));
+            animatorController.addCollision(EAnimation.RUN, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/megaKameha" + "/megaKameha_head1.json")));
             animatorController.addRepercussion(EAnimation.RUN, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_PROJECTED, 1, new Pair<>(GameConfig.speedTravel, 0f)));
+            animatorController.forceCurrentAnimationType(EAnimation.RUN);
         } else if (index == ESprites.MEGA_KAMEHA_Back) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/megaKameha" + "/megaKameha_back1.png", 247, 247), true, 0, 1, 0, 1, new int[]{200}));
-            animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_back1.json")));
+            animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/megaKameha" + "/megaKameha_back1.json")));
             animatorController.addAnimation(EAnimation.EXPLODE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/megaKameha" + "/megaKameha_back2.png", 247, 247), false, 0, 4, 0, 1, new int[]{100, 100, 100, 100}));
-            animatorController.addCollision(EAnimation.EXPLODE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_back2.json")));
+            animatorController.addCollision(EAnimation.EXPLODE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/megaKameha" + "/megaKameha_back2.json")));
         } else if (index == ESprites.MEGA_KAMEHA_Body) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/megaKameha" + "/megaKameha_body1.png", 247, 247), true, 0, 1, 0, 1, new int[]{250}));
-            animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_body1.json")));
+            animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/megaKameha" + "/megaKameha_body1.json")));
             animatorController.addAnimation(EAnimation.EXPLODE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/megaKameha" + "/megaKameha_body2.png", 247, 247), false, 0, 4, 0, 1, new int[]{60, 60, 60, 60}));
-            animatorController.addCollision(EAnimation.EXPLODE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kameha" + "/kameha_body2.json")));
+            animatorController.addCollision(EAnimation.EXPLODE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/megaKameha" + "/megaKameha_body2.json")));
         } else if (index == ESprites.KI_BLAST) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kiBlast" + "/gokuKiBlast_head.png", 247, 247), true, 0, 2, 0, 1, new int[]{200, 200}));
             animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/kiBlast" + "/gokuKiBlast_head.json")));

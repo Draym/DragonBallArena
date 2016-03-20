@@ -9,6 +9,7 @@ import com.andres_k.components.gameComponents.gameObject.objects.entities.KiEnti
 import com.andres_k.components.gameComponents.gameObject.objects.entities.ki.KiProjectiles;
 import com.andres_k.components.gameComponents.gameObject.objects.entities.ki.linked.Genkidama;
 import com.andres_k.components.gameComponents.gameObject.objects.entities.ki.linked.Kameha;
+import com.andres_k.components.gameComponents.gameObject.objects.entities.ki.linked.MegaKameha;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
@@ -54,7 +55,12 @@ public class Goku extends Player {
                 this.movement.setWeight(15);
                 this.maxLife = 3000;
                 this.setCurrentLife(this.currentLife);
-                this.animatorController = ResourceManager.get().getGameAnimator(EGameObject.GOKU);
+                EAnimation saveAnim = this.animatorController.currentAnimationType();
+                int index = this.animatorController.getIndex();
+                EDirection saveDir = this.animatorController.getEyesDirection();
+                this.animatorController = ResourceManager.get().getGameAnimator(EGameObject.GOKU_S1);
+                this.animatorController.forceCurrentAnimation(saveAnim, index);
+                this.animatorController.setEyesDirection(saveDir);
             }
             } catch (SlickException e) {
                 e.printStackTrace();
@@ -96,7 +102,7 @@ public class Goku extends Player {
         try {
             if (this.currentKi >= 400) {
                 this.incrementCurrentKi(-400);
-                KiEntity entity = new Kameha(ResourceManager.get().getGameAnimator(EGameObject.MEGA_KAMEHA), ResourceManager.get().getGameAnimator(EGameObject.MEGA_KAMEHA_Body), ResourceManager.get().getGameAnimator(EGameObject.MEGA_KAMEHA_Back), this.id, this.getPosX() + 120, this.getPosY() + 10, this.getAnimatorController().getEyesDirection(), 600 * this.damage, 1500);
+                KiEntity entity = new MegaKameha(ResourceManager.get().getGameAnimator(EGameObject.MEGA_KAMEHA), ResourceManager.get().getGameAnimator(EGameObject.MEGA_KAMEHA_Body), ResourceManager.get().getGameAnimator(EGameObject.MEGA_KAMEHA_Back), this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 130 : this.getPosX() - 130), this.getPosY(), (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() : this.getPosX() - 370), this.getAnimatorController().getEyesDirection(), 600 * this.damage, 1500);
                 CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity)));
             }
         } catch (SlickException e) {
@@ -108,7 +114,7 @@ public class Goku extends Player {
         try {
             if (this.currentKi >= 400) {
                 this.incrementCurrentKi(-400);
-                KiEntity entity = new Genkidama(ResourceManager.get().getGameAnimator(EGameObject.GENKIDAMA), EGameObject.GENKIDAMA, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 40 : this.getPosX() - 40), this.getPosY() + 10, this.getAnimatorController().getEyesDirection(), 500 * this.damage, 900, 0);
+                KiEntity entity = new Genkidama(ResourceManager.get().getGameAnimator(EGameObject.GENKIDAMA), EGameObject.GENKIDAMA, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 40 : this.getPosX() - 40), this.getPosY() + 10, this.getAnimatorController().getEyesDirection(), 500 * this.damage, 800, 0);
                 CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity)));
             }
         } catch (SlickException e) {

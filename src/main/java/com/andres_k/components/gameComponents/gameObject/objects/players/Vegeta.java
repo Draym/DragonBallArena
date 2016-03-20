@@ -53,7 +53,12 @@ public class Vegeta extends Player {
                     this.movement.setCurrentSpeed(220);
                     this.maxLife = 3300;
                     this.setCurrentLife(this.currentLife);
-                    this.animatorController = ResourceManager.get().getGameAnimator(EGameObject.VEGETA);
+                    EAnimation saveAnim = this.animatorController.currentAnimationType();
+                    int index = this.animatorController.getIndex();
+                    EDirection saveDir = this.animatorController.getEyesDirection();
+                    this.animatorController = ResourceManager.get().getGameAnimator(EGameObject.VEGETA_S1);
+                    this.animatorController.forceCurrentAnimation(saveAnim, index);
+                    this.animatorController.setEyesDirection(saveDir);
                 }
             } catch (SlickException e) {
                 e.printStackTrace();

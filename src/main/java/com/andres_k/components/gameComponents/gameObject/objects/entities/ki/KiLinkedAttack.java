@@ -49,7 +49,9 @@ public abstract class KiLinkedAttack extends KiAttack {
     @Override
     public void draw(Graphics g) throws SlickException {
         for (Pair<Float, AnimatorController> item : this.bodiesAnim) {
-            item.getV2().draw(g, item.getV1(), this.graphicalY());
+            if (item.getV1() != this.saveX) {
+                item.getV2().draw(g, item.getV1(), this.graphicalY());
+            }
         }
         if (this.body != null) {
             this.body.draw(g, this.getMaxBodyX(), this.graphicalY());
