@@ -85,23 +85,25 @@ public final class GameObjectController {
     }
 
     public void update(boolean running) throws SlickException {
-        for (int i = 0; i < this.players.size(); ++i) {
-            this.players.get(i).update();
-            if (this.players.get(i).isNeedDelete()) {
-                this.thisPlayerIsDead((Player) this.players.get(i));
-                this.players.remove(i);
-                --i;
-            } else {
-                this.doMovement(this.players.get(i));
+        if (running) {
+            for (int i = 0; i < this.players.size(); ++i) {
+                this.players.get(i).update();
+                if (this.players.get(i).isNeedDelete()) {
+                    this.thisPlayerIsDead((Player) this.players.get(i));
+                    this.players.remove(i);
+                    --i;
+                } else {
+                    this.doMovement(this.players.get(i));
+                }
             }
-        }
-        for (int i = 0; i < this.entities.size(); ++i) {
-            this.entities.get(i).update();
-            if (this.entities.get(i).isNeedDelete()) {
-                this.entities.remove(i);
-                --i;
-            } else {
-                this.doMovement(this.entities.get(i));
+            for (int i = 0; i < this.entities.size(); ++i) {
+                this.entities.get(i).update();
+                if (this.entities.get(i).isNeedDelete()) {
+                    this.entities.remove(i);
+                    --i;
+                } else {
+                    this.doMovement(this.entities.get(i));
+                }
             }
         }
     }
@@ -119,14 +121,14 @@ public final class GameObjectController {
     // EVENTS
     public void event(EInput event, EInput input) {
         if (event == EInput.KEY_RELEASED) {
-            if (input.getIndex() >= 0 && input.getIndex() < this.players.size()) {
+            if (input.getIndex() >= 0) {
                 GameObject player = this.getPlayerById("player" + String.valueOf(input.getIndex()));
                 if (player != null) {
                     player.eventReleased(input);
                 }
             }
         } else if (event == EInput.KEY_PRESSED) {
-            if (input.getIndex() >= 0 && input.getIndex() < this.players.size()) {
+            if (input.getIndex() >= 0) {
                 GameObject player = this.getPlayerById("player" + String.valueOf(input.getIndex()));
                 if (player != null) {
                     player.eventPressed(input);

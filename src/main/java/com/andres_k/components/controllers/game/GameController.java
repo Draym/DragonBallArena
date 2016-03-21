@@ -21,6 +21,7 @@ import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.Console;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -99,6 +100,7 @@ public class GameController extends WindowController {
         }
         if (this.running) {
             if (GameObjectController.get().isTheEndOfTheGame()) {
+                Console.write("END OF THE GAME");
                 //    CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.GAME_CONTROLLER, EnumLocation.GAME_GUI, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundEnd("admin", "admin", "enemy"))));
                 this.running = false;
             }
@@ -128,7 +130,6 @@ public class GameController extends WindowController {
                 e.printStackTrace();
             }
         }
-
         if (this.running) {
             EInput result = this.inputGame.checkInput(key);
             GameObjectController.get().event(EInput.KEY_RELEASED, result);
@@ -169,10 +170,7 @@ public class GameController extends WindowController {
                     }
                 }
             }
-        }/* else if (arg instanceof Pair) {
-            CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.GAME_CONTROLLER, (ELocation) ((Pair) arg).getV1(), ((Pair) arg).getV2()));
-            return;
-        }*/
+        }
         super.update(o, arg);
     }
 

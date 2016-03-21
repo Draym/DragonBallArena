@@ -93,7 +93,7 @@ public class VegetaActions extends BasicActions {
             object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
             if (object.getAnimatorController().currentAnimation().getFrame() >= 1 &&
                     object.getAnimatorController().currentAnimation().getFrame() <= 3) {
-                object.getMovement().setPushX(GameConfig.speedTravel * 1.5f);
+                object.getMovement().setPushX(GameConfig.speedTravel);
                 object.getMovement().setPushY(-GameConfig.speedTravel / 5);
             } else {
                 object.getMovement().setPushX(0);
@@ -195,7 +195,7 @@ public class VegetaActions extends BasicActions {
             object.getMovement().stopMovement();
             object.getMovement().setUseGravity(false);
             if (object.getAnimatorController().currentAnimation().getFrame() == 7) {
-                object.doTask(new Pair<>(ETaskType.CREATE, EGameObject.KI_FINAL.toString()));
+                object.doTask(new Pair<>(ETaskType.CREATE, EGameObject.FINAL_FLASH.toString()));
             }
         } catch (SlickException e) {
             e.printStackTrace();
