@@ -12,7 +12,7 @@ import org.newdawn.slick.SlickException;
 public class Obstacle extends PhysicalObject {
 
     public Obstacle(AnimatorController animatorController, EGameObject type, String id, float posX, float posY, float life, float damage, float speed, float weight) {
-        super(animatorController, type, id, posX, posY, life, damage, speed, weight);
+        super(animatorController, type, id, posX, posY, life, damage, speed, speed, weight);
     }
 
     @Override

@@ -38,8 +38,8 @@ public abstract class GameObject {
     protected float currentLife;
     protected float damage;
 
-    protected GameObject(AnimatorController animatorController, EGameObject type, String id, Pair<Float, Float> pos, float life, float damage, float speed, float weight) {
-        this.movement = new MovementController(pos, 9.8f, speed, weight, false);
+    protected GameObject(AnimatorController animatorController, EGameObject type, String id, Pair<Float, Float> pos, float life, float damage, float moveSpeed, float gravitySpeed, float weight) {
+        this.movement = new MovementController(pos, 9.8f, moveSpeed, gravitySpeed, weight, false);
 
         this.alive = true;
         this.type = type;

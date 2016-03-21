@@ -9,7 +9,7 @@ public class ConfigPath {
     public static final String config_overlay = "config/configDataOverlay.json";
     public static final String comboAvailableList = "config/comboAvailableList.json";
     public static final String preference_overlay = "config/configPreferenceOverlay.json";
-    public static final String jsonCollision = "json/";
+    public static final String jsonCollision = "json";
     public static final String image_game = "images/game";
     public static final String image_background = "images/background";
     public static final String image_map = "images/background/map";

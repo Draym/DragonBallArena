@@ -26,7 +26,7 @@ import java.util.TimerTask;
  */
 public class Vegeta extends Player {
     public Vegeta(AnimatorController animatorController, String id, float x, float y) {
-        super(animatorController, EGameObject.VEGETA, id, x, y, 3300, 1, 220, 15);
+        super(animatorController, EGameObject.VEGETA, id, x, y, 3300, 1, 300, 220, 15);
         try {
             this.specialActions.put(EGameObject.VEGETA.getValue(), this.getClass().getMethod("transformBasic"));
             this.specialActions.put(EGameObject.VEGETA_S1.getValue(), this.getClass().getMethod("transformS1"));

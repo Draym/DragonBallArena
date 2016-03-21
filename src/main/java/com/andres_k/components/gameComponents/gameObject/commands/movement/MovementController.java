@@ -27,12 +27,12 @@ public class MovementController {
     private float pushGravity;
     private float exponential;
 
-    public MovementController(Pair<Float, Float> positions, float gravity, float moveSpeed, float weight, boolean onEarth) {
+    public MovementController(Pair<Float, Float> positions, float gravity, float moveSpeed, float gravitySpeed, float weight, boolean onEarth) {
         this.positions = new Pair<>(positions.getV1(), positions.getV2());
         this.onEarth = onEarth;
         this.gravity = gravity;
         this.moveSpeed = moveSpeed;
-        this.gravitySpeed = this.moveSpeed;
+        this.gravitySpeed = gravitySpeed;
         this.weight = weight;
         this.pushX = 0;
         this.pushY = 0;
@@ -46,7 +46,7 @@ public class MovementController {
         this.onEarth = movement.onEarth;
         this.gravity = movement.gravity;
         this.moveSpeed = movement.moveSpeed;
-        this.gravitySpeed = this.moveSpeed;
+        this.gravitySpeed = movement.gravitySpeed;
         this.weight = movement.weight;
         this.pushX = movement.pushX;
         this.pushY = movement.pushY;

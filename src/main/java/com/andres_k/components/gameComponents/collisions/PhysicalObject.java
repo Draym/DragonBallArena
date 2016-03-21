@@ -24,8 +24,8 @@ import java.util.stream.Collectors;
 public abstract class PhysicalObject extends GameObject {
     private Map<UUID, UUID> saveCollisions;
 
-    protected PhysicalObject(AnimatorController animatorController, EGameObject type, String id, float x, float y, float life, float damage, float speed, float weight) {
-        super(animatorController, type, id, new Pair<>(x, y), life, damage, speed, weight);
+    protected PhysicalObject(AnimatorController animatorController, EGameObject type, String id, float x, float y, float life, float damage, float moveSpeed, float gravitySpeed, float weight) {
+        super(animatorController, type, id, new Pair<>(x, y), life, damage, moveSpeed, gravitySpeed, weight);
         this.saveCollisions = new HashMap<>();
     }
 

@@ -44,8 +44,8 @@ public class Player extends PhysicalObject {
     protected boolean transformed;
     protected Timer transformationTimer;
 
-    public Player(AnimatorController animatorController, EGameObject type, String id, float x, float y, float life, float damage, float speed, float weight) {
-        super(animatorController, type, id, x, y, life, damage, speed, weight);
+    public Player(AnimatorController animatorController, EGameObject type, String id, float x, float y, float life, float damage, float moveSpeed, float gravitySpeed, float weight) {
+        super(animatorController, type, id, x, y, life, damage, moveSpeed, gravitySpeed, weight);
 
         this.event = new EventController();
         this.event.addEvent(EInput.MOVE_UP);

@@ -7,13 +7,15 @@ import com.andres_k.utils.configs.GlobalVariable;
  */
 public class Console {
     public static void debug(String message){
-        if (GlobalVariable.debug == true) {
+        if (GlobalVariable.debug) {
             System.out.println(message);
         }
     }
 
     public static void write(String message){
-        System.out.println(message);
+        if (GlobalVariable.log) {
+            System.out.println(message);
+        }
     }
 
     public static void err(String locateClass, String locateMethod, String message){

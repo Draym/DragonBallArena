@@ -28,7 +28,7 @@ import java.util.TimerTask;
 public class Goku extends Player {
 
     public Goku(AnimatorController animatorController, String id, float x, float y) {
-        super(animatorController, EGameObject.GOKU, id, x, y, 3000, 1, 220, 15);
+        super(animatorController, EGameObject.GOKU, id, x, y, 3000, 1, 300, 220, 15);
         try {
             this.specialActions.put(EGameObject.GOKU.getValue(), this.getClass().getMethod("transformBasic"));
             this.specialActions.put(EGameObject.GOKU_S1.getValue(), this.getClass().getMethod("transformS1"));

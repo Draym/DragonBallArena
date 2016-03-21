@@ -20,7 +20,7 @@ public abstract class KiEntity extends PhysicalObject {
     protected String parent;
 
     protected KiEntity(AnimatorController animatorController, EGameObject type, String parent, float x, float y, EDirection direction, float damage, float speed, float weight) {
-        super(animatorController, type, parent + GlobalVariable.id_delimiter + UUID.randomUUID().toString(), x, y, damage, damage, speed, weight);
+        super(animatorController, type, parent + GlobalVariable.id_delimiter + UUID.randomUUID().toString(), x, y, damage, damage, speed, speed, weight);
         this.movement.setMoveDirection(direction);
         this.movement.setPushX(GameConfig.speedTravel);
         this.animatorController.setEyesDirection(direction);

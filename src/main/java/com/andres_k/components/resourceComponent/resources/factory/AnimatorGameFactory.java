@@ -17,6 +17,7 @@ import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.utils.configs.ConfigPath;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.FilesTools;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
@@ -51,9 +52,11 @@ public class AnimatorGameFactory extends AnimatorFactory {
         AnimatorController animatorController = new AnimatorController();
         String id = "/goku/basic";
         //IDLE
+        Console.write("Test IDLE");
         animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuIdle.png", 247, 247), EAnimation.IDLE.isLoop(), 0, 4, 0, 1, new int[]{200, 200, 200, 200}));
         animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuIdle.json")));
         animatorController.addConfig(EAnimation.IDLE, 0, new AnimationConfigItem(GokuActions.class.getMethod("idle", GameObject.class), true));
+        Console.write("SUCESS IDLE");
         // FALL
         animatorController.addAnimation(EAnimation.FALL, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuFall.png", 247, 247), EAnimation.FALL.isLoop(), 0, 1, 0, 1, new int[]{200}));
         animatorController.addCollision(EAnimation.FALL, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuFall.json")));
@@ -127,7 +130,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addRepercussion(EAnimation.HAND_FLY_PROPELS, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_FLIP, 70, new Pair<>(0f, 0f)));
         animatorController.addEffect(EAnimation.HAND_FLY_PROPELS, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_HAND_FLY_PROPELS));
         // JUMP_KICK
-        animatorController.addAnimation(EAnimation.JUMP_KICK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuJumpKick1.png", 247, 247), EAnimation.JUMP_KICK.isLoop(), 0, 4, 0, 1, new int[]{200, 150, 150, 100}));
+        animatorController.addAnimation(EAnimation.JUMP_KICK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuJumpKick1.png", 247, 247), EAnimation.JUMP_KICK.isLoop(), 0, 4, 0, 1, new int[]{150, 100, 100, 100}));
         animatorController.addCollision(EAnimation.JUMP_KICK, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuJumpKick1.json")));
         animatorController.addConfig(EAnimation.JUMP_KICK, 0, new AnimationConfigItem(GokuActions.class.getMethod("jumpKickAttack", GameObject.class), false, EAnimation.JUMP_KICK, 2));
         animatorController.addRepercussion(EAnimation.JUMP_KICK, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_SIMPLE, 30, new Pair<>(GameConfig.speedTravel * 2, 0f)));
@@ -180,7 +183,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addConfig(EAnimation.KI_SPE_ATTACK, 0, new AnimationConfigItem(EAnimation.KI_SPE_ATTACK, 1));
         animatorController.addEffect(EAnimation.KI_SPE_ATTACK, 0, 0, EffectFactory.createAnimationEffect(AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_expr.png", 85, 70), false, 0, 2, 0, 1, new int[]{1000, 1000}), 60, 60, false));
         animatorController.addEffect(EAnimation.KI_SPE_ATTACK, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_KAMEHAMEHA_AIM));
-        animatorController.addAnimation(EAnimation.KI_SPE_ATTACK, 1, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuKamehameha2.png", 247, 247), EAnimation.KI_SPE_ATTACK.isLoop(), 0, 6, 0, 1, new int[]{220, 200, 5000, 300, 100, 100}));
+        animatorController.addAnimation(EAnimation.KI_SPE_ATTACK, 1, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuKamehameha2.png", 247, 247), EAnimation.KI_SPE_ATTACK.isLoop(), 0, 6, 0, 1, new int[]{220, 100, 5000, 300, 100, 100}));
         animatorController.addCollision(EAnimation.KI_SPE_ATTACK, 1, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuKamehameha2.json")));
         animatorController.addConfig(EAnimation.KI_SPE_ATTACK, 1, new AnimationConfigItem(GokuActions.class.getMethod("kiSpeAttack", GameObject.class), false));
         animatorController.addEffect(EAnimation.KI_SPE_ATTACK, 1, 1, EffectFactory.createSoundEffect(ESound.GOKU_KAMEHAMEHA_FIRE));
@@ -603,7 +606,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addRepercussion(EAnimation.HAND_FLY_PROPELS, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_FLIP, 70, new Pair<>(0f, 0f)));
         animatorController.addEffect(EAnimation.HAND_FLY_PROPELS, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_HAND_FLY_PROPELS));
         // JUMP_KICK
-        animatorController.addAnimation(EAnimation.JUMP_KICK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuJumpKick1.png", 247, 247), EAnimation.JUMP_KICK.isLoop(), 0, 4, 0, 1, new int[]{200, 150, 150, 100}));
+        animatorController.addAnimation(EAnimation.JUMP_KICK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuJumpKick1.png", 247, 247), EAnimation.JUMP_KICK.isLoop(), 0, 4, 0, 1, new int[]{150, 100, 100, 100}));
         animatorController.addCollision(EAnimation.JUMP_KICK, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuJumpKick1.json")));
         animatorController.addConfig(EAnimation.JUMP_KICK, 0, new AnimationConfigItem(GokuS1Actions.class.getMethod("jumpKickAttack", GameObject.class), false, EAnimation.JUMP_KICK, 2));
         animatorController.addRepercussion(EAnimation.JUMP_KICK, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_SIMPLE, 30, new Pair<>(GameConfig.speedTravel * 2, 0f)));
