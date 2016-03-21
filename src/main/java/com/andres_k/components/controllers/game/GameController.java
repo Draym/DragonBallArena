@@ -136,6 +136,11 @@ public class GameController extends WindowController {
     }
 
     @Override
+    public void eventControllerReceived(EInput event, EInput input) {
+        GameObjectController.get().event(event, input);
+    }
+
+    @Override
     public void mousePressed(int button, int x, int y) {
     }
 

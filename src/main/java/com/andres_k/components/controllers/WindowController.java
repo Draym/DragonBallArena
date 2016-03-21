@@ -1,5 +1,6 @@
 package com.andres_k.components.controllers;
 
+import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.graphicComponents.background.BackgroundManager;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
@@ -54,6 +55,9 @@ public abstract class WindowController implements Observer {
     public abstract void keyPressed(int key, char c);
 
     public abstract void keyReleased(int key, char c);
+
+    public void eventControllerReceived(EInput event, EInput input) {
+    }
 
     public abstract void mouseReleased(int button, int x, int y);
 

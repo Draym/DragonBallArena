@@ -3,6 +3,8 @@ package com.andres_k.components.graphicComponents.graphic;
 import com.andres_k.components.controllers.WindowController;
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.eventComponent.input.InputEvent;
+import com.andres_k.components.eventComponent.input.joystick.JoystickController;
+import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.UserInterface;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.GlobalVariable;
@@ -147,5 +149,57 @@ public abstract class WindowBasedGame extends BasicGameState {
         int posY = container.getInput().getMouseY();
 
         this.gui.isOnFocus(posX, posY);
+    }
+
+    // CONTROLLER
+    @Override
+    public void controllerLeftPressed(int controller) {
+        this.controller.eventControllerReceived(EInput.KEY_PRESSED, JoystickController.transformDirection(controller, EDirection.LEFT));
+    }
+
+    @Override
+    public void controllerLeftReleased(int controller) {
+        this.controller.eventControllerReceived(EInput.KEY_RELEASED, JoystickController.transformDirection(controller, EDirection.LEFT));
+    }
+
+    @Override
+    public void controllerRightPressed(int controller) {
+        this.controller.eventControllerReceived(EInput.KEY_PRESSED, JoystickController.transformDirection(controller, EDirection.RIGHT));
+    }
+
+    @Override
+    public void controllerRightReleased(int controller) {
+        this.controller.eventControllerReceived(EInput.KEY_RELEASED, JoystickController.transformDirection(controller, EDirection.RIGHT));
+    }
+
+    @Override
+    public void controllerUpPressed(int controller) {
+        this.controller.eventControllerReceived(EInput.KEY_PRESSED, JoystickController.transformDirection(controller, EDirection.TOP));
+    }
+
+    @Override
+    public void controllerUpReleased(int controller) {
+        this.controller.eventControllerReceived(EInput.KEY_RELEASED, JoystickController.transformDirection(controller, EDirection.TOP));
+    }
+
+    @Override
+    public void controllerDownPressed(int controller) {
+        this.controller.eventControllerReceived(EInput.KEY_PRESSED, JoystickController.transformDirection(controller, EDirection.DOWN));
+    }
+
+    @Override
+    public void controllerDownReleased(int controller) {
+        this.controller.eventControllerReceived(EInput.KEY_RELEASED, JoystickController.transformDirection(controller, EDirection.DOWN));
+    }
+
+    @Override
+    public void controllerButtonPressed(int controller, int button) {
+        Console.write("Button: " + button);
+        this.controller.eventControllerReceived(EInput.KEY_PRESSED, JoystickController.transformButton(controller, button));
+    }
+
+    @Override
+    public void controllerButtonReleased(int controller, int button) {
+        this.controller.eventControllerReceived(EInput.KEY_RELEASED, JoystickController.transformButton(controller, button));
     }
 }
