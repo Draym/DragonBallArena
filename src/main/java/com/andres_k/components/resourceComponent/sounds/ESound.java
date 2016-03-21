@@ -14,7 +14,7 @@ public enum ESound {
     BACKGROUND_CONNECTION(ConfigPath.sound_musics + "/DBZ_embraceBlueSky.ogg"),
     BACKGROUND_CREDITS(ConfigPath.sound_musics + "/DBZ_capsuleObtain.ogg"),
     BACKGROUND_SELECT(ConfigPath.sound_musics + "/DBZ_overTheGalaxy.ogg"),
-    BACKGROUND_GAME(ConfigPath.sound_musics + "/backgroundGame.ogg"),
+    BACKGROUND_GAME(ConfigPath.sound_musics + "/DBZ_wildSoul.ogg"),
 
     //soundsGame
     EFFECT_FLASH(ConfigPath.sound_effects + "/DBZ_effect_flash.ogg"),

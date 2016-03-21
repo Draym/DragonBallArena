@@ -26,8 +26,8 @@ public class VegetaS1Actions extends VegetaActions {
         try {
             object.getMovement().stopMovement();
             object.getMovement().setUseGravity(false);
-            if (object.getAnimatorController().currentAnimation().getFrame() == 3) {
-                object.doTask(new Pair<>(ETaskType.CREATE, EGameObject.KI_FINAL.toString()));
+            if (object.getAnimatorController().currentAnimation().getFrame() == 2) {
+                object.doTask(new Pair<>(ETaskType.CREATE, EGameObject.BIG_BANG.toString()));
             }
         } catch (SlickException e) {
             e.printStackTrace();

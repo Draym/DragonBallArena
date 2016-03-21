@@ -75,6 +75,7 @@ public class AnimatorGameData extends DataManager {
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.FINAL_FLASH_Body), EGameObject.FINAL_FLASH_Body);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.KI_EXPLODE), EGameObject.KI_EXPLODE);
         this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.GENKIDAMA), EGameObject.GENKIDAMA);
+        this.addItemAnimator(this.animatorFactory.getAnimator(ESprites.BIG_BANG), EGameObject.BIG_BANG);
     }
 
     private void addPlayerAnimator(AnimatorController animatorController, EGameObject type) {

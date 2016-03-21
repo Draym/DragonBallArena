@@ -5,6 +5,7 @@ import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.animations.details.AnimationConfigItem;
 import com.andres_k.components.gameComponents.animations.details.AnimationRepercussionItem;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
+import com.andres_k.components.gameComponents.gameObject.commands.actionComponent.entity.BigBangActions;
 import com.andres_k.components.gameComponents.gameObject.commands.actionComponent.entity.GenkidamaActions;
 import com.andres_k.components.gameComponents.gameObject.commands.actionComponent.players.GokuActions;
 import com.andres_k.components.gameComponents.gameObject.commands.actionComponent.players.GokuS1Actions;
@@ -17,7 +18,6 @@ import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.utils.configs.ConfigPath;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.FilesTools;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
@@ -52,11 +52,9 @@ public class AnimatorGameFactory extends AnimatorFactory {
         AnimatorController animatorController = new AnimatorController();
         String id = "/goku/basic";
         //IDLE
-        Console.write("Test IDLE");
         animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuIdle.png", 247, 247), EAnimation.IDLE.isLoop(), 0, 4, 0, 1, new int[]{200, 200, 200, 200}));
         animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuIdle.json")));
         animatorController.addConfig(EAnimation.IDLE, 0, new AnimationConfigItem(GokuActions.class.getMethod("idle", GameObject.class), true));
-        Console.write("SUCESS IDLE");
         // FALL
         animatorController.addAnimation(EAnimation.FALL, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuFall.png", 247, 247), EAnimation.FALL.isLoop(), 0, 1, 0, 1, new int[]{200}));
         animatorController.addCollision(EAnimation.FALL, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuFall.json")));
@@ -183,7 +181,7 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addConfig(EAnimation.KI_SPE_ATTACK, 0, new AnimationConfigItem(EAnimation.KI_SPE_ATTACK, 1));
         animatorController.addEffect(EAnimation.KI_SPE_ATTACK, 0, 0, EffectFactory.createAnimationEffect(AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/kameha" + "/kameha_expr.png", 85, 70), false, 0, 2, 0, 1, new int[]{1000, 1000}), 60, 60, false));
         animatorController.addEffect(EAnimation.KI_SPE_ATTACK, 0, 0, EffectFactory.createSoundEffect(ESound.GOKU_KAMEHAMEHA_AIM));
-        animatorController.addAnimation(EAnimation.KI_SPE_ATTACK, 1, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuKamehameha2.png", 247, 247), EAnimation.KI_SPE_ATTACK.isLoop(), 0, 6, 0, 1, new int[]{220, 100, 5000, 300, 100, 100}));
+        animatorController.addAnimation(EAnimation.KI_SPE_ATTACK, 1, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/gokuKamehameha2.png", 247, 247), EAnimation.KI_SPE_ATTACK.isLoop(), 0, 6, 0, 1, new int[]{220, 80, 5000, 300, 100, 100}));
         animatorController.addCollision(EAnimation.KI_SPE_ATTACK, 1, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/gokuKamehameha2.json")));
         animatorController.addConfig(EAnimation.KI_SPE_ATTACK, 1, new AnimationConfigItem(GokuActions.class.getMethod("kiSpeAttack", GameObject.class), false));
         animatorController.addEffect(EAnimation.KI_SPE_ATTACK, 1, 1, EffectFactory.createSoundEffect(ESound.GOKU_KAMEHAMEHA_FIRE));
@@ -519,9 +517,21 @@ public class AnimatorGameFactory extends AnimatorFactory {
             animatorController.addRepercussion(EAnimation.RUN, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_MEDIUM, 1, new Pair<>(GameConfig.speedTravel / 3f, 0f)));
             animatorController.addAnimation(EAnimation.EXPLODE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/genkidama" + "/genkidama4.png", 260, 260), false, 0, 4, 0, 1, new int[]{150, 120, 100, 80}));
             animatorController.addCollision(EAnimation.EXPLODE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/genkidama" + "/genkidama4.json")));
-            animatorController.addRepercussion(EAnimation.EXPLODE, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_PROJECTED, 1, new Pair<>(GameConfig.speedTravel, 0f)));
-            animatorController.addConfig(EAnimation.EXPLODE, 0, new AnimationConfigItem(GenkidamaActions.class.getMethod("stopOnExplode", GameObject.class), false));
+            animatorController.addRepercussion(EAnimation.EXPLODE, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_PROJECTED, 1, new Pair<>(GameConfig.speedTravel * 2, GameConfig.speedTravel)));
+            animatorController.addConfig(EAnimation.EXPLODE, 0, new AnimationConfigItem(GenkidamaActions.class.getMethod("stopOnExplode", GameObject.class), false, EAnimation.NULL));
             animatorController.forceCurrentAnimationType(EAnimation.RUN);
+        } else if (index == ESprites.BIG_BANG) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/bigBang" + "/bigBang0.png", 247, 247), false, 0, 2, 0, 1, new int[]{150, 200}));
+            animatorController.addCollision(EAnimation.IDLE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/bigBang" + "/bigBang0.json")));
+            animatorController.addRepercussion(EAnimation.IDLE, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_MEDIUM, 1, new Pair<>(GameConfig.speedTravel / 3f, 0f)));
+            animatorController.addConfig(EAnimation.IDLE, 0, new AnimationConfigItem(EAnimation.RUN, 0));
+            animatorController.addAnimation(EAnimation.RUN, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/bigBang" + "/bigBang1.png", 247, 247), true, 0, 1, 0, 1, new int[]{100}));
+            animatorController.addCollision(EAnimation.RUN, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/bigBang" + "/bigBang1.json")));
+            animatorController.addRepercussion(EAnimation.RUN, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_MEDIUM, 1, new Pair<>(GameConfig.speedTravel / 3f, 0f)));
+            animatorController.addAnimation(EAnimation.EXPLODE, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + "/entity/bigBang" + "/bigBang2.png", 263, 263), false, 0, 7, 0, 1, new int[]{60, 60, 60, 80, 120, 150, 80, 120}));
+            animatorController.addCollision(EAnimation.EXPLODE, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/entity/bigBang" + "/bigBang2.json")));
+            animatorController.addRepercussion(EAnimation.EXPLODE, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_PROJECTED, 1, new Pair<>(GameConfig.speedTravel * 3, GameConfig.speedTravel)));
+            animatorController.addConfig(EAnimation.EXPLODE, 0, new AnimationConfigItem(BigBangActions.class.getMethod("stopOnExplode", GameObject.class), false, EAnimation.NULL));
         }
         return animatorController;
     }
@@ -827,8 +837,8 @@ public class AnimatorGameFactory extends AnimatorFactory {
         animatorController.addConfig(EAnimation.SPIRAL_KICK, 0, new AnimationConfigItem(VegetaS1Actions.class.getMethod("spiralKick", GameObject.class), false));
         animatorController.addRepercussion(EAnimation.SPIRAL_KICK, 0, new AnimationRepercussionItem(EAnimation.TOUCHED_MEDIUM, 100, new Pair<>(GameConfig.speedTravel, 0f)));
         // KI_FINAL_ATTACK
-        animatorController.addAnimation(EAnimation.KI_FINAL_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaFinalFlash.png", 247, 247), EAnimation.KI_FINAL_ATTACK.isLoop(), 0, 8, 0, 1, new int[]{250, 300, 300, 5000, 250, 250, 200, 200}));
-        animatorController.addCollision(EAnimation.KI_FINAL_ATTACK, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaFinalFlash.json")));
+        animatorController.addAnimation(EAnimation.KI_FINAL_ATTACK, 0, AnimationFactory.createAnimation(new SpriteSheet(ConfigPath.image_game + id + "/vegetaBigBang.png", 247, 247), EAnimation.KI_FINAL_ATTACK.isLoop(), 0, 8, 0, 1, new int[]{250, 300, 300, 300, 250, 250, 200, 200}));
+        animatorController.addCollision(EAnimation.KI_FINAL_ATTACK, 0, FilesTools.readInput(getClass().getClassLoader().getResourceAsStream(ConfigPath.jsonCollision + "/player" + id + "/vegetaBigBang.json")));
         animatorController.addConfig(EAnimation.KI_FINAL_ATTACK, 0, new AnimationConfigItem(VegetaS1Actions.class.getMethod("kiFinalAttack", GameObject.class), false));
         animatorController.addEffect(EAnimation.KI_FINAL_ATTACK, 0, 0, EffectFactory.createSoundEffect(ESound.VEGETA_FINAL_FLASH));
         // KI_SPE_ATTACK

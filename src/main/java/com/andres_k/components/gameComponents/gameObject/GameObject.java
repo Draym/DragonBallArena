@@ -23,6 +23,7 @@ import java.util.TimerTask;
  * Created by andres_k on 10/07/2015.
  */
 public abstract class GameObject {
+    private GameObject attackerOwner;
     private GameObject lastAttacker;
     private long resetAttackerTimer;
     private boolean useAttackerTimer;
@@ -59,7 +60,7 @@ public abstract class GameObject {
     }
 
     public boolean die() {
-        if (!this.animatorController.isDeleted()) {
+        if (this.alive) {
             this.currentLife = 0;
             this.animatorController.forceCurrentAnimationType(EAnimation.EXPLODE);
             this.alive = false;
@@ -88,6 +89,7 @@ public abstract class GameObject {
             this.resetAttackerTimer -= GameConfig.currentTimeLoop;
             if (this.resetAttackerTimer <= 0) {
                 this.lastAttacker = null;
+                this.attackerOwner = null;
                 this.initResetAttackerTimer(false);
             }
         }
@@ -118,9 +120,9 @@ public abstract class GameObject {
     // TOOLS
 
     public void teleportBehindMyAttacker() {
-        if (this.lastAttacker != null) {
-            this.movement.setPositions(this.lastAttacker.getPosX() + (this.lastAttacker.getAnimatorController().getEyesDirection() == EDirection.RIGHT ? - 70 : 70), this.lastAttacker.getPosY() - 70);
-            this.animatorController.setEyesDirection(this.lastAttacker.getAnimatorController().getEyesDirection());
+        if (this.attackerOwner != null) {
+            this.movement.setPositions(this.attackerOwner.getPosX() + (this.attackerOwner.getAnimatorController().getEyesDirection() == EDirection.RIGHT ? - 70 : 70), this.attackerOwner.getPosY() - 70);
+            this.animatorController.setEyesDirection(this.attackerOwner.getAnimatorController().getEyesDirection());
             this.useAttackerTimer = true;
         }
     }
@@ -248,6 +250,11 @@ public abstract class GameObject {
         return this.lastAttacker;
     }
 
+    public GameObject getAttackerOwner() {
+        this.initResetAttackerTimer(true);
+        return this.attackerOwner;
+    }
+
     public EDirection getDirectionOfMyAttacker() {
         if (this.lastAttacker != null) {
             if (this.getMovement().getX() > this.lastAttacker.getMovement().getX()) {
@@ -281,8 +288,9 @@ public abstract class GameObject {
     }
 
     public void setLastAttacker(GameObject attacker) {
-        this.lastAttacker = GameObjectController.get().getObjectById(StringTools.getWord(attacker.getId(), "", ".", 0, 1));
-        if (this.lastAttacker != null) {
+        this.lastAttacker = attacker;
+        this.attackerOwner = GameObjectController.get().getObjectById(StringTools.getWord(attacker.getId(), "", ".", 0, 1));
+        if (this.attackerOwner != null) {
             this.initResetAttackerTimer(true);
         }
     }

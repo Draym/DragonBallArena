@@ -7,7 +7,7 @@ import com.andres_k.components.gameComponents.gameObject.commands.movement.EDire
 import com.andres_k.components.gameComponents.gameObject.objects.Player;
 import com.andres_k.components.gameComponents.gameObject.objects.entities.KiEntity;
 import com.andres_k.components.gameComponents.gameObject.objects.entities.ki.KiProjectiles;
-import com.andres_k.components.gameComponents.gameObject.objects.entities.ki.linked.Genkidama;
+import com.andres_k.components.gameComponents.gameObject.objects.entities.ki.vulnerable.Genkidama;
 import com.andres_k.components.gameComponents.gameObject.objects.entities.ki.linked.Kameha;
 import com.andres_k.components.gameComponents.gameObject.objects.entities.ki.linked.MegaKameha;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
@@ -28,7 +28,7 @@ import java.util.TimerTask;
 public class Goku extends Player {
 
     public Goku(AnimatorController animatorController, String id, float x, float y) {
-        super(animatorController, EGameObject.GOKU, id, x, y, 3000, 1, 300, 220, 15);
+        super(animatorController, EGameObject.GOKU, id, x, y, 3000, 1, 270, 220, 15);
         try {
             this.specialActions.put(EGameObject.GOKU.getValue(), this.getClass().getMethod("transformBasic"));
             this.specialActions.put(EGameObject.GOKU_S1.getValue(), this.getClass().getMethod("transformS1"));
@@ -119,7 +119,7 @@ public class Goku extends Player {
         try {
             if (this.currentKi >= 400) {
                 this.incrementCurrentKi(-400);
-                KiEntity entity = new Genkidama(ResourceManager.get().getGameAnimator(EGameObject.GENKIDAMA), EGameObject.GENKIDAMA, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 40 : this.getPosX() - 40), this.getPosY() + 10, this.getAnimatorController().getEyesDirection(), 500 * this.damage, 800, 0);
+                KiEntity entity = new Genkidama(ResourceManager.get().getGameAnimator(EGameObject.GENKIDAMA), this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 40 : this.getPosX() - 40), this.getPosY() + 10, this.getAnimatorController().getEyesDirection(), 500 * this.damage, 800, 0);
                 CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity)));
             }
         } catch (SlickException e) {

@@ -30,12 +30,14 @@ public class WindowGame extends WindowBasedGame {
 
         WindowConfig.get().switchWindow(EnumWindow.getById(this.idWindow));
         MusicController.get().loop(ESound.BACKGROUND_GAME);
+        MusicController.get().changeVolume(0.5f);
     }
 
 
     @Override
     public void leave(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         MusicController.get().stop(ESound.BACKGROUND_GAME);
+        MusicController.get().changeVolume(1.0f);
         this.clean();
     }
 

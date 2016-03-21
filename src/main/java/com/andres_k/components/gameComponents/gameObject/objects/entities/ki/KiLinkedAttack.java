@@ -4,6 +4,7 @@ import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
+import com.andres_k.components.gameComponents.gameObject.objects.entities.KiEntity;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.MathTools;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * Created by andres_k on 23/02/2016.
  */
-public abstract class KiLinkedAttack extends KiAttack {
+public abstract class KiLinkedAttack extends KiEntity {
     protected List<Pair<Float, AnimatorController>> bodiesAnim;
     protected AnimatorController body;
     protected AnimatorController back;

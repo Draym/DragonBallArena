@@ -96,7 +96,7 @@ public final class GameObjectController {
             }
         }
         for (int i = 0; i < this.entities.size(); ++i) {
-            entities.get(i).update();
+            this.entities.get(i).update();
             if (this.entities.get(i).isNeedDelete()) {
                 this.entities.remove(i);
                 --i;
@@ -164,21 +164,6 @@ public final class GameObjectController {
 
         for (EGameObject type : playerNames) {
             this.createPlayer(type, "player" + count + GlobalVariable.id_delimiter + type.getValue(), WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1() - 600, 300, 0, 700, (count == 0));
-/*
-            GameObject player = null;
-            while (player == null || this.checkCollision(player, ETaskType.STATIC).hasCollision()) {
-                int randomX = RandomTools.getInt(WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1() - 600) + 300;
-                Console.write("Create player: " + type);
-                player = GameObjectFactory.create(type, ResourceManager.get().getGameAnimator(type),
-                        "player" + count + GlobalVariable.id_delimiter + type.getValue(), randomX, WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2() - 200);
-                if (count == 0) {
-                    CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, ELocation.GAME_GUI_State_AlliedPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(player.id, 475, 85, EGuiElement.getEnum(player.getType().getValue(), EGuiElement.ICON.getValue()), false))));
-                } else {
-                    CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, ELocation.GAME_GUI_State_EnemyPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(player.id, 475, 85, EGuiElement.getEnum(player.getType().getValue(), EGuiElement.ICON.getValue()), true))));
-                }
-            }
-            this.players.add(player);
-*/
             ++count;
         }
     }

@@ -1,6 +1,5 @@
 package com.andres_k.components.gameComponents.collisions;
 
-import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.bodies.BodyRect;
 import com.andres_k.components.gameComponents.bodies.BodySprite;
@@ -50,9 +49,7 @@ public abstract class PhysicalObject extends GameObject {
     }
 
     public boolean checkBorderCollision(GameObject enemy, Pair<Float, Float> pos) {
-        if (this.getAnimatorController().currentAnimationType() != EAnimation.EXPLODE &&
-                enemy.getAnimatorController().currentAnimationType() != EAnimation.EXPLODE &&
-                !enemy.getId().contains(this.getId())) {
+        if (!enemy.getId().contains(this.getId())) {
             BodySprite myBody = this.getBody();
             BodySprite hisBody = enemy.getBody();
 

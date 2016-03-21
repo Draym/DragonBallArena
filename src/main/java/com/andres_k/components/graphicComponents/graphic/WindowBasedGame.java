@@ -8,7 +8,6 @@ import com.andres_k.components.gameComponents.gameObject.commands.movement.EDire
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.UserInterface;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.GlobalVariable;
-import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -113,7 +112,6 @@ public abstract class WindowBasedGame extends BasicGameState {
 
     @Override
     public void keyPressed(int key, char c) {
-        Console.write("Key pressed: " + key);
         boolean absorbed = this.gui.event(new InputEvent(key, c, EInput.KEY_PRESSED));
         if (!absorbed) {
             this.controller.keyPressed(key, c);
@@ -194,7 +192,6 @@ public abstract class WindowBasedGame extends BasicGameState {
 
     @Override
     public void controllerButtonPressed(int controller, int button) {
-        Console.write("Button: " + button);
         this.controller.eventControllerReceived(EInput.KEY_PRESSED, JoystickController.transformButton(controller, button));
     }
 
