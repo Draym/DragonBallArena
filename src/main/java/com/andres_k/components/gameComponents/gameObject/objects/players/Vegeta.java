@@ -27,7 +27,7 @@ import java.util.TimerTask;
  */
 public class Vegeta extends Player {
     public Vegeta(AnimatorController animatorController, String id, float x, float y) {
-        super(animatorController, EGameObject.VEGETA, id, x, y, 3300, 1, 270, 220, 15);
+        super(animatorController, EGameObject.VEGETA, id, x, y, 330, 1, 270, 220, 15);
         try {
             this.specialActions.put(EGameObject.VEGETA.getValue(), this.getClass().getMethod("transformBasic"));
             this.specialActions.put(EGameObject.VEGETA_S1.getValue(), this.getClass().getMethod("transformS1"));
@@ -120,7 +120,7 @@ public class Vegeta extends Player {
     public void createBigBang() {
         try {
             if (this.currentKi >= 300) {
-                KiEntity entity = new BigBang(ResourceManager.get().getGameAnimator(EGameObject.BIG_BANG), this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 70 : this.getPosX() - 80), this.getPosY(), this.getAnimatorController().getEyesDirection(), this.currentKi * this.damage, 800, 0);
+                KiEntity entity = new BigBang(ResourceManager.get().getGameAnimator(EGameObject.BIG_BANG), this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 70 : this.getPosX() - 80), this.getPosY(), this.getAnimatorController().getEyesDirection(), this.currentKi * this.damage + 200, 800, 0);
                 this.setCurrentKi(0);
                 CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity)));
             }
@@ -131,9 +131,9 @@ public class Vegeta extends Player {
 
     public void createKiBurst() {
         try {
-            if (this.currentKi >= 100) {
-                this.incrementCurrentKi(-100);
-                KiEntity entity = new KiInvulnerableAttack(ResourceManager.get().getGameAnimator(EGameObject.KI_BURST), EGameObject.KI_BURST, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 70 : this.getPosX() - 80), this.getPosY() - 5, this.getAnimatorController().getEyesDirection(), 200 * this.damage, 0, 0);
+            if (this.currentKi >= 150) {
+                this.incrementCurrentKi(-150);
+                KiEntity entity = new KiInvulnerableAttack(ResourceManager.get().getGameAnimator(EGameObject.KI_BURST), EGameObject.KI_BURST, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 70 : this.getPosX() - 80), this.getPosY() - 5, this.getAnimatorController().getEyesDirection(), 300 * this.damage, 0, 0);
                 CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity)));
             }
         } catch (SlickException e) {
@@ -155,11 +155,11 @@ public class Vegeta extends Player {
 
     public void createKiBlast() {
         try {
-            if (this.currentKi >= 15) {
-                this.incrementCurrentKi(-15);
+            if (this.currentKi >= 20) {
+                this.incrementCurrentKi(-20);
                 KiEntity entity1 = new KiInvulnerableAttack(ResourceManager.get().getGameAnimator(EGameObject.VEGETA_KI_BLAST_BACK), EGameObject.KI_BLAST, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 95 : this.getPosX() - 95), this.getPosY() - 15, this.getAnimatorController().getEyesDirection(), this.damage, 0, 0);
                 CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity1)));
-                KiEntity entity2 = new KiProjectiles(ResourceManager.get().getGameAnimator(EGameObject.VEGETA_KI_BLAST_HEAD), EGameObject.KI_BLAST, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 95 : this.getPosX() - 95), this.getPosY() - 15, this.getAnimatorController().getEyesDirection(), 10 * this.damage, 1200, 0);
+                KiEntity entity2 = new KiProjectiles(ResourceManager.get().getGameAnimator(EGameObject.VEGETA_KI_BLAST_HEAD), EGameObject.KI_BLAST, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 95 : this.getPosX() - 95), this.getPosY() - 15, this.getAnimatorController().getEyesDirection(), 20 * this.damage, 1200, 0);
                 CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity2)));
             }
         } catch (SlickException e) {
@@ -177,11 +177,11 @@ public class Vegeta extends Player {
     }
 
     public boolean checkToLaunchKiBurst() {
-        return (this.currentKi > 100 && this.isOnEarth());
+        return (this.currentKi > 150 && this.isOnEarth());
     }
 
     public boolean checkToLaunchKiBlast() {
-        return (this.currentKi > 15);
+        return (this.currentKi > 20);
     }
 
     public boolean checkToLaunchKiCharge() {

@@ -22,20 +22,20 @@ public enum EInput {
     // ACTIONS
     ATTACK_A("ATTACK_A"),
     ATTACK_B("ATTACK_B"),
-    ATTACK_C("ATTACK_C"),
-    ATTACK_D("ATTACK_D"),
+    ATTACK_X("ATTACK_X"),
+    ATTACK_Y("ATTACK_Y"),
     ATTACK_SPE("ATTACK_SPE"),
 
     // PLAYERS
     MOVE_UP_P1(0, MOVE_UP.value + "_P1"), MOVE_DOWN_P1(0, MOVE_DOWN.value + "_P1"),
     MOVE_LEFT_P1(0, MOVE_LEFT.value + "_P1"), MOVE_RIGHT_P1(0, MOVE_RIGHT.value + "_P1"),
     ATTACK_A_P1(0, ATTACK_A.value + "_P1"), ATTACK_B_P1(0, ATTACK_B.value + "_P1"),
-    ATTACK_C_P1(0, ATTACK_C.value + "_P1"), ATTACK_D_P1(0, ATTACK_D.value + "_P1"),
+    ATTACK_X_P1(0, ATTACK_X.value + "_P1"), ATTACK_Y_P1(0, ATTACK_Y.value + "_P1"),
     ATTACK_SPE_P1(0, ATTACK_SPE.value + "_P1"),
     MOVE_UP_P2(1, MOVE_UP.value + "_P2"), MOVE_DOWN_P2(1, MOVE_DOWN.value + "_P2"),
     MOVE_LEFT_P2(1, MOVE_LEFT.value + "_P2"), MOVE_RIGHT_P2(1, MOVE_RIGHT.value + "_P2"),
     ATTACK_A_P2(1, ATTACK_A.value + "_P2"), ATTACK_B_P2(1, ATTACK_B.value + "_P2"),
-    ATTACK_C_P2(1, ATTACK_C.value + "_P2"), ATTACK_D_P2(1, ATTACK_D.value + "_P2"),
+    ATTACK_X_P2(1, ATTACK_X.value + "_P2"), ATTACK_Y_P2(1, ATTACK_Y.value + "_P2"),
     ATTACK_SPE_P2(1, ATTACK_SPE.value + "_P2");
 
 

@@ -44,8 +44,8 @@ public class JoystickController {
         NOTHING(EInput.NOTHING, 0),
         ATTACK_A(EInput.ATTACK_A, 1),
         ATTACK_B(EInput.ATTACK_B, 2),
-        ATTACK_C(EInput.ATTACK_C, 3),
-        ATTACK_D(EInput.ATTACK_D, 4),
+        ATTACK_C(EInput.ATTACK_X, 3),
+        ATTACK_D(EInput.ATTACK_Y, 4),
         ATTACK_SPE1(EInput.ATTACK_SPE, 5),
         ATTACK_SPE2(EInput.ATTACK_SPE, 6);
 

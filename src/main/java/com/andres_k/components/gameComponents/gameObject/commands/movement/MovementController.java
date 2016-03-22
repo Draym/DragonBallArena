@@ -205,6 +205,10 @@ public class MovementController {
             return 0f;
     }
 
+    public boolean isUseGravity() {
+        return this.useGravity;
+    }
+
     public float getGravity() {
         return this.pushGravity / this.calculateGravity();
     }

@@ -79,4 +79,19 @@ public class MathTools {
         }
         return new Rectangle(x, y, sizeX, sizeY);
     }
+
+    public static int numberLevel(int number, int max) {
+        int levelMax = 0;
+        int levelNumber = 0;
+
+        while (max >= 10) {
+            max = max / 10;
+            levelMax += 1;
+        }
+        while (number >= 10) {
+            number = number / 10;
+            levelNumber += 1;
+        }
+        return levelMax - levelNumber;
+    }
 }

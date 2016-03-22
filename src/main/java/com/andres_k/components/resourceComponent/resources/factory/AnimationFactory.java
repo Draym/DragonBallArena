@@ -1,5 +1,7 @@
 package com.andres_k.components.resourceComponent.resources.factory;
 
+import com.andres_k.utils.tools.MathTools;
+import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -15,13 +17,7 @@ public class AnimationFactory {
         String zero;
 
         for (int i = start; i <= end; ++i) {
-            if (i < 100) {
-                zero = "0";
-            } else if (i < 10) {
-                zero = "00";
-            } else {
-                zero = "";
-            }
+            zero = StringTools.duplicateString("0", MathTools.numberLevel(i, end));
             animation.addFrame(new Image(id + zero + i + extension), interval);
         }
         animation.setLooping(looping);
@@ -43,11 +39,19 @@ public class AnimationFactory {
         return animation;
     }
 
-    public static Animation createUniqueFrame(String file) throws SlickException {
+    public static Animation createStaticUniqueFrame(String file) throws SlickException {
         Animation animation = new Animation();
         Image img = new Image(file);
         animation.addFrame(img, 100);
         animation.setLooping(false);
+        return animation;
+    }
+
+    public static Animation createUniqueFrame(String file, int time, boolean looping) throws SlickException {
+        Animation animation = new Animation();
+        Image img = new Image(file);
+        animation.addFrame(img, time);
+        animation.setLooping(looping);
         return animation;
     }
 }

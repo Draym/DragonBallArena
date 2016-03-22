@@ -257,7 +257,9 @@ public abstract class GameObject {
 
     public EDirection getDirectionOfMyAttacker() {
         if (this.lastAttacker != null) {
-            if (this.getMovement().getX() > this.lastAttacker.getMovement().getX()) {
+            float attackerPosX = this.lastAttacker.getPosX();
+            attackerPosX = (this.lastAttacker.getAnimatorController().getEyesDirection() == EDirection.RIGHT ? attackerPosX : attackerPosX + 50);
+            if (this.getPosX() > attackerPosX) {
                 return EDirection.LEFT;
             } else {
                 return EDirection.RIGHT;

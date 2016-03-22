@@ -18,6 +18,30 @@ public class BasicActions {
         object.getMovement().stopMovement();
     }
 
+    public static void explode(GameObject object) {
+        if (object.getAnimatorController().getIndex() != 2) {
+            object.getMovement().setUseGravity(false);
+            if (object.getLastAttacker() != null) {
+                AnimationRepercussionItem repercussionItem = object.getLastAttacker().getAnimatorController().getCurrentContainer().getRepercussion();
+                if (repercussionItem != null) {
+                    repercussionItem.applyMoveRepercussion(object);
+                }
+            }
+        } else {
+            if (!object.getMovement().isUseGravity()) {
+                object.getMovement().setUseGravity(true);
+            }
+            object.getMovement().setPushY(0f);
+        }
+        if (!object.isOnEarth() && object.getAnimatorController().getIndex() == 0) {
+            object.getAnimatorController().forceCurrentAnimationIndex(1);
+        }
+        if (object.isOnEarth() && object.getAnimatorController().getIndex() != 0) {
+            object.getAnimatorController().forceCurrentAnimationIndex(0);
+            object.getMovement().stopMovement();
+        }
+    }
+
     public static void defense(GameObject object) {
         object.getMovement().setPushX(0f);
         object.getMovement().setPushY(0f);

@@ -28,7 +28,7 @@ import java.util.TimerTask;
 public class Goku extends Player {
 
     public Goku(AnimatorController animatorController, String id, float x, float y) {
-        super(animatorController, EGameObject.GOKU, id, x, y, 3000, 1, 270, 220, 15);
+        super(animatorController, EGameObject.GOKU, id, x, y, 300, 1, 270, 220, 15);
         try {
             this.specialActions.put(EGameObject.GOKU.getValue(), this.getClass().getMethod("transformBasic"));
             this.specialActions.put(EGameObject.GOKU_S1.getValue(), this.getClass().getMethod("transformS1"));
@@ -107,7 +107,7 @@ public class Goku extends Player {
         try {
             if (this.currentKi >= 400) {
                 this.incrementCurrentKi(-400);
-                KiEntity entity = new MegaKameha(ResourceManager.get().getGameAnimator(EGameObject.MEGA_KAMEHA), ResourceManager.get().getGameAnimator(EGameObject.MEGA_KAMEHA_Body), ResourceManager.get().getGameAnimator(EGameObject.MEGA_KAMEHA_Back), this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 130 : this.getPosX() - 130), this.getPosY(), (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() : this.getPosX() - 370), this.getAnimatorController().getEyesDirection(), 600 * this.damage, 1500);
+                KiEntity entity = new MegaKameha(ResourceManager.get().getGameAnimator(EGameObject.MEGA_KAMEHA), ResourceManager.get().getGameAnimator(EGameObject.MEGA_KAMEHA_Body), ResourceManager.get().getGameAnimator(EGameObject.MEGA_KAMEHA_Back), this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 130 : this.getPosX() - 130), this.getPosY(), (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() : this.getPosX() - 370), this.getAnimatorController().getEyesDirection(), 900 * this.damage, 1500);
                 CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity)));
             }
         } catch (SlickException e) {
@@ -131,7 +131,7 @@ public class Goku extends Player {
         try {
             if (this.currentKi >= 205) {
                 this.incrementCurrentKi(-205);
-                KiEntity entity = new Kameha(ResourceManager.get().getGameAnimator(EGameObject.KAMEHA), ResourceManager.get().getGameAnimator(EGameObject.KAMEHA_Body), ResourceManager.get().getGameAnimator(EGameObject.KAMEHA_Back), this.id, this.getPosX() + 120, this.getPosY() + 10, this.getAnimatorController().getEyesDirection(), 300 * this.damage, 1500);
+                KiEntity entity = new Kameha(ResourceManager.get().getGameAnimator(EGameObject.KAMEHA), ResourceManager.get().getGameAnimator(EGameObject.KAMEHA_Body), ResourceManager.get().getGameAnimator(EGameObject.KAMEHA_Back), this.id, this.getPosX() + 120, this.getPosY() + 10, this.getAnimatorController().getEyesDirection(), 400 * this.damage, 1500);
                 CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity)));
             }
         } catch (SlickException e) {
@@ -143,7 +143,7 @@ public class Goku extends Player {
         try {
             if (this.currentKi >= 30) {
                 this.incrementCurrentKi(-30);
-                KiEntity entity = new KiProjectiles(ResourceManager.get().getGameAnimator(EGameObject.KI_BLAST), EGameObject.KI_BLAST, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 100 : this.getPosX() + -100), this.getPosY() - 40, this.getAnimatorController().getEyesDirection(), 25 * this.damage, 900, 0);
+                KiEntity entity = new KiProjectiles(ResourceManager.get().getGameAnimator(EGameObject.KI_BLAST), EGameObject.KI_BLAST, this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 100 : this.getPosX() + -100), this.getPosY() - 40, this.getAnimatorController().getEyesDirection(), 40 * this.damage, 900, 0);
                 CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity)));
             }
         } catch (SlickException e) {

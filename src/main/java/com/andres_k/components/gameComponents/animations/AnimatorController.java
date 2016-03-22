@@ -92,22 +92,22 @@ public class AnimatorController implements Observer {
     }
 
     private void toNextCurrentAnimation() {
-        try {
+        if (this.getCurrentContainer().getConfig() != null) {
             Pair<EAnimation, Integer> next = this.getCurrentContainer().getConfig().getNext();
-            this.forceCurrentAnimationType(next.getV1());
-            this.forceCurrentAnimationIndex(next.getV2());
-        } catch (Exception e) {
-//            Console.err("AnimatorController", "toNextCurrentAnimation", e.getMessage());
+            Console.write("To next Anim: " + next);
+            if ((this.currentAnimationType() == EAnimation.EXPLODE && next.getV1() == EAnimation.EXPLODE)
+                    || this.currentAnimationType() != EAnimation.EXPLODE) {
+                this.forceCurrentAnimationType(next.getV1());
+                this.forceCurrentAnimationIndex(next.getV2());
+            }
         }
     }
 
     private void toNextRequiredAnimation() {
-        try {
+        if (this.currentAnimationType() != EAnimation.EXPLODE) {
             this.forceCurrentAnimationType(this.nextRequiredAnimation.getV1());
             this.forceCurrentAnimationIndex(this.nextRequiredAnimation.getV2());
             this.resetNextRequiredAnimation();
-        } catch (Exception e) {
-            Console.err("AnimatorController", "toNextRequiredAnimation", e.getMessage());
         }
     }
 
@@ -117,15 +117,6 @@ public class AnimatorController implements Observer {
         } else {
             toNextCurrentAnimation();
         }
-/*
-        if (this.animationHasNextAnimation()) {
-            this.toNextCurrentAnimation();
-        } else if (this.nextRequiredAnimation.getV1() != EAnimation.NULL) {
-            this.toNextRequiredAnimation();
-        } else {
-            toNextCurrentAnimation();
-        }
-*/
     }
 
     public void doCurrentAction(GameObject object) throws SlickException {
@@ -329,7 +320,13 @@ public class AnimatorController implements Observer {
     public boolean isDeleted() {
         try {
             if (this.current == EAnimation.EXPLODE && this.currentAnimation().isStopped()) {
-                this.deleted = true;
+                if (this.getCurrentContainer().getConfig() != null) {
+                    if (this.getCurrentContainer().getConfig().getNext().getV1() == EAnimation.NULL) {
+                        this.deleted = true;
+                    }
+                } else {
+                    this.deleted = true;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -385,7 +382,7 @@ public class AnimatorController implements Observer {
 
     public boolean canSwitchCurrent() {
         try {
-            return this.currentAnimation().isStopped() || EAnimation.checkLoop(this.current);
+            return (this.currentAnimation().isStopped() || EAnimation.checkLoop(this.current));
         } catch (SlickException e) {
             e.printStackTrace();
         }
@@ -394,7 +391,7 @@ public class AnimatorController implements Observer {
 
     public boolean animationHasNextAnimation() {
         Pair<EAnimation, Integer> next = this.getCurrentContainer().getNext();
-        return  next != null && next.getV1() != EAnimation.IDLE;
+        return next != null && next.getV1() != EAnimation.IDLE;
     }
 
     // SETTERS
@@ -409,7 +406,7 @@ public class AnimatorController implements Observer {
 //                NetworkController.get().sendMessage(new MessageActionPlayer(type, index));
                 return true;
             } else {
-  //              NetworkController.get().sendMessage(new MessageActionPlayer(type, 0));
+                //              NetworkController.get().sendMessage(new MessageActionPlayer(type, 0));
             }
         }
         return false;
@@ -421,13 +418,15 @@ public class AnimatorController implements Observer {
     }
 
     public boolean forceCurrentAnimationType(EAnimation current) {
-        if (this.animators.containsKey(current)) {
-            this.current = current;
-            this.getCurrentContainer().restart();
-            return true;
-        } else if (current == EAnimation.EXPLODE) {
-            this.setDeleted(true);
-            return true;
+        if (this.currentAnimationType() != EAnimation.EXPLODE) {
+            if (this.animators.containsKey(current)) {
+                this.current = current;
+                this.getCurrentContainer().restart();
+                return true;
+            } else if (current == EAnimation.EXPLODE) {
+                this.setDeleted(true);
+                return true;
+            }
         }
         return false;
     }
@@ -447,10 +446,12 @@ public class AnimatorController implements Observer {
     }
 
     public void changeAnimation(EAnimation type) throws SlickException {
-        if (this.canSwitchCurrent()) {
-            this.forceCurrentAnimation(type, 0);
-        } else {
-            this.setNextRequiredAnimation(type, 0);
+        if (type != EAnimation.NULL) {
+            if (this.canSwitchCurrent()) {
+                this.forceCurrentAnimation(type, 0);
+            } else {
+                this.setNextRequiredAnimation(type, 0);
+            }
         }
     }
 

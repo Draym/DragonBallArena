@@ -18,6 +18,7 @@ public enum ESound {
 
     //soundsGame
     EFFECT_FLASH(ConfigPath.sound_effects + "/DBZ_effect_flash.ogg"),
+    EFFECT_KO(ConfigPath.sound_effects + "/DBZ_KO.ogg"),
 
     //soundsMenu
     BUTTON_CLICK(ConfigPath.sound_gui + "/buttonClick.wav"),
