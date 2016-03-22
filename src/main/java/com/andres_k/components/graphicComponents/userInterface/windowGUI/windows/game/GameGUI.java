@@ -106,6 +106,16 @@ public class GameGUI extends UserInterface {
         this.taskManager.register(comboModal.getId(), comboModal);
         this.elements.add(comboModal);
 
+        //end game
+        ComplexElement panelQuit = new ComplexElement(new ColorRect(new Rectangle(WindowConfig.get().centerPosX(EnumWindow.GAME, 582), WindowConfig.get().centerPosY(EnumWindow.GAME, 488), 582, 488)), true);
+        panelQuit.addItem(new ImageElement((ResourceManager.get().getGuiAnimator(EGuiElement.PANEL2)), true));
+        panelQuit.addItem(ElementFactory.createButtonTitleText("Replay !", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 25, EGuiElement.BUTTON_PLAY_VERSUS, 160, 320, ElementFactory.createBasicButtonTasks(ELocation.GAME_GUI, ELocation.GAME_CONTROLLER, ETaskType.START), ElementFactory.createImageFocusTasks()));
+        panelQuit.addItem(ElementFactory.createButtonTitleText("Home", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 25, EGuiElement.BUTTON_EXIT, 160, 390, ElementFactory.createBasicButtonTasks(ELocation.GAME_GUI, ELocation.GAME_CONTROLLER, EnumWindow.HOME), ElementFactory.createImageFocusTasks()));
+
+        Modal panelQuitModal = new Modal(ELocation.GAME_GUI_PanelQuit.getId(), new ColorRect(new Rectangle(0, 0, WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1(), WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2()), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), panelQuit, false);
+        this.taskManager.register(panelQuitModal.getId(), panelQuitModal);
+        this.elements.add(panelQuitModal);
+
         this.initElements();
     }
 

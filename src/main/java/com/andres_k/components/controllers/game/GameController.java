@@ -15,8 +15,10 @@ import com.andres_k.components.networkComponents.networkSend.messageServer.Messa
 import com.andres_k.components.networkComponents.networkSend.messageServer.MessageNewPlayer;
 import com.andres_k.components.networkComponents.networkSend.messageServer.MessageStatePlayer;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
+import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
+import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.WindowConfig;
@@ -25,7 +27,6 @@ import com.andres_k.utils.tools.Console;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 import java.util.*;
@@ -72,18 +73,7 @@ public class GameController extends WindowController {
     @Override
     public void init() throws SlickException {
         GameObjectController.get().init();
-
         this.backgroundManager.addComponent(EBackground.VALLEY_MAP, new Wallpaper(ResourceManager.get().getBackgroundAnimator(EBackground.VALLEY_MAP)));
-    }
-
-    public void restart() throws SlickException {
-        this.leave();
-        try {
-            this.enter();
-        } catch (SlickException e) {
-            e.printStackTrace();
-            this.window.quit();
-        }
     }
 
     @Override
@@ -101,6 +91,7 @@ public class GameController extends WindowController {
         if (this.running) {
             if (GameObjectController.get().isTheEndOfTheGame()) {
                 Console.write("END OF THE GAME");
+                CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit, ETaskType.START_ACTIVITY));
                 //    CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.GAME_CONTROLLER, EnumLocation.GAME_GUI, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundEnd("admin", "admin", "enemy"))));
                 this.running = false;
             }
@@ -123,13 +114,6 @@ public class GameController extends WindowController {
 
     @Override
     public void keyReleased(int key, char c) {
-        if ((!this.running && GameObjectController.get().isTheEndOfTheGame()) && key == Input.KEY_ENTER) {
-            try {
-                this.restart();
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
-        }
         if (this.running) {
             EInput result = this.inputGame.checkInput(key);
             GameObjectController.get().event(EInput.KEY_RELEASED, result);
@@ -188,7 +172,7 @@ public class GameController extends WindowController {
         } else if (task instanceof MessageStatePlayer) {
             GameObject player = GameObjectController.get().getObjectById(task.getId());
             if (player != null) {
-                
+
             }
         }
     }

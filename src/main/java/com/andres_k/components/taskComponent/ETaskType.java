@@ -6,6 +6,7 @@ package com.andres_k.components.taskComponent;
 public enum ETaskType {
     //Interface generic
     ADD,
+    CREATE,
     DELETE,
     GETTER,
     SETTER,
@@ -29,7 +30,6 @@ public enum ETaskType {
 
     // ACTION
     START,
-    CREATE,
     EXIT,
     NEXT,
 

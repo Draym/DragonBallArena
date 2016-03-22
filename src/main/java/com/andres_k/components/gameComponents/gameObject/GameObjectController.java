@@ -12,6 +12,7 @@ import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.components.taskComponent.TaskFactory;
+import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
@@ -251,7 +252,6 @@ public final class GameObjectController {
     }
 
     public GameObject getObjectById(String id) {
-        Console.write("CHECK ID: '" + id + "'");
         for (GameObject player : this.players) {
             if (player.getId().contains(id)) {
                 return player;
@@ -266,7 +266,7 @@ public final class GameObjectController {
     }
 
     public boolean isTheEndOfTheGame() {
-        return (this.getNumberPlayers() == 0);
+        return (!GameConfig.onLine && this.getNumberPlayers() == 1);
     }
 
     public int getNumberPlayers() {
