@@ -31,6 +31,7 @@ public enum ESprites {
     KI_BAR(COMPONENT.getIndex()),
     ENERGY_BAR(COMPONENT.getIndex()),
     STATE_PLAYER(COMPONENT.getIndex()),
+    FIGHT_LOGO(COMPONENT.getIndex()),
 
     // GUI_CONTAINER
     PANEL1(CONTAINER.getIndex()),

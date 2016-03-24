@@ -45,6 +45,7 @@ public enum EGuiElement {
     KI_BAR("KI_BAR", COMPONENT.getValue()),
     ENERGY_BAR("ENERGY_BAR", COMPONENT.getValue()),
     STATE_PLAYER("STATE_PLAYER", COMPONENT.getValue()),
+    FIGHT_LOGO("FIGHT_LOGO", COMPONENT.getValue()),
 
     // GUI_CARDS
     CARDS_ALL("CARDS_ALL", CARDS.getValue()),

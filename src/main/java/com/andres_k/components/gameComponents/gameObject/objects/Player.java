@@ -20,6 +20,8 @@ import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
+import com.andres_k.utils.tools.Console;
+import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.SlickException;
 
 import java.lang.reflect.InvocationTargetException;
@@ -85,7 +87,7 @@ public class Player extends PhysicalObject {
         this.comboController.update();
         this.animatorController.update();
         this.executeLastActionEvent();
-        this.animatorController.doCurrentAction(this);
+        this.animatorController.updateAnimation(this);
         this.movement.update();
         if (this.animatorController.canSwitchCurrent()) {
             if (this.event.allInactive()) {
@@ -328,20 +330,40 @@ public class Player extends PhysicalObject {
     }
 
     public String getPseudo() {
+        String pseudo = StringTools.getWord(this.id, GlobalVariable.id_delimiter, "", 2, -1);
+        Console.write("pseudo: " + pseudo);
+
+        if (!pseudo.equals("")) {
+            return pseudo;
+        } else {
+            return id;
+        }
+/*
         if (this.id.contains(GlobalVariable.id_delimiter)) {
             return this.id.substring(this.id.indexOf(GlobalVariable.id_delimiter) + 1, this.id.length());
         } else {
             return this.id;
         }
+        */
     }
 
     public int getIdIndex() {
+        String index = StringTools.getWord(this.id, GlobalVariable.id_delimiter, GlobalVariable.id_delimiter, 1, 1);
+        Console.write("index: " + index);
+
+        if (!index.equals("")) {
+            return Integer.valueOf(index);
+        } else {
+            return -1;
+        }
+        /*
         if (this.id.contains(GlobalVariable.id_delimiter)) {
             int index = this.id.indexOf(GlobalVariable.id_delimiter);
             return Integer.valueOf(this.id.substring(index - 1, index));
         } else {
             return -1;
         }
+        */
     }
 
     // SETTERS

@@ -69,7 +69,22 @@ public class AnimatorController implements Observer {
         this.nextRequiredAnimation = new Pair<>(animatorController.nextRequiredAnimation);
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg instanceof EAnimation) {
+            this.forceCurrentAnimationType((EAnimation) arg);
+        } else if (arg instanceof Integer) {
+            this.forceCurrentAnimationIndex((Integer) arg);
+        }
+    }
+
     // UPDATE
+    public void draw(Graphics g, float x, float y) throws SlickException {
+        if (this.isPrintable() && !this.isDeleted()) {
+            this.currentAnimator().draw(g, x, y, this.getEyesDirection().isHorizontalFlip(), false);
+        }
+    }
+
     public void update() {
         if (this.animators.size() != 0) {
             try {
@@ -80,12 +95,27 @@ public class AnimatorController implements Observer {
         }
     }
 
-    public void draw(Graphics g, float x, float y) throws SlickException {
-        if (this.isPrintable() && !this.isDeleted()) {
-            this.currentAnimator().draw(g, x, y, this.getEyesDirection().isHorizontalFlip(), false);
+    public void updateAnimation(GameObject object) throws SlickException {
+        this.getCurrentContainer().doAction(object, this.currentFrame());
+        if (updateAnimation()) {
+            if (this.current == EAnimation.FALL) {
+                object.getMovement().resetGravity();
+            }
         }
     }
 
+    public boolean updateAnimation() {
+        try {
+            if (this.currentAnimation().isStopped()) {
+                this.toNextAnimation();
+                return true;
+            }
+        } catch (SlickException ignored) {
+        }
+        return false;
+    }
+
+    // TOOLS
     private void resetNextRequiredAnimation() {
         this.nextRequiredAnimation.setV1(EAnimation.NULL);
         this.nextRequiredAnimation.setV2(0);
@@ -116,25 +146,6 @@ public class AnimatorController implements Observer {
             this.toNextRequiredAnimation();
         } else {
             toNextCurrentAnimation();
-        }
-    }
-
-    public void doCurrentAction(GameObject object) throws SlickException {
-        this.getCurrentContainer().doAction(object, this.currentFrame());
-        if (this.currentAnimation().isStopped()) {
-            this.toNextAnimation();
-            if (this.current == EAnimation.FALL) {
-                object.getMovement().resetGravity();
-            }
-        }
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        if (arg instanceof EAnimation) {
-            this.forceCurrentAnimationType((EAnimation) arg);
-        } else if (arg instanceof Integer) {
-            this.forceCurrentAnimationIndex((Integer) arg);
         }
     }
 
@@ -372,8 +383,12 @@ public class AnimatorController implements Observer {
         return this.needUpdate;
     }
 
-    public boolean isActivated() {
+    public boolean timerIsActivated() {
         return this.activatedTimer.isActivated();
+    }
+
+    public boolean timerIsRunning() {
+        return this.activatedTimer.isRunning();
     }
 
     public EDirection getEyesDirection() {

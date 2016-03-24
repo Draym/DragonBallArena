@@ -12,7 +12,6 @@ public class GlobalVariable {
     public static boolean log = true;
 
     public static String id_delimiter = ".";
-    public static String param_delimiter = ":";
 
     public static AppGameContainer appGameContainer;
 }

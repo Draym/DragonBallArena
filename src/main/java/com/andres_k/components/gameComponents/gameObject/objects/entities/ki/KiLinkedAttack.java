@@ -68,11 +68,11 @@ public abstract class KiLinkedAttack extends KiEntity {
         super.update();
         if (this.back != null) {
             this.back.update();
-            this.back.doCurrentAction(this);
+            this.back.updateAnimation(this);
         }
         if (this.body != null) {
             this.body.update();
-            this.body.doCurrentAction(this);
+            this.body.updateAnimation(this);
         }
         this.bodiesAnim.stream().forEach(item -> item.getV2().update());
         if (this.animatorController.currentAnimationType() == EAnimation.RUN) {

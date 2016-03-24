@@ -35,7 +35,7 @@ public abstract class KiEntity extends PhysicalObject {
     @Override
     public void update() throws SlickException {
         this.animatorController.update();
-        this.animatorController.doCurrentAction(this);
+        this.animatorController.updateAnimation(this);
         this.movement.update();
     }
 

@@ -9,11 +9,13 @@ import com.andres_k.components.gameComponents.gameObject.GameObjectController;
 import com.andres_k.components.graphicComponents.background.EBackground;
 import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.ElementFactory;
 import com.andres_k.components.networkComponents.networkSend.MessageModel;
 import com.andres_k.components.networkComponents.networkSend.messageServer.MessageActionPlayer;
 import com.andres_k.components.networkComponents.networkSend.messageServer.MessageDeletePlayer;
 import com.andres_k.components.networkComponents.networkSend.messageServer.MessageNewPlayer;
 import com.andres_k.components.networkComponents.networkSend.messageServer.MessageStatePlayer;
+import com.andres_k.components.resourceComponent.fonts.EFont;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
@@ -21,9 +23,11 @@ import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.configs.GameConfig;
+import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.tools.Console;
+import com.andres_k.utils.tools.ColorTools;
+import com.andres_k.utils.tools.StringTools;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -51,13 +55,15 @@ public class GameController extends WindowController {
         GameObjectController.get().enter();
 
         this.createPlayerForGame();
-        //CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.GAME_CONTROLLER, EnumLocation.GAME_GUI, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundStart("admin", "admin", true))));
-
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
+        new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                //      CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.GAME_CONTROLLER, EnumLocation.GAME_GUI, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundStart("admin", "admin", false))));
+                CentralTaskManager.get().sendRequest(TaskFactory.createTask(location, ELocation.GAME_GUI_AnimStart, new Pair<>(ETaskType.START_TIMER, 1000)));
+            }
+        }, 2000);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
                 running = true;
             }
         }, 3000);
@@ -90,9 +96,21 @@ public class GameController extends WindowController {
         }
         if (this.running) {
             if (GameObjectController.get().isTheEndOfTheGame()) {
-                Console.write("END OF THE GAME");
                 CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit, ETaskType.START_ACTIVITY));
-                //    CentralTaskManager.get().sendRequest(TaskFactory.createTask(EnumLocation.GAME_CONTROLLER, EnumLocation.GAME_GUI, new Pair<>(EnumOverlayElement.TABLE_ROUND, new MessageRoundEnd("admin", "admin", "enemy"))));
+
+                GameObject winner = GameObjectController.get().getWinner();
+                if (winner != null) {
+                    String pseudo = "unknown";
+                    String type = winner.getType().getValue();
+
+                    String r1 = StringTools.getWord(winner.getId(), "", GlobalVariable.id_delimiter, 0, 2).replace(GlobalVariable.id_delimiter, " ");
+                    if (!r1.equals("")) {
+                        pseudo = r1;
+                    }
+                    CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Winner : " + pseudo + " with " + type, ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 20, 20, 40))));
+                } else {
+                    CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Winner : unknown", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 20, 20, 40))));
+                }
                 this.running = false;
             }
         }

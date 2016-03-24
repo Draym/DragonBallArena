@@ -123,14 +123,14 @@ public final class GameObjectController {
     public void event(EInput event, EInput input) {
         if (event == EInput.KEY_RELEASED) {
             if (input.getIndex() >= 0) {
-                GameObject player = this.getPlayerById("player" + String.valueOf(input.getIndex()));
+                GameObject player = this.getPlayerById("player" + GlobalVariable.id_delimiter + String.valueOf(input.getIndex()));
                 if (player != null) {
                     player.eventReleased(input);
                 }
             }
         } else if (event == EInput.KEY_PRESSED) {
             if (input.getIndex() >= 0) {
-                GameObject player = this.getPlayerById("player" + String.valueOf(input.getIndex()));
+                GameObject player = this.getPlayerById("player" + GlobalVariable.id_delimiter + String.valueOf(input.getIndex()));
                 if (player != null) {
                     player.eventPressed(input);
                 }
@@ -163,10 +163,10 @@ public final class GameObjectController {
     // ADD
 
     public void createPlayers(List<EGameObject> playerNames) throws SlickException {
-        Integer count = 0;
+        Integer count = 1;
 
         for (EGameObject type : playerNames) {
-            this.createPlayer(type, "player" + count + GlobalVariable.id_delimiter + type.getValue(), WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1() - 600, 300, 0, 700, (count == 0));
+            this.createPlayer(type, "player" + GlobalVariable.id_delimiter + count + GlobalVariable.id_delimiter + type.getValue(), WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1() - 600, 300, 0, 700, (count == 1));
             ++count;
         }
     }
@@ -261,6 +261,13 @@ public final class GameObjectController {
             if (entity.getId().contains(id)) {
                 return entity;
             }
+        }
+        return null;
+    }
+
+    public GameObject getWinner() {
+        if (this.isTheEndOfTheGame()) {
+            return this.players.get(0);
         }
         return null;
     }

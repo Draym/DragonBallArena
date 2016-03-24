@@ -94,6 +94,8 @@ public class AnimatorGuiFactory extends AnimatorFactory {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_gui + "/component" + "/energyBar.png"));
         } else if (index == ESprites.STATE_PLAYER) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_gui + "/component" + "/statePlayer.png"));
+        } else if (index == ESprites.FIGHT_LOGO) {
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_gui + "/logo" + "/fightLogo.png"));
         }
         return animatorController;
     }

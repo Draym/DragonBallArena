@@ -55,6 +55,7 @@ public class ImageElement extends Element {
         this.animatorController = animatorController;
         this.flip = flip;
         if (this.animatorController != null) {
+            this.animatorController.updateAnimator(activated, activated);
             if (this.body == null) {
                 this.body = new ColorRect(new Rectangle(0, 0, this.animatorController.currentSizeAnimation().getV1(), this.animatorController.currentSizeAnimation().getV2()));
             } else if (this.body.getSizeX() <= 0 && this.body.getSizeY() <= 0) {
@@ -113,23 +114,25 @@ public class ImageElement extends Element {
     @Override
     public void update() {
         if (this.animatorController != null) {
-            if (this.animatorController.needUpdate() && this.animatorController.isActivated()) {
-                this.animatorController.updateAnimator(true, true);
+            if (this.animatorController.needUpdate() && !this.animatorController.timerIsRunning()) {
+                this.animatorController.updateAnimator(this.animatorController.timerIsActivated(), this.animatorController.timerIsActivated());
+                this.setActivated(this.animatorController.timerIsActivated());
             }
             this.animatorController.update();
+            this.animatorController.updateAnimation();
         }
     }
 
     @Override
     public void draw(Graphics g) {
-        if (this.activated) {
+        if (this.isActivated()) {
             this.draw(g, 0, 0);
         }
     }
 
     @Override
     public void draw(Graphics g, float decalX, float decalY) {
-        if (this.activated) {
+        if (this.isActivated()) {
             this.body.cloneAndDecalFrom(decalX, decalY).draw(g);
 
             if (this.animatorController != null && this.animatorController.isPrintable()) {
@@ -141,7 +144,7 @@ public class ImageElement extends Element {
 
     @Override
     public void draw(Graphics g, ColorShape container) {
-        if (this.activated) {
+        if (this.isActivated()) {
             ColorShape body = container.cloneIt();
             if (body.getColor() == null) {
                 body.setColor(this.body.getColor());
@@ -187,8 +190,9 @@ public class ImageElement extends Element {
     public Object doTask(Object task) {
         if (task instanceof Pair && ((Pair) task).getV1() instanceof ETaskType) {
             if (((Pair) task).getV1() == ETaskType.START_TIMER) {
-                this.animatorController.updateAnimator(false, false);
-                this.animatorController.startTimer((Long) ((Pair) task).getV2());
+                this.setActivated(!this.isActivated());
+                this.animatorController.updateAnimator(this.isActivated(), this.isActivated());
+                this.animatorController.startTimer((Integer) ((Pair) task).getV2());
             }
 
         } else if (task instanceof Tuple && ((Tuple) task).getV1() instanceof ETaskType) {
@@ -226,8 +230,7 @@ public class ImageElement extends Element {
                         this.body.setSizes(0, this.body.getSizeY());
                     }
                     return true;
-                }
-                else if (target.equals("body_Y") && value instanceof Float) {
+                } else if (target.equals("body_Y") && value instanceof Float) {
                     float percent = (float) value;
                     if (percent >= 1) {
                         this.body.setPrintable(true);
@@ -256,14 +259,6 @@ public class ImageElement extends Element {
     @Override
     public String toString() {
         return "(" + super.toString() + " imageType: " + (this.animatorController != null ? this.animatorController.currentAnimationType() : ")");
-    }
-
-    private void start() {
-        this.animatorController.restart();
-    }
-
-    private void stop() {
-        this.animatorController.restart();
     }
 
     public boolean isEmpty() {

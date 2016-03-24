@@ -85,6 +85,7 @@ public class AnimatorGuiData extends DataManager {
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.KI_BAR), EGuiElement.KI_BAR);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.ENERGY_BAR), EGuiElement.ENERGY_BAR);
         this.addAnimator(this.animatorFactory.getAnimator(ESprites.STATE_PLAYER), EGuiElement.STATE_PLAYER);
+        this.addAnimator(this.animatorFactory.getAnimator(ESprites.FIGHT_LOGO), EGuiElement.FIGHT_LOGO);
     }
 
     public void initAvatars() throws NoSuchMethodException, SlickException, JSONException {

@@ -26,6 +26,8 @@ public class ColorTools {
 
         GUI_GREY,
         GUI_GREEN,
+        GUI_YELLOW,
+        GUI_YELLOW_BLAND,
         GUI_RED,
         GUI_ORANGE,
         GUI_BLUE,
@@ -49,8 +51,10 @@ public class ColorTools {
 
         colors.put(Colors.GUI_GREY, new Color(130, 130, 130));
         colors.put(Colors.GUI_GREEN, new Color(200, 255, 100));
+        colors.put(Colors.GUI_YELLOW, new Color(255, 225, 125));
+        colors.put(Colors.GUI_YELLOW_BLAND, new Color(218, 255, 174));
+        colors.put(Colors.GUI_ORANGE, new Color(244, 162, 34));
         colors.put(Colors.GUI_RED, new Color(210, 55, 53));
-        colors.put(Colors.GUI_ORANGE, new Color(255, 225, 125));
         colors.put(Colors.GUI_BLUE, new Color(102, 200, 255));
         colors.put(Colors.GUI_BLUE_LIGHT, new Color(204, 239, 255));
     }
