@@ -17,9 +17,11 @@ public abstract class FlashIt extends Effect {
     protected float constant;
     protected float duration;
     protected boolean upLight;
+    protected long speed;
 
     public FlashIt(String id, EffectType type, long speed, ColorShape shape) {
         super(id, type);
+        this.speed = speed;
         this.duration = (510 / (speed / GameConfig.currentTimeLoop)) * GameConfig.currentTimeLoop;
         this.flash = shape;
         this.light = shape.getColor().getAlpha();

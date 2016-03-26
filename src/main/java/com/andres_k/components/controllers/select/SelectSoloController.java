@@ -1,5 +1,6 @@
 package com.andres_k.components.controllers.select;
 
+import com.andres_k.components.controllers.EMode;
 import com.andres_k.components.controllers.WindowController;
 import com.andres_k.components.graphicComponents.background.EBackground;
 import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
@@ -21,7 +22,7 @@ public class SelectSoloController extends WindowController {
     @Override
     public void enter() throws SlickException {
         GameConfig.typePlayer.clear();
-        GameConfig.onLine = false;
+        GameConfig.mode = EMode.SOLO;
     }
 
     @Override

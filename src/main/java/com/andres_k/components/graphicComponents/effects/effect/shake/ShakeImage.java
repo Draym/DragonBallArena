@@ -1,5 +1,6 @@
 package com.andres_k.components.graphicComponents.effects.effect.shake;
 
+import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 
 /**
@@ -9,4 +10,10 @@ public class ShakeImage extends ShakeIt {
     protected ShakeImage(String id, long duration, int power, int speedInterval) {
         super(id, EffectType.SHAKE_IMAGE, duration, power, speedInterval);
     }
+
+    @Override
+    public Effect copy() {
+        return new ShakeImage(this.getId(), this.duration, this.power, this.interval);
+    }
+
 }

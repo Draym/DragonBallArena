@@ -11,7 +11,6 @@ import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ActivatedTimer;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.tools.Console;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -78,13 +77,20 @@ public class AnimatorController implements Observer {
         }
     }
 
-    // UPDATE
+    // DRAW
+    public void drawSubImage(Graphics g, float drawX, float drawY, int posX, int posY, int width, int height) throws SlickException {
+        if (this.isPrintable() && !this.isDeleted()) {
+            this.currentAnimator().drawSubImage(g, drawX, drawY, posX, posY, width, height, this.getEyesDirection().isHorizontalFlip(), false);
+        }
+    }
+
     public void draw(Graphics g, float x, float y) throws SlickException {
         if (this.isPrintable() && !this.isDeleted()) {
             this.currentAnimator().draw(g, x, y, this.getEyesDirection().isHorizontalFlip(), false);
         }
     }
 
+    // UPDATE
     public void update() {
         if (this.animators.size() != 0) {
             try {
@@ -124,7 +130,6 @@ public class AnimatorController implements Observer {
     private void toNextCurrentAnimation() {
         if (this.getCurrentContainer().getConfig() != null) {
             Pair<EAnimation, Integer> next = this.getCurrentContainer().getConfig().getNext();
-            Console.write("To next Anim: " + next);
             if ((this.currentAnimationType() == EAnimation.EXPLODE && next.getV1() == EAnimation.EXPLODE)
                     || this.currentAnimationType() != EAnimation.EXPLODE) {
                 this.forceCurrentAnimationType(next.getV1());

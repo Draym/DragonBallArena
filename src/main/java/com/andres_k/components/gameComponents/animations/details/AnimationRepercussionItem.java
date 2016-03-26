@@ -2,7 +2,6 @@ package com.andres_k.components.gameComponents.animations.details;
 
 import com.andres_k.components.gameComponents.animations.EAnimation;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
-import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
@@ -59,7 +58,7 @@ public class AnimationRepercussionItem {
     }
 
     public void applyMoveRepercussion(GameObject target) {
-        target.getMovement().setMoveDirection((target.getDirectionOfMyAttacker() == EDirection.RIGHT ? EDirection.LEFT : EDirection.RIGHT));
+        target.getMovement().setMoveDirection(target.getLastAttacker().getAnimatorController().getEyesDirection());
         target.getMovement().setPushX(this.getRecoil().getV1());
         target.getMovement().setPushY(this.getRecoil().getV2());
         target.getMovement().addPushX(this.getAdditionalMove().getV1());

@@ -8,6 +8,7 @@ import com.andres_k.components.gameComponents.gameObject.commands.movement.EDire
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.UserInterface;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.GlobalVariable;
+import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -187,11 +188,13 @@ public abstract class WindowBasedGame extends BasicGameState {
 
     @Override
     public void controllerDownReleased(int controller) {
+        Console.write("controller: " + controller + " down");
         this.controller.eventControllerReceived(EInput.KEY_RELEASED, JoystickController.transformDirection(controller, EDirection.DOWN));
     }
 
     @Override
     public void controllerButtonPressed(int controller, int button) {
+        Console.write("controller: " + controller + " button: " + button);
         this.controller.eventControllerReceived(EInput.KEY_PRESSED, JoystickController.transformButton(controller, button));
     }
 

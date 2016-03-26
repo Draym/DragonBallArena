@@ -13,16 +13,20 @@ import java.util.List;
  * Created by andres_k on 07/02/2016.
  */
 public abstract class ShakeIt extends Effect {
+    protected long duration;
     protected long timer;
     protected int interval;
     protected int current;
+    protected int power;
     protected List<Pair<Integer, Integer>> pattern;
 
     protected ShakeIt(String id, EffectType type, long duration, int power, int interval) {
         super(id, type);
-        this.timer = duration;
+        this.duration = duration;
+        this.timer = this.duration;
         this.current = 0;
         this.interval = interval;
+        this.power = power;
         this.pattern = new ArrayList<>();
         this.pattern.add(new Pair<>(-power, -power));
         this.pattern.add(new Pair<>(power, 0));
@@ -34,6 +38,7 @@ public abstract class ShakeIt extends Effect {
     public void restart() {
         super.restart();
         this.current = 0;
+        this.timer = this.duration;
     }
 
     @Override

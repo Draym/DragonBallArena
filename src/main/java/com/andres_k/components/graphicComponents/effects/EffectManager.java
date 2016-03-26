@@ -26,9 +26,13 @@ public class EffectManager {
 
     public EffectManager(EffectManager effectManager) {
         this.stockedEffects = new ArrayList<>();
-        this.stockedEffects.addAll(effectManager.stockedEffects);
+        for (Pair<Integer, Pair<Integer, Effect>> effect : effectManager.stockedEffects) {
+            this.stockedEffects.add(new Pair<>(effect.getV1(), new Pair<>(effect.getV2().getV1(), effect.getV2().getV2().copy())));
+        }
         this.availableEffects = new ArrayList<>();
-        this.availableEffects.addAll(effectManager.availableEffects);
+        for (Effect effect : effectManager.availableEffects) {
+            this.availableEffects.add(effect.copy());
+        }
         this.conf = new ImageConfiguration(effectManager.conf);
     }
 

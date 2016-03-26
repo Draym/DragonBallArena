@@ -2,6 +2,7 @@ package com.andres_k.components.graphicComponents.userInterface.elementGUI.eleme
 
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.animations.EAnimation;
+import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EStatus;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
@@ -162,16 +163,21 @@ public class ImageElement extends Element {
 
     private void drawCurrentImage(Graphics g, float x, float y) {
         try {
+            int posX = 0;
             int sizeX = (this.body.getSizeX() > this.animatorController.currentAnimation().getCurrentFrame().getWidth() ? this.animatorController.currentAnimation().getCurrentFrame().getWidth() : (int) this.body.getSizeX());
 
             int posY = (this.body.getSizeY() > this.animatorController.currentAnimation().getCurrentFrame().getHeight() ? 0 : this.animatorController.currentAnimation().getCurrentFrame().getHeight() - (int) this.body.getSizeY());
             int sizeY = this.animatorController.currentAnimation().getCurrentFrame().getHeight() - posY;
 
+            this.animatorController.setEyesDirection((this.flip? EDirection.LEFT : EDirection.RIGHT));
+            this.animatorController.drawSubImage(g, (this.flip? x + this.sizeXMAX - sizeX : x), y, posX, posY, sizeX, sizeY);
+/*
             if (this.flip) {
                 g.drawImage(this.animatorController.currentAnimation().getCurrentFrame().getSubImage(0, posY, sizeX, sizeY).getFlippedCopy(this.flip, false), x + this.sizeXMAX - sizeX, y);
             } else {
                 g.drawImage(this.animatorController.currentAnimation().getCurrentFrame().getSubImage(0, posY, sizeX, sizeY), x, y);
             }
+  */
         } catch (Exception e) {
             e.printStackTrace();
         }

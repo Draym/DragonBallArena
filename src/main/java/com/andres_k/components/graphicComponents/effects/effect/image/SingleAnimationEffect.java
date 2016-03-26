@@ -39,6 +39,11 @@ public class SingleAnimationEffect extends Effect {
     }
 
     @Override
+    public Effect copy() {
+        return new SingleAnimationEffect(this.getId(), this.animation.copy(), this.decalX, this.decalY, this.center);
+    }
+
+    @Override
     public boolean update() {
         this.animation.update(GameConfig.currentTimeLoop);
         if (this.animation.isStopped()) {

@@ -1,5 +1,6 @@
 package com.andres_k.components.networkComponents.networkGame;
 
+import com.andres_k.components.controllers.EMode;
 import com.andres_k.components.networkComponents.networkSend.MessageModel;
 import com.andres_k.components.networkComponents.networkSend.messageServer.MessageGameLaunch;
 import com.andres_k.components.taskComponent.CentralTaskManager;
@@ -64,7 +65,7 @@ public final class NetworkController {
     }
 
     public void sendMessage(MessageModel request) {
-        if (GameConfig.onLine) {
+        if (GameConfig.mode == EMode.ONLINE) {
             if (this.client.isConnected()) {
                 this.client.sendTCP(NetworkProfile.get().formatMessage(request));
             }
@@ -72,22 +73,4 @@ public final class NetworkController {
         //faire le mode offline avec:
         //CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.SERVER_MESSAGE, ELocation.GAME_CONTROLLER, request));
     }
-
-    /*
-    @Override
-    public void update(Observable o, Object arg) {
-        if (arg instanceof TaskComponent) {
-            TaskComponent task = (TaskComponent) arg;
-
-            if (task.getTarget().equals(ELocation.SERVER_MESSAGE)) {
-                if (task.getTask() instanceof MessageModel) {
-                    this.call((MessageModel) task.getTask());
-                }
-            } else if (task.getTarget().equals(ELocation.SERVER_CONFIG)) {
-                if (task.getTask() instanceof NetworkServerConfig) {
-                    this.connect((NetworkServerConfig) task.getTask());
-                }
-            }
-        }
-    }*/
 }

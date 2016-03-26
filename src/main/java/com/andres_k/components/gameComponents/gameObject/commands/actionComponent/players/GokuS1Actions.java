@@ -15,8 +15,10 @@ public class GokuS1Actions extends GokuActions {
 
     public static void kiChargeAction(GameObject object) {
         try {
+            object.getMovement().setPushX(0f);
+            object.getMovement().setPushY(0f);
             if (object.getAnimatorController().currentAnimation().getFrame() == 0) {
-                object.doTask(new Tuple<>(ETaskType.ADD, "ki", 100f));
+                object.doTask(new Tuple<>(ETaskType.ADD, "ki", 200f));
             }
         } catch (SlickException e) {
             e.printStackTrace();

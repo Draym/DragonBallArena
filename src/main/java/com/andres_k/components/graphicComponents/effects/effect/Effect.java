@@ -28,6 +28,8 @@ public abstract class Effect {
         this.delta = effect.delta;
     }
 
+    public abstract Effect copy();
+
     public boolean update() {
         this.delta += GameConfig.currentTimeLoop;
         return true;

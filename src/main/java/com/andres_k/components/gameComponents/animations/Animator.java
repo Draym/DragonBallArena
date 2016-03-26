@@ -73,6 +73,17 @@ public class Animator {
         }
     }
 
+    public void drawSubImage(Graphics g, float drawX, float drawY, int posX, int posY, int width, int height, boolean flipX, boolean flipY) {
+        if (this.animation != null) {
+            Image image = this.getAnimation().getCurrentFrame().getSubImage(posX, posY, width, height).getFlippedCopy(flipX, flipY);
+            if (this.effectManager.hasActivity()) {
+                this.effectManager.draw(g, image, drawX, drawY, flipX, flipY);
+            } else {
+                g.drawImage(image, drawX, drawY);
+            }
+        }
+    }
+
     public void update(long delta) {
         this.effectManager.update();
         if (this.animation != null) {

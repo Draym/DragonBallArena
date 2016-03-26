@@ -123,7 +123,6 @@ public class BasicActions {
 
     public static void touchedProjected(GameObject object) {
         object.getMovement().setUseGravity(false);
-        object.getMovement().setPushY(0f);
         AnimationRepercussionItem repercussionItem = object.getLastAttacker().getAnimatorController().getCurrentContainer().getRepercussion();
         if (repercussionItem != null) {
             repercussionItem.applyMoveRepercussion(object);

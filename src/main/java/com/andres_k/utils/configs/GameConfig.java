@@ -1,5 +1,6 @@
 package com.andres_k.utils.configs;
 
+import com.andres_k.components.controllers.EMode;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  */
 public class GameConfig {
 
-    public static boolean onLine = false;
+    public static EMode mode = EMode.NONE;
 
     public static final int maxFps = 60;
     public static long timeLoop = 30;

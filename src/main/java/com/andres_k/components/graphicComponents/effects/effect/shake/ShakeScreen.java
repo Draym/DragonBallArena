@@ -1,5 +1,6 @@
 package com.andres_k.components.graphicComponents.effects.effect.shake;
 
+import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 import com.andres_k.utils.configs.GameConfig;
 import org.lwjgl.opengl.Display;
@@ -10,6 +11,11 @@ import org.lwjgl.opengl.Display;
 public class ShakeScreen extends ShakeIt {
     public ShakeScreen(String id, long duration, int power, int speedInterval) {
         super(id, EffectType.SHAKE_SCREEN, duration, power, speedInterval);
+    }
+
+    @Override
+    public Effect copy() {
+        return new ShakeScreen(this.getId(), this.duration, this.power, this.interval);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.andres_k.components.graphicComponents.effects.effect.zoom;
 import com.andres_k.components.graphicComponents.effects.ImageConfiguration;
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
+import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.MathTools;
 import org.newdawn.slick.Graphics;
 
@@ -10,8 +11,9 @@ import org.newdawn.slick.Graphics;
  * Created by andres_k on 07/02/2016.
  */
 public class ZoomIt extends Effect {
-    protected float start;
-    protected float end;
+    protected final float start;
+    protected final float end;
+    protected final long duration;
     protected float max;
     protected float current;
     protected float interval;
@@ -23,7 +25,8 @@ public class ZoomIt extends Effect {
         this.end = 1f;
         this.max = max;
         this.current = start;
-        this.interval = (MathTools.abs(this.max - this.end) + MathTools.abs(this.max - this.start)) / duration;
+        this.duration = duration;
+        this.interval = (MathTools.abs(this.max - this.end) + MathTools.abs(this.max - this.start)) / this.duration;
         if (start > max) {
             this.interval *= (-1);
         }
@@ -33,8 +36,14 @@ public class ZoomIt extends Effect {
     @Override
     public void restart() {
         super.restart();
+        Console.write("RESTART");
         this.toEnd = false;
         this.current = this.start;
+    }
+
+    @Override
+    public Effect copy() {
+        return new ZoomIt(this.getId(), this.duration, this.start, this.max);
     }
 
     @Override

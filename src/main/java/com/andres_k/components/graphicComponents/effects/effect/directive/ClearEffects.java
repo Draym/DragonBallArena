@@ -14,6 +14,11 @@ public class ClearEffects extends Effect {
     }
 
     @Override
+    public Effect copy() {
+        return new ClearEffects();
+    }
+
+    @Override
     public void draw(Graphics g) {
 
     }

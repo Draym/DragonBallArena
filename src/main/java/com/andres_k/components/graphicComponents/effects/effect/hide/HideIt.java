@@ -29,6 +29,11 @@ public class HideIt extends Effect {
     }
 
     @Override
+    public Effect copy() {
+        return new HideIt(this.getId(), this.timer);
+    }
+
+    @Override
     public boolean update() {
         super.update();
         return false;

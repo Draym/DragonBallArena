@@ -18,6 +18,11 @@ public class SoundEffect extends Effect {
     }
 
     @Override
+    public Effect copy() {
+        return new SoundEffect(this.getId(), this.sound);
+    }
+
+    @Override
     public boolean update() {
         SoundController.get().play(this.sound);
         this.stop();

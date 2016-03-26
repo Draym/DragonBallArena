@@ -1,5 +1,6 @@
 package com.andres_k.components.gameComponents.gameObject;
 
+import com.andres_k.components.controllers.EMode;
 import com.andres_k.components.controllers.ScoreData;
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.gameComponents.collisions.CollisionResult;
@@ -273,7 +274,7 @@ public final class GameObjectController {
     }
 
     public boolean isTheEndOfTheGame() {
-        return (!GameConfig.onLine && this.getNumberPlayers() == 1);
+        return (GameConfig.mode == EMode.VERSUS && this.getNumberPlayers() == 1);
     }
 
     public int getNumberPlayers() {
