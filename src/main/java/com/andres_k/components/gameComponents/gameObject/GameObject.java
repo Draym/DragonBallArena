@@ -291,7 +291,7 @@ public abstract class GameObject {
 
     public void setLastAttacker(GameObject attacker) {
         this.lastAttacker = attacker;
-        this.attackerOwner = GameObjectController.get().getObjectById(StringTools.getWord(attacker.getId(), "", ".", 0, 1));
+        this.attackerOwner = GameObjectController.get().getObjectById(StringTools.getWord(attacker.getId(), "", ".", 0, 2));
         if (this.attackerOwner != null) {
             this.initResetAttackerTimer(true);
         }
