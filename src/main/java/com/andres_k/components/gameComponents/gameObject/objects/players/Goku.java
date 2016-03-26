@@ -105,8 +105,8 @@ public class Goku extends Player {
 
     public void createMegaKamehameha() {
         try {
-            if (this.currentKi >= 500) {
-                this.incrementCurrentKi(-500);
+            if (this.currentKi >= 700) {
+                this.incrementCurrentKi(-700);
                 KiEntity entity = new MegaKameha(ResourceManager.get().getGameAnimator(EGameObject.MEGA_KAMEHA), ResourceManager.get().getGameAnimator(EGameObject.MEGA_KAMEHA_Body), ResourceManager.get().getGameAnimator(EGameObject.MEGA_KAMEHA_Back), this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 130 : this.getPosX() - 130), this.getPosY(), (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() : this.getPosX() - 370), this.getAnimatorController().getEyesDirection(), 1000 * this.damage, 2400);
                 CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity)));
             }
@@ -157,7 +157,11 @@ public class Goku extends Player {
     }
 
     public boolean checkToLaunchGenkidama() {
-        return (this.currentKi > 500 && this.isOnEarth());
+        if (this.transformed) {
+            return (this.currentKi > 700 && this.isOnEarth());
+        } else {
+            return (this.currentKi > 500 && this.isOnEarth());
+        }
     }
 
     public boolean checkToLaunchKamehameha() {
