@@ -105,6 +105,9 @@ public class Player extends PhysicalObject {
     public void resetActions() {
         this.comboController.reset();
         this.event.reset();
+        this.transformationTimer.cancel();
+        this.transformationTimer.purge();
+        this.transformationTimer = new Timer();
     }
 
     // ACTIONS

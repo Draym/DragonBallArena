@@ -122,7 +122,7 @@ public class Vegeta extends Player {
         try {
             if (this.currentKi >= 300) {
                 float power = (this.currentKi >= 600 ? 600 : this.currentKi);
-                KiEntity entity = new BigBang(ResourceManager.get().getGameAnimator(EGameObject.BIG_BANG), this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 70 : this.getPosX() - 80), this.getPosY(), this.getAnimatorController().getEyesDirection(), power /** this.damage*/ + 200, 800, 0);
+                KiEntity entity = new BigBang(ResourceManager.get().getGameAnimator(EGameObject.BIG_BANG), this.id, (this.animatorController.getEyesDirection() == EDirection.RIGHT ? this.getPosX() + 70 : this.getPosX() - 80), this.getPosY(), this.getAnimatorController().getEyesDirection(), power /** this.damage*/, 800, 0);
                 this.incrementCurrentKi(-power);
                 CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.UNKNOWN, ELocation.GAME_CONTROLLER, new Pair<>(ETaskType.CREATE, entity)));
             }
