@@ -6,15 +6,13 @@ import com.andres_k.components.eventComponent.input.InputGame;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.gameComponents.gameObject.GameObjectController;
+import com.andres_k.components.gameComponents.gameObject.objects.Player;
 import com.andres_k.components.graphicComponents.background.EBackground;
 import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
-import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.ElementFactory;
+import com.andres_k.components.networkComponents.networkGame.NetworkProfile;
 import com.andres_k.components.networkComponents.networkSend.MessageModel;
-import com.andres_k.components.networkComponents.networkSend.messageServer.MessageActionPlayer;
-import com.andres_k.components.networkComponents.networkSend.messageServer.MessageDeletePlayer;
-import com.andres_k.components.networkComponents.networkSend.messageServer.MessageNewPlayer;
-import com.andres_k.components.networkComponents.networkSend.messageServer.MessageStatePlayer;
+import com.andres_k.components.networkComponents.networkSend.messageServer.*;
 import com.andres_k.components.resourceComponent.fonts.EFont;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.CentralTaskManager;
@@ -24,7 +22,6 @@ import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.GlobalVariable;
-import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
 import com.andres_k.utils.tools.StringTools;
@@ -95,22 +92,7 @@ public class GameController extends WindowController {
         }
         if (this.running) {
             if (GameObjectController.get().isTheEndOfTheGame()) {
-                CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit, ETaskType.START_ACTIVITY));
-
-                GameObject winner = GameObjectController.get().getWinner();
-                if (winner != null) {
-                    String pseudo = "unknown";
-                    String type = winner.getType().getValue();
-
-                    String r1 = StringTools.getWord(winner.getId(), "", GlobalVariable.id_delimiter, 0, 2).replace(GlobalVariable.id_delimiter, " ");
-                    if (!r1.equals("")) {
-                        pseudo = r1;
-                    }
-                    CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Winner : " + pseudo + " with " + type, ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 20, 20, 40))));
-                } else {
-                    CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Winner : unknown", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 20, 20, 40))));
-                }
-                this.running = false;
+                this.endOfTheGame();
             }
         }
     }
@@ -175,9 +157,32 @@ public class GameController extends WindowController {
         super.update(o, arg);
     }
 
+    private void endOfTheGame() {
+        CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit, ETaskType.START_ACTIVITY));
+
+        GameObject winner = GameObjectController.get().getWinner();
+        if (winner != null) {
+            String pseudo = "unknown";
+            String type = winner.getType().getValue();
+
+            String r1 = StringTools.getWord(winner.getId(), "", GlobalVariable.id_delimiter, 0, 2).replace(GlobalVariable.id_delimiter, " ");
+            if (!r1.equals("")) {
+                pseudo = r1;
+            }
+            CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Winner : " + pseudo + " with " + type, ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 20, 20, 40))));
+        } else {
+            CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Winner : unknown", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 20, 20, 40))));
+        }
+        this.running = false;
+    }
+
     public void resolveNetworkTask(MessageModel task) throws SlickException {
         if (task instanceof MessageNewPlayer) {
-            GameObjectController.get().createEntity(EGameObject.getEnumByValue(((MessageNewPlayer) task).getPlayerType()), task.getId(), (WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1() - 600), 300, 0, 700);
+            if (NetworkProfile.get().itsMyNetworkProfile(task.getId())) {
+                GameObjectController.get().createPlayer(EGameObject.getEnumByValue(((MessageNewPlayer) task).getPlayerType()), ((MessageNewPlayer) task).getGameId(), 0, (int) ((MessageNewPlayer) task).getX(), 0, (int) ((MessageNewPlayer) task).getY(), true);
+            } else {
+                GameObjectController.get().createEntity(EGameObject.getEnumByValue(((MessageNewPlayer) task).getPlayerType()), task.getId(), 0, (int) ((MessageNewPlayer) task).getX(), 0, (int) ((MessageNewPlayer) task).getY());
+            }
         } else if (task instanceof MessageDeletePlayer) {
             GameObjectController.get().deleteEntity(task.getId());
         } else if (task instanceof MessageActionPlayer) {
@@ -187,9 +192,19 @@ public class GameController extends WindowController {
                 player.getAnimatorController().forceCurrentAnimationIndex(((MessageActionPlayer) task).getIndex());
             }
         } else if (task instanceof MessageStatePlayer) {
-            GameObject player = GameObjectController.get().getObjectById(task.getId());
-            if (player != null) {
-
+            GameObject object = GameObjectController.get().getObjectById(task.getId());
+            if (object != null && object instanceof Player) {
+                Player player = (Player) object;
+                MessageStatePlayer state = (MessageStatePlayer) task;
+                player.setCurrentLife(state.getLife());
+                player.setCurrentEnergy(state.getEnergy());
+                player.setCurrentKi(state.getKi());
+                player.getMovement().setPositions(state.getX(), state.getY());
+            }
+        } else if (task instanceof MessageMoveDirection) {
+            GameObject object = GameObjectController.get().getObjectById(task.getId());
+            if (object != null) {
+                object.doTask(new Pair<>(ETaskType.LAUNCH, ((MessageMoveDirection) task).getDirection()));
             }
         }
     }

@@ -17,6 +17,7 @@ import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.stockage.Tuple;
 import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.RandomTools;
 import com.andres_k.utils.tools.StringTools;
@@ -164,11 +165,20 @@ public final class GameObjectController {
     // ADD
 
     public void createPlayers(List<EGameObject> playerNames) throws SlickException {
-        Integer count = 1;
+        Integer count;
+        int sizeX;
+        int startX;
 
-        for (EGameObject type : playerNames) {
-            this.createPlayer(type, "player" + GlobalVariable.id_delimiter + count + GlobalVariable.id_delimiter + type.getValue(), WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1() - 600, 300, 0, 700, (count == 1));
-            ++count;
+        if (!playerNames.isEmpty()) {
+            count = 1;
+            sizeX = WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1() / playerNames.size();
+            startX = 0;
+
+            for (EGameObject type : playerNames) {
+                this.createPlayer(type, "player" + GlobalVariable.id_delimiter + count + GlobalVariable.id_delimiter + type.getValue(), sizeX - 100, startX + 50, 0, 740, (count == 1));
+                startX += sizeX;
+                ++count;
+            }
         }
     }
 
@@ -179,13 +189,14 @@ public final class GameObjectController {
             int randomX = RandomTools.getInt(boundX) + startX;
             int randomY = RandomTools.getInt(boundY) + startY;
             player = GameObjectFactory.create(type, ResourceManager.get().getGameAnimator(type), id, randomX, randomY);
-            if (ally) {
-                CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, ELocation.GAME_GUI_State_AlliedPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(player.id, 475, 85, EGuiElement.getEnum(player.getType().getValue(), EGuiElement.ICON.getValue()), false))));
-            } else {
-                CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, ELocation.GAME_GUI_State_EnemyPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(player.id, 475, 85, EGuiElement.getEnum(player.getType().getValue(), EGuiElement.ICON.getValue()), true))));
-            }
+            player.doTask(new Tuple<>(ETaskType.SETTER, "teamOne", ally));
         }
         Console.write("Create Player: " + player);
+        if (ally) {
+            CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, ELocation.GAME_GUI_State_AlliedPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(player.id, 475, 85, EGuiElement.getEnum(player.getType().getValue(), EGuiElement.ICON.getValue()), false))));
+        } else {
+            CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, ELocation.GAME_GUI_State_EnemyPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(player.id, 475, 85, EGuiElement.getEnum(player.getType().getValue(), EGuiElement.ICON.getValue()), true))));
+        }
         this.players.add(player);
     }
 
@@ -196,9 +207,12 @@ public final class GameObjectController {
             int randomX = RandomTools.getInt(boundX) + startX;
             int randomY = RandomTools.getInt(boundY) + startY;
             object = GameObjectFactory.create(type, ResourceManager.get().getGameAnimator(type), id, randomX, randomY);
-            CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, ELocation.GAME_GUI_State_EnemyPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(object.id, 475, 85, EGuiElement.getEnum(object.getType().getValue(), EGuiElement.ICON.getValue()), true))));
+            object.doTask(new Tuple<>(ETaskType.SETTER, "teamOne", false));
         }
         Console.write("Create Entity: " + object);
+        if (object instanceof Player) {
+            CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, ELocation.GAME_GUI_State_EnemyPlayers, new Pair<>(ETaskType.ADD, ElementFactory.createStateBarPlayer(object.id, 475, 85, EGuiElement.getEnum(object.getType().getValue(), EGuiElement.ICON.getValue()), true))));
+        }
         this.entities.add(object);
     }
 

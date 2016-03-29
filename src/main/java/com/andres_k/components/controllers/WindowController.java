@@ -92,7 +92,7 @@ public abstract class WindowController implements Observer {
                 } else if (received.getTask() instanceof ETaskType) {
                     if (received.getTask() == ETaskType.EXIT) {
                         this.window.quit();
-                    } else if (received.getTask() == ETaskType.START) {
+                    } else if (received.getTask() == ETaskType.LAUNCH) {
                         this.beforeEnter();
                         this.stateWindow.enterState(this.idWindow);
                     }

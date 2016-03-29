@@ -1,5 +1,6 @@
 package com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.game;
 
+import com.andres_k.components.controllers.EMode;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.comboComponent.combo.ComboAvailableList;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
@@ -109,7 +110,7 @@ public class GameGUI extends UserInterface {
         //end game
         ComplexElement panelQuit = new ComplexElement(new ColorRect(new Rectangle(WindowConfig.get().centerPosX(EnumWindow.GAME, 582), WindowConfig.get().centerPosY(EnumWindow.GAME, 488), 582, 488)), true);
         panelQuit.addItem(new ImageElement((ResourceManager.get().getGuiAnimator(EGuiElement.PANEL2)), true));
-        panelQuit.addItem(ElementFactory.createButtonTitleText("Replay !", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 25, EGuiElement.BUTTON_PLAY_VERSUS, 160, 320, ElementFactory.createBasicButtonTasks(ELocation.GAME_GUI, ELocation.GAME_CONTROLLER, ETaskType.START), ElementFactory.createImageFocusTasks()));
+        panelQuit.addItem(ElementFactory.createButtonTitleText("Replay !", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 25, EGuiElement.BUTTON_PLAY_VERSUS, 160, 320, ElementFactory.createBasicButtonTasks(ELocation.GAME_GUI, ELocation.GAME_CONTROLLER, ETaskType.LAUNCH), ElementFactory.createImageFocusTasks()));
         panelQuit.addItem(ElementFactory.createButtonTitleText("Home", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 25, EGuiElement.BUTTON_EXIT, 160, 390, ElementFactory.createBasicButtonTasks(ELocation.GAME_GUI, ELocation.GAME_CONTROLLER, EnumWindow.HOME), ElementFactory.createImageFocusTasks()));
         ListElement panelQuitDetails = new ListElement(ELocation.GAME_GUI_PanelQuit_Details.getId(), new ColorRect(new Rectangle(35, 90, 510, 245)), 10, 10, true);
         this.taskManager.register(panelQuitDetails.getId(), panelQuitDetails);
@@ -129,24 +130,32 @@ public class GameGUI extends UserInterface {
 
     @Override
     public void initOnEnter() throws SlickException {
-        ListElement ally = (ListElement) this.getElementById(ELocation.GAME_GUI_State_AlliedPlayers.getId());
-        ally.clearItems();
-        ListElement enemy = (ListElement) this.getElementById(ELocation.GAME_GUI_State_EnemyPlayers.getId());
-        enemy.clearItems();
-        PaginatedList combos = (PaginatedList) this.getElementById(ELocation.GUI_ELEMENT_CombosList.getId());
-        combos.clear();
-        for (EGameObject player : GameConfig.typePlayer) {
-            combos.createList(ElementFactory.createText(player.getValue(), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 0, 0), 0, 20);
-            List<Pair<String, String>> combosList = ComboAvailableList.get().getPlayerCombos(player);
-            for (Pair<String, String> item : combosList) {
-                TextElement title = new TextElement(new StringTimer(StringTools.formatIt(item.getV1(), 20, ":", 10, "")), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.BASIC, 16, true);
-                TextElement content = ElementFactory.createText(item.getV2(), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 200, 0);
-                combos.addItem(player.getValue(), new ElementWithTitle(new ColorRect(new org.newdawn.slick.geom.Rectangle(0, 0, 0, 0)), title, content, true));
+        if (GameConfig.mode == EMode.ONLINE) {
+            PaginatedList combos = (PaginatedList) this.getElementById(ELocation.GUI_ELEMENT_CombosList.getId());
+            combos.clear();
+            if (GameConfig.mode != EMode.ONLINE) {
+                for (EGameObject player : GameConfig.typePlayer) {
+                    combos.createList(ElementFactory.createText(player.getValue(), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 0, 0), 0, 20);
+                    List<Pair<String, String>> combosList = ComboAvailableList.get().getPlayerCombos(player);
+                    for (Pair<String, String> item : combosList) {
+                        TextElement title = new TextElement(new StringTimer(StringTools.formatIt(item.getV1(), 20, ":", 10, "")), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.BASIC, 16, true);
+                        TextElement content = ElementFactory.createText(item.getV2(), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 200, 0);
+                        combos.addItem(player.getValue(), new ElementWithTitle(new ColorRect(new org.newdawn.slick.geom.Rectangle(0, 0, 0, 0)), title, content, true));
+                    }
+                }
             }
         }
         ListElement panelQuitDetails = (ListElement) this.getElementById(ELocation.GAME_GUI_PanelQuit_Details.getId());
         panelQuitDetails.clearItems();
         panelQuitDetails.addItem(ElementFactory.createText("End of the Game !", ColorTools.get(ColorTools.Colors.GUI_YELLOW_BLAND), EFont.MODERN, 30, 90, 0));
+    }
+
+    @Override
+    public void cleanOnLeave() {
+        ListElement ally = (ListElement) this.getElementById(ELocation.GAME_GUI_State_AlliedPlayers.getId());
+        ally.clearItems();
+        ListElement enemy = (ListElement) this.getElementById(ELocation.GAME_GUI_State_EnemyPlayers.getId());
+        enemy.clearItems();
     }
 
     @Override

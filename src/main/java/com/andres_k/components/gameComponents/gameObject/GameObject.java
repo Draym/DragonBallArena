@@ -303,6 +303,6 @@ public abstract class GameObject {
 
     @Override
     public String toString() {
-        return "(" + this.id + ") (" + this.type + ") [" + this.currentLife + "pv, " + this.damage + "dg]";
+        return "(" + this.id + ") (" + this.type + ") [" + this.currentLife + "pv, " + this.damage + "dg] [" + this.getPosX() + ", " + this.getPosY() + "]";
     }
 }

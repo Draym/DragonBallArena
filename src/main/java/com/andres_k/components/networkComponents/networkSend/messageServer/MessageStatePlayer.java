@@ -10,11 +10,26 @@ public class MessageStatePlayer extends MessageModel {
     private float life;
     private float ki;
     private float energy;
+    private float x;
+    private float y;
+
+    public MessageStatePlayer() {
+    }
 
     public MessageStatePlayer(Player player) {
         this.life = player.getCurrentLife();
         this.ki = player.getCurrentKi();
         this.energy = player.getCurrentEnergy();
+        this.x = player.getPosX();
+        this.y = player.getPosY();
+    }
+
+    public float getX() {
+        return this.x;
+    }
+
+    public float getY() {
+        return this.y;
     }
 
     public float getLife() {

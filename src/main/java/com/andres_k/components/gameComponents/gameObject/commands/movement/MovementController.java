@@ -123,7 +123,7 @@ public class MovementController {
             CollisionItem item = collisionResult.getLowCollisionY(new EGameObject[]{EGameObject.BORDER});
 
             if (item != null) {
-                if (item.getCollisionDirection() == EDirection.TOP) {
+                if (item.getCollisionDirection() == EDirection.UP) {
                     if (item.getCollisionDistance() > 0)
                         this.positions.setV2(this.getY() + item.getCollisionDistance());
                     this.onEarth = true;

@@ -43,7 +43,7 @@ public class SelectMultiGUI extends UserInterface {
         //packSelect
         ComplexRelayElement packSelect = ElementFactory.createPackSelectPlayer(ELocation.SELECT_MULTI_GUI_SelectPackPlayer);
         packSelect.addTarget(ELocation.SELECT_MULTI_GUI_ChoicePlayer1);
-        packSelect.addTask(new Pair<>(EStatus.ON_FINISH, new TaskComponent(this.getLocation(), ELocation.BATTLE_CONNECTION_CONTROLLER, ETaskType.START)));
+        packSelect.addTask(new Pair<>(EStatus.ON_FINISH, new TaskComponent(this.getLocation(), ELocation.BATTLE_CONNECTION_CONTROLLER, ETaskType.LAUNCH)));
         packSelect.setLocation(WindowConfig.get().centerPosX(EnumWindow.SELECT_MULTI, (int) packSelect.getAbsoluteWidth()), WindowConfig.get().centerPosY(EnumWindow.SELECT_MULTI, (int) packSelect.getAbsoluteHeight()) + 200);
         this.taskManager.register(packSelect.getId(), packSelect);
         this.elements.add(packSelect);
@@ -95,6 +95,11 @@ public class SelectMultiGUI extends UserInterface {
 
     @Override
     public void initOnEnter() {
+    }
+
+    @Override
+    public void cleanOnLeave() {
+
     }
 
     @Override

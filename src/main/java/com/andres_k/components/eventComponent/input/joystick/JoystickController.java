@@ -9,7 +9,7 @@ import com.andres_k.components.gameComponents.gameObject.commands.movement.EDire
 public class JoystickController {
     private enum JoystickDirection {
         NOTHING(EInput.NOTHING, EDirection.NONE),
-        MOVE_UP(EInput.MOVE_UP, EDirection.TOP),
+        MOVE_UP(EInput.MOVE_UP, EDirection.UP),
         MOVE_DOWN(EInput.MOVE_DOWN, EDirection.DOWN),
         MOVE_LEFT(EInput.MOVE_LEFT, EDirection.LEFT),
         MOVE_RIGHT(EInput.MOVE_RIGHT, EDirection.RIGHT);

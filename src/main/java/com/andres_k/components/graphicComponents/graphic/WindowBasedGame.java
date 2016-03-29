@@ -173,12 +173,12 @@ public abstract class WindowBasedGame extends BasicGameState {
 
     @Override
     public void controllerUpPressed(int controller) {
-        this.controller.eventControllerReceived(EInput.KEY_PRESSED, JoystickController.transformDirection(controller, EDirection.TOP));
+        this.controller.eventControllerReceived(EInput.KEY_PRESSED, JoystickController.transformDirection(controller, EDirection.UP));
     }
 
     @Override
     public void controllerUpReleased(int controller) {
-        this.controller.eventControllerReceived(EInput.KEY_RELEASED, JoystickController.transformDirection(controller, EDirection.TOP));
+        this.controller.eventControllerReceived(EInput.KEY_RELEASED, JoystickController.transformDirection(controller, EDirection.UP));
     }
 
     @Override

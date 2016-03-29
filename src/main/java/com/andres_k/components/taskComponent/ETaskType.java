@@ -29,7 +29,7 @@ public enum ETaskType {
     OFF_CLICK,
 
     // ACTION
-    START,
+    LAUNCH,
     EXIT,
     NEXT,
 

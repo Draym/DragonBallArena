@@ -52,6 +52,11 @@ public class LoadGUI extends UserInterface {
     }
 
     @Override
+    public void cleanOnLeave() {
+
+    }
+
+    @Override
     public void update(Observable o, Object arg) {
     }
 }

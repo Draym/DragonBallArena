@@ -5,7 +5,7 @@ package com.andres_k.components.gameComponents.gameObject.commands.movement;
  */
 public enum EDirection {
     NONE(0, 0, false),
-    TOP(0, -1, false),
+    UP(0, -1, false),
     DOWN(0, 1, false),
     LEFT(-1, 0, true),
     RIGHT(1, 0, false);

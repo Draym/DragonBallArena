@@ -12,6 +12,7 @@ import com.andres_k.components.gameComponents.gameObject.commands.comboComponent
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
 import com.andres_k.components.networkComponents.networkGame.NetworkController;
+import com.andres_k.components.networkComponents.networkSend.messageServer.MessageMoveDirection;
 import com.andres_k.components.networkComponents.networkSend.messageServer.MessageStatePlayer;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
@@ -45,6 +46,7 @@ public class Player extends PhysicalObject {
     protected float currentEnergy;
     protected boolean transformed;
     protected Timer transformationTimer;
+    protected boolean teamOne;
 
     public Player(AnimatorController animatorController, EGameObject type, String id, float x, float y, float life, float damage, float moveSpeed, float gravitySpeed, float weight) {
         super(animatorController, type, id, x, y, life, damage, moveSpeed, gravitySpeed, weight);
@@ -74,6 +76,8 @@ public class Player extends PhysicalObject {
         this.currentEnergy = this.maxEnergy;
         this.transformed = false;
         this.transformationTimer = new Timer();
+        this.animatorController.setOwnerId(this.id);
+        this.teamOne = false;
     }
 
     @Override
@@ -121,6 +125,7 @@ public class Player extends PhysicalObject {
                 && this.animatorController.canSwitchCurrent()) {
             this.animatorController.changeAnimation(EAnimation.FALL);
             this.movement.resetGravity();
+            NetworkController.get().sendMessage(this.id, new MessageMoveDirection(EDirection.DOWN));
             return true;
         }
         return false;
@@ -134,6 +139,7 @@ public class Player extends PhysicalObject {
             this.event.addStackEvent(EInput.MOVE_RIGHT);
             if (this.event.isActivated(EInput.MOVE_UP))
                 this.moveUp();
+            NetworkController.get().sendMessage(this.id, new MessageMoveDirection(EDirection.RIGHT));
             return true;
         }
         return false;
@@ -145,8 +151,10 @@ public class Player extends PhysicalObject {
             this.animatorController.changeAnimation(EAnimation.RUN);
             this.movement.setMoveDirection(EDirection.LEFT);
             this.event.addStackEvent(EInput.MOVE_LEFT);
-            if (this.event.isActivated(EInput.MOVE_UP))
+            NetworkController.get().sendMessage(this.id, new MessageMoveDirection(EDirection.LEFT));
+            if (this.event.isActivated(EInput.MOVE_UP)) {
                 this.moveUp();
+            }
             return true;
         }
         return false;
@@ -160,6 +168,7 @@ public class Player extends PhysicalObject {
         this.setOnEarth(false);
         this.movement.resetGravity();
         this.event.addStackEvent(EInput.MOVE_UP);
+        NetworkController.get().sendMessage(this.id, new MessageMoveDirection(EDirection.UP));
         return true;
     }
 
@@ -249,7 +258,21 @@ public class Player extends PhysicalObject {
         if (task instanceof Pair && ((Pair) task).getV1() instanceof ETaskType) {
             Pair<ETaskType, Object> received = (Pair<ETaskType, Object>) task;
 
-            if (received.getV1() == ETaskType.UPGRADE_SCORE && received.getV2() instanceof Integer) {
+            if (received.getV1() == ETaskType.LAUNCH && received.getV2() instanceof EDirection) {
+                try {
+                    if (received.getV2() == EDirection.RIGHT) {
+                        this.moveRight();
+                    } else if (received.getV2() == EDirection.LEFT) {
+                        this.moveLeft();
+                    } else if (received.getV2() == EDirection.UP) {
+                        this.moveUp();
+                    } else if (received.getV2() == EDirection.DOWN) {
+                        this.moveFall();
+                    }
+                } catch (SlickException e) {
+                    e.printStackTrace();
+                }
+            } else if (received.getV1() == ETaskType.UPGRADE_SCORE && received.getV2() instanceof Integer) {
                 this.score += (int) received.getV2();
             } else if (received.getV1() == ETaskType.CREATE && received.getV2() instanceof String) {
                 if (this.specialActions.containsKey(received.getV2())) {
@@ -276,6 +299,10 @@ public class Player extends PhysicalObject {
                     } else if (received.getV2().equals("energy")) {
                         this.incrementCurrentEnergy((Float) received.getV3());
                     }
+                } else if (received.getV1().equals(ETaskType.SETTER)) {
+                    if (received.getV2().equals("teamOne") && received.getV3() instanceof Boolean) {
+                        this.setTeamOne((Boolean) received.getV3());
+                    }
                 }
             }
         }
@@ -301,7 +328,7 @@ public class Player extends PhysicalObject {
     @Override
     public boolean die() {
         if (super.die()) {
-            NetworkController.get().sendMessage(new MessageStatePlayer(this));
+            NetworkController.get().sendMessage(this.id, new MessageStatePlayer(this));
             CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 1 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Pair<>(ETaskType.DELETE, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER)));
             return true;
         }
@@ -341,13 +368,6 @@ public class Player extends PhysicalObject {
         } else {
             return id;
         }
-/*
-        if (this.id.contains(GlobalVariable.id_delimiter)) {
-            return this.id.substring(this.id.indexOf(GlobalVariable.id_delimiter) + 1, this.id.length());
-        } else {
-            return this.id;
-        }
-        */
     }
 
     public int getIdIndex() {
@@ -374,8 +394,8 @@ public class Player extends PhysicalObject {
     @Override
     public boolean setCurrentLife(float value) {
         if (super.setCurrentLife(value)) {
-            NetworkController.get().sendMessage(new MessageStatePlayer(this));
-            CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 1 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "life", value / this.maxLife))));
+            NetworkController.get().sendMessage(this.id, new MessageStatePlayer(this));
+            CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.teamOne ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "life", value / this.maxLife))));
             return true;
         }
         return false;
@@ -383,14 +403,14 @@ public class Player extends PhysicalObject {
 
     public void setCurrentKi(float value) {
         this.currentKi = value;
-        NetworkController.get().sendMessage(new MessageStatePlayer(this));
-        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 1 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "ki", this.currentKi * 100 / this.maxKi))));
+        NetworkController.get().sendMessage(this.id, new MessageStatePlayer(this));
+        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.teamOne ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "ki", this.currentKi * 100 / this.maxKi))));
     }
 
     public void setCurrentEnergy(float value) {
         this.currentEnergy = value;
-        NetworkController.get().sendMessage(new MessageStatePlayer(this));
-        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 1 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "energy", this.currentEnergy * 100 / this.maxEnergy))));
+        NetworkController.get().sendMessage(this.id, new MessageStatePlayer(this));
+        CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.teamOne ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Tuple<>(ETaskType.RELAY, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER, new Tuple<>(ETaskType.SETTER, "energy", this.currentEnergy * 100 / this.maxEnergy))));
     }
 
     public void incrementCurrentKi(float value) {
@@ -415,5 +435,9 @@ public class Player extends PhysicalObject {
             }
             this.setCurrentEnergy(this.currentEnergy);
         }
+    }
+
+    public void setTeamOne(boolean value) {
+        this.teamOne = value;
     }
 }

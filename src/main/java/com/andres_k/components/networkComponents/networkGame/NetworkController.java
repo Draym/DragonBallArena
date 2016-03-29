@@ -55,7 +55,6 @@ public final class NetworkController {
             return true;
         } catch (IOException e) {
             System.err.println("ERROR: " + e.getMessage());
-            e.printStackTrace();
             return false;
         }
     }
@@ -64,10 +63,12 @@ public final class NetworkController {
         this.client.close();
     }
 
-    public void sendMessage(MessageModel request) {
+    public void sendMessage(String senderId, MessageModel request) {
         if (GameConfig.mode == EMode.ONLINE) {
-            if (this.client.isConnected()) {
-                this.client.sendTCP(NetworkProfile.get().formatMessage(request));
+            if (NetworkProfile.get().itsMyGameProfile(senderId)) {
+                if (this.client.isConnected()) {
+                    this.client.sendTCP(NetworkProfile.get().formatMessage(request));
+                }
             }
         }
         //faire le mode offline avec:

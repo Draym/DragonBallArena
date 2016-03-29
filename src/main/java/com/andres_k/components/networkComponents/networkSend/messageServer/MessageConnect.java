@@ -7,8 +7,13 @@ import com.andres_k.components.networkComponents.networkSend.MessageModel;
  */
 public class MessageConnect extends MessageModel {
     private String playerType;
+    private String gameId;
 
-    public MessageConnect(String playerType) {
+    public MessageConnect() {
+    }
+
+    public MessageConnect(String gameId, String playerType) {
+        this.gameId = gameId;
         this.playerType = playerType;
     }
 
@@ -18,5 +23,13 @@ public class MessageConnect extends MessageModel {
 
     public void setPlayerType(String playerType) {
         this.playerType = playerType;
+    }
+
+    public String getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
     }
 }

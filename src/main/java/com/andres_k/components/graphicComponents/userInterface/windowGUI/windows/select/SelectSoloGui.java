@@ -43,7 +43,7 @@ public class SelectSoloGUI extends UserInterface {
         //packSelect
         ComplexRelayElement packSelect = ElementFactory.createPackSelectPlayer(ELocation.SELECT_SOLO_GUI_SelectPackPlayer);
         packSelect.addTarget(ELocation.SELECT_SOLO_GUI_ChoicePlayer1);
-        packSelect.addTask(new Pair<>(EStatus.ON_FINISH, new TaskComponent(this.getLocation(), ELocation.GAME_CONTROLLER, ETaskType.START)));
+        packSelect.addTask(new Pair<>(EStatus.ON_FINISH, new TaskComponent(this.getLocation(), ELocation.GAME_CONTROLLER, ETaskType.LAUNCH)));
         packSelect.setLocation(WindowConfig.get().centerPosX(EnumWindow.SELECT_SOLO, (int) packSelect.getAbsoluteWidth()), WindowConfig.get().centerPosY(EnumWindow.SELECT_SOLO, (int) packSelect.getAbsoluteHeight()) + 200);
         this.taskManager.register(packSelect.getId(), packSelect);
         this.elements.add(packSelect);
@@ -96,6 +96,11 @@ public class SelectSoloGUI extends UserInterface {
 
     @Override
     public void initOnEnter() {
+    }
+
+    @Override
+    public void cleanOnLeave() {
+
     }
 
     @Override

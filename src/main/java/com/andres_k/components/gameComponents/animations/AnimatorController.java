@@ -9,6 +9,8 @@ import com.andres_k.components.gameComponents.gameObject.commands.movement.EDire
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ActivatedTimer;
+import com.andres_k.components.networkComponents.networkGame.NetworkController;
+import com.andres_k.components.networkComponents.networkSend.messageServer.MessageActionPlayer;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.stockage.Pair;
 import org.codehaus.jettison.json.JSONException;
@@ -39,6 +41,8 @@ public class AnimatorController implements Observer {
     private boolean deleted;
     private boolean needUpdate;
 
+    private String ownerId;
+
     public AnimatorController() {
         this.animators = new HashMap<>();
         this.current = EAnimation.IDLE;
@@ -49,6 +53,7 @@ public class AnimatorController implements Observer {
         this.activatedTimer = new ActivatedTimer(true);
         this.eyesDirection = EDirection.RIGHT;
         this.nextRequiredAnimation = new Pair<>(EAnimation.NULL, 0);
+        this.ownerId = "unknown";
     }
 
     public AnimatorController(AnimatorController animatorController) throws SlickException {
@@ -66,6 +71,7 @@ public class AnimatorController implements Observer {
         this.activatedTimer = new ActivatedTimer(animatorController.activatedTimer);
         this.eyesDirection = animatorController.eyesDirection;
         this.nextRequiredAnimation = new Pair<>(animatorController.nextRequiredAnimation);
+        this.ownerId = animatorController.ownerId;
     }
 
     @Override
@@ -416,6 +422,10 @@ public class AnimatorController implements Observer {
 
     // SETTERS
 
+    public void setOwnerId(String id) {
+        this.ownerId = id;
+    }
+
     public void setPrintable(boolean printable) {
         this.printable = printable;
     }
@@ -423,10 +433,10 @@ public class AnimatorController implements Observer {
     public boolean forceCurrentAnimation(EAnimation type, int index) {
         if (this.forceCurrentAnimationType(type)) {
             if (this.forceCurrentAnimationIndex(index)) {
-//                NetworkController.get().sendMessage(new MessageActionPlayer(type, index));
+                NetworkController.get().sendMessage(this.ownerId, new MessageActionPlayer(type, index));
                 return true;
             } else {
-                //              NetworkController.get().sendMessage(new MessageActionPlayer(type, 0));
+                NetworkController.get().sendMessage(this.ownerId, new MessageActionPlayer(type, 0));
             }
         }
         return false;

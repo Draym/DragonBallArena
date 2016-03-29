@@ -30,6 +30,8 @@ public abstract class UserInterface implements Observer {
 
     public abstract void initOnEnter() throws SlickException;
 
+    public abstract void cleanOnLeave();
+
     protected void initElements() throws SlickException {
         for (GuiElement element : this.elements) {
             element.init();
@@ -41,7 +43,9 @@ public abstract class UserInterface implements Observer {
         this.elements.forEach(GuiElement::enter);
     }
 
-    public void leave() {
+    public void leave()
+    {
+        this.cleanOnLeave();
         this.elements.forEach(GuiElement::leave);
     }
 

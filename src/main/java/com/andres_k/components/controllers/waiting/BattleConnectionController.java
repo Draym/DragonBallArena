@@ -4,6 +4,7 @@ import com.andres_k.components.controllers.WindowController;
 import com.andres_k.components.graphicComponents.background.EBackground;
 import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
 import com.andres_k.components.networkComponents.networkGame.NetworkController;
+import com.andres_k.components.networkComponents.networkGame.NetworkProfile;
 import com.andres_k.components.networkComponents.networkSend.MessageModel;
 import com.andres_k.components.networkComponents.networkSend.messageServer.MessageConnect;
 import com.andres_k.components.networkComponents.networkSend.messageServer.MessageGameLaunch;
@@ -14,6 +15,7 @@ import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.configs.GameConfig;
+import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.NetworkServerConfig;
 import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.SlickException;
@@ -32,7 +34,10 @@ public class BattleConnectionController extends WindowController {
     public void enter() throws SlickException {
         if (NetworkController.get().connect(new NetworkServerConfig(55555, 55556, "localhost"))) {
             Console.write("Connection: OK");
-            NetworkController.get().sendMessage(new MessageConnect(GameConfig.typePlayer.get(0).getValue()));
+
+            NetworkProfile.get().setGameId("player" + GlobalVariable.id_delimiter + 1 + GlobalVariable.id_delimiter + GameConfig.typePlayer.get(0).getValue());
+            NetworkController.get().sendMessage(NetworkProfile.get().getGameId(), new MessageConnect(NetworkProfile.get().getGameId(), GameConfig.typePlayer.get(0).getValue()));
+            GameConfig.typePlayer.clear();
         } else {
             Console.write("Connection: ERROR");
         }
@@ -76,7 +81,7 @@ public class BattleConnectionController extends WindowController {
 
     public void resolveNetworkTask(MessageModel task) {
         if (task instanceof MessageGameLaunch) {
-            CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_CONTROLLER, ETaskType.START));
+            CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_CONTROLLER, ETaskType.LAUNCH));
         }
     }
 

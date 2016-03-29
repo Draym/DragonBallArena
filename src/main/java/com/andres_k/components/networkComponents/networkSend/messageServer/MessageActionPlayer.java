@@ -10,6 +10,9 @@ public class MessageActionPlayer extends MessageModel {
     private EAnimation action;
     private int index;
 
+    public MessageActionPlayer() {
+    }
+
     public MessageActionPlayer(EAnimation action, int index) {
         this.action = action;
         this.index = index;

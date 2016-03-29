@@ -44,7 +44,7 @@ public class ChoicePlayerElement extends ComplexElement {
     public void init() throws SlickException {
         this.addItem(new ImageElement(new ColorRect(new Rectangle(54, 600, 0, 0)), ResourceManager.get().getGuiAnimator(EGuiElement.DISABLED), true));
         this.addItem(new ImageElement(new ColorRect(new Rectangle(4, 4, 0, 0)), ResourceManager.get().getGuiAnimator(EGuiElement.CARDS_ALL), true));
-        this.addItem(ElementFactory.createButtonLockTitleText("Lock", ColorTools.get(ColorTools.Colors.GUI_GREEN), EFont.MODERN, 20, EGuiElement.BUTTON_LOCK, 54, 600, ElementFactory.createBasicButtonTasks(ELocation.UNKNOWN, ELocation.getEnumByLocation(this.getId()), ETaskType.START), ElementFactory.createImageClickTasks()));
+        this.addItem(ElementFactory.createButtonLockTitleText("Lock", ColorTools.get(ColorTools.Colors.GUI_GREEN), EFont.MODERN, 20, EGuiElement.BUTTON_LOCK, 54, 600, ElementFactory.createBasicButtonTasks(ELocation.UNKNOWN, ELocation.getEnumByLocation(this.getId()), ETaskType.LAUNCH), ElementFactory.createImageClickTasks()));
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ChoicePlayerElement extends ComplexElement {
                 return true;
             }
         } else if (task instanceof ETaskType) {
-            if (task.equals(ETaskType.START)) {
+            if (task.equals(ETaskType.LAUNCH)) {
                 if (this.currentChoice < GameConfig.playerChoiceType.length) {
                     GameConfig.typePlayer.add(GameConfig.playerChoiceType[this.currentChoice]);
                     CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.getId(), target.getId(), ETaskType.NEXT));

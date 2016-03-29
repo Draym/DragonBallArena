@@ -141,7 +141,7 @@ public abstract class PhysicalObject extends GameObject {
                 diffAbsPos = MathTools.abs(diffPos);
 
                 distance = diffAbsPos - (myShape.getHeight() / 2 + hisShape.getHeight() / 2);
-                result.addCollisionY((diffAbsPos >= diffAbsNewPos), enemy.getType(), (diffPos <= 0 ? EDirection.TOP : EDirection.DOWN), distance);
+                result.addCollisionY((diffAbsPos >= diffAbsNewPos), enemy.getType(), (diffPos <= 0 ? EDirection.UP : EDirection.DOWN), distance);
             }
         }
     }

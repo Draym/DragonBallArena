@@ -9,11 +9,13 @@ import java.util.UUID;
  */
 public final class NetworkProfile {
     private String pseudo;
-    private String id;
+    private String networkId;
+    private String gameId;
 
     private NetworkProfile() {
         this.pseudo = "unknown";
-        this.id = UUID.randomUUID().toString();
+        this.gameId = "none";
+        this.networkId = UUID.randomUUID().toString();
     }
 
     private static class SingletonHolder {
@@ -26,23 +28,38 @@ public final class NetworkProfile {
 
     public MessageModel formatMessage(MessageModel message) {
         message.setPseudo(this.pseudo);
-        message.setId(this.id);
+        message.setId(this.networkId);
         return message;
     }
 
+    public boolean itsMyNetworkProfile(String id) {
+        return !this.networkId.equals("none") && this.networkId.equals(id);
+    }
+
+    public boolean itsMyGameProfile(String id) {
+        return !this.gameId.equals("none") && this.gameId.equals(id);
+    }
     // GETTERS
 
     public String getPseudo() {
         return this.pseudo;
     }
 
-    public String getId() {
-        return this.id;
+    public String getNetworkId() {
+        return this.networkId;
+    }
+
+    public String getGameId() {
+        return this.gameId;
     }
 
     // SETTERS
     public void setPseudo(String pseudo) {
         this.pseudo = pseudo;
+    }
+
+    public void setGameId(String id) {
+        this.gameId = id;
     }
 
 }
