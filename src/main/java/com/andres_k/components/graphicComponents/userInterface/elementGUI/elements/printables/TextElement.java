@@ -29,6 +29,7 @@ public class TextElement extends Element {
     protected TrueTypeFont font;
     protected float size;
     protected Color textColor;
+    protected EFont fontType;
 
     public TextElement(StringTimer textTimer, Color textColor, boolean activated) {
         this(ELocation.UNKNOWN.getId(), textTimer, textColor, activated);
@@ -59,11 +60,8 @@ public class TextElement extends Element {
         this.textTimer = textTimer;
         this.textColor = textColor;
         this.size = size;
-
-        Font item = ResourceManager.get().getFont(font);
-        item = item.deriveFont(this.size);
-        this.font = new TrueTypeFont(item, true);
-
+        this.fontType = font;
+        this.font = null;
         if (this.body == null) {
             this.body = new ColorRect(new Rectangle(0, 0, 0, 0));
         }
@@ -75,6 +73,7 @@ public class TextElement extends Element {
     @Override
     public void init() {
         this.reset();
+        this.createFont();
     }
 
     @Override
@@ -119,11 +118,20 @@ public class TextElement extends Element {
         }
     }
 
+    private void createFont() {
+        Font item = ResourceManager.get().getFont(this.fontType);
+        item = item.deriveFont(this.size);
+        this.font = new TrueTypeFont(item, true);
+    }
+
     private void drawText(Pair<Float, Float> position) {
         this.drawString(this.textTimer.getValue(), position.getV1(), position.getV2());
     }
 
     private void drawString(String value, float posX, float posY) {
+        if (this.font == null) {
+            this.createFont();
+        }
         this.font.drawString(posX, posY, value, this.textColor);
     }
 

@@ -78,4 +78,9 @@ public abstract class KiEntity extends PhysicalObject {
         super.manageGetHit(enemy);
         this.damage = this.currentLife;
     }
+
+    @Override
+    public String getOwnerId() {
+        return this.parent;
+    }
 }

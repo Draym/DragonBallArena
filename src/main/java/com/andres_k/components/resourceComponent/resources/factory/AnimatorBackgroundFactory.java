@@ -2,7 +2,9 @@ package com.andres_k.components.resourceComponent.resources.factory;
 
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.animations.EAnimation;
+import com.andres_k.components.graphicComponents.effects.EffectFactory;
 import com.andres_k.components.resourceComponent.resources.ESprites;
+import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.utils.configs.ConfigPath;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.Animation;
@@ -33,8 +35,10 @@ public class AnimatorBackgroundFactory extends AnimatorFactory {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_background + "/backgroundSelect.jpg"));
         } else if (index == ESprites.BATTLE_CONNECTION_SCREEN) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_background + "/backgroundBattleConnection.jpg"));
+            animatorController.addEffect(EAnimation.IDLE, 0, 0, EffectFactory.createFlashEffect(200));
+            animatorController.addEffect(EAnimation.IDLE, 0, 0, EffectFactory.createSoundEffect(ESound.EFFECT_FLASH));
         } else if (index == ESprites.HOME_SCREEN) {
-            Animation animation = AnimationFactory.loadAnimation(ConfigPath.image_background + "/Home/backgroundHome 0", ".jpg", 37, 37 /*125*/ /*192*/, true, 80);
+            Animation animation = AnimationFactory.loadAnimation(ConfigPath.image_background + "/Home/backgroundHome ", ".jpg", 37, /*37*/ 125 /*192*/, true, 80);
             animation.setPingPong(true);
             animatorController.addAnimation(EAnimation.IDLE, 0, animation);
         }

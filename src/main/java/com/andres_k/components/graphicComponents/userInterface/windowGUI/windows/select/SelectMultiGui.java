@@ -4,6 +4,7 @@ import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EStatus;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElementsManager;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.Element;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.ElementFactory;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.buttons.Button;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.ImageElement;
@@ -12,6 +13,8 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.patter
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.list.ListElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.modal.Modal;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.specific.ChoicePlayerElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.specific.SelectionIPElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.StringTimer;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorCircle;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
 import com.andres_k.components.graphicComponents.userInterface.windowGUI.UserInterface;
@@ -43,7 +46,7 @@ public class SelectMultiGUI extends UserInterface {
         //packSelect
         ComplexRelayElement packSelect = ElementFactory.createPackSelectPlayer(ELocation.SELECT_MULTI_GUI_SelectPackPlayer);
         packSelect.addTarget(ELocation.SELECT_MULTI_GUI_ChoicePlayer1);
-        packSelect.addTask(new Pair<>(EStatus.ON_FINISH, new TaskComponent(this.getLocation(), ELocation.BATTLE_CONNECTION_CONTROLLER, ETaskType.LAUNCH)));
+        packSelect.addTask(new Pair<>(EStatus.ON_FINISH, new TaskComponent(this.getLocation(), ELocation.SELECT_MULTI_GUI_PanelPlay, ETaskType.ON_CREATE)));
         packSelect.setLocation(WindowConfig.get().centerPosX(EnumWindow.SELECT_MULTI, (int) packSelect.getAbsoluteWidth()), WindowConfig.get().centerPosY(EnumWindow.SELECT_MULTI, (int) packSelect.getAbsoluteHeight()) + 200);
         this.taskManager.register(packSelect.getId(), packSelect);
         this.elements.add(packSelect);
@@ -90,6 +93,18 @@ public class SelectMultiGUI extends UserInterface {
         controlModal.addTasks(ElementFactory.createBasicModalTasks(ELocation.SELECT_MULTI_GUI_Controls, ELocation.SELECT_MULTI_GUI_Settings));
         this.taskManager.register(controlModal.getId(), controlModal);
         this.elements.add(controlModal);
+
+        // next to play
+        ComplexElement panelPlay = new ComplexElement(new ColorRect(new Rectangle(WindowConfig.get().centerPosX(EnumWindow.GAME, 582), WindowConfig.get().centerPosY(EnumWindow.GAME, 488), 582, 488)), true);
+        panelPlay.addItem(new ImageElement((ResourceManager.get().getGuiAnimator(EGuiElement.PANEL2)), true));
+        panelPlay.addItem(ElementFactory.createText("Enter an IP : ", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 20, 50, 150));
+        panelPlay.addItem(new SelectionIPElement(ELocation.UNKNOWN.getId(), new StringTimer("..."), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.BASIC, 20, new ColorRect(new Rectangle(220, 150, 300, 30)), Element.PositionInBody.MIDDLE_MID, true));
+        panelPlay.addItem(ElementFactory.createButtonTitleText("Play", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 25, EGuiElement.BUTTON_EXIT, 260, 390, ElementFactory.createBasicButtonTasks(ELocation.SELECT_VERSUS_GUI, ELocation.SELECT_VERSUS_CONTROLLER, EnumWindow.BATTLE_CONNECTION), ElementFactory.createImageFocusTasks()));
+
+        Modal panelQuitModal = new Modal(ELocation.SELECT_MULTI_GUI_PanelPlay.getId(), new ColorRect(new Rectangle(0, 0, WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV1(), WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2()), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), panelPlay, false);
+        this.taskManager.register(panelQuitModal.getId(), panelQuitModal);
+        this.elements.add(panelQuitModal);
+
         this.initElements();
     }
 

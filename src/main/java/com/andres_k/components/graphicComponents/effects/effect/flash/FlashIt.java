@@ -3,7 +3,6 @@ package com.andres_k.components.graphicComponents.effects.effect.flash;
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
-import com.andres_k.utils.configs.GameConfig;
 import org.newdawn.slick.Graphics;
 
 /**
@@ -21,12 +20,13 @@ public abstract class FlashIt extends Effect {
 
     public FlashIt(String id, EffectType type, long speed, ColorShape shape) {
         super(id, type);
+        float timeLoop = 30; //GameConfig.currentTimeLoop;
         this.speed = speed;
-        this.duration = (510 / (speed / GameConfig.currentTimeLoop)) * GameConfig.currentTimeLoop;
+        this.duration = (510 / (speed / timeLoop)) * timeLoop;
         this.flash = shape;
         this.light = shape.getColor().getAlpha();
         this.upLight = true;
-        this.constant = (255 / (speed / GameConfig.currentTimeLoop));
+        this.constant = (255 / (speed / timeLoop));
         this.save_light = this.light;
         this.save_constant = this.constant;
     }

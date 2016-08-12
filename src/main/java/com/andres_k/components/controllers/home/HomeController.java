@@ -1,8 +1,10 @@
 package com.andres_k.components.controllers.home;
 
 import com.andres_k.components.controllers.WindowController;
+import com.andres_k.components.gameComponents.gameObject.GameObjectController;
 import com.andres_k.components.graphicComponents.background.EBackground;
 import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
+import com.andres_k.components.networkComponents.networkGame.NetworkController;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.ELocation;
 import org.codehaus.jettison.json.JSONException;
@@ -21,6 +23,10 @@ public class HomeController extends WindowController {
 
     @Override
     public void enter() throws SlickException {
+        if (NetworkController.get().isConnected()) {
+            NetworkController.get().disconnect();
+            GameObjectController.get().leave();
+        }
     }
 
     @Override

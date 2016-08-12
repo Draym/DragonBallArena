@@ -11,7 +11,6 @@ import com.andres_k.components.gameComponents.gameObject.commands.movement.Movem
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
-import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
@@ -229,6 +228,10 @@ public abstract class GameObject {
         return this.id;
     }
 
+    public String getOwnerId() {
+        return this.id;
+    }
+
     public EGameObject getType() {
         return this.type;
     }
@@ -291,7 +294,7 @@ public abstract class GameObject {
 
     public void setLastAttacker(GameObject attacker) {
         this.lastAttacker = attacker;
-        this.attackerOwner = GameObjectController.get().getObjectById(StringTools.getWord(attacker.getId(), "", ".", 0, 2));
+        this.attackerOwner = GameObjectController.get().getObjectById(attacker.getOwnerId());
         if (this.attackerOwner != null) {
             this.initResetAttackerTimer(true);
         }

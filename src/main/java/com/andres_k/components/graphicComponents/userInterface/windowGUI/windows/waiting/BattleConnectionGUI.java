@@ -8,6 +8,7 @@ import com.andres_k.components.graphicComponents.userInterface.elementGUI.elemen
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.ImageElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.complex.ComplexElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.list.ListElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.list.ScrollableList;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.pattern.generic.modal.Modal;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorCircle;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorRect;
@@ -78,12 +79,17 @@ public class BattleConnectionGUI extends UserInterface {
         ImageElement loadingBar = new ImageElement(new ColorRect(new Rectangle(490, 755, 0, 0)), ResourceManager.get().getGuiAnimator(EGuiElement.LOADING_ANIM), true);
         this.elements.add(loadingBar);
 
+        // list status text
+        ListElement textStatus = new ScrollableList(ELocation.BATTLE_CONNECTION_GUI_StatusList.getId(), new ColorRect(new Rectangle(525, 15, 575, 305), ColorTools.get(ColorTools.Colors.TRANSPARENT_BLACK)), 0, 10, true);
+        this.taskManager.register(textStatus.getId(), textStatus);
+        this.elements.add(textStatus);
         this.initElements();
     }
 
     @Override
     public void initOnEnter() {
-
+        ListElement textStatus = (ListElement) this.getElementById(ELocation.BATTLE_CONNECTION_GUI_StatusList.getId());
+        textStatus.clearItems();
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.andres_k.components.graphicComponents.userInterface.elementGUI.patte
 import com.andres_k.components.eventComponent.input.InputEvent;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.printables.TextElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
@@ -113,7 +114,9 @@ public class ComplexElement extends GuiElement {
             if (((Pair) task).getV1().equals(ETaskType.ADD) && ((Pair) task).getV2() instanceof GuiElement) {
                 GuiElement item = (GuiElement) ((Pair) task).getV2();
                 try {
-                    item.init();
+                    if (!(item instanceof TextElement)) {
+                        item.init();
+                    }
                     this.addItem(item);
                     return true;
                 } catch (SlickException e) {

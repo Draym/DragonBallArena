@@ -4,23 +4,21 @@ package com.andres_k.utils.configs;
  * Created by andres_k on 11/03/2015.
  */
 public class NetworkServerConfig {
-    private int udpPort;
-    private int tcpPort;
-    private String address;
+    private static int udpPort = 55555;
+    private static int tcpPort = 55556;
+    private static String address = "";
 
-    public NetworkServerConfig(int udpPort, int tcpPort, String address) {
-        this.udpPort = udpPort;
-        this.tcpPort = tcpPort;
-        this.address = address;
+    public static int getUdpPort(){
+        return udpPort;
+    }
+    public static int getTcpPort(){
+        return tcpPort;
+    }
+    public static String getAddress(){
+        return address;
     }
 
-    public int getUdpPort(){
-        return this.udpPort;
-    }
-    public int getTcpPort(){
-        return this.tcpPort;
-    }
-    public String getAddress(){
-        return this.address;
+    public static void setAddress(String value) {
+        address = value;
     }
 }

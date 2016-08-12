@@ -37,7 +37,7 @@ public final class MusicController implements Observer {
     }
 
     public void addMusic(ESound sound) throws SlickException {
-            this.musics.put(sound, new Music(sound.getPath()));
+        this.musics.put(sound, new Music(sound.getPath()));
     }
 
     public boolean play(ESound value) {

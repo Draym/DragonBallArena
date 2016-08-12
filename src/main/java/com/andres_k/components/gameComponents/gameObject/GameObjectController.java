@@ -8,6 +8,8 @@ import com.andres_k.components.gameComponents.gameObject.objects.Player;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.ElementFactory;
+import com.andres_k.components.networkComponents.networkGame.NetworkController;
+import com.andres_k.components.networkComponents.networkSend.messageServer.MessageInputPlayer;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
@@ -114,7 +116,7 @@ public final class GameObjectController {
     // TASK
 
     public void taskForPlayer(String id, Object task) {
-        GameObject player = this.getPlayerById(id);
+        GameObject player = this.getObjectById(id);
 
         if (player != null) {
             player.doTask(task);
@@ -123,17 +125,14 @@ public final class GameObjectController {
 
     // EVENTS
     public void event(EInput event, EInput input) {
-        if (event == EInput.KEY_RELEASED) {
-            if (input.getIndex() >= 0) {
-                GameObject player = this.getPlayerById("player" + GlobalVariable.id_delimiter + String.valueOf(input.getIndex()));
-                if (player != null) {
+        if (input.getIndex() >= 0) {
+            GameObject player = this.getPlayerById("player" + GlobalVariable.id_delimiter + String.valueOf(input.getIndex()));
+
+            if (player != null) {
+                NetworkController.get().sendMessage(player.getId(), new MessageInputPlayer(event, input));
+                if (event == EInput.KEY_RELEASED) {
                     player.eventReleased(input);
-                }
-            }
-        } else if (event == EInput.KEY_PRESSED) {
-            if (input.getIndex() >= 0) {
-                GameObject player = this.getPlayerById("player" + GlobalVariable.id_delimiter + String.valueOf(input.getIndex()));
-                if (player != null) {
+                } else if (event == EInput.KEY_PRESSED) {
                     player.eventPressed(input);
                 }
             }
@@ -221,8 +220,10 @@ public final class GameObjectController {
     }
 
     public void deleteEntity(String id) {
+        Console.write("delete : " + id);
         for (int i = 0; i < this.entities.size(); ++i) {
             if (this.entities.get(i).getId().equals(id)) {
+                Console.write("REMOVE");
                 this.entities.remove(i);
                 --i;
             }
@@ -282,16 +283,32 @@ public final class GameObjectController {
 
     public GameObject getWinner() {
         if (this.isTheEndOfTheGame()) {
-            return this.players.get(0);
+            for (GameObject object : this.players) {
+                if (object instanceof Player) {
+                    return object;
+                }
+            }
+            for (GameObject object : this.entities) {
+                if (object instanceof Player) {
+                    return object;
+                }
+            }
         }
         return null;
     }
 
     public boolean isTheEndOfTheGame() {
-        return (GameConfig.mode == EMode.VERSUS && this.getNumberPlayers() == 1);
+        return (GameConfig.mode != EMode.SOLO && this.getNumberPlayers() == 1);
     }
 
     public int getNumberPlayers() {
-        return this.players.size();
+        int nbPlayer = this.players.size();
+
+        for (GameObject object : this.entities) {
+            if (object instanceof Player) {
+                nbPlayer += 1;
+            }
+        }
+        return nbPlayer;
     }
 }

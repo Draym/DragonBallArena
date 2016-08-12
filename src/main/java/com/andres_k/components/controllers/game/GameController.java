@@ -1,5 +1,6 @@
 package com.andres_k.components.controllers.game;
 
+import com.andres_k.components.controllers.EMode;
 import com.andres_k.components.controllers.WindowController;
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.eventComponent.input.InputGame;
@@ -10,11 +11,14 @@ import com.andres_k.components.gameComponents.gameObject.objects.Player;
 import com.andres_k.components.graphicComponents.background.EBackground;
 import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.ElementFactory;
+import com.andres_k.components.networkComponents.networkGame.NetworkController;
 import com.andres_k.components.networkComponents.networkGame.NetworkProfile;
 import com.andres_k.components.networkComponents.networkSend.MessageModel;
 import com.andres_k.components.networkComponents.networkSend.messageServer.*;
 import com.andres_k.components.resourceComponent.fonts.EFont;
 import com.andres_k.components.resourceComponent.resources.ResourceManager;
+import com.andres_k.components.resourceComponent.sounds.ESound;
+import com.andres_k.components.resourceComponent.sounds.SoundController;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
@@ -24,6 +28,8 @@ import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
+import com.andres_k.utils.tools.Console;
+import com.andres_k.utils.tools.DateTools;
 import com.andres_k.utils.tools.StringTools;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.GameContainer;
@@ -55,6 +61,7 @@ public class GameController extends WindowController {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
+                SoundController.get().play(ESound.EFFECT_FIGHT);
                 CentralTaskManager.get().sendRequest(TaskFactory.createTask(location, ELocation.GAME_GUI_AnimStart, new Pair<>(ETaskType.START_TIMER, 1000)));
             }
         }, 2000);
@@ -70,6 +77,9 @@ public class GameController extends WindowController {
     public void leave() {
         this.running = false;
         GameObjectController.get().leave();
+        if (NetworkController.get().isConnected()) {
+            NetworkController.get().disconnect();
+        }
     }
 
     @Override
@@ -158,30 +168,55 @@ public class GameController extends WindowController {
     }
 
     private void endOfTheGame() {
-        CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit, ETaskType.START_ACTIVITY));
+        if (this.running) {
+            CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit, ETaskType.START_ACTIVITY));
 
-        GameObject winner = GameObjectController.get().getWinner();
-        if (winner != null) {
-            String pseudo = "unknown";
-            String type = winner.getType().getValue();
+            GameObject winner = GameObjectController.get().getWinner();
+            if (winner != null) {
+                String pseudo = "unknown";
+                String type = winner.getType().getValue();
 
-            String r1 = StringTools.getWord(winner.getId(), "", GlobalVariable.id_delimiter, 0, 2).replace(GlobalVariable.id_delimiter, " ");
-            if (!r1.equals("")) {
-                pseudo = r1;
+                String r1 = StringTools.getWord(winner.getId(), "", GlobalVariable.id_delimiter, 0, 2).replace(GlobalVariable.id_delimiter, " ");
+                if (!r1.equals("")) {
+                    pseudo = r1;
+                }
+                NetworkController.get().sendMessage(winner.getId(), new MessageGameEnd(winner.getId(), winner.getType().getValue()));
+                if (GameConfig.mode == EMode.ONLINE) {
+                    this.endOfTheGameForcedByNetwork(winner.getId(), "unknown", winner.getType().getValue());
+                } else {
+                    CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Winner : " + pseudo + " with " + type, ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 20, 20, 40))));
+                }
+            } else {
+                CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Winner : unknown", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 20, 20, 40))));
             }
-            CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Winner : " + pseudo + " with " + type, ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 20, 20, 40))));
-        } else {
-            CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Winner : unknown", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 20, 20, 40))));
+            this.running = false;
         }
-        this.running = false;
+    }
+
+    private void endOfTheGameForcedByNetwork(String id, String pseudo, String type) {
+        if (this.running) {
+            this.running = false;
+            CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit, ETaskType.START_ACTIVITY));
+            if (NetworkProfile.get().itsMyNetworkProfile(id) || NetworkProfile.get().itsMyGameProfile(id)) {
+                CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("YOU WIN !", ColorTools.get(ColorTools.Colors.GUI_GREEN), EFont.MODERN, 30, 30, 40))));
+            } else {
+                CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("YOU LOOSE !", ColorTools.get(ColorTools.Colors.GUI_RED), EFont.MODERN, 30, 30, 40))));
+            }
+            CentralTaskManager.get().sendRequest(TaskFactory.createTask(this.location, ELocation.GAME_GUI_PanelQuit_Details, new Pair<>(ETaskType.ADD, ElementFactory.createText("Winner : " + pseudo + " with " + type, ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 20, 20, 80))));
+        }
     }
 
     public void resolveNetworkTask(MessageModel task) throws SlickException {
+        Console.write("Task: " + task + "\n");
         if (task instanceof MessageNewPlayer) {
             if (NetworkProfile.get().itsMyNetworkProfile(task.getId())) {
                 GameObjectController.get().createPlayer(EGameObject.getEnumByValue(((MessageNewPlayer) task).getPlayerType()), ((MessageNewPlayer) task).getGameId(), 0, (int) ((MessageNewPlayer) task).getX(), 0, (int) ((MessageNewPlayer) task).getY(), true);
+                CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.SERVER, ELocation.BATTLE_CONNECTION_GUI_StatusList, new Pair<>(ETaskType.ADD, ElementFactory.createText(DateTools.getCurrentDate("HH:mm:ss") + " : you are connected as " + ((MessageNewPlayer) task).getPlayerType(), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.BASIC, 20, 5, 0))));
+                CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.SERVER, ELocation.BATTLE_CONNECTION_GUI_StatusList, new Pair<>(ETaskType.ADD, ElementFactory.createText(DateTools.getCurrentDate("HH:mm:ss") + " : waiting " + (4 - GameObjectController.get().getNumberPlayers()) + " player(s)", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.BASIC, 20, 5, 0))));
             } else {
                 GameObjectController.get().createEntity(EGameObject.getEnumByValue(((MessageNewPlayer) task).getPlayerType()), task.getId(), 0, (int) ((MessageNewPlayer) task).getX(), 0, (int) ((MessageNewPlayer) task).getY());
+                CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.SERVER, ELocation.BATTLE_CONNECTION_GUI_StatusList, new Pair<>(ETaskType.ADD, ElementFactory.createText(DateTools.getCurrentDate("HH:mm:ss") + " : another player is connected as " + ((MessageNewPlayer) task).getPlayerType(), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.BASIC, 20, 5, 0))));
+                CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.SERVER, ELocation.BATTLE_CONNECTION_GUI_StatusList, new Pair<>(ETaskType.ADD, ElementFactory.createText(DateTools.getCurrentDate("HH:mm:ss") + " : waiting " + (4 - GameObjectController.get().getNumberPlayers()) + " player(s)", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.BASIC, 20, 5, 0))));
             }
         } else if (task instanceof MessageDeletePlayer) {
             GameObjectController.get().deleteEntity(task.getId());
@@ -201,11 +236,18 @@ public class GameController extends WindowController {
                 player.setCurrentKi(state.getKi());
                 player.getMovement().setPositions(state.getX(), state.getY());
             }
-        } else if (task instanceof MessageMoveDirection) {
+        } else if (task instanceof MessageInputPlayer) {
             GameObject object = GameObjectController.get().getObjectById(task.getId());
+
             if (object != null) {
-                object.doTask(new Pair<>(ETaskType.LAUNCH, ((MessageMoveDirection) task).getDirection()));
+                if (((MessageInputPlayer) task).getEvent() == EInput.KEY_RELEASED) {
+                    object.eventReleased(((MessageInputPlayer) task).getInput());
+                } else if (((MessageInputPlayer) task).getEvent() == EInput.KEY_PRESSED) {
+                    object.eventPressed(((MessageInputPlayer) task).getInput());
+                }
             }
+        } else if (task instanceof MessageGameEnd) {
+            this.endOfTheGameForcedByNetwork(task.getId(), ((MessageGameEnd) task).getWinner(), ((MessageGameEnd) task).getWinnerType());
         }
     }
 

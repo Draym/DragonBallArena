@@ -8,8 +8,8 @@ public enum EInput {
     NOTHING("NOTHING"),
     INFINITE("INFINITE"),
     RELEASED("RELEASED"), PRESSED("PRESSED"),
-    KEY_RELEASED("KEY"+RELEASED.value), KEY_PRESSED("KEY" + PRESSED.value),
-    MOUSE_RELEASED("MOUSE"+RELEASED.value), MOUSE_PRESSED("MOUSE" + PRESSED.value),
+    KEY_RELEASED("KEY" + RELEASED.value), KEY_PRESSED("KEY" + PRESSED.value),
+    MOUSE_RELEASED("MOUSE" + RELEASED.value), MOUSE_PRESSED("MOUSE" + PRESSED.value),
 
 
     // MENU
@@ -93,7 +93,7 @@ public enum EInput {
         return NOTHING.getIndex();
     }
 
-    public boolean isIn(EInput input){
+    public boolean isIn(EInput input) {
         return this.getValue().contains(input.getValue());
     }
 

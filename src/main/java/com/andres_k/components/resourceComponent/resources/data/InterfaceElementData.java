@@ -70,7 +70,7 @@ public class InterfaceElementData extends DataManager {
         InputData.getAvailableInput().entrySet().forEach(entry -> {
             TextElement title = new TextElement(new StringTimer(StringTools.formatIt(entry.getKey().getContainer().getValue(), 20, ":", 10, "")), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.BASIC, 16, true);
             TextElement content = new AlterableInputControlElement(entry.getKey().getValue(), new StringTimer(entry.getValue()), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 200, 0, Element.PositionInBody.MIDDLE_MID, true);
-            playerControls.addItem("Player " + (entry.getKey().getIndex() + 1), new ElementWithTitle(new ColorRect(new org.newdawn.slick.geom.Rectangle(0, 0, 0, 0)), title, content, true));
+            playerControls.addItem("Player " + (entry.getKey().getIndex() + 1), new ElementWithTitle(new ColorRect(new Rectangle(0, 0, 0, 0)), title, content, true));
         });
         GuiElementsManager.get().add(playerControls.getId(), playerControls);
     }

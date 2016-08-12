@@ -9,8 +9,6 @@ import com.andres_k.components.gameComponents.gameObject.commands.movement.EDire
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ActivatedTimer;
-import com.andres_k.components.networkComponents.networkGame.NetworkController;
-import com.andres_k.components.networkComponents.networkSend.messageServer.MessageActionPlayer;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.stockage.Pair;
 import org.codehaus.jettison.json.JSONException;
@@ -431,15 +429,7 @@ public class AnimatorController implements Observer {
     }
 
     public boolean forceCurrentAnimation(EAnimation type, int index) {
-        if (this.forceCurrentAnimationType(type)) {
-            if (this.forceCurrentAnimationIndex(index)) {
-                NetworkController.get().sendMessage(this.ownerId, new MessageActionPlayer(type, index));
-                return true;
-            } else {
-                NetworkController.get().sendMessage(this.ownerId, new MessageActionPlayer(type, 0));
-            }
-        }
-        return false;
+        return  this.forceCurrentAnimationType(type) && this.forceCurrentAnimationIndex(index);
     }
 
     public boolean forceCurrentAnimationIndex(int value) {

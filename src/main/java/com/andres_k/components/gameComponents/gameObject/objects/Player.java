@@ -12,7 +12,6 @@ import com.andres_k.components.gameComponents.gameObject.commands.comboComponent
 import com.andres_k.components.gameComponents.gameObject.commands.movement.EDirection;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
 import com.andres_k.components.networkComponents.networkGame.NetworkController;
-import com.andres_k.components.networkComponents.networkSend.messageServer.MessageMoveDirection;
 import com.andres_k.components.networkComponents.networkSend.messageServer.MessageStatePlayer;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
@@ -125,7 +124,6 @@ public class Player extends PhysicalObject {
                 && this.animatorController.canSwitchCurrent()) {
             this.animatorController.changeAnimation(EAnimation.FALL);
             this.movement.resetGravity();
-            NetworkController.get().sendMessage(this.id, new MessageMoveDirection(EDirection.DOWN));
             return true;
         }
         return false;
@@ -139,7 +137,6 @@ public class Player extends PhysicalObject {
             this.event.addStackEvent(EInput.MOVE_RIGHT);
             if (this.event.isActivated(EInput.MOVE_UP))
                 this.moveUp();
-            NetworkController.get().sendMessage(this.id, new MessageMoveDirection(EDirection.RIGHT));
             return true;
         }
         return false;
@@ -151,7 +148,6 @@ public class Player extends PhysicalObject {
             this.animatorController.changeAnimation(EAnimation.RUN);
             this.movement.setMoveDirection(EDirection.LEFT);
             this.event.addStackEvent(EInput.MOVE_LEFT);
-            NetworkController.get().sendMessage(this.id, new MessageMoveDirection(EDirection.LEFT));
             if (this.event.isActivated(EInput.MOVE_UP)) {
                 this.moveUp();
             }
@@ -168,7 +164,6 @@ public class Player extends PhysicalObject {
         this.setOnEarth(false);
         this.movement.resetGravity();
         this.event.addStackEvent(EInput.MOVE_UP);
-        NetworkController.get().sendMessage(this.id, new MessageMoveDirection(EDirection.UP));
         return true;
     }
 
@@ -242,6 +237,7 @@ public class Player extends PhysicalObject {
     @Override
     public void eventPressed(EInput input) {
         if (this.isAlive()) {
+            Console.write("input pressed: " + input.getContainer());
             this.event.setActivated(input.getContainer(), true);
         }
     }
@@ -249,6 +245,7 @@ public class Player extends PhysicalObject {
     @Override
     public void eventReleased(EInput input) {
         if (this.isAlive()) {
+            Console.write("input released: " + input.getContainer());
             this.event.setActivated(input.getContainer(), false);
         }
     }
@@ -258,21 +255,7 @@ public class Player extends PhysicalObject {
         if (task instanceof Pair && ((Pair) task).getV1() instanceof ETaskType) {
             Pair<ETaskType, Object> received = (Pair<ETaskType, Object>) task;
 
-            if (received.getV1() == ETaskType.LAUNCH && received.getV2() instanceof EDirection) {
-                try {
-                    if (received.getV2() == EDirection.RIGHT) {
-                        this.moveRight();
-                    } else if (received.getV2() == EDirection.LEFT) {
-                        this.moveLeft();
-                    } else if (received.getV2() == EDirection.UP) {
-                        this.moveUp();
-                    } else if (received.getV2() == EDirection.DOWN) {
-                        this.moveFall();
-                    }
-                } catch (SlickException e) {
-                    e.printStackTrace();
-                }
-            } else if (received.getV1() == ETaskType.UPGRADE_SCORE && received.getV2() instanceof Integer) {
+            if (received.getV1() == ETaskType.UPGRADE_SCORE && received.getV2() instanceof Integer) {
                 this.score += (int) received.getV2();
             } else if (received.getV1() == ETaskType.CREATE && received.getV2() instanceof String) {
                 if (this.specialActions.containsKey(received.getV2())) {
@@ -329,7 +312,7 @@ public class Player extends PhysicalObject {
     public boolean die() {
         if (super.die()) {
             NetworkController.get().sendMessage(this.id, new MessageStatePlayer(this));
-            CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.getIdIndex() == 1 ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Pair<>(ETaskType.DELETE, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER)));
+            CentralTaskManager.get().sendRequest(TaskFactory.createTask(ELocation.UNKNOWN, (this.teamOne ? ELocation.GAME_GUI_State_AlliedPlayers : ELocation.GAME_GUI_State_EnemyPlayers), new Pair<>(ETaskType.DELETE, this.getId() + GlobalVariable.id_delimiter + EGuiElement.STATE_PLAYER)));
             return true;
         }
         return false;
@@ -379,14 +362,6 @@ public class Player extends PhysicalObject {
         } else {
             return -1;
         }
-        /*
-        if (this.id.contains(GlobalVariable.id_delimiter)) {
-            int index = this.id.indexOf(GlobalVariable.id_delimiter);
-            return Integer.valueOf(this.id.substring(index - 1, index));
-        } else {
-            return -1;
-        }
-        */
     }
 
     // SETTERS

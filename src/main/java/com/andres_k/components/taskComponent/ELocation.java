@@ -71,12 +71,14 @@ public enum ELocation {
     SELECT_MULTI_GUI_Combos("Combos", SELECT_MULTI_GUI.getId()),
     SELECT_MULTI_GUI_SelectPackPlayer("SelectPackPlayer", SELECT_MULTI_GUI.getId()),
     SELECT_MULTI_GUI_ChoicePlayer1("ChoicePlayer1", SELECT_MULTI_GUI.getId()),
+    SELECT_MULTI_GUI_PanelPlay("PanelPlay", SELECT_MULTI_GUI.getId()),
 
     //BATTLE_CONNECTION_GUI
     BATTLE_CONNECTION_GUI_Options("Options", BATTLE_CONNECTION_GUI.getId()),
     BATTLE_CONNECTION_GUI_Settings("Settings", BATTLE_CONNECTION_GUI.getId()),
     BATTLE_CONNECTION_GUI_Controls("Controls", BATTLE_CONNECTION_GUI.getId()),
     BATTLE_CONNECTION_GUI_Combos("Combos", BATTLE_CONNECTION_GUI.getId()),
+    BATTLE_CONNECTION_GUI_StatusList("StatusList", BATTLE_CONNECTION_GUI.getId()),
 
     //GAME_GUI
     GAME_GUI_Options("Options", GAME_GUI.getId()),

@@ -16,7 +16,6 @@ import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.GlobalVariable;
-import com.andres_k.utils.configs.NetworkServerConfig;
 import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.SlickException;
 
@@ -32,7 +31,7 @@ public class BattleConnectionController extends WindowController {
 
     @Override
     public void enter() throws SlickException {
-        if (NetworkController.get().connect(new NetworkServerConfig(55555, 55556, "localhost"))) {
+        if (NetworkController.get().connect()) {
             Console.write("Connection: OK");
 
             NetworkProfile.get().setGameId("player" + GlobalVariable.id_delimiter + 1 + GlobalVariable.id_delimiter + GameConfig.typePlayer.get(0).getValue());

@@ -28,6 +28,7 @@ import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
+import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.StringTools;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Circle;
@@ -130,18 +131,16 @@ public class GameGUI extends UserInterface {
 
     @Override
     public void initOnEnter() throws SlickException {
-        if (GameConfig.mode == EMode.ONLINE) {
+        if (GameConfig.mode != EMode.ONLINE) {
             PaginatedList combos = (PaginatedList) this.getElementById(ELocation.GUI_ELEMENT_CombosList.getId());
             combos.clear();
-            if (GameConfig.mode != EMode.ONLINE) {
-                for (EGameObject player : GameConfig.typePlayer) {
-                    combos.createList(ElementFactory.createText(player.getValue(), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 0, 0), 0, 20);
-                    List<Pair<String, String>> combosList = ComboAvailableList.get().getPlayerCombos(player);
-                    for (Pair<String, String> item : combosList) {
-                        TextElement title = new TextElement(new StringTimer(StringTools.formatIt(item.getV1(), 20, ":", 10, "")), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.BASIC, 16, true);
-                        TextElement content = ElementFactory.createText(item.getV2(), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 200, 0);
-                        combos.addItem(player.getValue(), new ElementWithTitle(new ColorRect(new org.newdawn.slick.geom.Rectangle(0, 0, 0, 0)), title, content, true));
-                    }
+            for (EGameObject player : GameConfig.typePlayer) {
+                combos.createList(ElementFactory.createText(player.getValue(), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 0, 0), 0, 20);
+                List<Pair<String, String>> combosList = ComboAvailableList.get().getPlayerCombos(player);
+                for (Pair<String, String> item : combosList) {
+                    TextElement title = new TextElement(new StringTimer(StringTools.formatIt(item.getV1(), 20, ":", 10, "")), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.BASIC, 16, true);
+                    TextElement content = ElementFactory.createText(item.getV2(), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.MODERN, 16, 200, 0);
+                    combos.addItem(player.getValue(), new ElementWithTitle(new ColorRect(new org.newdawn.slick.geom.Rectangle(0, 0, 0, 0)), title, content, true));
                 }
             }
         }
@@ -152,6 +151,7 @@ public class GameGUI extends UserInterface {
 
     @Override
     public void cleanOnLeave() {
+        Console.write("\n**LEAVE GUI GAME**\n");
         ListElement ally = (ListElement) this.getElementById(ELocation.GAME_GUI_State_AlliedPlayers.getId());
         ally.clearItems();
         ListElement enemy = (ListElement) this.getElementById(ELocation.GAME_GUI_State_EnemyPlayers.getId());
