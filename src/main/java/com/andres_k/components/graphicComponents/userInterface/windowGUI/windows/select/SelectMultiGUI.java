@@ -36,8 +36,8 @@ import java.util.Observable;
 /**
  * Created by andres_k on 09/02/2016.
  */
-public class SelectMultiGUI2 extends UserInterface {
-    public SelectMultiGUI2() {
+public class SelectMultiGUI extends UserInterface {
+    public SelectMultiGUI() {
         super(ELocation.SELECT_MULTI_GUI);
     }
 

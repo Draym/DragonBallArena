@@ -3,7 +3,7 @@ package com.andres_k.components.graphicComponents.graphic.windows.select;
 import com.andres_k.components.controllers.select.SelectSoloController;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
-import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.select.SelectSoloGUI2;
+import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.select.SelectSoloGUI;
 import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.resourceComponent.sounds.MusicController;
 import com.andres_k.components.taskComponent.LocalTaskManager;
@@ -18,7 +18,7 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class WindowSelectSolo extends WindowBasedGame {
     public WindowSelectSolo(LocalTaskManager windowsTask) throws JSONException, SlickException {
-        super(EnumWindow.SELECT_SOLO.getId(), new SelectSoloController(EnumWindow.SELECT_SOLO.getId()), new SelectSoloGUI2());
+        super(EnumWindow.SELECT_SOLO.getId(), new SelectSoloController(EnumWindow.SELECT_SOLO.getId()), new SelectSoloGUI());
         this.gui.register(windowsTask);
         this.controller.register(windowsTask);
     }

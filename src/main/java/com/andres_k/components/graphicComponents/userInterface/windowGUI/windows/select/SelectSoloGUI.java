@@ -33,8 +33,8 @@ import java.util.Observable;
 /**
  * Created by andres_k on 09/02/2016.
  */
-public class SelectSoloGUI2 extends UserInterface {
-    public SelectSoloGUI2() {
+public class SelectSoloGUI extends UserInterface {
+    public SelectSoloGUI() {
         super(ELocation.SELECT_SOLO_GUI);
     }
 

@@ -3,7 +3,7 @@ package com.andres_k.components.graphicComponents.graphic.windows.select;
 import com.andres_k.components.controllers.select.SelectVersusController;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.graphic.WindowBasedGame;
-import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.select.SelectVersusGUI2;
+import com.andres_k.components.graphicComponents.userInterface.windowGUI.windows.select.SelectVersusGUI;
 import com.andres_k.components.resourceComponent.sounds.ESound;
 import com.andres_k.components.resourceComponent.sounds.MusicController;
 import com.andres_k.components.taskComponent.LocalTaskManager;
@@ -18,7 +18,7 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class WindowSelectVersus extends WindowBasedGame {
     public WindowSelectVersus(LocalTaskManager windowsTask) throws JSONException, SlickException {
-        super(EnumWindow.SELECT_VERSUS.getId(), new SelectVersusController(EnumWindow.SELECT_VERSUS.getId()), new SelectVersusGUI2());
+        super(EnumWindow.SELECT_VERSUS.getId(), new SelectVersusController(EnumWindow.SELECT_VERSUS.getId()), new SelectVersusGUI());
         this.gui.register(windowsTask);
         this.controller.register(windowsTask);
     }
