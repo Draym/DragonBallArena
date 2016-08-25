@@ -33,8 +33,8 @@ import java.util.Observable;
 /**
  * Created by andres_k on 09/02/2016.
  */
-public class SelectVersusGUI extends UserInterface {
-    public SelectVersusGUI() {
+public class SelectVersusGUI2 extends UserInterface {
+    public SelectVersusGUI2() {
         super(ELocation.SELECT_VERSUS_GUI);
     }
 

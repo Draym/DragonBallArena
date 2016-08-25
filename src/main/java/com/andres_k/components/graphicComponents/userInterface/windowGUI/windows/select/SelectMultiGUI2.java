@@ -36,14 +36,15 @@ import java.util.Observable;
 /**
  * Created by andres_k on 09/02/2016.
  */
-public class SelectMultiGUI extends UserInterface {
-    public SelectMultiGUI() {
+public class SelectMultiGUI2 extends UserInterface {
+    public SelectMultiGUI2() {
         super(ELocation.SELECT_MULTI_GUI);
     }
 
     @Override
     public void init() throws SlickException {
         //packSelect
+
         ComplexRelayElement packSelect = ElementFactory.createPackSelectPlayer(ELocation.SELECT_MULTI_GUI_SelectPackPlayer);
         packSelect.addTarget(ELocation.SELECT_MULTI_GUI_ChoicePlayer1);
         packSelect.addTask(new Pair<>(EStatus.ON_FINISH, new TaskComponent(this.getLocation(), ELocation.SELECT_MULTI_GUI_PanelPlay, ETaskType.ON_CREATE)));
