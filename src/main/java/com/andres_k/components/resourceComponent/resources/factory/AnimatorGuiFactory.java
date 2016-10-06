@@ -2,8 +2,11 @@ package com.andres_k.components.resourceComponent.resources.factory;
 
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.animations.EAnimation;
+import com.andres_k.components.gameComponents.gameObject.EGameObject;
+import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.components.resourceComponent.resources.ESprites;
 import com.andres_k.utils.configs.ConfigPath;
+import com.andres_k.utils.configs.GameConfig;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
@@ -120,21 +123,21 @@ public class AnimatorGuiFactory extends AnimatorFactory {
         AnimatorController animatorController = new AnimatorController();
 
         if (index == ESprites.AVATAR_GOKU) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_avatar + "/gokuAvatar2.png"));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_avatar + "/gokuAvatar2" + (GameConfig.characterLogoOff && EGameObject.GOKU.isAvailable() ? "" : "Off") + ".png"));
         } else if (index == ESprites.AVATAR_GOHAN) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_avatar + "/gohanAvatar.png"));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_avatar + "/gohanAvatar" + (GameConfig.characterLogoOff && EGameObject.GOHAN.isAvailable() ? "" : "Off") + ".png"));
         } else if (index == ESprites.AVATAR_VEGETA) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_avatar + "/vegetaAvatar.png"));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_avatar + "/vegetaAvatar" + (GameConfig.characterLogoOff && EGameObject.VEGETA.isAvailable() ? "" : "Off") + ".png"));
         } else if (index == ESprites.AVATAR_PICOLO) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_avatar + "/picoloAvatar.png"));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_avatar + "/picoloAvatar" + (GameConfig.characterLogoOff && EGameObject.PICOLO.isAvailable() ? "" : "Off") + ".png"));
         } else if (index == ESprites.AVATAR_KAME_SENNIN) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_avatar + "/kameSenninAvatar.png"));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_avatar + "/kameSenninAvatar" + (GameConfig.characterLogoOff && EGameObject.KAME_SENNIN.isAvailable() ? "" : "Off") + ".png"));
         } else if (index == ESprites.AVATAR_CELL) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_avatar + "/cellAvatar.png"));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_avatar + "/cellAvatar" + (GameConfig.characterLogoOff && EGameObject.CELL.isAvailable() ? "" : "Off") + ".png"));
         } else if (index == ESprites.AVATAR_BUU) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_avatar + "/buuAvatar.png"));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_avatar + "/buuAvatar" + (GameConfig.characterLogoOff && EGameObject.BUU.isAvailable() ? "" : "Off") + ".png"));
         } else if (index == ESprites.AVATAR_FRIEEZA) {
-            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_avatar + "/frieezaAvatar.png"));
+            animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_avatar + "/frieezaAvatar" + (GameConfig.characterLogoOff && EGameObject.FRIEEZA.isAvailable() ? "" : "Off") + ".png"));
         } else if (index == ESprites.AVATAR_BORDER) {
             animatorController.addAnimation(EAnimation.IDLE, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_avatar + "/avatarBorder.png"));
             animatorController.addAnimation(EAnimation.ON_FOCUS, 0, AnimationFactory.createStaticUniqueFrame(ConfigPath.image_avatar + "/avatarBorderLight.png"));

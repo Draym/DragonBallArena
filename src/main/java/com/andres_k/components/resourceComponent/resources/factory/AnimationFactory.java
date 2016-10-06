@@ -13,11 +13,15 @@ import org.newdawn.slick.SpriteSheet;
 public class AnimationFactory {
 
     public static Animation loadAnimation(String id, String extension, int start, int end, boolean looping, int interval) throws SlickException {
+        return loadAnimation(id, extension, start, end, looping, interval, 0);
+    }
+
+    public static Animation loadAnimation(String id, String extension, int start, int end, boolean looping, int interval, int addZero) throws SlickException {
         Animation animation = new Animation();
         String zero;
 
         for (int i = start; i <= end; ++i) {
-            zero = StringTools.duplicateString("0", MathTools.numberLevel(i, end));
+            zero = StringTools.duplicateString("0", MathTools.numberLevel(i, end) + addZero);
             animation.addFrame(new Image(id + zero + i + extension), interval);
         }
         animation.setLooping(looping);
