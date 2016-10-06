@@ -55,7 +55,7 @@ public class ComboFactory {
             addElement(combo, EInput.ATTACK_A, EAnimation.HAND_ATTACK, 1, true, 1000, 3);
             addElement(combo, EInput.ATTACK_SPE, EAnimation.NULL, 1, true, 250, 1);
             addElement(combo, EInput.ATTACK_A, EAnimation.KI_SIMPLE_PROPELS, 0, true, 2000, 1);
-            addElement(combo, EInput.ATTACK_Y, EAnimation.KI_SPE_ATTACK, 1, true, 250, 1);
+            addElement(combo, EInput.ATTACK_D, EAnimation.KI_SPE_ATTACK, 1, true, 250, 1);
         } else if (type == ECombos.MOVE_HAND_ATTACK_RIGHT) {
             addElement(combo, EInput.MOVE_RIGHT, EAnimation.NULL, 0, false, -1, 1);
             addElement(combo, EInput.ATTACK_A, EAnimation.HAND_ATTACK, 1, EAnimation.TOUCHED_SIMPLE, 0, true, 250, 2);
@@ -78,13 +78,13 @@ public class ComboFactory {
             addElement(combo, EInput.ATTACK_SPE, EAnimation.NULL, 0, false, 250, 1);
             addElement(combo, EInput.ATTACK_A, EAnimation.RUSH_ATTACK, 0, true, 100, 1);
         } else if (type == ECombos.JUMP_KICK_ATTACK) {
-            addElement(combo, EInput.ATTACK_X, EAnimation.JUMP_KICK, 0, true, 1000, 1);
-            addElement(combo, EInput.ATTACK_X, EAnimation.JUMP_KICK, 1, true, 1000, 2);
+            addElement(combo, EInput.ATTACK_C, EAnimation.JUMP_KICK, 0, true, 1000, 1);
+            addElement(combo, EInput.ATTACK_C, EAnimation.JUMP_KICK, 1, true, 1000, 2);
             addElement(combo, EInput.ATTACK_B, EAnimation.KICK_PROPELS, 0, true, 1000, 1);
         } else if (type == ECombos.SPIRAL_KICK_ATTACK) {
             addElement(combo, EInput.ATTACK_SPE, EAnimation.NULL, 0, false, 250, 1);
-            addElement(combo, EInput.ATTACK_X, EAnimation.SPIRAL_KICK, 0, true, 250, 1);
-            addElement(combo, EInput.ATTACK_X, EAnimation.SPIRAL_KICK, 1, true, 250, 3);
+            addElement(combo, EInput.ATTACK_C, EAnimation.SPIRAL_KICK, 0, true, 250, 1);
+            addElement(combo, EInput.ATTACK_C, EAnimation.SPIRAL_KICK, 1, true, 250, 3);
         } else if (type == ECombos.KICK_PROPELS_ATTACK) {
             addElement(combo, EInput.ATTACK_SPE, EAnimation.NULL, 0, false, 250, 1);
             addElement(combo, EInput.ATTACK_B, EAnimation.KICK_PROPELS, 0, true, 250, 1);
@@ -93,22 +93,22 @@ public class ComboFactory {
             addElement(combo, EInput.ATTACK_SPE, EAnimation.KI_CHARGE, 0, true, 250, 1);
             addInfiniteElement(combo, EInput.ATTACK_SPE, EAnimation.KI_CHARGE, 1, true, 250);
         } else if (type == ECombos.KI_BASIC_ATTACK) {
-            addElement(combo, EInput.ATTACK_Y, EAnimation.KI_BASIC_ATTACK, 0, true, 500, 1);
-            addElement(combo, EInput.ATTACK_Y, EAnimation.KI_BASIC_ATTACK, 1, true, 500, 1);
-            addElement(combo, EInput.ATTACK_Y, EAnimation.KI_BASIC_ATTACK, 2, true, 500, 1);
-            addElement(combo, EInput.ATTACK_Y, EAnimation.KI_BASIC_ATTACK, 1, true, 500, 1);
-            addElement(combo, EInput.ATTACK_Y, EAnimation.KI_BASIC_ATTACK, 2, true, 500, 1);
-            addElement(combo, EInput.ATTACK_Y, EAnimation.KI_BASIC_ATTACK, 1, true, 500, 1);
-            addElement(combo, EInput.ATTACK_Y, EAnimation.KI_BASIC_ATTACK, 2, true, 500, 1);
+            addElement(combo, EInput.ATTACK_D, EAnimation.KI_BASIC_ATTACK, 0, true, 500, 1);
+            addElement(combo, EInput.ATTACK_D, EAnimation.KI_BASIC_ATTACK, 1, true, 500, 1);
+            addElement(combo, EInput.ATTACK_D, EAnimation.KI_BASIC_ATTACK, 2, true, 500, 1);
+            addElement(combo, EInput.ATTACK_D, EAnimation.KI_BASIC_ATTACK, 1, true, 500, 1);
+            addElement(combo, EInput.ATTACK_D, EAnimation.KI_BASIC_ATTACK, 2, true, 500, 1);
+            addElement(combo, EInput.ATTACK_D, EAnimation.KI_BASIC_ATTACK, 1, true, 500, 1);
+            addElement(combo, EInput.ATTACK_D, EAnimation.KI_BASIC_ATTACK, 2, true, 500, 1);
         } else if (type == ECombos.KI_SPE_ATTACK) {
             addElement(combo, EInput.ATTACK_SPE, EAnimation.NULL, 0, false, 150, 1);
-            addElement(combo, EInput.ATTACK_Y, EAnimation.KI_SPE_ATTACK, 0, true, 100, 1);
+            addElement(combo, EInput.ATTACK_D, EAnimation.KI_SPE_ATTACK, 0, true, 100, 1);
         } else if (type == ECombos.KI_FINAL_ATTACK) {
             addElement(combo, EInput.ATTACK_SPE, EAnimation.NULL, 0, false, 300, 2);
-            addElement(combo, EInput.ATTACK_X, EAnimation.NULL, 0, false, 300, 1);
+            addElement(combo, EInput.ATTACK_C, EAnimation.NULL, 0, false, 300, 1);
             addElement(combo, EInput.ATTACK_A, EAnimation.NULL, 0, false, 300, 1);
             addElement(combo, EInput.ATTACK_B, EAnimation.NULL, 0, false, 300, 1);
-            addElement(combo, EInput.ATTACK_Y, EAnimation.KI_FINAL_ATTACK, 0, true, 300, 1);
+            addElement(combo, EInput.ATTACK_D, EAnimation.KI_FINAL_ATTACK, 0, true, 300, 1);
         }
         return combo;
     }
@@ -154,30 +154,30 @@ public class ComboFactory {
             addElement(combo, EInput.ATTACK_A, EAnimation.JUMP_HAND_ATTACK, 1, true, 500, 1);
             addElement(combo, EInput.ATTACK_A, EAnimation.JUMP_HAND_ATTACK, 2, true, 500, 1);
         } else if (type == ECombos.KICK_ATTACK) {
-            addElement(combo, EInput.ATTACK_X, EAnimation.KICK_ATTACK, 0, true, 1000, 1);
-            addElement(combo, EInput.ATTACK_X, EAnimation.KICK_ATTACK, 1, true, 1000, 2);
+            addElement(combo, EInput.ATTACK_C, EAnimation.KICK_ATTACK, 0, true, 1000, 1);
+            addElement(combo, EInput.ATTACK_C, EAnimation.KICK_ATTACK, 1, true, 1000, 2);
             addElement(combo, EInput.ATTACK_SPE, EAnimation.NULL, 0, false, 1000, 1);
-            addElement(combo, EInput.ATTACK_X, EAnimation.SPIRAL_KICK, 0, true, 1000, 1);
+            addElement(combo, EInput.ATTACK_C, EAnimation.SPIRAL_KICK, 0, true, 1000, 1);
         } else if (type == ECombos.KI_CHARGE) {
             addElement(combo, EInput.ATTACK_SPE, EAnimation.NULL, 0, false, 250, 2);
             addElement(combo, EInput.ATTACK_SPE, EAnimation.KI_CHARGE, 0, true, 250, 1);
             addInfiniteElement(combo, EInput.ATTACK_SPE, EAnimation.KI_CHARGE, 1, true, 250);
         } else if (type == ECombos.KI_BASIC_ATTACK) {
-            addElement(combo, EInput.ATTACK_Y, EAnimation.KI_BASIC_ATTACK, 0, true, 500, 1);
-            addElement(combo, EInput.ATTACK_Y, EAnimation.KI_BASIC_ATTACK, 1, true, 500, 3);
+            addElement(combo, EInput.ATTACK_D, EAnimation.KI_BASIC_ATTACK, 0, true, 500, 1);
+            addElement(combo, EInput.ATTACK_D, EAnimation.KI_BASIC_ATTACK, 1, true, 500, 3);
         } else if (type == ECombos.KI_SPE_ATTACK) {
             addElement(combo, EInput.ATTACK_SPE, EAnimation.NULL, 0, false, 150, 1);
-            addElement(combo, EInput.ATTACK_Y, EAnimation.KI_SPE_ATTACK, 0, true, 100, 1);
+            addElement(combo, EInput.ATTACK_D, EAnimation.KI_SPE_ATTACK, 0, true, 100, 1);
         } else if (type == ECombos.KI_FINAL_ATTACK) {
             addElement(combo, EInput.ATTACK_SPE, EAnimation.NULL, 0, false, 300, 2);
             addElement(combo, EInput.ATTACK_B, EAnimation.NULL, 0, false, 300, 1);
             addElement(combo, EInput.ATTACK_A, EAnimation.NULL, 0, false, 300, 1);
-            addElement(combo, EInput.ATTACK_X, EAnimation.NULL, 0, false, 300, 1);
-            addElement(combo, EInput.ATTACK_Y, EAnimation.KI_FINAL_ATTACK, 0, true, 300, 1);
+            addElement(combo, EInput.ATTACK_C, EAnimation.NULL, 0, false, 300, 1);
+            addElement(combo, EInput.ATTACK_D, EAnimation.KI_FINAL_ATTACK, 0, true, 300, 1);
         } else if (type == ECombos.KI_EXPLODE) {
             addElement(combo, EInput.ATTACK_SPE, EAnimation.NULL, 0, false, 300, 2);
             addElement(combo, EInput.ATTACK_B, EAnimation.NULL, 0, false, 300, 1);
-            addElement(combo, EInput.ATTACK_Y, EAnimation.KI_EXPLODE, 0, true, 300, 1);
+            addElement(combo, EInput.ATTACK_D, EAnimation.KI_EXPLODE, 0, true, 300, 1);
         }
         return combo;
     }

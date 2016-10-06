@@ -203,6 +203,10 @@ public class Modal extends GuiElement {
         return this.content.getAbsoluteHeight();
     }
 
+    public GuiElement getContent() {
+        return this.content;
+    }
+
     // SETTERS
     @Override
     public void setId(String value) {

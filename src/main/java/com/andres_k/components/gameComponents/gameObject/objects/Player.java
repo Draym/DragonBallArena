@@ -57,8 +57,8 @@ public class Player extends PhysicalObject {
         this.event.addEvent(EInput.MOVE_RIGHT);
         this.event.addEvent(EInput.ATTACK_A);
         this.event.addEvent(EInput.ATTACK_B);
-        this.event.addEvent(EInput.ATTACK_X);
-        this.event.addEvent(EInput.ATTACK_Y);
+        this.event.addEvent(EInput.ATTACK_C);
+        this.event.addEvent(EInput.ATTACK_D);
         this.event.addEvent(EInput.ATTACK_SPE);
 
         this.specialActions = new HashMap<>();

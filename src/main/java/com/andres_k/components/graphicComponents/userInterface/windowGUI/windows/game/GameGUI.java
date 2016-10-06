@@ -5,6 +5,7 @@ import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.components.gameComponents.gameObject.commands.comboComponent.combo.ComboAvailableList;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.EGuiElement;
+import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElement;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.GuiElementsManager;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.ElementFactory;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.buttons.Button;
@@ -76,7 +77,7 @@ public class GameGUI extends UserInterface {
         this.elements.add(settingModal);
 
         // controls
-        ComplexElement controls = new ComplexElement(new ColorRect(new Rectangle(WindowConfig.get().centerPosX(EnumWindow.GAME, 582), WindowConfig.get().centerPosY(EnumWindow.GAME, 450), 582, 450)), true);
+        ComplexElement controls = new ComplexElement("Ctrls", new ColorRect(new Rectangle(WindowConfig.get().centerPosX(EnumWindow.GAME, 582), WindowConfig.get().centerPosY(EnumWindow.GAME, 450), 582, 450)), true);
         controls.addItem(new ImageElement((ResourceManager.get().getGuiAnimator(EGuiElement.PANEL3)), true));
         controls.addItem(new Button(new ImageElement(new ColorCircle(new Circle(530, 15, 0)), ResourceManager.get().getGuiAnimator(EGuiElement.BUTTON_CLOSE), true), ElementFactory.createBasicButtonTasks(ELocation.UNKNOWN, ELocation.GAME_GUI_Controls, ETaskType.ON_KILL, ESound.NOTHING, ESound.UNVALIDATE)));
         controls.addItem(GuiElementsManager.get().getElement(ELocation.GUI_ELEMENT_PlayerControls.getId()));
@@ -147,6 +148,9 @@ public class GameGUI extends UserInterface {
         ListElement panelQuitDetails = (ListElement) this.getElementById(ELocation.GAME_GUI_PanelQuit_Details.getId());
         panelQuitDetails.clearItems();
         panelQuitDetails.addItem(ElementFactory.createText("End of the Game !", ColorTools.get(ColorTools.Colors.GUI_YELLOW_BLAND), EFont.MODERN, 30, 90, 0));
+
+        PaginatedList ctrl = (PaginatedList) this.getElementById(ELocation.GAME_GUI_Controls.getId()).getFromId(ELocation.GUI_ELEMENT_PlayerControls.getId());
+        ctrl.setVisibleList("Player 2", GameConfig.mode == EMode.VERSUS);
     }
 
     @Override

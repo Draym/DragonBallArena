@@ -5,8 +5,8 @@
   "MOVE_RIGHT_P1": "RIGHT",
   "ATTACK_A_P1": "NUMPAD8",
   "ATTACK_B_P1": "NUMPAD6",
-  "ATTACK_X_P1": "NUMPAD4",
-  "ATTACK_Y_P1": "NUMPAD5",
+  "ATTACK_C_P1": "NUMPAD4",
+  "ATTACK_D_P1": "NUMPAD5",
   "ATTACK_SPE_P1": "NUMPAD0",
   "MOVE_UP_P2": "Z",
   "MOVE_DOWN_P2": "S",
@@ -14,7 +14,7 @@
   "MOVE_RIGHT_P2": "D",
   "ATTACK_A_P2": "Y",
   "ATTACK_B_P2": "J",
-  "ATTACK_X_P2": "G",
-  "ATTACK_Y_P2": "H",
+  "ATTACK_C_P2": "G",
+  "ATTACK_D_P2": "H",
   "ATTACK_SPE_P2": "SPACE"
 }

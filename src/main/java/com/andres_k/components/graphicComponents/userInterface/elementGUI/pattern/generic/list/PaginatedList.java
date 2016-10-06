@@ -15,6 +15,7 @@ import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.ETaskType;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.stockage.Tuple;
+import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
@@ -58,6 +59,9 @@ public class PaginatedList extends GuiElement {
         this.reset();
         for (Map.Entry<String, ListElement> entry : this.lists.entrySet()) {
             entry.getValue().init();
+        }
+        if (this.tabs.size() > 0) {
+            this.switchCurrent(this.tabs.get(0).getId());
         }
     }
 
@@ -204,6 +208,7 @@ public class PaginatedList extends GuiElement {
     }
 
     // MODIFIER
+
     public void addList(String key, GuiElement list) {
         if (list instanceof ListElement) {
             this.lists.put(key, (ListElement) list);
@@ -222,6 +227,28 @@ public class PaginatedList extends GuiElement {
         }
         if (this.lists.size() == 1) {
             this.switchCurrent(text.getValue());
+        }
+    }
+
+    public void setVisibleList(String id, boolean visibility) {
+        this.lists.get(id).setActivated(visibility);
+
+        for (ElementWithTitle tab : this.tabs) {
+            if (tab.getId().equals(id)) {
+                tab.setActivated(visibility);
+                return;
+            }
+        }
+    }
+
+    public void removeList(String id) {
+        this.lists.get(id).clear();
+        this.lists.remove(id);
+        for (int i = 0; i < this.tabs.size(); ++i) {
+            if (this.tabs.get(i).getId().equals(id)) {
+                this.tabs.remove(i);
+                return;
+            }
         }
     }
 
