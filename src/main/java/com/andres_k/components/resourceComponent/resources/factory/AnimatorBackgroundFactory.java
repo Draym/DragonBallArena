@@ -39,7 +39,7 @@ public class AnimatorBackgroundFactory extends AnimatorFactory {
             animatorController.addEffect(EAnimation.IDLE, 0, 0, EffectFactory.createFlashEffect(200));
             animatorController.addEffect(EAnimation.IDLE, 0, 0, EffectFactory.createSoundEffect(ESound.EFFECT_FLASH));
         } else if (index == ESprites.HOME_SCREEN) {
-            Animation animation = AnimationFactory.loadAnimation(ConfigPath.image_background + "/Home/backgroundHome ", ".jpg", 37, GameConfig.animatedHome ? 125 /*192*/ : 37, true, 80, GameConfig.animatedHome ? 0 : 1);
+            Animation animation = AnimationFactory.loadAnimation(ConfigPath.image_background + "/home/backgroundHome ", ".jpg", 37, GameConfig.animatedHome ? 125 /*192*/ : 37, true, 80, GameConfig.animatedHome ? 0 : 1);
             animation.setPingPong(true);
             animatorController.addAnimation(EAnimation.IDLE, 0, animation);
         }

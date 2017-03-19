@@ -17,7 +17,7 @@ public class GameConfig {
     public static long timeLoop = 30;
     public static long currentTimeLoop = 30;
 
-    public static final boolean animatedHome = false;
+    public static final boolean animatedHome = true;
     public static final boolean characterLogoOff = true;
 
     public static ArrayList<EGameObject> typePlayer = new ArrayList<>();
