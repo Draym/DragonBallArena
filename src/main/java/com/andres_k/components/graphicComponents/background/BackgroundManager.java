@@ -28,6 +28,9 @@ public class BackgroundManager {
         this.components.entrySet().forEach(entry -> entry.getValue().update());
     }
 
+    public void run() {
+        this.components.entrySet().forEach(entry -> entry.getValue().run());
+    }
 
     public void addComponent(EBackground type, BackgroundComponent component) {
         this.components.put(type, component);

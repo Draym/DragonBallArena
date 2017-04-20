@@ -27,20 +27,31 @@ public abstract class BackgroundComponent {
         this.x = x;
         this.y = y;
         this.animator = animator;
-        this.initialize();
-        this.ready = true;
     }
 
     // FUNCTIONS
-    public void draw(Graphics g) throws SlickException {
-        this.animator.draw(g, this.x, this.y);
+    public void run() {
+        this.running = true;
+    }
+
+    public void stop() {
+        this.running = false;
+    }
+
+    public void draw(Graphics g) {
+        if (this.animator != null)
+            try {
+                this.animator.draw(g, this.x, this.y);
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
     }
 
     public void update() {
-        this.animator.update();
+        if (this.running) {
+            this.animator.update();
+        }
     }
-
-    public abstract void initialize() throws SlickException;
 
     public void playEffect(Effect effect, int priority) {
         this.animator.playEffect(effect, priority);

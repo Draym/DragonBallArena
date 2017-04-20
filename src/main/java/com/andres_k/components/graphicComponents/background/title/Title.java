@@ -12,8 +12,4 @@ public class Title extends BackgroundComponent {
     public Title(AnimatorController animator, float x, float y) throws SlickException {
         super(animator, x, y);
     }
-
-    @Override
-    public void initialize() throws SlickException {
-    }
 }

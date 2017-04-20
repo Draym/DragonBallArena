@@ -1,78 +1,81 @@
 package com.andres_k.components.graphicComponents.background.wallpaper;
 
 import com.andres_k.components.gameComponents.animations.AnimatorController;
-import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.utils.configs.GameConfig;
-import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by andres_k on 10/07/2015.
  */
 public class WallpaperSliding extends Wallpaper {
-
-    protected List<Pair<Integer, Integer>> positions;
-    protected List<Image> images;
-
-    protected float backgroundSizeY;
     private float speed;
+    private boolean horizontal;
+    private boolean moveRight;
 
-    public WallpaperSliding(AnimatorController animator, float speed) throws SlickException {
+    public WallpaperSliding(AnimatorController animator, float speed, boolean horizontal, boolean moveRight) throws SlickException {
         super(animator, 0, 0);
-        this.images = new ArrayList<>();
-        this.positions = new ArrayList<>();
-        this.ready = false;
         this.speed = speed;
+        this.horizontal = horizontal;
+        this.moveRight = moveRight;
     }
 
     @Override
     public void draw(Graphics g) {
-        if (this.ready)
-            for (int i = 0; i < this.images.size(); ++i) {
-                g.drawImage(this.images.get(i), this.positions.get(i).getV1(), this.positions.get(i).getV2());
+        if (this.animator != null)
+            try {
+                this.animator.draw(g, this.x, this.y);
+                if (this.moveRight) {
+                    this.animator.draw(g, (this.horizontal ? this.x + animator.currentAnimation().getCurrentFrame().getWidth() : this.x),
+                            (this.horizontal ? this.y : this.y - animator.currentAnimation().getCurrentFrame().getHeight()));
+                } else {
+                    this.animator.draw(g, (this.horizontal ? this.x - animator.currentAnimation().getCurrentFrame().getWidth() : this.x),
+                            (this.horizontal ? this.y : this.y + animator.currentAnimation().getCurrentFrame().getHeight()));
+                }
+            } catch (SlickException e) {
+                e.printStackTrace();
             }
     }
 
     @Override
     public void update() {
-        if (this.ready) {
-            for (Pair<Integer, Integer> pos : this.positions) {
-                pos.setV2((int) Math.ceil(((float) pos.getV2() + (this.speed * (GameConfig.currentTimeLoop / 1000)))));
-            }
-            for (int i = 0; i < this.positions.size(); ++i) {
-                if (this.positions.get(i).getV2() > WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2()) {
-                    int posPrev = i - 1;
-                    posPrev = (posPrev < 0 ? this.positions.size() - 1 : posPrev);
+        if (this.running) {
+            try {
+                float increase = (this.speed * ((float) GameConfig.currentTimeLoop / 1000));
+                if (this.horizontal) {
+                    if (this.moveRight) {
+                        this.x -= increase;
+                        if (this.x <= -animator.currentAnimation().getCurrentFrame().getWidth()) {
+                            this.x = 0;
+                        }
+                    } else {
+                        this.x += increase;
+                        if (this.x >= animator.currentAnimation().getCurrentFrame().getWidth()) {
+                            this.x = 0;
+                        }
+                    }
+                } else {
+                    if (this.moveRight) {
+                        this.y += increase;
+                        if (this.y >= animator.currentAnimation().getCurrentFrame().getHeight()) {
+                            this.y = 0;
+                        }
+                    } else {
+                        this.y -= increase;
+                        if (this.y <= -animator.currentAnimation().getCurrentFrame().getHeight()) {
+                            this.y = 0;
+                        }
+                    }
 
-                    this.positions.get(i).setV2((int) Math.ceil((float) this.positions.get(posPrev).getV2() - this.backgroundSizeY + 5));
+
                 }
+            } catch (SlickException e) {
+                e.printStackTrace();
             }
-        }
-    }
-
-    @Override
-    public void initialize() throws SlickException {
-        Image background = animator.currentAnimation().getCurrentFrame();
-
-        this.images.clear();
-        this.positions.clear();
-        this.backgroundSizeY = background.getHeight();
-        int number = (int) (WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2() / this.backgroundSizeY) + 2;
-
-        int x = 0;
-        int y = (int)(WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2() - this.backgroundSizeY);
-
-        y = (y < 0 ? 0 : y);
-        for (int i = 0; i < number; ++i) {
-            this.images.add(background.copy());
-            this.positions.add(new Pair<>(x, y));
-            y -= this.backgroundSizeY;
         }
     }
 }
