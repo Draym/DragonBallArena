@@ -1,6 +1,7 @@
 package com.andres_k.components.graphicComponents.graphic;
 
 import com.andres_k.components.controllers.WindowController;
+import com.andres_k.components.eventComponent.events.MouseController;
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.eventComponent.input.InputEvent;
 import com.andres_k.components.eventComponent.input.joystick.JoystickController;
@@ -147,6 +148,7 @@ public abstract class WindowBasedGame extends BasicGameState {
         int posX = container.getInput().getMouseX();
         int posY = container.getInput().getMouseY();
 
+        MouseController.get().updatePosition(posX, posY);
         this.gui.isOnFocus(posX, posY);
     }
 
