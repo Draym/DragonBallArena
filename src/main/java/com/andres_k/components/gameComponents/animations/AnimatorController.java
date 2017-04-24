@@ -11,6 +11,7 @@ import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.ActivatedTimer;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.Console;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -31,6 +32,7 @@ public class AnimatorController implements Observer {
     private HashMap<EAnimation, AnimatorContainer> animators;
     private ActivatedTimer activatedTimer;
     private EDirection eyesDirection;
+    private float rotateAngle;
 
     private EAnimation current;
     private Pair<EAnimation, Integer> nextRequiredAnimation;
@@ -52,6 +54,7 @@ public class AnimatorController implements Observer {
         this.eyesDirection = EDirection.RIGHT;
         this.nextRequiredAnimation = new Pair<>(EAnimation.NULL, 0);
         this.ownerId = "unknown";
+        this.rotateAngle = 0;
     }
 
     public AnimatorController(AnimatorController animatorController) throws SlickException {
@@ -70,6 +73,7 @@ public class AnimatorController implements Observer {
         this.eyesDirection = animatorController.eyesDirection;
         this.nextRequiredAnimation = new Pair<>(animatorController.nextRequiredAnimation);
         this.ownerId = animatorController.ownerId;
+        this.rotateAngle = animatorController.rotateAngle;
     }
 
     @Override
@@ -84,13 +88,13 @@ public class AnimatorController implements Observer {
     // DRAW
     public void drawSubImage(Graphics g, float drawX, float drawY, int posX, int posY, int width, int height) throws SlickException {
         if (this.isPrintable() && !this.isDeleted()) {
-            this.currentAnimator().drawSubImage(g, drawX, drawY, posX, posY, width, height, this.getEyesDirection().isHorizontalFlip(), false);
+            this.currentAnimator().drawSubImage(g, drawX, drawY, posX, posY, width, height, this.rotateAngle, this.getEyesDirection().isHorizontalFlip(), false);
         }
     }
 
     public void draw(Graphics g, float x, float y) throws SlickException {
         if (this.isPrintable() && !this.isDeleted()) {
-            this.currentAnimator().draw(g, x, y, this.getEyesDirection().isHorizontalFlip(), false);
+            this.currentAnimator().draw(g, x, y, this.rotateAngle, this.getEyesDirection().isHorizontalFlip(), false);
         }
     }
 
@@ -366,6 +370,10 @@ public class AnimatorController implements Observer {
         return this.getCurrentContainer().getFilter();
     }
 
+    public float getRotateAngle() {
+        return this.rotateAngle;
+    }
+
     public Animation getAnimation(EAnimation type, int index) {
         if (this.animators.containsKey(type)) {
             try {
@@ -429,7 +437,7 @@ public class AnimatorController implements Observer {
     }
 
     public boolean forceCurrentAnimation(EAnimation type, int index) {
-        return  this.forceCurrentAnimationType(type) && this.forceCurrentAnimationIndex(index);
+        return this.forceCurrentAnimationType(type) && this.forceCurrentAnimationIndex(index);
     }
 
     public boolean forceCurrentAnimationIndex(int value) {
@@ -495,5 +503,9 @@ public class AnimatorController implements Observer {
 
     public void setEyesDirection(EDirection direction) {
         this.eyesDirection = direction;
+    }
+
+    public void setRotateAngle(float value) {
+        this.rotateAngle = value;
     }
 }

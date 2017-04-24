@@ -40,8 +40,7 @@ public class Animator {
     public Animator(Animator animator) {
         if (animator.animation != null) {
             this.animation = animator.animation.copy();
-        }
-        else {
+        } else {
             this.animation = null;
         }
         this.body = animator.body;
@@ -62,20 +61,28 @@ public class Animator {
         }
     }
 
-    public void draw(Graphics g, float x, float y, boolean flipX, boolean flipY) {
+    public void draw(Graphics g, float drawX, float drawY, float rotateAngle, boolean flipX, boolean flipY) {
         if (this.animation != null) {
             Image image = this.getAnimation().getCurrentFrame().getFlippedCopy(flipX, flipY);
+            if (rotateAngle != 0) {
+               // image.setCenterOfRotation(drawX, drawY);
+                image.setRotation(rotateAngle);
+            }
             if (this.effectManager.hasActivity()) {
-                this.effectManager.draw(g, image, x, y, flipX, flipY);
+                this.effectManager.draw(g, image, drawX, drawY, flipX, flipY);
             } else {
-                g.drawImage(image, x, y);
+                g.drawImage(image, drawX, drawY);
             }
         }
     }
 
-    public void drawSubImage(Graphics g, float drawX, float drawY, int posX, int posY, int width, int height, boolean flipX, boolean flipY) {
+    public void drawSubImage(Graphics g, float drawX, float drawY, int posX, int posY, int width, int height, float rotateAngle, boolean flipX, boolean flipY) {
         if (this.animation != null) {
             Image image = this.getAnimation().getCurrentFrame().getSubImage(posX, posY, width, height).getFlippedCopy(flipX, flipY);
+            if (rotateAngle != 0) {
+                //image.setCenterOfRotation(drawX, drawY);
+                image.setRotation(rotateAngle);
+            }
             if (this.effectManager.hasActivity()) {
                 this.effectManager.draw(g, image, drawX, drawY, flipX, flipY);
             } else {
