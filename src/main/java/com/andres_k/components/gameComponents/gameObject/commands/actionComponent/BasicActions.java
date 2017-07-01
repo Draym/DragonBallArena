@@ -173,8 +173,8 @@ public class BasicActions {
 
     public static void jump(GameObject object) {
         if (object.getMovement().getMoveDirection() != EDirection.NONE) {
-            object.getMovement().setPushX(GameConfig.speedTravel);
+            object.getMovement().setPushX(GameConfig.speedTravel * object.getMovement().getCoeffX());
         }
-        object.getMovement().setPushY(-GameConfig.speedJump);
+        object.getMovement().setPushY(-GameConfig.speedJump * object.getMovement().getCoeffY());
     }
 }

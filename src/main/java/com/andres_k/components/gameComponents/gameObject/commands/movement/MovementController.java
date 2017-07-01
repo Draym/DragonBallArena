@@ -27,6 +27,9 @@ public class MovementController {
     private float pushGravity;
     private float exponential;
 
+    private float coeffX;
+    private float coeffY;
+
     public MovementController(Pair<Float, Float> positions, float gravity, float moveSpeed, float gravitySpeed, float weight, boolean onEarth) {
         this.positions = new Pair<>(positions.getV1(), positions.getV2());
         this.onEarth = onEarth;
@@ -36,6 +39,8 @@ public class MovementController {
         this.weight = weight;
         this.pushX = 0;
         this.pushY = 0;
+        this.coeffX = 1;
+        this.coeffY = 1;
         this.useGravity = true;
         this.moveDirection = EDirection.NONE;
         this.resetGravity();
@@ -170,6 +175,14 @@ public class MovementController {
         return this.positions.getV2();
     }
 
+    public float getCoeffX() {
+        return this.coeffX;
+    }
+
+    public float getCoeffY() {
+        return this.coeffY;
+    }
+
     public Pair<Float, Float> getPositions() {
         return this.positions;
     }
@@ -237,6 +250,14 @@ public class MovementController {
 
     public void setPushY(float value) {
         this.pushY = value;
+    }
+
+    public void setCoeffX(float value) {
+        this.coeffX = value;
+    }
+
+    public void setCoeffY(float value) {
+        this.coeffY = value;
     }
 
     public void setOnEarth(boolean value) {

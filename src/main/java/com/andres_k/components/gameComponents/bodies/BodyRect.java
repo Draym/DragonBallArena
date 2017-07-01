@@ -1,5 +1,6 @@
 package com.andres_k.components.gameComponents.bodies;
 
+import com.andres_k.components.camera.CameraController;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.MathTools;
@@ -35,7 +36,7 @@ public class BodyRect {
         this.lastCollisions = new ArrayList<>();
     }
 
-    public void draw(Graphics g, boolean haveToFlip, Rectangle container, float posX, float posY) {
+    public void draw(Graphics g, boolean haveToFlip, Shape container, float posX, float posY, float rotateAngle, boolean useCameraMove) {
         if (this.type == EGameObject.DEFENSE_BODY) {
             g.setColor(Color.cyan);
         } else if (this.type == EGameObject.ATTACK_BODY) {
@@ -43,7 +44,7 @@ public class BodyRect {
         } else if (this.type == EGameObject.BLOCK_BODY) {
             g.setColor(Color.black);
         }
-        g.draw(this.getFlippedRect(haveToFlip, container, posX, posY));
+        CameraController.get().draw(g, this.getFlippedRect(haveToFlip, container, posX, posY, rotateAngle), useCameraMove);
     }
 
     public void restart() {
@@ -70,7 +71,7 @@ public class BodyRect {
         return this.id;
     }
 
-    public Shape getFlippedRect(boolean haveToFlip, Rectangle container, float posX, float posY) {
+    public Shape getFlippedRect(boolean haveToFlip, Shape container, float posX, float posY, float rotateAngle) {
         Pair<Float, Float> newPoint = new Pair<>(this.positions.getV1() + container.getMinX(), this.positions.getV2() + container.getMinY());
 
         if (haveToFlip) {
@@ -82,9 +83,9 @@ public class BodyRect {
         }
 
         if (this.sizes.getV2() < 0) {
-            return new Circle(newPoint.getV1(), newPoint.getV2(), this.sizes.getV1());
+            return MathTools.rotateShape(new Circle(newPoint.getV1(), newPoint.getV2(), this.sizes.getV1()), rotateAngle);
         } else {
-            return new Rectangle(newPoint.getV1(), newPoint.getV2(), this.sizes.getV1(), this.sizes.getV2());
+            return MathTools.rotateShape(new Rectangle(newPoint.getV1(), newPoint.getV2(), this.sizes.getV1(), this.sizes.getV2()), rotateAngle);
         }
     }
 

@@ -23,6 +23,7 @@ public class HomeController extends WindowController {
 
     @Override
     public void enter() throws SlickException {
+        this.backgroundManager.run();
         if (NetworkController.get().isConnected()) {
             NetworkController.get().disconnect();
             GameObjectController.get().leave();

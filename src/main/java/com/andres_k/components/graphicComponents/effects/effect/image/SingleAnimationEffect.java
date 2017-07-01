@@ -1,5 +1,6 @@
 package com.andres_k.components.graphicComponents.effects.effect.image;
 
+import com.andres_k.components.camera.CameraController;
 import com.andres_k.components.graphicComponents.effects.ImageConfiguration;
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
@@ -54,7 +55,7 @@ public class SingleAnimationEffect extends Effect {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(this.animation.getCurrentFrame().getFlippedCopy(this.flipX, this.flipY), this.x, this.y);
+        CameraController.get().draw(this.animation.getCurrentFrame().getFlippedCopy(this.flipX, this.flipY), this.x, this.y, true);
     }
 
     @Override

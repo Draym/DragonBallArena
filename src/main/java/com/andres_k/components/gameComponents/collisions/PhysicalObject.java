@@ -38,6 +38,7 @@ public abstract class PhysicalObject extends GameObject {
         CollisionResult result = new CollisionResult();
 
         this.saveCollisions.clear();
+
         List<GameObject> potential = items.stream().filter(item -> checkBorderCollision(item, newPos)).collect(Collectors.toList());
 
         potential.forEach(item -> result.compileWith(checkBodyCollision(item, pos, newPos)));
@@ -48,7 +49,7 @@ public abstract class PhysicalObject extends GameObject {
         return result;
     }
 
-    public boolean checkBorderCollision(GameObject enemy, Pair<Float, Float> pos) {
+    private boolean checkBorderCollision(GameObject enemy, Pair<Float, Float> pos) {
         if (!enemy.getId().contains(this.getId())) {
             BodySprite myBody = this.getBody();
             BodySprite hisBody = enemy.getBody();
@@ -57,8 +58,10 @@ public abstract class PhysicalObject extends GameObject {
                     || this.saveCollisions.get(myBody.getId()) == hisBody.getId()
                     || this.saveCollisions.get(hisBody.getId()) == myBody.getId())
                 return false;
-            if (myBody.getFlippedBody(this.getAnimatorController().getEyesDirection().isHorizontalFlip(), pos.getV1(), pos.getV2())
-                    .intersects(hisBody.getFlippedBody(enemy.getAnimatorController().getEyesDirection().isHorizontalFlip(), enemy.getPosX(), enemy.getPosY()))) {
+            if (myBody.getFlippedBody(this.getAnimatorController().getEyesDirection().isHorizontalFlip(),
+                    pos.getV1(), pos.getV2(), this.getAnimatorController().getRotateAngle())
+                    .intersects(hisBody.getFlippedBody(enemy.getAnimatorController().getEyesDirection().isHorizontalFlip(),
+                            enemy.getPosX(), enemy.getPosY(), enemy.getAnimatorController().getRotateAngle()))) {
                 this.saveCollisions.put(myBody.getId(), hisBody.getId());
                 return true;
             }
@@ -85,17 +88,24 @@ public abstract class PhysicalObject extends GameObject {
 
     private boolean checkCollisionInSpecialWay(GameObject enemy, BodyRect myRect, BodyRect hisRect, Pair<Float, Float> pos, Pair<Float, Float> newPos, CollisionResult result, int mode) {
 
-        Shape myShape = myRect.getFlippedRect(this.getAnimatorController().getEyesDirection().isHorizontalFlip(),
-                this.getBody().getFlippedBody(this.getAnimatorController().getEyesDirection().isHorizontalFlip(), newPos.getV1(), newPos.getV2()), newPos.getV1(), newPos.getV2());
+        boolean myEyesDir = this.getAnimatorController().getEyesDirection().isHorizontalFlip();
+        float myRotateAngle = this.getAnimatorController().getRotateAngle();
+        boolean hisEyesDir = enemy.getAnimatorController().getEyesDirection().isHorizontalFlip();
+        float hisRotateAngle = this.getAnimatorController().getRotateAngle();
 
-        Shape hisShape = hisRect.getFlippedRect(enemy.getAnimatorController().getEyesDirection().isHorizontalFlip(),
-                enemy.getBody().getFlippedBody(enemy.getAnimatorController().getEyesDirection().isHorizontalFlip(), enemy.getPosX(), enemy.getPosY()), enemy.getPosX(), enemy.getPosY());
+        Shape myShape = myRect.getFlippedRect(myEyesDir,
+                this.getBody().getFlippedBody(myEyesDir, newPos.getV1(), newPos.getV2()),
+                newPos.getV1(), newPos.getV2(), myRotateAngle);
+
+        Shape hisShape = hisRect.getFlippedRect(hisEyesDir,
+                enemy.getBody().getFlippedBody(hisEyesDir, enemy.getPosX(), enemy.getPosY()),
+                enemy.getPosX(), enemy.getPosY(), hisRotateAngle);
 
         if (myShape.intersects(hisShape) || myShape.contains(hisShape) || hisShape.contains(myShape)) {
             this.doCollision(enemy, myRect, hisRect, myShape, hisShape, result, pos, mode);
             myRect.addCollision(hisRect.getId());
             hisRect.addCollision(myRect.getId());
-            if (enemy.getType() == EGameObject.PLATFORM)
+            if (enemy.getType() == EGameObject.PLATFORM || (enemy.getType() == EGameObject.MAP && hisShape.getWidth() >= hisShape.getHeight()))
                 return true;
         } else {
             myRect.deleteCollision(hisRect.getId());
@@ -108,8 +118,10 @@ public abstract class PhysicalObject extends GameObject {
         if (!myRect.containsCollision(hisRect.getId()) && !hisRect.containsCollision(myRect.getId())) {
             if (myRect.getType() == EGameObject.ATTACK_BODY && hisRect.getType() == EGameObject.DEFENSE_BODY) {
                 enemy.manageGetHit(this);
+                this.manageDoHit(enemy);
             } else if (myRect.getType() == EGameObject.DEFENSE_BODY && hisRect.getType() == EGameObject.ATTACK_BODY) {
                 this.manageGetHit(enemy);
+                enemy.manageDoHit(this);
             } else if (myRect.getType() == EGameObject.ATTACK_BODY && hisRect.getType() == EGameObject.ATTACK_BODY) {
                 this.manageMutualHit(enemy);
             } else {
@@ -124,8 +136,23 @@ public abstract class PhysicalObject extends GameObject {
             float diffAbsNewPos;
             float distance;
 
-            Shape myPreviousShape = myRect.getFlippedRect(this.getAnimatorController().getEyesDirection().isHorizontalFlip(),
-                    this.getBody().getFlippedBody(this.getAnimatorController().getEyesDirection().isHorizontalFlip(), pos.getV1(), pos.getV2()), pos.getV1(), pos.getV2());
+            boolean myEyesDir = this.getAnimatorController().getEyesDirection().isHorizontalFlip();
+            float myRotateAngle = this.getAnimatorController().getRotateAngle();
+
+            Shape myPreviousShape = myRect.getFlippedRect(myEyesDir,
+                    this.getBody().getFlippedBody(myEyesDir, pos.getV1(), pos.getV2()),
+                    pos.getV1(), pos.getV2(), myRotateAngle);
+
+            EGameObject enemyType = enemy.getType();
+
+            enemy.manageDoHit(this);
+            if (enemyType == EGameObject.MAP) {
+                if (hisShape.getWidth() >= hisShape.getHeight()) {
+                    enemyType = EGameObject.PLATFORM;
+                } else {
+                    enemyType = EGameObject.BORDER;
+                }
+            }
             if (mode == 1) {
                 diffPos = MathTools.getDistance(myPreviousShape.getCenterX(), hisShape.getCenterX());
                 diffNewPos = MathTools.getDistance(myShape.getCenterX(), hisShape.getCenterX());
@@ -133,7 +160,7 @@ public abstract class PhysicalObject extends GameObject {
                 diffAbsPos = MathTools.abs(diffPos);
 
                 distance = diffAbsPos - (myShape.getWidth() / 2 + hisShape.getWidth() / 2);
-                result.addCollisionX((diffAbsPos >= diffAbsNewPos), enemy.getType(), (diffPos > 0 ? EDirection.RIGHT : EDirection.LEFT), distance);
+                result.addCollisionX((diffAbsPos >= diffAbsNewPos), enemyType, (diffPos > 0 ? EDirection.RIGHT : EDirection.LEFT), distance);
             } else {
                 diffPos = MathTools.getDistance(myPreviousShape.getCenterY(), hisShape.getCenterY());
                 diffNewPos = myShape.getCenterY() - hisShape.getCenterY();
@@ -141,7 +168,7 @@ public abstract class PhysicalObject extends GameObject {
                 diffAbsPos = MathTools.abs(diffPos);
 
                 distance = diffAbsPos - (myShape.getHeight() / 2 + hisShape.getHeight() / 2);
-                result.addCollisionY((diffAbsPos >= diffAbsNewPos), enemy.getType(), (diffPos <= 0 ? EDirection.UP : EDirection.DOWN), distance);
+                result.addCollisionY((diffAbsPos >= diffAbsNewPos), enemyType, (diffPos <= 0 ? EDirection.UP : EDirection.DOWN), distance);
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.andres_k.components.gameComponents.gameObject;
 
+import com.andres_k.components.camera.CameraController;
 import com.andres_k.components.eventComponent.input.EInput;
 import com.andres_k.components.gameComponents.animations.AnimatorController;
 import com.andres_k.components.gameComponents.animations.EAnimation;
@@ -11,6 +12,7 @@ import com.andres_k.components.gameComponents.gameObject.commands.movement.Movem
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
@@ -77,8 +79,12 @@ public abstract class GameObject {
         if (this.animatorController != null) {
             this.animatorController.draw(g, this.graphicalX(), this.graphicalY());
             if (GlobalVariable.drawCollision && this.animatorController.currentBodyAnimation() != null) {
-                this.animatorController.currentBodyAnimation().draw(g, this.animatorController.currentFrame(), this.animatorController.getEyesDirection().isHorizontalFlip(), this.getPosX(), this.getPosY());
-                g.fillRect(this.getPosX(), this.getPosY(), 5, 5);
+                this.animatorController.currentBodyAnimation().draw(g, this.animatorController.currentFrame(), this.animatorController.getEyesDirection().isHorizontalFlip(),
+                        this.getPosX(), this.getPosY(), this.getAnimatorController().getRotateAngle(), this.getAnimatorController().isUseCameraMove());
+                if (this.getAnimatorController().isUseCameraMove())
+                    g.fillRect(CameraController.get().getTransformPosX(this.getPosX()), CameraController.get().getTransformPosY(this.getPosY()), 5, 5);
+                else
+                    g.fillRect(this.getPosX(), this.getPosY(), 5, 5);
             }
         }
     }
@@ -120,7 +126,7 @@ public abstract class GameObject {
 
     public void teleportBehindMyAttacker() {
         if (this.attackerOwner != null) {
-            this.movement.setPositions(this.attackerOwner.getPosX() + (this.attackerOwner.getAnimatorController().getEyesDirection() == EDirection.RIGHT ? - 70 : 70), this.attackerOwner.getPosY() - 70);
+            this.movement.setPositions(this.attackerOwner.getPosX() + (this.attackerOwner.getAnimatorController().getEyesDirection() == EDirection.RIGHT ? -70 : 70), this.attackerOwner.getPosY() - 70);
             this.animatorController.setEyesDirection(this.attackerOwner.getAnimatorController().getEyesDirection());
             this.useAttackerTimer = true;
         }
@@ -133,6 +139,10 @@ public abstract class GameObject {
     }
 
     public void manageMutualHit(GameObject enemy) {
+    }
+
+    public void manageDoHit(GameObject enemy) {
+
     }
 
     public void manageGetHit(GameObject enemy) {
@@ -198,7 +208,10 @@ public abstract class GameObject {
         return this.animatorController.currentBodySprite();
     }
 
-    public float graphicalX() {
+    public float
+
+
+    graphicalX() {
         if (this.getBody() == null) {
             return this.getPosX();
         }

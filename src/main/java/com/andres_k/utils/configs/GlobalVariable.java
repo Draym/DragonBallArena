@@ -9,7 +9,7 @@ public class GlobalVariable {
     public static boolean drawCollision = false;
     public static boolean showFps = true;
     public static boolean debug = false;
-    public static boolean log = false;
+    public static boolean log = true;
 
     public static String id_delimiter = ".";
 

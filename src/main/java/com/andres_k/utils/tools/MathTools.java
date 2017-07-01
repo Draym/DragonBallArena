@@ -3,6 +3,8 @@ package com.andres_k.utils.tools;
 
 import com.andres_k.utils.stockage.Pair;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.geom.Transform;
 
 import java.awt.geom.AffineTransform;
 
@@ -29,7 +31,7 @@ public class MathTools {
         return new Pair<>(x * delta, y * delta);
     }
 
-    public static void flipRect(int mode, Rectangle container, Pair<Float, Float> point, Pair<Float, Float> sizes) {
+    public static void flipRect(int mode, Shape container, Pair<Float, Float> point, Pair<Float, Float> sizes) {
         if (mode == 1) {
             point.setV1(container.getMaxX() - (point.getV1() - container.getMinX()) - sizes.getV1());
         } else {
@@ -37,12 +39,20 @@ public class MathTools {
         }
     }
 
-    public static void flipCircle(int mode, Rectangle container, Pair<Float, Float> point, Pair<Float, Float> sizes) {
+    public static void flipCircle(int mode, Shape container, Pair<Float, Float> point, Pair<Float, Float> sizes) {
         if (mode == 1) {
             point.setV1(container.getMaxX() - (point.getV1() - container.getMinX()));
         } else {
             point.setV2(container.getMaxY() - (point.getV2() - container.getMinY()));
         }
+    }
+
+
+    public static Shape rotateShape(Shape shape, float angle) {
+        if (angle != 0) {
+            return shape.transform(Transform.createRotateTransform(MathTools.toRadian(angle), shape.getCenterX(), shape.getCenterY()));
+        }
+        return shape;
     }
 
     public static void rotate(Pair<Float, Float> center, Pair<Float, Float> point, float angle){

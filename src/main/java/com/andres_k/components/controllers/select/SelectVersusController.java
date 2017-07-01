@@ -23,6 +23,7 @@ public class SelectVersusController extends WindowController {
     public void enter() throws SlickException {
         GameConfig.typePlayer.clear();
         GameConfig.mode = EMode.VERSUS;
+        this.backgroundManager.run();
     }
 
     @Override

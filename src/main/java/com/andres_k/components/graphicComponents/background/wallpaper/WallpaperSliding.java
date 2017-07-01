@@ -31,7 +31,7 @@ public class WallpaperSliding extends Wallpaper {
 
     @Override
     public void draw(Graphics g) {
-        if (this.animator != null) {
+        if (this.animator != null && this.activated) {
             int currentX = 0;
             int currentY = 0;
             int incrX;
@@ -59,7 +59,7 @@ public class WallpaperSliding extends Wallpaper {
 
     @Override
     public void update() {
-        if (this.running) {
+        if (this.running && this.activated) {
             try {
                 float increase = (this.speed * ((float) GameConfig.currentTimeLoop / 1000));
                 if (this.horizontal) {

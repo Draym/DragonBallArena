@@ -26,6 +26,7 @@ public enum EGameObject {
     ENTITY("ENTITY", ANIMATED.getValue()),
 
     //items
+    MAP("Map", UNBREAKABLE.getValue()),
     GROUND("Ground", PLATFORM.getValue()),
     WALL("Wall", BORDER.getValue()),
 

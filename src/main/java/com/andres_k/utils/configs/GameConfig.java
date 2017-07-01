@@ -25,6 +25,9 @@ public class GameConfig {
     public static float speedTravel = 1f;
     public static float speedJump = 2f;
 
+    public static float globalMapWidth = 1900;
+    public static float globalMapHeight = 950;
+
     public static final EGuiElement playerChoiceGui[] = new EGuiElement[] {EGuiElement.AVATAR_GOKU, EGuiElement.AVATAR_PICOLO, EGuiElement.AVATAR_VEGETA, EGuiElement.AVATAR_KAME_SENNIN, EGuiElement.AVATAR_FRIEEZA, EGuiElement.AVATAR_BUU, EGuiElement.AVATAR_CELL, EGuiElement.AVATAR_GOHAN};
     public static final EGameObject playerChoiceType[] = new EGameObject[] {EGameObject.GOKU, EGameObject.PICOLO, EGameObject.VEGETA, EGameObject.KAME_SENNIN, EGameObject.FRIEEZA, EGameObject.BUU, EGameObject.CELL, EGameObject.GOHAN};
 }

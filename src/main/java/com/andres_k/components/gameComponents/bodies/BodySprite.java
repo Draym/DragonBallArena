@@ -1,11 +1,14 @@
 package com.andres_k.components.gameComponents.bodies;
 
+import com.andres_k.components.camera.CameraController;
+import com.andres_k.utils.tools.MathTools;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,15 +35,15 @@ public class BodySprite {
         this.id = UUID.randomUUID();
     }
 
-    public void draw(Graphics g, boolean haveToFlip, float posX, float posY) {
+    public void draw(Graphics g, boolean haveToFlip, float posX, float posY, float rotateAngle, boolean useCameraMove) {
         g.setColor(Color.red);
-        Rectangle mySprite = this.getFlippedSprite(haveToFlip, posX, posY);
-        g.draw(mySprite);
+        Shape mySprite = this.getFlippedSprite(haveToFlip, posX, posY, rotateAngle);
+        CameraController.get().draw(g, mySprite, useCameraMove);
         g.setColor(Color.green);
-        Rectangle myBody = this.getFlippedBody(haveToFlip, posX, posY);
-        g.draw(myBody);
+        Shape myBody = this.getFlippedBody(haveToFlip, posX, posY, rotateAngle);
+        CameraController.get().draw(g, myBody, useCameraMove);
         for (BodyRect rect : this.bodies) {
-            rect.draw(g, haveToFlip, myBody, posX, posY);
+            rect.draw(g, haveToFlip, this.getFlippedBody(haveToFlip, posX, posY), posX, posY, rotateAngle, useCameraMove);
         }
     }
 
@@ -57,24 +60,32 @@ public class BodySprite {
 
     }
 
-    public Rectangle getFlippedSprite(boolean haveToFlip, float posX, float posY) {
+    public Shape getFlippedSprite(boolean haveToFlip, float posX, float posY) {
+        return this.getFlippedSprite(haveToFlip, posX, posY, 0);
+    }
+
+    public Shape getFlippedSprite(boolean haveToFlip, float posX, float posY, float rotateAngle) {
         float flipX = posX - this.sprite.getCenterX();
 
         if (haveToFlip) {
             flipX = posX - this.sprite.getWidth();
         }
-        return new Rectangle(flipX, posY - this.sprite.getCenterY(), this.sprite.getWidth(), this.sprite.getHeight());
+        return MathTools.rotateShape(new Rectangle(flipX, posY - this.sprite.getCenterY(), this.sprite.getWidth(), this.sprite.getHeight()), rotateAngle);
     }
 
-    public Rectangle getFlippedBody(boolean haveToFlip, float posX, float posY) {
+    public Shape getFlippedBody(boolean haveToFlip, float posX, float posY, float rotateAngle) {
         float flipX = posX - this.sprite.getCenterX() + this.body.getMinX();
 
         if (haveToFlip) {
-            Rectangle sprite = this.getFlippedSprite(true, posX, posY);
+            Shape sprite = this.getFlippedSprite(true, posX, posY, rotateAngle);
 
             flipX = sprite.getCenterX() + ((sprite.getWidth() / 2) - this.body.getMaxX());
         }
-        return new Rectangle(flipX, posY - this.sprite.getCenterY() + this.body.getMinY(), this.body.getWidth(), this.body.getHeight());
+        return MathTools.rotateShape(new Rectangle(flipX, posY - this.sprite.getCenterY() + this.body.getMinY(), this.body.getWidth(), this.body.getHeight()), rotateAngle);
+    }
+
+    public Shape getFlippedBody(boolean haveToFlip, float posX, float posY) {
+        return this.getFlippedBody(haveToFlip, posX, posY, 0);
     }
 
     public UUID getId() {

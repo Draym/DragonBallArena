@@ -31,9 +31,9 @@ public class BodyAnimation {
         }
     }
 
-    public void draw(Graphics g, int currentFrame, boolean haveToFlip, float posX, float posY) {
+    public void draw(Graphics g, int currentFrame, boolean haveToFlip, float posX, float posY, float rotateAngle, boolean useCameraMove) {
         if (currentFrame < this.bodies.size()) {
-            this.bodies.get(currentFrame).draw(g, haveToFlip, posX, posY);
+            this.bodies.get(currentFrame).draw(g, haveToFlip, posX, posY, rotateAngle, useCameraMove);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.andres_k.components.gameComponents.animations;
 
+import com.andres_k.components.camera.CameraController;
 import com.andres_k.components.gameComponents.animations.details.AnimationConfigItem;
 import com.andres_k.components.gameComponents.animations.details.AnimationRepercussionItem;
 import com.andres_k.components.gameComponents.bodies.BodyAnimation;
@@ -8,6 +9,7 @@ import com.andres_k.components.graphicComponents.effects.EffectManager;
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -61,32 +63,30 @@ public class Animator {
         }
     }
 
-    public void draw(Graphics g, float drawX, float drawY, float rotateAngle, boolean flipX, boolean flipY) {
-        if (this.animation != null) {
+    public void draw(Graphics g, float drawX, float drawY, float rotateAngle, boolean flipX, boolean flipY, boolean useCameraMove) {
+            if (this.animation != null) {
             Image image = this.getAnimation().getCurrentFrame().getFlippedCopy(flipX, flipY);
             if (rotateAngle != 0) {
-               // image.setCenterOfRotation(drawX, drawY);
-                image.setRotation(rotateAngle);
+                 image.setRotation(rotateAngle);
             }
             if (this.effectManager.hasActivity()) {
                 this.effectManager.draw(g, image, drawX, drawY, flipX, flipY);
             } else {
-                g.drawImage(image, drawX, drawY);
+                CameraController.get().draw(image, drawX, drawY, useCameraMove);
             }
         }
     }
 
-    public void drawSubImage(Graphics g, float drawX, float drawY, int posX, int posY, int width, int height, float rotateAngle, boolean flipX, boolean flipY) {
+    public void drawSubImage(Graphics g, float drawX, float drawY, int posX, int posY, int width, int height, float rotateAngle, boolean flipX, boolean flipY, boolean useCameraMove) {
         if (this.animation != null) {
             Image image = this.getAnimation().getCurrentFrame().getSubImage(posX, posY, width, height).getFlippedCopy(flipX, flipY);
             if (rotateAngle != 0) {
-                //image.setCenterOfRotation(drawX, drawY);
-                image.setRotation(rotateAngle);
+               image.setRotation(rotateAngle);
             }
             if (this.effectManager.hasActivity()) {
                 this.effectManager.draw(g, image, drawX, drawY, flipX, flipY);
             } else {
-                g.drawImage(image, drawX, drawY);
+                CameraController.get().draw(image, drawX, drawY, useCameraMove);
             }
         }
     }

@@ -3,6 +3,7 @@ package com.andres_k.components.graphicComponents.effects.effect.flash;
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.tools.shapes.ColorShape;
+import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Graphics;
 
 /**

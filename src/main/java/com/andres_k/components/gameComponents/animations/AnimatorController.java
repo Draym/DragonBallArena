@@ -41,6 +41,8 @@ public class AnimatorController implements Observer {
     private boolean deleted;
     private boolean needUpdate;
 
+    private boolean useCameraMove;
+
     private String ownerId;
 
     public AnimatorController() {
@@ -55,6 +57,7 @@ public class AnimatorController implements Observer {
         this.nextRequiredAnimation = new Pair<>(EAnimation.NULL, 0);
         this.ownerId = "unknown";
         this.rotateAngle = 0;
+        this.useCameraMove = true;
     }
 
     public AnimatorController(AnimatorController animatorController) throws SlickException {
@@ -74,6 +77,7 @@ public class AnimatorController implements Observer {
         this.nextRequiredAnimation = new Pair<>(animatorController.nextRequiredAnimation);
         this.ownerId = animatorController.ownerId;
         this.rotateAngle = animatorController.rotateAngle;
+        this.useCameraMove = animatorController.useCameraMove;
     }
 
     @Override
@@ -88,13 +92,13 @@ public class AnimatorController implements Observer {
     // DRAW
     public void drawSubImage(Graphics g, float drawX, float drawY, int posX, int posY, int width, int height) throws SlickException {
         if (this.isPrintable() && !this.isDeleted()) {
-            this.currentAnimator().drawSubImage(g, drawX, drawY, posX, posY, width, height, this.rotateAngle, this.getEyesDirection().isHorizontalFlip(), false);
+            this.currentAnimator().drawSubImage(g, drawX, drawY, posX, posY, width, height, this.rotateAngle, this.getEyesDirection().isHorizontalFlip(), false, this.useCameraMove);
         }
     }
 
     public void draw(Graphics g, float x, float y) throws SlickException {
         if (this.isPrintable() && !this.isDeleted()) {
-            this.currentAnimator().draw(g, x, y, this.rotateAngle, this.getEyesDirection().isHorizontalFlip(), false);
+            this.currentAnimator().draw(g, x, y, this.rotateAngle, this.getEyesDirection().isHorizontalFlip(), false, this.useCameraMove);
         }
     }
 
@@ -374,6 +378,10 @@ public class AnimatorController implements Observer {
         return this.rotateAngle;
     }
 
+    public boolean isUseCameraMove() {
+        return this.useCameraMove;
+    }
+
     public Animation getAnimation(EAnimation type, int index) {
         if (this.animators.containsKey(type)) {
             try {
@@ -507,5 +515,9 @@ public class AnimatorController implements Observer {
 
     public void setRotateAngle(float value) {
         this.rotateAngle = value;
+    }
+
+    public void setUseCameraMove(boolean value) {
+        this.useCameraMove = value;
     }
 }

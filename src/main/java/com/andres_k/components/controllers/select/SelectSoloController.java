@@ -23,6 +23,7 @@ public class SelectSoloController extends WindowController {
     public void enter() throws SlickException {
         GameConfig.typePlayer.clear();
         GameConfig.mode = EMode.SOLO;
+        this.backgroundManager.run();
     }
 
     @Override

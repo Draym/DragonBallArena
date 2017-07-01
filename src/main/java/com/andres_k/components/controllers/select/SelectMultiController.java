@@ -23,6 +23,7 @@ public class SelectMultiController extends WindowController {
     public void enter() throws SlickException {
         GameConfig.typePlayer.clear();
         GameConfig.mode = EMode.ONLINE;
+        this.backgroundManager.run();
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.andres_k.components.eventComponent.events;
 
+import com.andres_k.components.camera.CameraController;
+
 /**
  * Created by kevin on 25/04/2017.
  */
@@ -22,8 +24,8 @@ public class MouseController {
     }
 
     public void updatePosition(int x, int y) {
-        this.mouseX = x;
-        this.mouseY = y;
+        this.mouseX = x + (int) CameraController.get().getCamX();
+        this.mouseY = y + (int) CameraController.get().getCamY();
     }
 
     // GETTERS

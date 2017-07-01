@@ -35,6 +35,7 @@ public class LoadController extends WindowController {
 
     @Override
     public void enter() throws SlickException {
+        this.backgroundManager.run();
     }
 
     @Override
@@ -72,7 +73,6 @@ public class LoadController extends WindowController {
             }
             ++this.index;
         }
-
     }
 
     @Override

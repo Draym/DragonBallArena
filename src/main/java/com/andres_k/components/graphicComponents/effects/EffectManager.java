@@ -1,9 +1,11 @@
 package com.andres_k.components.graphicComponents.effects;
 
+import com.andres_k.components.camera.CameraController;
 import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 import com.andres_k.components.graphicComponents.effects.effect.directive.ClearEffects;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.Console;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
@@ -16,7 +18,7 @@ import java.util.List;
 public class EffectManager {
     private List<Pair<Integer, Pair<Integer, Effect>>> stockedEffects;
     private List<Effect> availableEffects;
-    private ImageConfiguration conf;
+    protected ImageConfiguration conf;
 
     public EffectManager() {
         this.stockedEffects = new ArrayList<>();
@@ -56,7 +58,6 @@ public class EffectManager {
     public void update() {
         boolean result;
         int level = -1;
-
         for (int i = 0; i < this.availableEffects.size(); ++i) {
             if (level == -1) {
                 level = this.availableEffects.get(i).getPriority();
@@ -99,9 +100,9 @@ public class EffectManager {
             image.setCenterOfRotation((image.getWidth() * this.conf.scale) / 2, (image.getHeight() * this.conf.scale) / 2);
             image.rotate(this.conf.rotation);
             if (conf.color == null) {
-                image.draw(this.conf.x, this.conf.y, this.conf.scale);
+                CameraController.get().draw(image, this.conf.x, this.conf.y, this.conf.scale, true);
             } else {
-                image.draw(this.conf.x, this.conf.y, this.conf.scale, this.conf.color);
+                CameraController.get().draw(image, this.conf.x, this.conf.y, this.conf.scale, this.conf.color, true);
             }
             this.draw(g);
         }

@@ -31,6 +31,7 @@ public class BattleConnectionController extends WindowController {
 
     @Override
     public void enter() throws SlickException {
+        this.backgroundManager.run();
         if (NetworkController.get().connect()) {
             Console.write("Connection: OK");
 

@@ -32,6 +32,10 @@ public class BackgroundManager {
         this.components.entrySet().forEach(entry -> entry.getValue().run());
     }
 
+    public void stop() {
+        this.components.entrySet().forEach(entry -> entry.getValue().stop());
+    }
+
     public void addComponent(EBackground type, BackgroundComponent component) {
         this.components.put(type, component);
     }
@@ -43,6 +47,10 @@ public class BackgroundManager {
     }
 
     // GETTERS
+    public BackgroundComponent getComponent(EBackground id) {
+        return this.components.get(id);
+    }
+
     public boolean isReady() {
         return this.components.entrySet().stream().allMatch(entry -> entry.getValue().isReady());
     }
