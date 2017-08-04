@@ -24,5 +24,9 @@ public class BigBang extends KiVulnerableAttack {
         if (this.movement.getPushX() == 0f && this.animatorController.currentAnimationType() == EAnimation.RUN) {
             this.movement.setPushX(GameConfig.speedTravel);
         }
+        if (this.animatorController.currentAnimationType() == EAnimation.EXPLODE) {
+            this.movement.setPushX(GameConfig.speedTravel / 4);
+            this.movement.setMoveSpeed(this.movement.getMoveSpeed() / 2);
+        }
     }
 }

@@ -10,6 +10,7 @@ import com.andres_k.components.graphicComponents.effects.effect.Effect;
 import com.andres_k.components.graphicComponents.effects.effect.EffectType;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.Console;
+import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -27,6 +28,7 @@ public class Animator {
     protected Color filter;
     private int currentFrame;
     private boolean canDoAction;
+    private float scale;
 
     public Animator() {
         this.animation = null;
@@ -37,6 +39,7 @@ public class Animator {
         this.currentFrame = -1;
         this.canDoAction = true;
         this.effectManager = new EffectManager();
+        this.scale = 1.0f;
     }
 
     public Animator(Animator animator) {
@@ -52,6 +55,7 @@ public class Animator {
         this.currentFrame = animator.currentFrame;
         this.canDoAction = animator.canDoAction;
         this.effectManager = new EffectManager(animator.effectManager);
+        this.scale = animator.scale;
     }
 
     // METHODS
@@ -70,9 +74,9 @@ public class Animator {
                  image.setRotation(rotateAngle);
             }
             if (this.effectManager.hasActivity()) {
-                this.effectManager.draw(g, image, drawX, drawY, flipX, flipY);
+                this.effectManager.draw(g, image, drawX, drawY, this.scale, flipX, flipY);
             } else {
-                CameraController.get().draw(image, drawX, drawY, useCameraMove);
+                CameraController.get().draw(image, drawX, drawY, this.scale, useCameraMove);
             }
         }
     }
@@ -84,7 +88,7 @@ public class Animator {
                image.setRotation(rotateAngle);
             }
             if (this.effectManager.hasActivity()) {
-                this.effectManager.draw(g, image, drawX, drawY, flipX, flipY);
+                this.effectManager.draw(g, image, drawX, drawY, 1.0f, flipX, flipY);
             } else {
                 CameraController.get().draw(image, drawX, drawY, useCameraMove);
             }
@@ -151,12 +155,13 @@ public class Animator {
     }
 
     // ADD FUNCTIONS
-    public void addAnimation(Animation animation) {
+    public void addAnimation(Animation animation, float scale) {
         this.animation = animation.copy();
+        this.scale = scale;
     }
 
-    public void addCollision(BodyAnimation body) {
-        this.body = body;
+    public void addCollision(String jsonValue) throws JSONException {
+        this.body = new BodyAnimation(jsonValue, this.scale);
     }
 
     public void addConfig(AnimationConfigItem config) {
@@ -197,4 +202,7 @@ public class Animator {
         return this.filter;
     }
 
+    public float getScale() {
+        return this.scale;
+    }
 }

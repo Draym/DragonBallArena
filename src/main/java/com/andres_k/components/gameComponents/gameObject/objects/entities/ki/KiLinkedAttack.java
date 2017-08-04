@@ -23,11 +23,13 @@ public abstract class KiLinkedAttack extends KiEntity {
     protected AnimatorController back;
     protected boolean canCreateBodies;
     protected float saveX;
+    protected float sizeBody;
 
-    public KiLinkedAttack(AnimatorController head, AnimatorController body, AnimatorController back, EGameObject type, String parent, float x, float y, EDirection direction, float damage, float speed, float weight) {
+    public KiLinkedAttack(AnimatorController head, AnimatorController body, AnimatorController back, EGameObject type, String parent, float x, float y, EDirection direction, float damage, float speed, float weight, float sizeBody) {
         super(head, type, parent, x, y, direction, damage, speed, weight);
         this.body = body;
         this.back = back;
+        this.sizeBody = sizeBody;
         if (this.back != null) {
             this.back.setPrintable(false);
             this.back.setEyesDirection(direction);
@@ -117,9 +119,9 @@ public abstract class KiLinkedAttack extends KiEntity {
             if (this.animatorController.getEyesDirection() == EDirection.LEFT) {
                 distance = MathTools.abs(distance);
             }
-            while (distance >= 60) {
+            while (distance >= this.sizeBody) {
                 this.bodiesAnim.add(new Pair<>(this.getMaxBodyX(), new AnimatorController(this.body)));
-                distance -= 60;
+                distance -= this.sizeBody;
             }
         }
     }
@@ -137,9 +139,9 @@ public abstract class KiLinkedAttack extends KiEntity {
         if (this.bodiesAnim.isEmpty())
             return this.saveX;
         if (this.animatorController.getEyesDirection() == EDirection.RIGHT) {
-            return this.bodiesAnim.get(this.bodiesAnim.size() - 1).getV1() + 60;
+            return this.bodiesAnim.get(this.bodiesAnim.size() - 1).getV1() + this.sizeBody;
         } else {
-            return this.bodiesAnim.get(this.bodiesAnim.size() - 1).getV1() - 60;
+            return this.bodiesAnim.get(this.bodiesAnim.size() - 1).getV1() - this.sizeBody;
         }
     }
 

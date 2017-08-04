@@ -208,10 +208,7 @@ public abstract class GameObject {
         return this.animatorController.currentBodySprite();
     }
 
-    public float
-
-
-    graphicalX() {
+    public float graphicalX() {
         if (this.getBody() == null) {
             return this.getPosX();
         }
@@ -282,6 +279,10 @@ public abstract class GameObject {
             }
         }
         return EDirection.NONE;
+    }
+
+    public float getScaledValue(float value) {
+        return value * GameConfig.scaleGameSprite;
     }
 
     // SETTERS

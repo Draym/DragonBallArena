@@ -2,6 +2,7 @@ package com.andres_k.components.gameComponents.bodies;
 
 import com.andres_k.components.camera.CameraController;
 import com.andres_k.utils.tools.MathTools;
+import com.sun.xml.internal.ws.client.sei.ResponseBuilder;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -9,6 +10,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
+import org.w3c.dom.css.Rect;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +25,15 @@ public class BodySprite {
     private Rectangle sprite;
     private Rectangle body;
 
-    public BodySprite(JSONObject object) throws JSONException {
+    public BodySprite(JSONObject object, float scale) throws JSONException {
         this.bodies = new ArrayList<>();
-        this.sprite = new Rectangle(0, 0, (float) object.getDouble("SpriteSizeX"), (float) object.getDouble("SpriteSizeY"));
-        this.body = new Rectangle((float) object.getDouble("BodyPosX"), (float) object.getDouble("BodyPosY"), (float) object.getDouble("BodySizeX"), (float) object.getDouble("BodySizeY"));
+        this.sprite = new Rectangle(0, 0, (float) object.getDouble("SpriteSizeX") * scale, (float) object.getDouble("SpriteSizeY") * scale);
+        this.body = new Rectangle((float) object.getDouble("BodyPosX") * scale, (float) object.getDouble("BodyPosY") * scale,
+                (float) object.getDouble("BodySizeX") * scale, (float) object.getDouble("BodySizeY") * scale);
         JSONArray array = object.getJSONArray("rectangles");
 
         for (int i = 0; i < array.length(); ++i) {
-            this.bodies.add(new BodyRect(array.getJSONObject(i), this.body.getMinX(), this.body .getMinY()));
+            this.bodies.add(new BodyRect(array.getJSONObject(i), this.body.getMinX(), this.body.getMinY(), scale));
         }
         this.id = UUID.randomUUID();
     }
@@ -73,6 +76,10 @@ public class BodySprite {
         return MathTools.rotateShape(new Rectangle(flipX, posY - this.sprite.getCenterY(), this.sprite.getWidth(), this.sprite.getHeight()), rotateAngle);
     }
 
+    public Shape getFlippedBody(boolean haveToFlip, float posX, float posY) {
+        return this.getFlippedBody(haveToFlip, posX, posY, 0);
+    }
+
     public Shape getFlippedBody(boolean haveToFlip, float posX, float posY, float rotateAngle) {
         float flipX = posX - this.sprite.getCenterX() + this.body.getMinX();
 
@@ -82,10 +89,6 @@ public class BodySprite {
             flipX = sprite.getCenterX() + ((sprite.getWidth() / 2) - this.body.getMaxX());
         }
         return MathTools.rotateShape(new Rectangle(flipX, posY - this.sprite.getCenterY() + this.body.getMinY(), this.body.getWidth(), this.body.getHeight()), rotateAngle);
-    }
-
-    public Shape getFlippedBody(boolean haveToFlip, float posX, float posY) {
-        return this.getFlippedBody(haveToFlip, posX, posY, 0);
     }
 
     public UUID getId() {

@@ -176,17 +176,21 @@ public class AnimatorController implements Observer {
     }
 
     public void addAnimation(EAnimation type, int index, Animation animation) {
+        this.addAnimation(type, index, 1.0f, animation);
+    }
+
+    public void addAnimation(EAnimation type, int index, float scale, Animation animation) {
         if (!this.animators.containsKey(type)) {
             this.animators.put(type, new AnimatorContainer());
         }
-        this.animators.get(type).addAnimation(animation, index);
+        this.animators.get(type).addAnimation(animation, index, scale);
     }
 
     public void addCollision(EAnimation type, int index, String jsonValue) throws JSONException {
         if (!this.animators.containsKey(type)) {
             this.animators.put(type, new AnimatorContainer());
         }
-        this.animators.get(type).addCollision(new BodyAnimation(jsonValue), index);
+        this.animators.get(type).addCollision(jsonValue, index);
     }
 
     public void addConfig(EAnimation type, int index, AnimationConfigItem config) {

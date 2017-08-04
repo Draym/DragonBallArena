@@ -3,6 +3,7 @@ package com.andres_k.components.gameComponents.bodies;
 import com.andres_k.components.camera.CameraController;
 import com.andres_k.components.gameComponents.gameObject.EGameObject;
 import com.andres_k.utils.stockage.Pair;
+import com.andres_k.utils.tools.Console;
 import com.andres_k.utils.tools.MathTools;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -28,10 +29,10 @@ public class BodyRect {
     private Pair<Float, Float> positions;
     private Pair<Float, Float> sizes;
 
-    public BodyRect(JSONObject object, Float decalX, Float decalY) throws JSONException {
+    public BodyRect(JSONObject object, Float decalX, Float decalY, float scale) throws JSONException {
         this.type = EGameObject.getEnumByValue(object.getString("type"));
-        this.positions = new Pair<>((float) object.getDouble("posX") - decalX, (float) object.getDouble("posY") - decalY);
-        this.sizes = new Pair<>((float) object.getDouble("sizeX"), (float) object.getDouble("sizeY"));
+        this.positions = new Pair<>(((float) object.getDouble("posX") * scale) - decalX, ((float) object.getDouble("posY") * scale) - decalY);
+        this.sizes = new Pair<>((float) object.getDouble("sizeX") * scale, (float) object.getDouble("sizeY") * scale);
         this.id = UUID.randomUUID();
         this.lastCollisions = new ArrayList<>();
     }
@@ -83,7 +84,8 @@ public class BodyRect {
         }
 
         if (this.sizes.getV2() < 0) {
-            return MathTools.rotateShape(new Circle(newPoint.getV1(), newPoint.getV2(), this.sizes.getV1()), rotateAngle);
+            Circle circle = new Circle(newPoint.getV1(), newPoint.getV2(), this.sizes.getV1());
+            return MathTools.rotateShape(circle, rotateAngle);
         } else {
             return MathTools.rotateShape(new Rectangle(newPoint.getV1(), newPoint.getV2(), this.sizes.getV1(), this.sizes.getV2()), rotateAngle);
         }

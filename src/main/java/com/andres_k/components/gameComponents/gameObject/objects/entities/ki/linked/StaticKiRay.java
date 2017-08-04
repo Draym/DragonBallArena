@@ -15,8 +15,8 @@ import com.andres_k.utils.stockage.Pair;
  */
 public class StaticKiRay extends KiLinkedAttack {
 
-    public StaticKiRay(AnimatorController head, AnimatorController body, AnimatorController back, EGameObject type, String parent, float x, float y, EDirection direction, float damage, float speed, float weight) {
-        super(head, body, back, type, parent, x, y, direction, damage, speed, weight);
+    public StaticKiRay(AnimatorController head, AnimatorController body, AnimatorController back, EGameObject type, String parent, float x, float y, EDirection direction, float damage, float speed, float weight, float sizeBody) {
+        super(head, body, back, type, parent, x, y, direction, damage, speed, weight, sizeBody);
         this.saveX = x;
     }
 

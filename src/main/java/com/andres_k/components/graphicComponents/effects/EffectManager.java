@@ -74,15 +74,16 @@ public class EffectManager {
         }
     }
 
-    private void draw(Graphics g) {
-        this.availableEffects.forEach(effect -> effect.draw(g));
+    private void draw(Graphics g, float scale) {
+        this.availableEffects.forEach(effect -> effect.draw(g, scale));
     }
 
-    public void draw(Graphics g, Image image, Float x, Float y, boolean flipX, boolean flipY) {
+    public void draw(Graphics g, Image image, Float x, Float y, float scale, boolean flipX, boolean flipY) {
         this.conf.reset();
         this.conf.changePosition(x, y);
-        this.conf.changeSizes(image.getWidth(), image.getHeight());
+        this.conf.changeSizes(image.getWidth() * scale, image.getHeight() * scale);
         this.conf.setFlip(flipX, flipY);
+        this.conf.setScale(scale);
         int level = -1;
 
         for (Effect effect : this.availableEffects) {
@@ -97,14 +98,16 @@ public class EffectManager {
         }
 
         if (this.conf.drawable) {
-            image.setCenterOfRotation((image.getWidth() * this.conf.scale) / 2, (image.getHeight() * this.conf.scale) / 2);
-            image.rotate(this.conf.rotation);
+            if (this.conf.rotation != 0.0f) {
+                image.setCenterOfRotation((image.getWidth() * this.conf.scale) / 2, (image.getHeight() * this.conf.scale) / 2);
+                image.rotate(this.conf.rotation);
+            }
             if (conf.color == null) {
                 CameraController.get().draw(image, this.conf.x, this.conf.y, this.conf.scale, true);
             } else {
                 CameraController.get().draw(image, this.conf.x, this.conf.y, this.conf.scale, this.conf.color, true);
             }
-            this.draw(g);
+            this.draw(g, scale);
         }
     }
 

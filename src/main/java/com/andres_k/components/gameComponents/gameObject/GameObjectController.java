@@ -174,7 +174,7 @@ public final class GameObjectController {
             startX = 0;
 
             for (EGameObject type : playerNames) {
-                this.createPlayer(type, "player" + GlobalVariable.id_delimiter + count + GlobalVariable.id_delimiter + type.getValue(), sizeX - 100, startX + 50, 0, 740, (count == 1));
+                this.createPlayer(type, "player" + GlobalVariable.id_delimiter + count + GlobalVariable.id_delimiter + type.getValue(), sizeX - 100, startX + 50, 0, 300, (count == 1));
                 startX += sizeX;
                 ++count;
             }

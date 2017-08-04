@@ -25,7 +25,8 @@ public class HideIt extends Effect {
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics g, float scale) {
+        // do nothing
     }
 
     @Override

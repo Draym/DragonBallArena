@@ -5,6 +5,7 @@ import com.andres_k.components.gameComponents.animations.details.AnimationReperc
 import com.andres_k.components.gameComponents.bodies.BodyAnimation;
 import com.andres_k.components.gameComponents.gameObject.GameObject;
 import com.andres_k.utils.stockage.Pair;
+import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.SlickException;
@@ -45,16 +46,16 @@ public class AnimatorContainer {
     }
 
     // ADD FUNCTIONS
-    public void addAnimation(Animation animation, int index) {
+    public void addAnimation(Animation animation, int index, float scale) {
         if (!this.animators.containsKey(index))
             this.animators.put(index, new Animator());
-        this.animators.get(index).addAnimation(animation);
+        this.animators.get(index).addAnimation(animation, scale);
     }
 
-    public void addCollision(BodyAnimation body, int index) {
+    public void addCollision(String jsonValue, int index) throws JSONException {
         if (!this.animators.containsKey(index))
             this.animators.put(index, new Animator());
-        this.animators.get(index).addCollision(body);
+        this.animators.get(index).addCollision(jsonValue);
     }
 
     public void addConfig(AnimationConfigItem config, int index) {

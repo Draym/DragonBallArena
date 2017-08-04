@@ -35,7 +35,7 @@ public abstract class Effect {
         return true;
     }
 
-    public abstract void draw(Graphics g);
+    public abstract void draw(Graphics g, float scale);
 
     public abstract boolean applyChanges(ImageConfiguration conf);
 

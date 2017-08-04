@@ -17,17 +17,17 @@ public class BodyAnimation {
     private int spriteNumber;
     private List<BodySprite> bodies;
 
-    public BodyAnimation(String jsonValue) throws JSONException {
+    public BodyAnimation(String jsonValue, float scale) throws JSONException {
         this.bodies = new ArrayList<>();
 
         JSONObject object = new JSONObject(jsonValue);
-        this.sizeXSprite = (float) object.getDouble("spriteSizeX");
-        this.sizeXSprite = (float) object.getDouble("spriteSizeY");
+        this.sizeXSprite = (float) object.getDouble("spriteSizeX") * scale;
+        this.sizeXSprite = (float) object.getDouble("spriteSizeY") * scale;
         this.spriteNumber = object.getInt("spriteNumber");
         JSONArray array = object.getJSONArray("sprites");
 
         for (int i = 0; i < array.length(); ++i) {
-            this.bodies.add(new BodySprite(array.getJSONObject(i)));
+            this.bodies.add(new BodySprite(array.getJSONObject(i), scale));
         }
     }
 

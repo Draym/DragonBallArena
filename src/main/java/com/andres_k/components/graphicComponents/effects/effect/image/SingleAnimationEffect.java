@@ -54,21 +54,21 @@ public class SingleAnimationEffect extends Effect {
     }
 
     @Override
-    public void draw(Graphics g) {
-        CameraController.get().draw(this.animation.getCurrentFrame().getFlippedCopy(this.flipX, this.flipY), this.x, this.y, true);
+    public void draw(Graphics g, float scale) {
+        CameraController.get().draw(this.animation.getCurrentFrame().getFlippedCopy(this.flipX, this.flipY), this.x, this.y, scale, true);
     }
 
     @Override
     public boolean applyChanges(ImageConfiguration conf) {
         if (conf.flipX) {
-            this.x = conf.x + (this.decalX < 0 ? -this.decalX : 2 * this.decalX);
+            this.x = conf.x + (this.decalX < 0 ? -this.decalX : 2 * this.decalX) * conf.scale;
         } else {
-            this.x = conf.x + this.decalX;
+            this.x = conf.x + this.decalX * conf.scale;
         }
         if (conf.flipY) {
-            this.y = conf.y + (this.decalY < 0 ? -this.decalY : 2 * this.decalY);
+            this.y = conf.y + (this.decalY < 0 ? -this.decalY : 2 * this.decalY) * conf.scale;
         } else {
-            this.y = conf.y + this.decalY;
+            this.y = conf.y + this.decalY * conf.scale;
         }
         this.flipX = conf.flipX;
         this.flipY = conf.flipY;

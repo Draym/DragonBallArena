@@ -71,6 +71,10 @@ public class ImageConfiguration {
         this.flipY = flipY;
     }
 
+    public void setScale(float scale) {
+        this.scale = scale;
+    }
+
     @Override
     public String toString() {
         return "[" + this.x + ", " + this.y + "] (" + this.imageSizeX + ", " + this.imageSizeY + ") {" + this.drawable + ", " + this.scale + ", " + this.rotation + "}";

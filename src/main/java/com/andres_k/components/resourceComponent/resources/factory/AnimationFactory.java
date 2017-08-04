@@ -28,8 +28,10 @@ public class AnimationFactory {
         return animation;
     }
 
+
     public static Animation createAnimation(SpriteSheet spriteSheet, boolean looping, int startX, int endX, int startY, int endY, int speed[]) {
         Animation animation = new Animation();
+
         int i = 0;
 
         for (int y = startY; y < endY; y++) {
