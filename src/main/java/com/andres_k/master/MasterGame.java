@@ -14,6 +14,7 @@ import com.andres_k.utils.configs.CurrentUser;
 import com.andres_k.utils.configs.GlobalVariable;
 import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.tools.ColorTools;
+import com.andres_k.utils.tools.DLLTools;
 import org.codehaus.jettison.json.JSONException;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
@@ -25,6 +26,7 @@ public class MasterGame {
     private Windows windows;
 
     public MasterGame() throws SlickException, JSONException {
+        DLLTools.init();
         ColorTools.init();
 
         InputData.init(ConfigPath.config_input);

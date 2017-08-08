@@ -6,6 +6,7 @@ package com.andres_k.utils.configs;
 public class ConfigPath {
     public static final String config_input = "config/configInput.json";
     public static final String config_score = "config/gameScore.json";
+    public static final String game_info = "config/gameInfo.json";
     public static final String config_overlay = "config/configDataOverlay.json";
     public static final String comboAvailableList = "config/comboAvailableList.json";
     public static final String preference_overlay = "config/configPreferenceOverlay.json";
