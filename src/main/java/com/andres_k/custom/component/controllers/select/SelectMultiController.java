@@ -1,0 +1,62 @@
+package com.andres_k.custom.component.controllers.select;
+
+import com.andres_k.custom.component.graphicComponents.background.EBackground;
+import com.andres_k.custom.component.taskComponents.ELocation;
+import com.andres_k.gameToolsLib.components.controllers.EMode;
+import com.andres_k.gameToolsLib.components.controllers.WindowController;
+import com.andres_k.gameToolsLib.components.graphicComponents.background.wallpaper.Wallpaper;
+import com.andres_k.gameToolsLib.components.resourceComponents.resources.ResourceManager;
+import com.andres_k.gameToolsLib.utils.configs.GameConfig;
+import org.newdawn.slick.SlickException;
+
+import java.util.Observable;
+
+/**
+ * Created by com.andres_k on 09/02/2016.
+ */
+public class SelectMultiController extends WindowController {
+    public SelectMultiController(int idWindow) {
+        super(ELocation.SELECT_MULTI_CONTROLLER, idWindow);
+    }
+
+    @Override
+    public void enter() throws SlickException {
+        GameConfig.typePlayer.clear();
+        GameConfig.mode = EMode.ONLINE;
+        this.backgroundManager.run();
+    }
+
+    @Override
+    public void leave() {
+    }
+
+    @Override
+    public void init() throws SlickException {
+        this.backgroundManager.addComponent(EBackground.SELECT_SCREEN, new Wallpaper(ResourceManager.get().getBackgroundAnimator(EBackground.SELECT_SCREEN), 0, 0));
+    }
+
+    @Override
+    public void keyPressed(int key, char c) {
+
+    }
+
+    @Override
+    public void keyReleased(int key, char c) {
+
+    }
+
+    @Override
+    public void mouseReleased(int button, int x, int y) {
+
+    }
+
+    @Override
+    public void mousePressed(int button, int x, int y) {
+
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        super.update(o, arg);
+    }
+}

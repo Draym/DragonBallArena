@@ -1,0 +1,28 @@
+package com.andres_k.gameToolsLib.components.graphicComponents.userInterface.elementGUI.elements.buttons;
+
+import com.andres_k.gameToolsLib.components.graphicComponents.userInterface.elementGUI.EStatus;
+import com.andres_k.gameToolsLib.components.graphicComponents.userInterface.elementGUI.elements.Element;
+import com.andres_k.gameToolsLib.utils.stockage.Pair;
+
+import java.util.List;
+
+/**
+ * Created by com.andres_k on 17/02/2016.
+ */
+public class ButtonLock extends Button {
+    public ButtonLock(Element element, List<Pair<EStatus, Object>> tasks) {
+        super(element, tasks);
+    }
+
+    @Override
+    public boolean isOnClick(float x, float y) {
+        boolean result = false;
+        if (this.activated && !this.clicked && this.content.isOnClick(x, y)) {
+            this.clicked = true;
+            result = true;
+            this.OnClick(false);
+        }
+        return result;
+    }
+
+}
