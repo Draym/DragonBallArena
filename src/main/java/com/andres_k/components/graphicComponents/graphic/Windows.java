@@ -7,7 +7,7 @@ import com.andres_k.components.graphicComponents.graphic.windows.waiting.WindowL
 import com.andres_k.components.graphicComponents.graphic.windows.select.WindowSelectMulti;
 import com.andres_k.components.graphicComponents.graphic.windows.select.WindowSelectSolo;
 import com.andres_k.components.graphicComponents.graphic.windows.select.WindowSelectVersus;
-import com.andres_k.components.graphicComponents.graphic.windows.waiting.WindowBattleConnection;
+import com.andres_k.components.graphicComponents.graphic.windows.multiWait.WindowBattleConnection;
 import com.andres_k.components.taskComponent.CentralTaskManager;
 import com.andres_k.components.taskComponent.ELocation;
 import com.andres_k.components.taskComponent.LocalTaskManager;

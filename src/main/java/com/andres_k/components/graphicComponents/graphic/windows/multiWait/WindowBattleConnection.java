@@ -1,4 +1,4 @@
-package com.andres_k.components.graphicComponents.graphic.windows.waiting;
+package com.andres_k.components.graphicComponents.graphic.windows.multiWait;
 
 import com.andres_k.components.controllers.waiting.BattleConnectionController;
 import com.andres_k.components.graphicComponents.graphic.EnumWindow;
