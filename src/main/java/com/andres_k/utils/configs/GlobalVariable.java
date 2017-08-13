@@ -6,10 +6,10 @@ import org.newdawn.slick.AppGameContainer;
  * Created by andres_k on 09/07/2015.
  */
 public class GlobalVariable {
-    public static boolean drawCollision = true;
-    public static boolean showFps = true;
+    public static boolean drawCollision = false;
+    public static boolean showFps = false;
     public static boolean debug = false;
-    public static boolean log = true;
+    public static boolean log = false;
 
     public static String id_delimiter = ".";
 

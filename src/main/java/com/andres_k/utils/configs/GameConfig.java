@@ -17,14 +17,14 @@ public class GameConfig {
     public static long timeLoop = 30;
     public static long currentTimeLoop = 30;
 
-    public static final boolean animatedHome = false;
+    public static final boolean animatedHome = true;
     public static final boolean characterLogoOff = true;
     public static final float scaleGameSprite = 2.0f;
 
     public static ArrayList<EGameObject> typePlayer = new ArrayList<>();
 
     public static float speedTravel = 1f;
-    public static float speedJump = 2f;
+    public static float speedJump = 1.8f;
 
     public static float globalMapWidth = 1900;
     public static float globalMapHeight = 950;

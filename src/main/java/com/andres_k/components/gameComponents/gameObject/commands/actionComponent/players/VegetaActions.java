@@ -19,7 +19,7 @@ public class VegetaActions extends BasicActions {
             if (object.getAnimatorController().currentAnimation().getFrame() == 0) {
                 object.getMovement().setUseGravity(true);
                 object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
-                object.getMovement().addPushX(GameConfig.speedTravel * 4f);
+                object.getMovement().addPushX(GameConfig.speedTravel * 15f);
             } else {
                 object.getMovement().setPushX(0);
             }
@@ -123,6 +123,7 @@ public class VegetaActions extends BasicActions {
         try {
             object.getMovement().setUseGravity(false);
             object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
+            object.getMovement().setPushY(-GameConfig.speedTravel / 15f);
             if (object.getAnimatorController().currentAnimation().getFrame() == 1 ||
                     object.getAnimatorController().currentAnimation().getFrame() == 2) {
                 object.getMovement().setPushX(GameConfig.speedTravel);

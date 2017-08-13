@@ -167,7 +167,7 @@ public class BasicActions {
             object.getMovement().addPushY(-0.20f);
         }
         if (object.getMovement().getMoveDirection() != EDirection.NONE) {
-            object.getMovement().setPushX(GameConfig.speedTravel);
+            object.getMovement().setPushX(GameConfig.speedTravel * 2f);
         }
     }
 

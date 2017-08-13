@@ -20,7 +20,7 @@ public class GokuActions extends BasicActions {
             if (object.getAnimatorController().getIndex() == 1 && object.getAnimatorController().currentAnimation().getFrame() == 0) {
                 object.getMovement().setUseGravity(true);
                 object.getMovement().setMoveDirection(object.getAnimatorController().getEyesDirection());
-                object.getMovement().addPushX(GameConfig.speedTravel * 4f);
+                object.getMovement().addPushX(GameConfig.speedTravel * 12f);
             } else {
                 object.getMovement().setPushX(0);
             }

@@ -15,7 +15,7 @@ public class Kameha extends StaticKiRay {
     }
 
     public Kameha(AnimatorController head, AnimatorController body, AnimatorController back, String parent, float x, float y, EDirection direction, float damage, float speed) {
-        super(head, body, back, EGameObject.KAMEHA, parent, (direction == EDirection.RIGHT ? x : x - 200), y, direction, damage, speed, 0, 60 * GameConfig.scaleGameSprite);
+        super(head, body, back, EGameObject.KAMEHA, parent, (direction == EDirection.RIGHT ? x : x - 200), y, direction, damage, speed, 0, 40 * GameConfig.scaleGameSprite);
         this.saveX = (direction == EDirection.RIGHT ? x - 140 : x - 470);
     }
 }
