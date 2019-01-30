@@ -1,6 +1,6 @@
 <img src="ReadMe-images/dba-baniere.jpg" width="900" height="200">
 
-## DragonBall Arena
+# DragonBall Arena
 
 DBA is a multiplayer fighting game on the universe of DragonBallZ.
 
