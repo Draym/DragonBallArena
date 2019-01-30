@@ -1,4 +1,4 @@
-<img src="ReadMe-images/dba-baniere.jpg" width="900" height="200">
+<img src="README-images/dba-baniere.jpg" width="900" height="200">
 
 # DragonBall Arena
 
@@ -18,16 +18,16 @@ I have used external sources for :
 
 
 - Loading Screen
-<img src="ReadMe-images/dba-loading.PNG" height="200">
+<img src="README-images/dba-loading.PNG" height="200">
 
 - Menu
-<img src="ReadMe-images/dba-menu.gif" height="200">
+<img src="README-images/dba-menu.gif" height="200">
 
 - Character selection
-<img src="ReadMe-images/dba-select.PNG" height="200">
+<img src="README-images/dba-select.PNG" height="200">
 
 - Multiplayer 1vs1 / 2vs2 fight are available. A DBA server needs to be launched. Actually no permanent online servers are available, you can contact kevin.andres@epitech.eu to get yours. Then it is needed to enter the serverIP in the 'BATTLE' screen.
-<img src="ReadMe-images/dba-online.PNG" height="200">
+<img src="README-images/dba-online.PNG" height="200">
 
 - Possibility to modify controls and sound setings in the menu by pressing **esc**
 
@@ -50,13 +50,13 @@ Goku and Vegata got (it may changes for others) :
 <br />
 
 - Classic attack + dodge
-<img src="ReadMe-images/dba-attack1.gif" height="200">
+<img src="README-images/dba-attack1.gif" height="200">
 
 - Super Saiyans
-<img src="ReadMe-images/dba-attack3.gif" height="200">
+<img src="README-images/dba-attack3.gif" height="200">
 
 - Kamehameha
-<img src="ReadMe-images/dba-attack2.gif" height="200">
+<img src="README-images/dba-attack2.gif" height="200">
 
 - Gengidama
 <img src="ReadMe-images/dba-attack4.gif" height="200">
