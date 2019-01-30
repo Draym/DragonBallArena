@@ -36,7 +36,7 @@ I have used external sources for :
 -------------------------------------------------------------------------------------------  
 ## Gameplay:  
 
-- Actually Goku and Vegeta are fully playable. Super sayen form are also implemented for both.
+- Actually Goku and Vegeta are fully playable. Super saiyan form are also implemented for both.
 - Every character have different attacks, absolutly no move are identical
 
 Goku and Vegata got (it may changes for others) :
@@ -45,14 +45,14 @@ Goku and Vegata got (it may changes for others) :
 - more than 10 combo attack
 - 1 powerfull KI attack : special + KI
 - 1 ultimate KI attack : 2 special + combo of 4 keys in a row
-- super sayen form (boost stat, offer new KI attacks)
+- super saiyan form (boost stat, offer new KI attacks)
 <br />
 <br />
 
 - Classic attack + dodge
 <img src="ReadMe-images/dba-attack1.gif" height="200">
 
-- Super Sayens
+- Super Saiyans
 <img src="ReadMe-images/dba-attack3.gif" height="200">
 
 - Kamehameha
