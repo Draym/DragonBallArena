@@ -10,6 +10,7 @@ import com.andres_k.components.gameComponents.gameObject.GameObjectController;
 import com.andres_k.components.gameComponents.gameObject.objects.Player;
 import com.andres_k.components.graphicComponents.background.EBackground;
 import com.andres_k.components.graphicComponents.background.wallpaper.Wallpaper;
+import com.andres_k.components.graphicComponents.graphic.EnumWindow;
 import com.andres_k.components.graphicComponents.userInterface.elementGUI.elements.ElementFactory;
 import com.andres_k.components.networkComponents.networkGame.NetworkController;
 import com.andres_k.components.networkComponents.networkGame.NetworkProfile;
@@ -26,6 +27,7 @@ import com.andres_k.components.taskComponent.TaskFactory;
 import com.andres_k.components.taskComponent.utils.TaskComponent;
 import com.andres_k.utils.configs.GameConfig;
 import com.andres_k.utils.configs.GlobalVariable;
+import com.andres_k.utils.configs.WindowConfig;
 import com.andres_k.utils.stockage.Pair;
 import com.andres_k.utils.tools.ColorTools;
 import com.andres_k.utils.tools.Console;
@@ -211,7 +213,7 @@ public class GameController extends WindowController {
         Console.write("Task: " + task + "\n");
         if (task instanceof MessageNewPlayer) {
             if (NetworkProfile.get().itsMyNetworkProfile(task.getId())) {
-                GameObjectController.get().createPlayer(EGameObject.getEnumByValue(((MessageNewPlayer) task).getPlayerType()), ((MessageNewPlayer) task).getGameId(), 0, (int) ((MessageNewPlayer) task).getX(), 0, (int) ((MessageNewPlayer) task).getY(), true);
+                GameObjectController.get().createPlayer(EGameObject.getEnumByValue(((MessageNewPlayer) task).getPlayerType()), ((MessageNewPlayer) task).getGameId(), 0, (int) ((MessageNewPlayer) task).getX(), 0, WindowConfig.get().getWindowSizes(EnumWindow.GAME).getV2() - ((int) (247 * GameConfig.scaleGameSprite / 2)) - 31, true);
                 CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.SERVER, ELocation.BATTLE_CONNECTION_GUI_StatusList, new Pair<>(ETaskType.ADD, ElementFactory.createText(DateTools.getCurrentDate("HH:mm:ss") + " : you are connected as " + ((MessageNewPlayer) task).getPlayerType(), ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.BASIC, 20, 5, 0))));
                 CentralTaskManager.get().sendRequest(new TaskComponent(ELocation.SERVER, ELocation.BATTLE_CONNECTION_GUI_StatusList, new Pair<>(ETaskType.ADD, ElementFactory.createText(DateTools.getCurrentDate("HH:mm:ss") + " : waiting " + (4 - GameObjectController.get().getNumberPlayers()) + " player(s)", ColorTools.get(ColorTools.Colors.GUI_BLUE), EFont.BASIC, 20, 5, 0))));
             } else {
