@@ -1,7 +1,2 @@
-
-Configure Build:
-VM options: -Djava.library.path=C:\Users\andres_k\Documents\native\windows
-
 Make "as excluded":
-
 components.graphicComponents.userInterfaceDeprecated
