@@ -19,7 +19,7 @@ public final class ComboAvailableList {
     private ComboAvailableList() {
         this.playerCombos = new HashMap<>();
         try {
-            JSONObject configs = new JSONObject(FilesTools.readFile(ConfigPath.comboAvailableList));
+            JSONObject configs = new JSONObject(FilesTools.readTempFile(ConfigPath.comboAvailableList));
 
             Iterator iterator = configs.keys();
             while (iterator.hasNext()) {

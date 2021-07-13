@@ -19,7 +19,7 @@ public class InputData {
 
     public static void init(String file) throws JSONException {
         availableInput = new LinkedHashMap<>();
-        configs = new JSONObject(FilesTools.readFile(file));
+        configs = new JSONObject(FilesTools.readTempFile(file));
         InputData.file = file;
 
         Iterator iterator = configs.keys();
@@ -62,7 +62,7 @@ public class InputData {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            FilesTools.writeInFile(file, configs.toString());
+            FilesTools.writeInTempFile(file, configs.toString());
             return true;
         }
         return false;
