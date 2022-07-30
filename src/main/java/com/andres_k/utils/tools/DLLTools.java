@@ -13,7 +13,6 @@ import java.lang.reflect.Field;
  * Created by kevin on 18/07/2017.
  */
 public class DLLTools {
-    private final static String LIB_BIN = "/native/windows/";
     private final static String[] WIN_DLL32 = new String[]{"jinput-dx8.dll", "jinput-raw.dll", "lwjgl.dll", "OpenAL32.dll"};
     private final static String[] WIN_DLL64 = new String[]{"jinput-dx8_64.dll", "jinput-raw_64.dll", "lwjgl64.dll","OpenAL64.dll"};
     private final static String[] LIN_DLL32 = new String[]{"libjinput-linux.so", "liblwjgl.so", "libopenal.so"};
@@ -25,36 +24,40 @@ public class DLLTools {
         String[] dlls = new String[]{};
         String os = System.getProperty("os.name");
         String arch = System.getProperty("os.arch");
+        String libPath = "";
 
         if (os.contains("Windows")) {
+            libPath = "/native/windows/";
             if (arch.contains("64")) {
                 dlls = WIN_DLL64;
             } else {
                 dlls = WIN_DLL32;
             }
         } else if (os.contains("Linux")) {
+            libPath = "/native/linux/";
             if (arch.contains("64")) {
                 dlls = LIN_DLL64;
             } else {
                 dlls = LIN_DLL32;
             }
         } else if (os.contains("Mac")) {
+            libPath = "/native/macosx/";
             dlls = MAC_DLL;
         }
 
-        loadFromJar(dlls);
+        loadFromJar(libPath, dlls);
     }
 
     /**
      * When packaged into JAR extracts DLLs, places these into
      */
-    private static void loadFromJar(String[] dlls) {
-        String path = GameInfo.get().getGamePathTMP() + LIB_BIN;
+    private static void loadFromJar(String libPath, String[] dlls) {
+        String path = GameInfo.get().getGamePathTMP() + libPath;
         try {
             for (String dll : dlls) {
                 File f = new File(path + dll);
                 if (!f.exists()) {
-                    loadLib(LIB_BIN, path, dll);
+                    loadLib(libPath, path, dll);
                 }
             }
 
