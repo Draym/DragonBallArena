@@ -17,7 +17,7 @@ public class GameInfo {
             JSONObject gameInfo = new JSONObject(FilesTools.readFile(ConfigPath.game_info));
             this.name = gameInfo.getString("name");
             this.version = gameInfo.getString("version");
-            this.gamePathTMP = System.getProperty("java.io.tmpdir") + "/TMP_DLL_" + this.name;
+            this.gamePathTMP = System.getProperty("java.io.tmpdir") + "TMP_DLL_" + this.name;
         } catch (JSONException e) {
             e.printStackTrace();
         }

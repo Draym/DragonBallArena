@@ -62,7 +62,7 @@ public class DLLTools {
             }
 
             System.setProperty("java.library.path", path);
-            Field fieldSysPath = ClassLoader.class.getDeclaredField( "sys_paths" );
+            Field fieldSysPath = ClassLoader.class.getDeclaredField( "sys_paths");
             fieldSysPath.setAccessible( true );
             fieldSysPath.set( null, null );
         } catch (Exception e) {
