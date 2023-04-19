@@ -26,7 +26,10 @@ I have used external sources for :
 - Character selection
 <img src="README-images/dba-select.PNG" height="200">
 
-- Multiplayer 1vs1 / 2vs2 fight are available. A DBA server needs to be launched. Actually no permanent online servers are available, you can contact kevin.andres@epitech.eu to get yours. Then it is needed to enter the serverIP in the 'BATTLE' screen.
+- Multiplayer 1vs1 / 2vs2 fight is available. Actually no permanent online servers are available, so you will need to launch your own DBA server. You can download the server on my github: [DBAServer](https://github.com/Draym/DBAServer). You can contact kevin.andres@epitech.eu for help.
+
+Then it is needed to enter the serverIP in the 'BATTLE' screen.
+
 <img src="README-images/dba-online.PNG" height="200">
 
 - Possibility to modify controls and sound setings in the menu by pressing **esc**
